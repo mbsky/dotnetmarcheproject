@@ -7,6 +7,10 @@ using DotNetMarche.Infrastructure.Configuration;
 
 namespace DotNetMarche.Infrastructure.Base
 {
+	/// <summary>
+	/// This static class is used internally to handle various 
+	/// settings of the infrastructure.
+	/// </summary>
 	internal static class SettingsRegistry
 	{
 		private static DotNetMarcheIntrastructureSettings DefaultConfiguration
