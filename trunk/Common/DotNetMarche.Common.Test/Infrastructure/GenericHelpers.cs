@@ -57,6 +57,18 @@ namespace DotNetMarche.Common.Test.Infrastructure
 			Assert.That(id, Is.EqualTo(10));
 		}
 
+		/// <summary>
+		/// verify that the idFinder can set private id for entities.
+		/// </summary>
+		[Test]
+		public void TestIdFinderSet()
+		{
+			AnEntity entity = AnEntity.CreateWithIdOnly(10);
+			EntityIdFinder.SetIdValueForEntity(entity, 99);
+			Object id = EntityIdFinder.GetIdValueFromEntity(entity);
+			Assert.That(id, Is.TypeOf(typeof(Int32)));
+			Assert.That(id, Is.EqualTo(99));
+		}
 		
 		#endregion
 	}

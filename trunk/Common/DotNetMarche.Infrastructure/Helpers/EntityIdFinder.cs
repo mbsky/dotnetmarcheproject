@@ -19,12 +19,18 @@ namespace DotNetMarche.Infrastructure.Helpers
 			BindingFlags.IgnoreCase | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public;
 
 		private const string MsgNotHaveIdPropertyException = "Entity of type {0} does not have Id property and cannot be used with inmemoryrepository";
+		private const string MsgUnsupportedIdType = "The entity has an id of type 0}, that have no generator associated.";
 
 		private static Hashtable IdList = new Hashtable();
 
 		private static RetrieveValue GetRetrieveValueForType(Type type)
 		{
-			return (RetrieveValue)IdList[type];
+			return ((TypeInformation)IdList[type]).retriever;
+		}
+
+		private static IdGenerator GetIdGeneratorForType(Type type)
+		{
+			return ((TypeInformation)IdList[type]).generator;
 		}
 
 		public static Object GetIdValueFromEntity<T>(T entity)
@@ -33,14 +39,32 @@ namespace DotNetMarche.Infrastructure.Helpers
 			return (GetRetrieveValueForType(typeof(T)).GetValue(entity));
 		}
 
+		/// <summary>
+		/// Set the new value based on the default generator for the type
+		/// of id.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="entity"></param>
+		public static void SetIdValueForEntity<T>(T entity)
+		{
+			if (!IdList.ContainsKey(typeof(T))) FindIdByReflection<T>();
+			GetRetrieveValueForType(typeof(T)).SetValue(entity, GetIdGeneratorForType(typeof(T)).Generate());
+		}	
+		
+		public static void SetIdValueForEntity<T>(T entity, Object value)
+		{
+			if (!IdList.ContainsKey(typeof(T))) FindIdByReflection<T>();
+			GetRetrieveValueForType(typeof(T)).SetValue(entity, value);
+		}
+
 		private static void FindIdByReflection<T>()
 		{
 			//This type was never investigated.
-			RetrieveValue Id = FindRetrieveValueForType<T>();
+			TypeInformation Id = FindRetrieveValueForType<T>();
 			if (Id == null)
 			{
 				//The entity does not have any property called Id, throw exception.
-				throw new ArgumentException(String.Format(MsgNotHaveIdPropertyException, typeof(T)), "entity");
+				throw new ArgumentException(String.Format(MsgNotHaveIdPropertyException, typeof(T)));
 			}
 			lock (IdList)
 			{
@@ -48,13 +72,23 @@ namespace DotNetMarche.Infrastructure.Helpers
 			}
 		}
 
-		private static RetrieveValue FindRetrieveValueForType<T>()
+		private static TypeInformation FindRetrieveValueForType<T>()
 		{
 			PropertyInfo pinfo = typeof(T).GetProperty("Id", BindingFlagsToReflectEntities);
-			if (pinfo != null) return new PropertyInfoRetrieveValue(pinfo);
+			if (pinfo != null) return new TypeInformation(
+				new PropertyInfoRetrieveValue(pinfo), FindGeneratorForType(pinfo.PropertyType));
 			FieldInfo finfo = typeof(T).GetField("Id", BindingFlagsToReflectEntities);
-			if (finfo != null) return new FieldInfoRetrieveValue(finfo);
+			if (finfo != null) return new TypeInformation(
+				new FieldInfoRetrieveValue(finfo), FindGeneratorForType(finfo.FieldType));
 			return null;
+		}
+
+		private static IdGenerator FindGeneratorForType(Type type)
+		{
+			if (type == typeof(Int32))
+				return new SequenceIdGenerator();
+			else
+				throw new NotSupportedException(String.Format(MsgUnsupportedIdType, type));
 		}
 
 		#region InternalClasses
@@ -62,6 +96,8 @@ namespace DotNetMarche.Infrastructure.Helpers
 		private abstract class RetrieveValue
 		{
 			public abstract Object GetValue(Object entity);
+
+			public abstract void SetValue(object entity, object value);
 		}
 
 		private class PropertyInfoRetrieveValue : RetrieveValue
@@ -76,6 +112,11 @@ namespace DotNetMarche.Infrastructure.Helpers
 			public override Object GetValue(Object entity)
 			{
 				return info.GetValue(entity, Constants.EmptyObjectArray);
+			}
+
+			public override void SetValue(object entity, object value)
+			{
+				info.SetValue(entity, value, Constants.EmptyObjectArray);
 			}
 		}
 
@@ -92,7 +133,28 @@ namespace DotNetMarche.Infrastructure.Helpers
 			{
 				return info.GetValue(entity);
 			}
+
+			public override void SetValue(object entity, object value)
+			{
+				info.SetValue(entity, value);
+			}
 		}
+		#endregion
+
+		#region Internal structure
+
+		private class TypeInformation
+		{
+			internal RetrieveValue	retriever;
+			internal IdGenerator generator;
+
+			public TypeInformation(RetrieveValue retriever, IdGenerator generator)
+			{
+				this.retriever = retriever;
+				this.generator = generator;
+			}
+		}
+
 		#endregion
 	}
 }
