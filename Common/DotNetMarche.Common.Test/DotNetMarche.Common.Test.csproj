@@ -56,6 +56,7 @@
     <Compile Include="Infrastructure\Entities\ForEntityIdFinder\IdWithField.cs" />
     <Compile Include="Infrastructure\Entities\ForEntityIdFinder\PublicIdEntity.cs" />
     <Compile Include="Infrastructure\GenericHelpers.cs" />
+    <Compile Include="Infrastructure\InMemoryRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

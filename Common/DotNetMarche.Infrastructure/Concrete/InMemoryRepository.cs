@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DotNetMarche.Infrastructure.Data;
+using DotNetMarche.Infrastructure.Helpers;
 
 namespace DotNetMarche.Infrastructure.Concrete
 {
@@ -14,16 +16,38 @@ namespace DotNetMarche.Infrastructure.Concrete
 	/// <typeparam name="T"></typeparam>
 	public class InMemoryRepository<T> : IRepository<T>
 	{
+		#region Constructors
+
+		static InMemoryRepository()
+		{
+			LastGeneratedId = 0;
+		}
+
+		#endregion
+
+		#region Internal structures
+
+		private Dictionary<Object, T> context = new Dictionary<Object, T>();
+
+		/// <summary>
+		/// Used for generation of Id.
+		/// </summary>
+		private static Int32 LastGeneratedId;
+
+		#endregion
+
 		#region IRepository<T> Members
 
 		public T GetById(object id)
 		{
-			throw new NotImplementedException();
+			if (!context.ContainsKey(id)) return default(T);
+			return context[id];
 		}
 
 		public void Save(T obj)
 		{
-			throw new NotImplementedException();
+			EntityIdFinder.SetIdValueForEntity(obj);
+			context.Add(EntityIdFinder.GetIdValueFromEntity(obj), obj);
 		}
 
 		public void Update(T obj)
