@@ -7,6 +7,10 @@ using DotNetMarche.Infrastructure.Base.Interfaces;
 
 namespace DotNetMarche.Infrastructure.Base
 {
+	/// <summary>
+	/// This class represent the current configuration with a registry pattern
+	/// 
+	/// </summary>
 	static class ConfigurationRegistry
 	{
 

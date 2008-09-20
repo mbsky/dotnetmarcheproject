@@ -6,11 +6,11 @@ using DotNetMarche.Infrastructure.Base.Interfaces;
 
 namespace DotNetMarche.Infrastructure.Base
 {
-	static class Context
+	static class CurrentContext
 	{
 		private static IContext context;
 
-		static Context()
+		static CurrentContext()
 		{
 			context = IoC.Resolve<IContext>();
 		}
