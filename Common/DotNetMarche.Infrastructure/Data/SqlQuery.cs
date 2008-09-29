@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -38,6 +39,13 @@ namespace DotNetMarche.Infrastructure.Data
 		{
 			Int32 result = 0;
 			DataAccess.Execute(this, () => result = Command.ExecuteNonQuery());
+			return result;
+		}
+
+		public IDataReader ExecuteReader()
+		{
+			IDataReader result = null;
+			DataAccess.Execute(this, () => result = Command.ExecuteReader());
 			return result;
 		}
 
@@ -100,5 +108,7 @@ namespace DotNetMarche.Infrastructure.Data
 		}
 
 		#endregion
+
+		
 	}
 }
