@@ -38,6 +38,8 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			repo.ConnStrings.Add("main",
 			                     new ConnectionStringSettings("main", "data source=" + dbFile.FullName, "System.Data.SQLite"));
 			DataAccess.CreateQuery("CREATE TABLE TESTTABLE(field1 int, field2 varchar(50))").ExecuteNonQuery();
+			repo.ConnStrings.Add("preload1", new ConnectionStringSettings("preload1", "data source=" + 
+				Path.GetFullPath(@"Infrastructure\Data\Preload\preload1.db"), "System.Data.SQLite"));
 		}
 
 		[TestFixtureTearDown]
@@ -46,13 +48,25 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			OverrideSettings.Dispose();
 		}
 
-      
 		[Test]
 		public void TestBasicInsertionQuery()
 		{
 			Int32 count =	DataAccess.CreateQuery("Insert into TESTTABLE (field1, field2) values (1, 'test')").ExecuteNonQuery();
 			Assert.That(count, Is.EqualTo(1));
 			DbAssert.OnQuery("Select count(*) cnt from testtable").That("cnt", Is.EqualTo(1)).ExecuteAssert();
+		}
+
+		[Test]
+		public void ChangeAnotherConnectionString()
+		{
+			Int64 count = DataAccess.CreateQuery("select count(*) from Table1").OnDb("preload1").ExecuteScalar<Int64>();
+			Assert.That(count, Is.EqualTo(2));
+		}		
+
+		[Test]
+		public void TestFillDataSet()
+		{
+
 		}
 	}
 }

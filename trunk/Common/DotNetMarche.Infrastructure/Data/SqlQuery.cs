@@ -15,6 +15,7 @@ namespace DotNetMarche.Infrastructure.Data
 		internal DbCommand Command { get; set; }
 		internal DbProviderFactory Factory { get; set; }
 		internal StringBuilder query = new StringBuilder();
+		internal String ConnectionStringName { get; set; }
 
 		internal SqlQuery(string query, CommandType cmdType)
 		{
@@ -116,6 +117,15 @@ namespace DotNetMarche.Infrastructure.Data
 
 		#endregion
 
-		
+		#region Database management
+
+		public SqlQuery OnDb(String connectionStringName)
+		{
+			ConnectionStringName = connectionStringName;
+			return this;
+		}
+
+		#endregion
+
 	}
 }
