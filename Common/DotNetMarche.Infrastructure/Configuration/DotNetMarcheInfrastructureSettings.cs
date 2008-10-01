@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DotNetMarche.Infrastructure.Configuration
 {
-	public class DotNetMarcheIntrastructureSettings : ConfigurationSection
+	public class DotNetMarcheInfrastructureSettings : ConfigurationSection
 	{
 
 		[ConfigurationProperty("IoC", IsRequired = true)]
