@@ -27,7 +27,16 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <returns></returns>
 		public static DisposableAction BeginTransaction()
 		{
-			ActualConnectionData = InnerCreateConnection();
+			return BeginTransaction(null);
+		}
+
+		/// <summary>
+		/// La funzione che marca l'inizio della transazione
+		/// </summary>
+		/// <returns></returns>
+		public static DisposableAction BeginTransaction(string connectionName)
+		{
+			ActualConnectionData = InnerCreateConnection(null);
 			return new DisposableAction(delegate()
 			{
 				ActualConnectionData.Dispose();
@@ -35,11 +44,18 @@ namespace DotNetMarche.Infrastructure.Data
 			});
 		}
 
-		private static ConnectionData InnerCreateConnection()
+
+		private static ConnectionData InnerCreateConnection(string connectionName)
 		{
-			DbProviderFactory factory = DbProviderFactories.GetFactory(ConfigurationRegistry.MainConnectionString.ProviderName);
+			ConnectionStringSettings cn;
+			if (String.IsNullOrEmpty(connectionName))
+				cn = ConfigurationRegistry.MainConnectionString;
+			else
+				cn = ConfigurationRegistry.ConnectionString(connectionName);
+
+			DbProviderFactory factory = DbProviderFactories.GetFactory(cn.ProviderName);
 			DbConnection conn = factory.CreateConnection();
-			conn.ConnectionString = ConfigurationRegistry.MainConnectionString.ConnectionString;
+			conn.ConnectionString = cn.ConnectionString;
 			conn.Open();
 			DbTransaction tran = conn.BeginTransaction();
 			return new ConnectionData(conn, tran, false);
@@ -67,12 +83,17 @@ namespace DotNetMarche.Infrastructure.Data
 
 		internal static ConnectionData CreateConnection()
 		{
+			return CreateConnection(null);
+		}
+
+		internal static ConnectionData CreateConnection(string connectionName)
+		{
 			if (ActualConnectionData != null)
 			{
 				//Sono in una connessione globale
 				return new ConnectionData(ActualConnectionData.Connection, ActualConnectionData.Transaction, true);
 			}
-			return InnerCreateConnection();
+			return InnerCreateConnection(connectionName);
 		}
 
 		/// <summary>
@@ -412,7 +433,7 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <param name="executionCore"></param>
 		public static void Execute(SqlQuery q, Action executionCore)
 		{
-			using (DataAccess.ConnectionData connectionData = DataAccess.CreateConnection())
+			using (DataAccess.ConnectionData connectionData = CreateConnection(q.ConnectionStringName))
 			{
 				try
 				{
@@ -434,7 +455,5 @@ namespace DotNetMarche.Infrastructure.Data
 		}
 
 		#endregion
-
-
 	}
 }
