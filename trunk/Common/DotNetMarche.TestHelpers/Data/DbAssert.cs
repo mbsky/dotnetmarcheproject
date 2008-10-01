@@ -32,15 +32,14 @@ namespace DotNetMarche.TestHelpers.Data
 
 		public void ExecuteAssert()
 		{
-			using (IDataReader dr = DataAccess.CreateQuery(query).ExecuteReader())
-			{
-				NUnit.Framework.Assert.That(dr.Read(), "La query " + query + " non ha ritornato dati");
-				foreach (KeyValuePair<String, Constraint> kvp in constraints)
+			DataAccess.CreateQuery(query).ExecuteReader((dr) =>
 				{
-					Assert.That(dr[kvp.Key], kvp.Value, String.Format("field {0} reason:", kvp.Key));
-				}
-
-			}
+					Assert.That(dr.Read(), "Query " + query + " did not return suitable data");
+					foreach (KeyValuePair<String, Constraint> kvp in constraints)
+					{
+						Assert.That(dr[kvp.Key], kvp.Value, String.Format("field {0} reason:", kvp.Key));
+					}
+				});
 		}
 
 	}

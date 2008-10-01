@@ -56,8 +56,9 @@
     <Compile Include="Base\Interfaces\IInversionOfControlContainer.cs" />
     <Compile Include="Base\IoC.cs" />
     <Compile Include="Base\SettingsRegistry.cs" />
-    <Compile Include="Concrete\CastleWindsorIoCEngine.cs" />
-    <Compile Include="Configuration\DotNetMarcheIntrastructureSettings.cs" />
+    <Compile Include="Concrete\AppConfigConfigurationRegistry.cs" />
+    <Compile Include="Concrete\InMemoryConfigurationRegistry.cs" />
+    <Compile Include="Configuration\DotNetMarcheInfrastructureSettings.cs" />
     <Compile Include="Configuration\IoCConfigurationSetting.cs" />
     <Compile Include="Concrete\InMemoryRepository.cs" />
     <Compile Include="Constants.cs" />

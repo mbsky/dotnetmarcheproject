@@ -9,7 +9,7 @@ namespace DotNetMarche.Infrastructure.Base.Interfaces
 	/// We abstray even the IoC container, we could use whatever container we want, but it has
 	/// at least to satisfy a minimum interface
 	/// </summary>
-	interface IInversionOfControlContainer
+	public interface IInversionOfControlContainer
 	{
 		/// <summary>
 		/// Resolve the default element for the type T

@@ -13,9 +13,9 @@ namespace DotNetMarche.Infrastructure.Base
 	/// </summary>
 	internal static class SettingsRegistry
 	{
-		private static DotNetMarcheIntrastructureSettings DefaultConfiguration
+		private static DotNetMarcheInfrastructureSettings DefaultConfiguration
 		{
-			get { return (DotNetMarcheIntrastructureSettings) ConfigurationManager.GetSection("DotNetMarcheInfrastructure"); }
+			get { return (DotNetMarcheInfrastructureSettings) ConfigurationManager.GetSection("DotNetMarcheInfrastructure"); }
 		}
 		
 		internal static IoCConfigurationSetting IoC {

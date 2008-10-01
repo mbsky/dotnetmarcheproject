@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.NHibernate", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.TestHelpers", "..\Common\DotNetMarche.TestHelpers\DotNetMarche.TestHelpers.csproj", "{A0D3CD36-443B-4899-A455-7B4BFC955383}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure.Castle", "..\Common\DotNetMarche.Infrastructure.Castle\DotNetMarche.Infrastructure.Castle.csproj", "{1FDE5335-76CF-48D8-A921-3D15678E6718}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{A0D3CD36-443B-4899-A455-7B4BFC955383}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0D3CD36-443B-4899-A455-7B4BFC955383}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0D3CD36-443B-4899-A455-7B4BFC955383}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FDE5335-76CF-48D8-A921-3D15678E6718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FDE5335-76CF-48D8-A921-3D15678E6718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FDE5335-76CF-48D8-A921-3D15678E6718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FDE5335-76CF-48D8-A921-3D15678E6718}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,5 +75,6 @@ Global
 		{75E2529D-95B2-4440-AE35-CEF39D8412F5} = {0CAA0B84-E32B-43FB-A388-39EA68146A32}
 		{F2C23E4B-BC07-417F-8815-5B8ACB98CB04} = {0CAA0B84-E32B-43FB-A388-39EA68146A32}
 		{A0D3CD36-443B-4899-A455-7B4BFC955383} = {0CAA0B84-E32B-43FB-A388-39EA68146A32}
+		{1FDE5335-76CF-48D8-A921-3D15678E6718} = {0CAA0B84-E32B-43FB-A388-39EA68146A32}
 	EndGlobalSection
 EndGlobal

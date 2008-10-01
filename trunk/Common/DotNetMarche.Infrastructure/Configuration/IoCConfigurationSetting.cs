@@ -12,14 +12,14 @@ namespace DotNetMarche.Infrastructure.Configuration
 		private const String IoCConcreteTypeConst = "IoCConcreteType";
 		private const String IoCContainerNameConst = "IoCContainerName";
 
-		[ConfigurationProperty(IoCConcreteTypeConst, DefaultValue = "Castle.Windsor.WindsorContainer", IsRequired = true)]
+		[ConfigurationProperty(IoCConcreteTypeConst, IsRequired = true)]
 		public String IoCConcreteType
 		{
 			get { return (String)this[IoCConcreteTypeConst]; }
 			set { this[IoCConcreteTypeConst] = value; }
 		}
 
-		[ConfigurationProperty(IoCContainerNameConst, DefaultValue = "", IsRequired = true)]
+		[ConfigurationProperty(IoCContainerNameConst, DefaultValue = "", IsRequired = false)]
 		public String IoCContainerName
 		{
 			get { return (String)this[IoCContainerNameConst]; }
@@ -32,7 +32,8 @@ namespace DotNetMarche.Infrastructure.Configuration
 		/// <returns></returns>
 		internal IInversionOfControlContainer CreateIoCContainer()
 		{
-			throw new NotImplementedException();
+			Type type = Type.GetType(IoCConcreteType);
+			return (IInversionOfControlContainer) Activator.CreateInstance(type, new[] {IoCContainerName});
 		}
 	}
 }

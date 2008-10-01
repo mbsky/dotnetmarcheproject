@@ -11,10 +11,17 @@ namespace DotNetMarche.Infrastructure.Base
 	/// This class represent the current configuration with a registry pattern
 	/// 
 	/// </summary>
-	static class ConfigurationRegistry
+	public static class ConfigurationRegistry
 	{
 
 		private static IConfigurationRegistry registry;
+
+		internal static IDisposable Override(IConfigurationRegistry overrideRegistry)
+		{
+			IConfigurationRegistry current = registry;
+			registry = overrideRegistry;
+			return new DisposableAction(() => registry = current);
+		}
 
 		static ConfigurationRegistry()
 		{

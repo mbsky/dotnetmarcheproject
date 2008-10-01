@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CastleWindsor>
+	<components>
+		<component
+			id="DefaultConfiguration"
+			service="DotNetMarche.Infrastructure.Base.Interfaces.IConfigurationRegistry, DotNetMarche.Infrastructure"
+			type="DotNetMarche.Infrastructure.Concrete.InMemoryConfigurationRegistry, DotNetMarche.Infrastructure"
+			lifestyle="Singleton"
+			default="true">
+		</component>
+	</components>
+</CastleWindsor>

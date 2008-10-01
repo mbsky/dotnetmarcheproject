@@ -17,6 +17,7 @@ namespace DotNetMarche.Infrastructure.Base.Interfaces
 		/// Single connection string program use a single configuration
 		/// </summary>
 		ConnectionStringSettings MainConnectionString { get; }
+
 		/// <summary>
 		/// Multiple connection string use a named connection string.
 		/// </summary>
