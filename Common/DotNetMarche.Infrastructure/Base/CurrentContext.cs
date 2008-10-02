@@ -8,7 +8,7 @@ namespace DotNetMarche.Infrastructure.Base
 {
 	static class CurrentContext
 	{
-		private static IContext context;
+		private static readonly IContext context;
 
 		static CurrentContext()
 		{
@@ -20,11 +20,14 @@ namespace DotNetMarche.Infrastructure.Base
 			return context.GetData(key);
 		}
 
-		public static Object SetData(String key, Object value)
+		public static void SetData(String key, Object value)
 		{
-			return context.SetData(key, value);
+			context.SetData(key, value);
 		}
-
+		public static void ReleaseData(String key)
+		{
+			context.ReleaseData(key);
+		}
 		public static IEnumerator<KeyValuePair<String, Object>> Enumerate()
 		{
 			return context.GetEnumerator();
