@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Transactions;
+using DotNetMarche.Infrastructure.Data;
 using NUnit.Framework;
 
 namespace DotNetMarche.TestHelpers.BaseTests
 {
 	public class DbTest
 	{
-		private TransactionScope scope = new TransactionScope();
+		private IDisposable scope;
 
 		[SetUp]
 		public void SetUp()
@@ -19,7 +20,7 @@ namespace DotNetMarche.TestHelpers.BaseTests
 
 		protected virtual void OnTestSetUp()
 		{
-			scope = new TransactionScope();
+			scope = DataAccess.BeginTransaction(); 
 		}
 
 		[TearDown]

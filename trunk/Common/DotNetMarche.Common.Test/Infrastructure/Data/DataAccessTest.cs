@@ -15,7 +15,7 @@ using NUnit.Framework.SyntaxHelpers;
 namespace DotNetMarche.Common.Test.Infrastructure.Data
 {
 	[TestFixture]
-	public class DataAccessTest //: DbTest
+	public class DataAccessTest : DbTest
 	{
 		private IDisposable OverrideSettings;
 		private InMemoryConfigurationRegistry repo;

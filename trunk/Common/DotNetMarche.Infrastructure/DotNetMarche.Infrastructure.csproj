@@ -56,8 +56,10 @@
     <Compile Include="Base\Interfaces\IInversionOfControlContainer.cs" />
     <Compile Include="Base\IoC.cs" />
     <Compile Include="Base\SettingsRegistry.cs" />
+    <Compile Include="Base\GlobalTransactionManager.cs" />
     <Compile Include="Concrete\AppConfigConfigurationRegistry.cs" />
     <Compile Include="Concrete\InMemoryConfigurationRegistry.cs" />
+    <Compile Include="Concrete\RemotingCallContext.cs" />
     <Compile Include="Configuration\DotNetMarcheInfrastructureSettings.cs" />
     <Compile Include="Configuration\IoCConfigurationSetting.cs" />
     <Compile Include="Concrete\InMemoryRepository.cs" />
@@ -68,12 +70,17 @@
     <Compile Include="Data\SqlQuery.cs" />
     <Compile Include="Helpers\EntityIdFinder.cs" />
     <Compile Include="Helpers\IdGenerator.cs" />
+    <Compile Include="Helpers\Verify.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\DotNetMarche.snk">
       <Link>DotNetMarche.snk</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Constraint\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

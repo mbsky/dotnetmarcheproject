@@ -8,5 +8,13 @@
 			lifestyle="Singleton"
 			default="true">
 		</component>
+
+		<component
+			id="DefaultContext"
+			service="DotNetMarche.Infrastructure.Base.Interfaces.IContext, DotNetMarche.Infrastructure"
+			type="DotNetMarche.Infrastructure.Concrete.RemotingCallContext, DotNetMarche.Infrastructure"
+			lifestyle="Singleton"
+			default="true">
+		</component>
 	</components>
 </CastleWindsor>

@@ -15,7 +15,8 @@ namespace DotNetMarche.Infrastructure.Base.Interfaces
 	interface IContext : IEnumerable<KeyValuePair<String, Object>>
 	{
 		Object GetData(String key);
-		Object SetData(String key, Object value);
+		void SetData(String key, Object value);
+		void ReleaseData(String key);
 		Object this[String key] { get; set; }
 	}
 }
