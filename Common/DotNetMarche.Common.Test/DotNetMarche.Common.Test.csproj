@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ExternalLibs\Testing\Nunit\nunit.framework.dll</HintPath>
@@ -69,9 +73,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetMarche.Infrastructure.Castle\DotNetMarche.Infrastructure.Castle.csproj">
-      <Project>{1FDE5335-76CF-48D8-A921-3D15678E6718}</Project>
-      <Name>DotNetMarche.Infrastructure.Castle</Name>
+    <ProjectReference Include="..\DotNetMarche.Infrastructure.Concrete\DotNetMarche.Infrastructure.Concrete.csproj">
+      <Project>{0BDB9FC6-22E3-4DCF-9748-31A07623DC83}</Project>
+      <Name>DotNetMarche.Infrastructure.Concrete</Name>
     </ProjectReference>
     <ProjectReference Include="..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">
       <Project>{75E2529D-95B2-4440-AE35-CEF39D8412F5}</Project>

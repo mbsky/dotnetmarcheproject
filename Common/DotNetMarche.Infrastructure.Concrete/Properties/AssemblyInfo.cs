@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DotNetMarche.Infrastructure.Castle")]
+[assembly: AssemblyTitle("DotNetMarche.Infrastructure.Concrete")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DotNetMarche.Infrastructure.Castle")]
+[assembly: AssemblyProduct("DotNetMarche.Infrastructure.Concrete")]
 [assembly: AssemblyCopyright("Copyright ©  2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("47501fae-d212-4f0c-9df2-2ba714b160a5")]
+[assembly: Guid("995fb7df-fd9f-491e-adc0-3552a1ebc949")]
 
 // Version information for an assembly consists of the following four values:
 //

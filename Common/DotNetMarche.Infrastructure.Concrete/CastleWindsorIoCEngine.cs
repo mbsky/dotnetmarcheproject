@@ -5,7 +5,7 @@ using System.Text;
 using Castle.Windsor;
 using DotNetMarche.Infrastructure.Base.Interfaces;
 
-namespace DotNetMarche.Infrastructure.Castle
+namespace DotNetMarche.Infrastructure.Concrete
 {
 	public class CastleWindsorIoCEngine : IInversionOfControlContainer
 	{
