@@ -26,7 +26,7 @@ namespace DotNetMarche.Infrastructure.Base
 		/// <returns></returns>
 		public static DisposableAction BeginTransactionScope()
 		{
-
+			throw new NotImplementedException();
 		}
 	}
 }

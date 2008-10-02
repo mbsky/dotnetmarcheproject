@@ -5,15 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1FDE5335-76CF-48D8-A921-3D15678E6718}</ProjectGuid>
+    <ProjectGuid>{0BDB9FC6-22E3-4DCF-9748-31A07623DC83}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DotNetMarche.Infrastructure.Castle</RootNamespace>
-    <AssemblyName>DotNetMarche.Infrastructure.Castle</AssemblyName>
+    <RootNamespace>DotNetMarche.Infrastructure.Concrete</RootNamespace>
+    <AssemblyName>DotNetMarche.Infrastructure.Concrete</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>DotNetMarche.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ExternalLibs\Castle\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\Logging\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -60,10 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CastleWindsorIoCEngine.cs" />
+    <Compile Include="Logging\Log4NetLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DotNetMarche.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">

@@ -71,6 +71,7 @@
     <Compile Include="Helpers\EntityIdFinder.cs" />
     <Compile Include="Helpers\IdGenerator.cs" />
     <Compile Include="Helpers\Verify.cs" />
+    <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
