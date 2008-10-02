@@ -8,16 +8,16 @@ namespace DotNetMarche.Infrastructure.Logging
 
 	public enum LogLevel
 	{
-		Verbose, 
-		Info,
-		Warning,
-		Error,
-		Critical
+		Verbose = 1, 
+		Info = 2,
+		Warning = 3,
+		Error = 4,
+		Critical = 5,
 	}
 
 	public interface ILogger
 	{
+		LogLevel ActualLevel { get;  }
 		void Log(LogLevel level, String message, Exception ex);
-		void Log(String category, LogLevel level, String message, Exception ex);
 	}
 }
