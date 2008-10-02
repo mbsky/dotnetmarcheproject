@@ -13,6 +13,7 @@ namespace DotNetMarche.Infrastructure.Logging.Concrete
 	{
 
 		private readonly ILog mainLog;
+		private LogLevel level;
 
 		public Log4NetLogger(String configFileName)
 		{
@@ -22,6 +23,16 @@ namespace DotNetMarche.Infrastructure.Logging.Concrete
 			   throw new ApplicationException(String.Format("Configuration file {0} missing.", log4netConfiguration.FullName));
 			XmlConfigurator.ConfigureAndWatch(log4netConfiguration);
 			mainLog = LogManager.GetLogger("root");
+			if (mainLog.IsDebugEnabled)
+				level = LogLevel.Verbose;
+			else if (mainLog.IsInfoEnabled)
+				level = LogLevel.Info;
+			else if (mainLog.IsWarnEnabled)
+				level = LogLevel.Warning;
+			else if (mainLog.IsErrorEnabled)
+				level = LogLevel.Error;
+			else 
+				level = LogLevel.Critical;
 		}
 
 		#region ILogger Members
@@ -32,9 +43,9 @@ namespace DotNetMarche.Infrastructure.Logging.Concrete
 			//mainLog.Logger.Log()
 		}
 
-		public void Log(string category, LogLevel level, string message, Exception ex)
+		public LogLevel ActualLevel
 		{
-			throw new NotImplementedException();
+			get { throw new NotImplementedException(); }
 		}
 
 		#endregion
