@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuxClasses\ConsoleLogger.cs" />
     <Compile Include="AuxClasses\TestContext.cs" />
     <Compile Include="Infrastructure\Data\DataAccessTest.cs" />
     <Compile Include="Infrastructure\Entities\AnEntity.cs" />
