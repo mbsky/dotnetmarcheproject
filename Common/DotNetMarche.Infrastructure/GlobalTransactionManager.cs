@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DotNetMarche.Infrastructure.Base;
+using DotNetMarche.Infrastructure.Helpers;
 
-namespace DotNetMarche.Infrastructure.Base
+namespace DotNetMarche.Infrastructure
 {
 	/// <summary>
 	/// 
@@ -11,38 +12,50 @@ namespace DotNetMarche.Infrastructure.Base
 	public static class GlobalTransactionManager
 	{
 		private const String TransactionScopeKey = "FF2DB3E7-1D02-4f60-9F78-CCD6DF7D2841";
-		private class Transaction
+
+		/// <summary>
+		/// Begin a transaction.
+		/// </summary>
+		/// <returns></returns>
+		public static DisposableAction BeginTransaction()
 		{
-			public DateTime TransactionStart { get; set; }
-
-			public Transaction(DateTime transactionStart)
-			{
-				TransactionStart = transactionStart;
-			}
-
-			private readonly List<Action<Boolean>> disposeList = new List<Action<Boolean>>();
-
-			/// <summary>
-			/// Enlist a delegate into the transaction, the transaction will call the
-			/// list of action passing true if the transaction is committed or false
-			/// if the transaction is rollback.
-			/// </summary>
-			/// <param name="disposeAction"></param>
-			public void Enlist(Action<Boolean> disposeAction)
-			{
-				disposeList.Add(disposeAction);
-			}
-
+			CurrentContext.SetData(TransactionScopeKey, new Transaction(DateTime.Now));
+			return new DisposableAction(CloseCurrentTransaction);
 		}
 
 		/// <summary>
-		/// Begin a transactionScope.
+		/// Tells if a transaction is active.
 		/// </summary>
-		/// <returns></returns>
-		public static DisposableAction BeginTransactionScope()
+		public static Boolean IsInTransaction
 		{
-			CurrentContext.SetData(TransactionScopeKey, new Transaction(DateTime.Now));
-			return new DisposableAction(() => CurrentContext.ReleaseData(TransactionScopeKey));
+			get { return null != CurrentContext.GetData(TransactionScopeKey); }
+		}
+
+		private static Transaction CurrentTransaction
+		{
+			get { return (Transaction) CurrentContext.GetData(TransactionScopeKey); }
+		}
+
+		public static void DoomCurrentTransaction()
+		{
+			Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
+			CurrentTransaction.Doom();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private static void CloseCurrentTransaction()
+		{
+			Transaction currentTransaction = (Transaction) CurrentContext.GetData(TransactionScopeKey);
+			CurrentContext.ReleaseData(TransactionScopeKey);
+			currentTransaction.Complete();
+		}
+
+		public static void Enlist(Action<Boolean> completeTransactionCallback)
+		{
+			Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
+			CurrentTransaction.Enlist(completeTransactionCallback);
 		}
 	}
 }

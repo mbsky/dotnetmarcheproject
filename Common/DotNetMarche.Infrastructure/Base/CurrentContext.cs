@@ -8,7 +8,19 @@ namespace DotNetMarche.Infrastructure.Base
 {
 	static class CurrentContext
 	{
-		private static readonly IContext context;
+
+		#region Test Overriding
+
+		public static DisposableAction Override(IContext overrideContext)
+		{
+			IContext current = context;
+			context = overrideContext;
+			return new DisposableAction(() => context = current);
+		}
+
+		#endregion
+
+		private static IContext context;
 
 		static CurrentContext()
 		{
