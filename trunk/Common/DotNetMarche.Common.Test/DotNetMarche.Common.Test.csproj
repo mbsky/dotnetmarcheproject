@@ -41,6 +41,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ExternalLibs\Testing\Nunit\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.4.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\Testing\Rhino\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -57,12 +61,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuxClasses\TestContext.cs" />
     <Compile Include="Infrastructure\Data\DataAccessTest.cs" />
     <Compile Include="Infrastructure\Entities\AnEntity.cs" />
     <Compile Include="Infrastructure\Entities\ForEntityIdFinder\IdNotNamedId.cs" />
     <Compile Include="Infrastructure\Entities\ForEntityIdFinder\IdWithField.cs" />
     <Compile Include="Infrastructure\Entities\ForEntityIdFinder\PublicIdEntity.cs" />
     <Compile Include="Infrastructure\GenericHelpers.cs" />
+    <Compile Include="Infrastructure\GlobalTransactionTest.cs" />
     <Compile Include="Infrastructure\InMemoryRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
