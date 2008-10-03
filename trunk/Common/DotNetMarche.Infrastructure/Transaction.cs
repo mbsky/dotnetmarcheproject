@@ -65,7 +65,6 @@ namespace DotNetMarche.Infrastructure
 				catch (Exception ex)
 				{
 					Logger.ErrorFormat("Exception during transaction {0}", ex, transactionOk ? "committ" : "rollback");
-					throw;
 				}
 			}
 		}

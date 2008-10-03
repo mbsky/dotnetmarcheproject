@@ -43,10 +43,15 @@ namespace DotNetMarche.Infrastructure
 		}
 
 		/// <summary>
-		/// 
+		/// Close current transaction, this function is private because is used inside a DisposableAction.
+		/// We need to check if are inside an exception handler to doom the transaction, then we need to 
+		/// remove the global transaction from the context and committ it.
 		/// </summary>
 		private static void CloseCurrentTransaction()
 		{
+			Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
+			if (Utils.ExceptionUtils.IsInExceptionHandler())
+				CurrentTransaction.Doom();
 			Transaction currentTransaction = (Transaction) CurrentContext.GetData(TransactionScopeKey);
 			CurrentContext.ReleaseData(TransactionScopeKey);
 			currentTransaction.Complete();

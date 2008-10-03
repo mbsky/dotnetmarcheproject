@@ -15,6 +15,14 @@
 			type="DotNetMarche.Infrastructure.Concrete.RemotingCallContext, DotNetMarche.Infrastructure"
 			lifestyle="Singleton"
 			default="true">
+		</component>		
+		
+		<component
+			id="DefaultLogger"
+			service="DotNetMarche.Infrastructure.Logging.ILogger, DotNetMarche.Infrastructure"
+			type="DotNetMarche.Common.Test.AuxClasses.ConsoleLogger, DotNetMarche.Common.Test"
+			lifestyle="Singleton"
+			default="true">
 		</component>
 	</components>
 </CastleWindsor>
