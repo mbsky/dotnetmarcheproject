@@ -65,6 +65,7 @@
     <Compile Include="AuxClasses\TestContext.cs" />
     <Compile Include="Infrastructure\ContextTest.cs" />
     <Compile Include="Infrastructure\Data\DataAccessTest.cs" />
+    <Compile Include="Infrastructure\Data\DataAccessTransactionTest.cs" />
     <Compile Include="Infrastructure\Entities\AnEntity.cs" />
     <Compile Include="Infrastructure\Entities\ForEntityIdFinder\IdNotNamedId.cs" />
     <Compile Include="Infrastructure\Entities\ForEntityIdFinder\IdWithField.cs" />

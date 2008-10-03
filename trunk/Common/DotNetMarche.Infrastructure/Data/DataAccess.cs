@@ -16,118 +16,80 @@ namespace DotNetMarche.Infrastructure.Data
 
 		#region TransactionManagement
 
-		/// <summary>
-		/// La connessione attuale quando si fa la BeginTransaction
-		/// </summary>
-		private static ConnectionData ActualConnectionData;
-
-		/// <summary>
-		/// La funzione che marca l'inizio della transazione
-		/// </summary>
-		/// <returns></returns>
-		public static DisposableAction BeginTransaction()
+		private const String TransactionKeyBase = "C51B2130-6CCF-4b12-9CD3-778768B5B07E";
+		private static String GetKeyFromConnName(String connectionName)
 		{
-			return BeginTransaction(null);
+			return TransactionKeyBase + connectionName ?? String.Empty;
 		}
 
-		/// <summary>
-		/// La funzione che marca l'inizio della transazione
-		/// </summary>
-		/// <returns></returns>
-		public static DisposableAction BeginTransaction(string connectionName)
-		{
-			ActualConnectionData = InnerCreateConnection(null);
-			return new DisposableAction(delegate()
-			{
-				ActualConnectionData.Dispose();
-				ActualConnectionData = null;
-			});
-		}
-
-
-		private static ConnectionData InnerCreateConnection(string connectionName)
-		{
-			ConnectionStringSettings cn;
-			if (String.IsNullOrEmpty(connectionName))
-				cn = ConfigurationRegistry.MainConnectionString;
-			else
-				cn = ConfigurationRegistry.ConnectionString(connectionName);
-
-			DbProviderFactory factory = DbProviderFactories.GetFactory(cn.ProviderName);
-			DbConnection conn = factory.CreateConnection();
-			conn.ConnectionString = cn.ConnectionString;
-			conn.Open();
-			DbTransaction tran = conn.BeginTransaction();
-			return new ConnectionData(conn, tran, false);
-		}
-
-		public static void CommitTransaction()
-		{
-			if (ActualConnectionData != null)
-				ActualConnectionData.Commit();
-		}
-
-		public static DbTransaction GetTransaction()
-		{
-			if (ActualConnectionData == null)
-				throw new ApplicationException("There is no transaction active");
-			return ActualConnectionData.Transaction;
-		}
-
-		public static DbConnection GetConnectionInTransaction()
-		{
-			if (ActualConnectionData == null)
-				throw new ApplicationException("There is no transaction active");
-			return ActualConnectionData.Connection;
-		}
-
-		internal static ConnectionData CreateConnection()
+		internal static GlobalTransactionManager.TransactionToken CreateConnection()
 		{
 			return CreateConnection(null);
 		}
 
-		internal static ConnectionData CreateConnection(string connectionName)
+		/// <summary>
+		/// This is the Connetion creation function, this function should enlist in the
+		/// current transaction as well reusing the same connection for all the call
+		/// inside a global transaction to consume less resources.
+		/// </summary>
+		/// <param name="connectionName"></param>
+		/// <returns></returns>
+		internal static GlobalTransactionManager.TransactionToken CreateConnection(string connectionName)
 		{
-			if (ActualConnectionData != null)
+			if (GlobalTransactionManager.IsInTransaction)
 			{
-				//Sono in una connessione globale
-				return new ConnectionData(ActualConnectionData.Connection, ActualConnectionData.Transaction, true);
-			}
-			return InnerCreateConnection(connectionName);
+				Object connData = GlobalTransactionManager.TransactionContext.Get(GetKeyFromConnName(connectionName));
+				if (null != connData)
+				{
+				//We already created the connection for this database in this transaction.
+				return GlobalTransactionManager.Enlist(DoNothing);
+				}
+			} 
+			//If we reach here we does not have a global transaction or we never creted connectino for this transaction
+			//This is the first time we connect to this database inside this transaction.
+			ConnectionData newConnData = new ConnectionData(connectionName);
+			GlobalTransactionManager.TransactionToken token =
+				GlobalTransactionManager.Enlist(newConnData.CloseConnection);
+			token.SetInTransactionContext(GetKeyFromConnName(connectionName), newConnData);
+			return token;
 		}
 
+		private static void DoNothing(Boolean b) { }
+
 		/// <summary>
-		/// Incapsula i dati di una connessione e tiene traccia del fatto che siamo 
-		/// o non siamo in una transazione globale.
+		/// Keep all the objects needed to access the database in a single
+		/// class. 
 		/// </summary>
-		internal class ConnectionData : IDisposable
+		private class ConnectionData
 		{
-			public DbConnection Connection;
-			public DbTransaction Transaction;
-			private Boolean IsWeakReference;
-
-			public ConnectionData(DbConnection connection, DbTransaction transaction, bool isWeakReference)
+			public readonly DbConnection Connection;
+			public readonly DbTransaction Transaction;
+			public readonly DbProviderFactory Factory;
+			/// <summary>
+			/// In the constructor we creates all the object we need to access the database.
+			/// </summary>
+			/// <param name="connectionName"></param>
+			public ConnectionData(String connectionName)
 			{
-				Connection = connection;
-				Transaction = transaction;
-				this.IsWeakReference = isWeakReference;
+				ConnectionStringSettings cn;
+				if (String.IsNullOrEmpty(connectionName))
+					cn = ConfigurationRegistry.MainConnectionString;
+				else
+					cn = ConfigurationRegistry.ConnectionString(connectionName);
+
+				Factory = DbProviderFactories.GetFactory(cn.ProviderName);
+				Connection = Factory.CreateConnection();
+				Connection.ConnectionString = cn.ConnectionString;
+				Connection.Open();
+				Transaction = Connection.BeginTransaction();
 			}
 
-			internal void Commit()
+			public void CloseConnection(Boolean shouldCommit)
 			{
-				if (IsWeakReference) return;
-				Transaction.Commit();
-			}
-
-			internal void Rollback()
-			{
-				if (IsWeakReference) return;
-				Transaction.Rollback();
-			}
-
-			public void Dispose()
-			{
-				if (IsWeakReference) return;
+				if (shouldCommit)
+					Transaction.Commit();
+				else
+					Transaction.Rollback();
 				Transaction.Dispose();
 				Connection.Dispose();
 			}
@@ -186,8 +148,9 @@ namespace DotNetMarche.Infrastructure.Data
 		public static void Execute(Action<DbCommand, DbProviderFactory> functionToExecute)
 		{
 			DbProviderFactory factory = GetFactory();
-			using (ConnectionData connectionData = CreateConnection())
+			using (GlobalTransactionManager.TransactionToken token = CreateConnection())
 			{
+				ConnectionData connectionData = (ConnectionData)token.GetFromTransactionContext(GetKeyFromConnName(String.Empty));
 				try
 				{
 					using (DbCommand command = factory.CreateCommand())
@@ -197,11 +160,10 @@ namespace DotNetMarche.Infrastructure.Data
 						command.Transaction = connectionData.Transaction;
 						functionToExecute(command, factory);
 					}
-					connectionData.Commit();
 				}
 				catch
 				{
-					connectionData.Rollback();
+					token.Doom();
 					throw;
 				}
 			}
@@ -433,8 +395,11 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <param name="executionCore"></param>
 		public static void Execute(SqlQuery q, Action executionCore)
 		{
-			using (DataAccess.ConnectionData connectionData = CreateConnection(q.ConnectionStringName))
+			using (GlobalTransactionManager.TransactionToken token = CreateConnection(q.ConnectionStringName))
 			{
+				ConnectionData connectionData = 
+					(ConnectionData) token.GetFromTransactionContext(
+						GetKeyFromConnName(q.ConnectionStringName));
 				try
 				{
 					using (q.Command)
@@ -444,11 +409,10 @@ namespace DotNetMarche.Infrastructure.Data
 						q.Command.CommandText = q.query.ToString();
 						executionCore();
 					}
-					connectionData.Commit();
 				}
 				catch
 				{
-					connectionData.Rollback();
+					token.Doom();
 					throw;
 				}
 			}

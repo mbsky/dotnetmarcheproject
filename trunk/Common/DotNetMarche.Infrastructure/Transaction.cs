@@ -14,6 +14,12 @@ namespace DotNetMarche.Infrastructure
 		public DateTime TransactionStart { get; set; }
 
 		/// <summary>
+		/// It is important for some classes, such as DataAccess being able to set some data in
+		/// the context of the transaction.
+		/// </summary>
+		internal Dictionary<String, Object> TransactionContext = new Dictionary<String, Object>();
+
+		/// <summary>
 		/// Tells if the transaction is to be committed or rollbacked
 		/// </summary>
 		private Boolean IsDoomed { get; set; }
