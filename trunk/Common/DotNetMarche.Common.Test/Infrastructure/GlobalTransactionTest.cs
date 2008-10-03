@@ -50,6 +50,12 @@ namespace DotNetMarche.Common.Test.Infrastructure
 
 		#endregion
 
+		#region Helpers
+
+		public void Nope(Boolean b){}
+
+		#endregion
+
 		[Test]
 		public void TransactionInContext()
 		{
@@ -73,6 +79,33 @@ namespace DotNetMarche.Common.Test.Infrastructure
 			using (GlobalTransactionManager.BeginTransaction())
 			{
 				GlobalTransactionManager.Enlist(mock);
+			}
+		}
+
+		[Test]
+		public void EnlistWithoutATransaction()
+		{
+			Action<Boolean> mock = mockRepository.CreateMock<Action<Boolean>>();
+			mock(true); //Sets the expectation
+			mockRepository.ReplayAll();
+			using (GlobalTransactionManager.Enlist(mock))
+			{
+				//Do something, the important thing is that the delegate is called because we have 
+				//not a transaction active.
+			}
+		}
+
+		[Test]
+		public void EnlistWithoutATransactionRollback()
+		{
+			Action<Boolean> mock = mockRepository.CreateMock<Action<Boolean>>();
+			mock(false); //Sets the expectation
+			mockRepository.ReplayAll();
+			using (GlobalTransactionManager.TransactionToken token = GlobalTransactionManager.Enlist(mock))
+			{
+				token.Doom();
+				//Do something, the important thing is that the delegate is called because we have 
+				//not a transaction active.
 			}
 		}
 
@@ -165,8 +198,8 @@ namespace DotNetMarche.Common.Test.Infrastructure
 			{
 				//Ok we catch the exception but the inner using is exited inside an application handler.
 			}
-
 		}
+
 
 
 	}

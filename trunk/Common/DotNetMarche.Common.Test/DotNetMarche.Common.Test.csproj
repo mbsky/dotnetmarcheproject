@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="AuxClasses\ConsoleLogger.cs" />
     <Compile Include="AuxClasses\TestContext.cs" />
+    <Compile Include="Infrastructure\ContextTest.cs" />
     <Compile Include="Infrastructure\Data\DataAccessTest.cs" />
     <Compile Include="Infrastructure\Entities\AnEntity.cs" />
     <Compile Include="Infrastructure\Entities\ForEntityIdFinder\IdNotNamedId.cs" />
@@ -91,6 +92,10 @@
     <ProjectReference Include="..\DotNetMarche.TestHelpers\DotNetMarche.TestHelpers.csproj">
       <Project>{A0D3CD36-443B-4899-A455-7B4BFC955383}</Project>
       <Name>DotNetMarche.TestHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
+      <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
+      <Name>DotNetMarche.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

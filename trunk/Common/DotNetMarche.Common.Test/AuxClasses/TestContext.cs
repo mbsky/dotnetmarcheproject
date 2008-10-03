@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DotNetMarche.Infrastructure.Base.Interfaces;
+using DotNetMarche.Utils;
 
 namespace DotNetMarche.Common.Test.AuxClasses
 {
@@ -14,7 +15,7 @@ namespace DotNetMarche.Common.Test.AuxClasses
 
 		public object GetData(string key)
 		{
-			return storage[key];
+			return storage.SafeGet(key);
 		}
 
 		public void SetData(string key, object value)
