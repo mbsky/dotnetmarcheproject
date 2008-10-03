@@ -17,8 +17,25 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 	[TestFixture]
 	public class DataAccessTest : DbTest
 	{
+		#region Base test functions
+
 		private IDisposable OverrideSettings;
 		private InMemoryConfigurationRegistry repo;
+
+		private void InitDatabase()
+		{
+			FileInfo dbFile = new FileInfo("maindbForDataAccess.db");
+			if (dbFile.Exists) dbFile.Delete();
+			repo.ConnStrings.Add("main",
+			                     new ConnectionStringSettings("main", "data source=" + dbFile.FullName, "System.Data.SQLite"));
+			DataAccess.CreateQuery("CREATE TABLE TESTTABLE(field1 int, field2 varchar(50))").ExecuteNonQuery();
+			repo.ConnStrings.Add("preload1", new ConnectionStringSettings("preload1", "data source=" + 
+			                                                                          Path.GetFullPath(@"Infrastructure\Data\Preload\preload1.db"), "System.Data.SQLite"));
+		}
+
+		#endregion
+
+		#region Basic Test
 
 		/// <summary>
 		/// I know that default testing re
@@ -29,17 +46,6 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			repo = new InMemoryConfigurationRegistry();
 			OverrideSettings = ConfigurationRegistry.Override(repo);
 			InitDatabase();
-		}
-
-		private void InitDatabase()
-		{
-			FileInfo dbFile = new FileInfo("maindbForDataAccess.db");
-			if (dbFile.Exists) dbFile.Delete();
-			repo.ConnStrings.Add("main",
-			                     new ConnectionStringSettings("main", "data source=" + dbFile.FullName, "System.Data.SQLite"));
-			DataAccess.CreateQuery("CREATE TABLE TESTTABLE(field1 int, field2 varchar(50))").ExecuteNonQuery();
-			repo.ConnStrings.Add("preload1", new ConnectionStringSettings("preload1", "data source=" + 
-				Path.GetFullPath(@"Infrastructure\Data\Preload\preload1.db"), "System.Data.SQLite"));
 		}
 
 		[TestFixtureTearDown]
@@ -68,5 +74,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 		{
 
 		}
+
+		#endregion
 	}
 }

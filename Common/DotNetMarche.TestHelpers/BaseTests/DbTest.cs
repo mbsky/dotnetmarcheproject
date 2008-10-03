@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Transactions;
+using DotNetMarche.Infrastructure;
 using DotNetMarche.Infrastructure.Data;
 using NUnit.Framework;
 
@@ -20,7 +21,7 @@ namespace DotNetMarche.TestHelpers.BaseTests
 
 		protected virtual void OnTestSetUp()
 		{
-			scope = DataAccess.BeginTransaction(); 
+			scope = GlobalTransactionManager.BeginTransaction(); 
 		}
 
 		[TearDown]
