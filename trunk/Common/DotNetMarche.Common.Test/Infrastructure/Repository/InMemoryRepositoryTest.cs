@@ -8,7 +8,7 @@ using DotNetMarche.Infrastructure.Helpers;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace DotNetMarche.Common.Test.Infrastructure
+namespace DotNetMarche.Common.Test.Infrastructure.Repository
 {
 	[TestFixture]
 	public class InMemoryRepositoryTest

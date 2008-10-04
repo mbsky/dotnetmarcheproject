@@ -6,7 +6,7 @@ using DotNetMarche.Infrastructure.Base.Interfaces;
 
 namespace DotNetMarche.Infrastructure.Base
 {
-	static class CurrentContext
+	public static class CurrentContext
 	{
 
 		#region Test Overriding
