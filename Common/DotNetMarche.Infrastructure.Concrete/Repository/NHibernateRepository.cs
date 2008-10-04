@@ -4,10 +4,20 @@ using System.Linq;
 using System.Text;
 using DotNetMarche.Infrastructure.Data;
 
-namespace DotNetMarche.NHibernate
+namespace DotNetMarche.Infrastructure.Concrete.Repository
 {
 	public class NHibernateRepository<T> : IRepository<T>
 	{
+
+		#region Inner management
+
+		/// <summary>
+		/// Each repository can have a different configuration file name
+		/// to support more than one database.
+		/// </summary>
+		public String ConfigurationFileName { get; set; }
+
+		#endregion
 
 		#region IRepository<T> Members
 

@@ -12,7 +12,7 @@ namespace DotNetMarche.Infrastructure.Base.Interfaces
 	/// windows application or httprequest in web contetx or whathever 
 	/// you want for your architecture.
 	/// </summary>
-	interface IContext : IEnumerable<KeyValuePair<String, Object>>
+	public interface IContext : IEnumerable<KeyValuePair<String, Object>>
 	{
 		Object GetData(String key);
 		void SetData(String key, Object value);

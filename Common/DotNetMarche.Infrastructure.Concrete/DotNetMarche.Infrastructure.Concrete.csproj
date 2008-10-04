@@ -12,6 +12,8 @@
     <AssemblyName>DotNetMarche.Infrastructure.Concrete</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>DotNetMarche.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +49,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ExternalLibs\Logging\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -64,12 +70,21 @@
     <Compile Include="CastleWindsorIoCEngine.cs" />
     <Compile Include="Logging\Log4NetLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\NHibernateRepository.cs" />
+    <Compile Include="Repository\NHibernateSessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">
       <Project>{75E2529D-95B2-4440-AE35-CEF39D8412F5}</Project>
       <Name>DotNetMarche.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
+      <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
+      <Name>DotNetMarche.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DotNetMarche.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
