@@ -33,6 +33,11 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 
 		private static Dictionary<String, NhibConfigData> factories = new Dictionary<String, NhibConfigData>();
 
+		public static ISession GetSession()
+		{
+			return GetSessionFor("hibernate.cfg.xml");
+		}
+
 		public static ISession GetSessionFor(String configFileName)
 		{
 			Object obj = CurrentContext.GetData(GetContextSessionKeyForConfigFileName(configFileName));
@@ -60,6 +65,21 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			}
 		}
 
+		/// <summary>
+		/// Close all open session
+		/// </summary>
+		public static void CloseSessions()
+		{
+			foreach(KeyValuePair<String, Object> kvp in CurrentContext.Enumerate().SafeEnumerate())
+			{
+				if (kvp.Key.StartsWith(ContextSessionKey))
+				{
+					//Yes this is a session.
+					CloseSessionFor(kvp.Key.Substring(ContextSessionKey.Length));
+				}
+			}
+		}
+
 		private static NhibConfigData GetDataFromConfigName(String configFileName)
 		{
 			NhibConfigData retvalue = factories.SafeGet(configFileName);
@@ -74,6 +94,7 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			}
 			return retvalue;
 		}
+
 
 
 	}

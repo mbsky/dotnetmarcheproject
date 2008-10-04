@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="BasicExtensions.cs" />
     <Compile Include="ExceptionUtils.cs" />
+    <Compile Include="ExpressionTreeReflection.cs" />
+    <Compile Include="PerfTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

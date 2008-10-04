@@ -59,10 +59,33 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 		}
 
 		[Test]
+		public void BasicGetSessionForDefaultConfiguration()
+		{
+			ISession session = NHibernateSessionManager.GetSession();
+			Assert.That(session, Is.Not.Null);
+		}
+
+		[Test]
 		public void SessionIsInTheContext()
 		{
 			ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfig1.cfg.xml");
 			Assert.That(overrideContext.storage.Count, Is.EqualTo(1));
+		}		
+		
+		[Test]
+		public void TwoSessionIsInTheContext()
+		{
+			NHibernateSessionManager.GetSessionFor("files\\NhConfig1.cfg.xml");
+			NHibernateSessionManager.GetSessionFor("files\\NhConfig2.cfg.xml");
+			Assert.That(overrideContext.storage.Count, Is.EqualTo(2));
+		}
+
+		[Test]
+		public void TwoConfigurationReturnDistinctSessions()
+		{
+			ISession session1 = NHibernateSessionManager.GetSessionFor("files\\NhConfig1.cfg.xml");
+			ISession session2 = NHibernateSessionManager.GetSessionFor("files\\NhConfig2.cfg.xml");
+			Assert.That(!ReferenceEquals(session1, session2));
 		}
 
 		[Test]
@@ -95,6 +118,28 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 				typeof(NHibernateSessionManager), "GetContextSessionKeyForConfigFileName", "files\\NhConfig1.cfg.xml");
 			overrideContext.storage.Add(sessionkey, session);
 			NHibernateSessionManager.CloseSessionFor("files\\NhConfig1.cfg.xml");
+		}
+
+		/// <summary>
+		/// Verify that the closeSessionFor correctly invoke flush and dispose of the session.
+		/// </summary>
+		[Test]
+		public void SessionIsDisposedAndFlushedWhenClosedForAllSessions()
+		{
+			ISession session = mockRepository.CreateMock<ISession>();
+			Expect.Call(session.Flush);
+			Expect.Call(session.Dispose);
+			ISession session2 = mockRepository.CreateMock<ISession>();
+			Expect.Call(session2.Flush);
+			Expect.Call(session2.Dispose);
+			mockRepository.ReplayAll();
+			String sessionkey1 = Invoker.InvokePrivate<String>(
+				typeof(NHibernateSessionManager), "GetContextSessionKeyForConfigFileName", "files\\NhConfig1.cfg.xml");
+			overrideContext.storage.Add(sessionkey1, session);
+			String sessionkey2 = Invoker.InvokePrivate<String>(
+					typeof(NHibernateSessionManager), "GetContextSessionKeyForConfigFileName", "files\\NhConfig2.cfg.xml");
+			overrideContext.storage.Add(sessionkey2, session2);
+			NHibernateSessionManager.CloseSessions();
 		}
 	}
 }
