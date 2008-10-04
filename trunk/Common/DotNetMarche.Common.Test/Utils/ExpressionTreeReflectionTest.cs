@@ -14,22 +14,20 @@ namespace DotNetMarche.Common.Test.Utils
 	[TestFixture]
 	public class ExpressionTreeReflectionTest
 	{
+		private static readonly Type suType = Type.GetType("DotNetMarche.Common.Test.AuxClasses.SimpleUnknown, DotNetMarche.Common.Test");
+		private static readonly Object suInstance = Activator.CreateInstance(Type.GetType("DotNetMarche.Common.Test.AuxClasses.SimpleUnknown, DotNetMarche.Common.Test"));
 		[Test]
 		public void TestFuncNoArgInt32()
 		{
-			Type type = typeof (SimpleUnknown);
-			Func<Object, Int32> func = ExpressionTreeReflection.Reflect<Int32>(type, "AMethod");
-			SimpleUnknown su = new SimpleUnknown();
-			Assert.That(func(su), Is.EqualTo(1));
-		}		
-		
+			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
+			Assert.That(func(suInstance), Is.EqualTo(1));
+		}
+
 		[Test]
 		public void TestFuncNoArgString()
 		{
-			Type type = typeof (SimpleUnknown);
-			Func<Object, String> func = ExpressionTreeReflection.Reflect<String>(type, "SMethod");
-			SimpleUnknown su = new SimpleUnknown();
-			Assert.That(func(su), Is.EqualTo("Hello"));
+			Func<Object, String> func = ExpressionTreeReflection.ReflectFunction<String>(suType, "SMethod");
+			Assert.That(func(suInstance), Is.EqualTo("Hello"));
 		}
 
 		/// <summary>
@@ -38,46 +36,56 @@ namespace DotNetMarche.Common.Test.Utils
 		[Test, Explicit]
 		public void TestPerformanceGain()
 		{
-			Type type = typeof (SimpleUnknown);
-			Func<Object, Int32> func = ExpressionTreeReflection.Reflect<Int32>(type, "AMethod");
-			MethodInfo minfo = type.GetMethod("AMethod", BindingFlags.Public | BindingFlags.Instance);
-			SimpleUnknown su = new SimpleUnknown();
-			Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) minfo.Invoke(su, new Object[] {}); });
-			Double ExpDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) func(su); });
+			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
+			MethodInfo minfo = suType.GetMethod("AMethod", BindingFlags.Public | BindingFlags.Instance);
+			Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) minfo.Invoke(suInstance, new Object[] { }); });
+			Double ExpDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) func(suInstance); });
 			Console.WriteLine("Reflection = {0} Expression Tree {1}", RefDuration, ExpDuration);
-		}		
-		
+		}
+
 		/// <summary>
 		/// Verify performance gain with expression tree instead of reflection.
 		/// </summary>
 		[Test, Explicit]
 		public void TestPerformanceGain2()
 		{
-			Type type = typeof (SimpleUnknown);
-			Func<Object, String, Int32> func = ExpressionTreeReflection.Reflect<String, Int32>(type, "BMethod");
-			MethodInfo minfo = type.GetMethod("BMethod", BindingFlags.Public | BindingFlags.Instance, null, new Type[] {typeof(String)}, null);
-			SimpleUnknown su = new SimpleUnknown();
-			Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) minfo.Invoke(su, new Object[] {"test"}); });
-			Double ExpDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) func(su, "test"); });
+			Func<Object, String, Int32> func = ExpressionTreeReflection.ReflectFunction<String, Int32>(suType, "BMethod");
+			MethodInfo minfo = suType.GetMethod("BMethod", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { typeof(String) }, null);
+			Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) minfo.Invoke(suInstance, new Object[] { "test" }); });
+			Double ExpDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) func(suInstance, "test"); });
 			Console.WriteLine("Reflection = {0} Expression Tree {1}", RefDuration, ExpDuration);
 		}
 
 		[Test]
 		public void TestFuncOneArgInt32()
 		{
-			Type type = typeof(SimpleUnknown);
-			Func<Object, Int32, Int32> func = ExpressionTreeReflection.Reflect<Int32, Int32>(type, "BMethod");
-			SimpleUnknown su = new SimpleUnknown();
-			Assert.That(func(su, 4), Is.EqualTo(8));
-		}		
-		
+			Func<Object, Int32, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32, Int32>(suType, "BMethod");
+			Assert.That(func(suInstance, 4), Is.EqualTo(8));
+		}
+
 		[Test]
 		public void TestFuncOneArgInt32Overload()
 		{
-			Type type = typeof(SimpleUnknown);
-			Func<Object, String, Int32> func = ExpressionTreeReflection.Reflect<String, Int32>(type, "BMethod");
+			Func<Object, String, Int32> func = ExpressionTreeReflection.ReflectFunction<String, Int32>(suType, "BMethod");
+			Assert.That(func(suInstance, "test"), Is.EqualTo(8));
+		}		
+		
+		[Test]
+		public void TestActionNoParams()
+		{
+			Action<Object> func = ExpressionTreeReflection.ReflectAction(suType, "VMethod");
 			SimpleUnknown su = new SimpleUnknown();
-			Assert.That(func(su, "test"), Is.EqualTo(8));
+			func(su);
+			Assert.That(su.Val, Is.EqualTo(10));
+		}		
+		
+		[Test]
+		public void TestActionOneParamInt32()
+		{
+			Action<Object, String> func = ExpressionTreeReflection.ReflectAction<String>(suType, "VMethod");
+			SimpleUnknown su = new SimpleUnknown();
+			func(su, "test");
+			Assert.That(su.Val, Is.EqualTo(4));
 		}
 	}
 }

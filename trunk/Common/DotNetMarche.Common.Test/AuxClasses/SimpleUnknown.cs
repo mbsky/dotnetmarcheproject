@@ -26,5 +26,17 @@ namespace DotNetMarche.Common.Test.AuxClasses
 		{
 			return "Hello";
 		}
+
+		public Int32 Val { get; set; }
+
+		public void VMethod()
+		{
+			Val = 10;
+		}		
+		
+		public void VMethod(String param)
+		{
+			Val = param.Length;
+		}
 	}
 }
