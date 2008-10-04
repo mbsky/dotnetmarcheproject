@@ -11,5 +11,19 @@ namespace DotNetMarche.Utils
 		{
 			return dic.ContainsKey(key) ? dic[key] : default(T);
 		}
+
+		/// <summary>
+		/// This function permits to enumerate an object with foreach while modifiying the 
+		/// original enumeration, this is simply a matter of creating a copy of the original
+		/// enumeration.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> SafeEnumerate<T>(this IEnumerable<T> source)
+		{
+			List<T> copy = source.ToList();
+			return copy;
+		}
 	}
 }

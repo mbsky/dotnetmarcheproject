@@ -40,9 +40,9 @@ namespace DotNetMarche.Infrastructure.Base
 		{
 			context.ReleaseData(key);
 		}
-		public static IEnumerator<KeyValuePair<String, Object>> Enumerate()
+		public static IEnumerable<KeyValuePair<String, Object>> Enumerate()
 		{
-			return context.GetEnumerator();
+			return context;
 		}
 	}
 }
