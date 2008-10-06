@@ -10,6 +10,15 @@ namespace DotNetMarche.TestHelpers.Data
 {
 	public class DbAssert
 	{
+		#region Fields
+
+		private String query;
+
+		private Dictionary<String, Constraint> constraints = new Dictionary<String, Constraint>();
+
+		private String connectionStringName;
+
+		#endregion
 
 		public static DbAssert OnQuery(String query)
 		{
@@ -27,12 +36,9 @@ namespace DotNetMarche.TestHelpers.Data
 			this.query = query;
 		}
 
-		private String query;
-		private Dictionary<String, Constraint> constraints = new Dictionary<String, Constraint>();
-
 		public void ExecuteAssert()
 		{
-			DataAccess.CreateQuery(query).ExecuteReader((dr) =>
+			DataAccess.CreateQuery(query).OnDb(connectionStringName).ExecuteReader((dr) =>
 				{
 					Assert.That(dr.Read(), "Query " + query + " did not return suitable data");
 					foreach (KeyValuePair<String, Constraint> kvp in constraints)
@@ -42,5 +48,15 @@ namespace DotNetMarche.TestHelpers.Data
 				});
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="connectionString"></param>
+		/// <returns></returns>
+		public DbAssert OnDb(String connectionString)
+		{
+			connectionStringName = connectionString;
+			return this;
+		}
 	}
 }

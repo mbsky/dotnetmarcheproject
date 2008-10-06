@@ -64,12 +64,12 @@ namespace DotNetMarche.Common.Test.Utils
 			Assert.That(func(suInstance, 4), Is.EqualTo(8));
 		}
 
-		[Test]
-		public void TestFuncOneArgInt32Overload()
-		{
-			Func<Object, String, Int32> func = ExpressionTreeReflection.ReflectFunction<String, Int32>(suType, "BMethod");
-			Assert.That(func(suInstance, "test"), Is.EqualTo(8));
-		}		
+[Test]
+public void TestFuncOneArgInt32Overload()
+{
+	Func<Object, String, Int32> func = ExpressionTreeReflection.ReflectFunction<String, Int32>(suType, "BMethod");
+	Assert.That(func(suInstance, "test"), Is.EqualTo(8));
+}		
 		
 		[Test]
 		public void TestActionNoParams()
