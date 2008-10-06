@@ -168,5 +168,26 @@ namespace DotNetMarche.Utils
 			Expression<Action<Object, P1>> dynamicSetterExpression = (Expression<Action<Object, P1>>)lambda;
 			return dynamicSetterExpression.Compile();
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="objType"></param>
+		/// <returns></returns>
+		public static Func<Object> ReflectConstructor(Type objType)
+		{
+			ConstructorInfo minfo = objType.GetConstructor(
+				BindingFlags.Instance | BindingFlags.Public,
+				null,
+				CallingConventions.Any,
+				new Type[] { },
+				null);
+
+			Expression invoke = Expression.New(minfo);
+			Expression convert = Expression.Convert(invoke, typeof (Object));
+			LambdaExpression lambda = Expression.Lambda(convert);
+			Expression<Func<Object>> dynamicSetterExpression = (Expression<Func<Object>>)lambda;
+			return dynamicSetterExpression.Compile();
+		}
 	}
 }

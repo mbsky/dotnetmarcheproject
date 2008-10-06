@@ -16,6 +16,7 @@ namespace DotNetMarche.Common.Test.Utils
 	{
 		private static readonly Type suType = Type.GetType("DotNetMarche.Common.Test.AuxClasses.SimpleUnknown, DotNetMarche.Common.Test");
 		private static readonly Object suInstance = Activator.CreateInstance(Type.GetType("DotNetMarche.Common.Test.AuxClasses.SimpleUnknown, DotNetMarche.Common.Test"));
+		
 		[Test]
 		public void TestFuncNoArgInt32()
 		{
@@ -86,6 +87,28 @@ namespace DotNetMarche.Common.Test.Utils
 			SimpleUnknown su = new SimpleUnknown();
 			func(su, "test");
 			Assert.That(su.Val, Is.EqualTo(4));
+		}		
+		
+		[Test]
+		public void TestReflectConstructors()
+		{
+			Func<Object> func = ExpressionTreeReflection.ReflectConstructor(suType);
+			Object su = func();
+			Assert.That(su, Is.InstanceOfType(typeof(SimpleUnknown)));
 		}
+
+		/// <summary>
+		/// Verify performance gain with expression tree instead of reflection.
+		/// </summary>
+		[Test, Explicit]
+		public void TestPerformanceGainConstructors()
+		{
+			Func<Object> func = ExpressionTreeReflection.ReflectConstructor(suType);
+			ConstructorInfo cinfo = suType.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, new Type[] { }, null);
+			Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) cinfo.Invoke(new Object[] {}); });
+			Double ExpDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) func(); });
+			Console.WriteLine("Reflection = {0} Expression Tree {1}", RefDuration, ExpDuration);
+		}
+
 	}
 }
