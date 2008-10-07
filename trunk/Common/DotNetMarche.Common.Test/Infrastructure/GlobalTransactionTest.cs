@@ -52,7 +52,7 @@ namespace DotNetMarche.Common.Test.Infrastructure
 
 		#region Helpers
 
-		public void Nope(Boolean b){}
+		public void Nope(Boolean b) { }
 
 		#endregion
 
@@ -93,6 +93,87 @@ namespace DotNetMarche.Common.Test.Infrastructure
 				//Do something, the important thing is that the delegate is called because we have 
 				//not a transaction active.
 			}
+		}
+
+		[Test]
+		public void EnlistNestedWithTwoTransaction()
+		{
+			Action<Boolean> mock = mockRepository.CreateMock<Action<Boolean>>();
+			Expect.Call(() => mock(true)).Repeat.Twice(); //Sets the expectation
+			mockRepository.ReplayAll();
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				using (GlobalTransactionManager.BeginTransaction())
+				{
+					GlobalTransactionManager.Enlist(mock, 0);
+					GlobalTransactionManager.Enlist(mock, 1);
+				}
+			}
+		}		
+		
+		/// <summary>
+		/// Create two nested transaction, then enlist in the first and second, dispose the second and
+		/// be sure that the mock is called one time
+		/// </summary>
+		[Test]
+		public void EnlistNestedWithTwoTransactionDisposeOne()
+		{
+			Action<Boolean> mock = mockRepository.CreateMock<Action<Boolean>>();
+			Expect.Call(() => mock(true)).Repeat.Once(); //Sets the expectation
+			mockRepository.ReplayAll();
+			IDisposable first = GlobalTransactionManager.BeginTransaction();
+			IDisposable second = GlobalTransactionManager.BeginTransaction();
+		
+			GlobalTransactionManager.Enlist(mock, 0);
+			GlobalTransactionManager.Enlist(mock, 1);
+			first.Dispose();
+		}		
+		
+		/// <summary>
+		/// If we enlist in the transaction with index zero we should access the corresponding transaction
+		/// </summary>
+		[Test]
+		public void ContextNestedWithTwoTransaction()
+		{
+			GlobalTransactionManager.BeginTransaction();
+			GlobalTransactionManager.BeginTransaction();
+		
+			GlobalTransactionManager.TransactionToken token = GlobalTransactionManager.Enlist(Nope, 0);
+			GlobalTransactionManager.TransactionContext.Set("key", "test", 0);
+			Assert.That(token.GetFromTransactionContext("key"), Is.EqualTo("test"));
+		}			
+		
+		/// <summary>
+		/// If we enlist without specification, we are enlisting on the last transaction scope.
+		/// </summary>
+		[Test]
+		public void ContextNestedWithTwoTransactionLast()
+		{
+			GlobalTransactionManager.BeginTransaction();
+			GlobalTransactionManager.BeginTransaction();
+		
+			GlobalTransactionManager.TransactionToken token = GlobalTransactionManager.Enlist(Nope);
+			GlobalTransactionManager.TransactionContext.Set("key", "test", 1);
+			Assert.That(token.GetFromTransactionContext("key"), Is.EqualTo("test"));
+		}		
+		
+
+		/// <summary>
+		/// Create two nested transaction, then enlist in the first and second, dispose the second and
+		/// be sure that the mock is called one time
+		/// </summary>
+		[Test]
+		public void EnlistNestedWithTwoTransactionDisposeTwo()
+		{
+			Action<Boolean> mock = mockRepository.CreateMock<Action<Boolean>>();
+			Expect.Call(() => mock(true)).Repeat.Once(); //Sets the expectation
+			mockRepository.ReplayAll();
+			IDisposable first = GlobalTransactionManager.BeginTransaction();
+			IDisposable second = GlobalTransactionManager.BeginTransaction();
+		
+			GlobalTransactionManager.Enlist(mock, 0);
+			GlobalTransactionManager.Enlist(mock, 1);
+			second.Dispose();
 		}
 
 		[Test]
