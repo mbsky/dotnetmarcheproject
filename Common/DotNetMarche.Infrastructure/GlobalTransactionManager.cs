@@ -17,19 +17,14 @@ namespace DotNetMarche.Infrastructure
 
 		private const String TransactionScopeKey = "FF2DB3E7-1D02-4f60-9F78-CCD6DF7D2841";
 
-		private static Transaction CurrentTransaction
+		private static List<Transaction> CurrentTransactionList
 		{
-			get { return (Transaction)CurrentContext.GetData(TransactionScopeKey); }
+			get { return (List<Transaction>) CurrentContext.GetData(TransactionScopeKey); }
 		}
 
-		/// <summary>
-		/// Begin a transaction.
-		/// </summary>
-		/// <returns></returns>
-		public static DisposableAction BeginTransaction()
+		private static Transaction CurrentTransaction
 		{
-			CurrentContext.SetData(TransactionScopeKey, new Transaction(DateTime.Now));
-			return new DisposableAction(CloseCurrentTransaction);
+			get { return CurrentTransactionList[CurrentTransactionList.Count - 1]; }
 		}
 
 		/// <summary>
@@ -38,6 +33,29 @@ namespace DotNetMarche.Infrastructure
 		public static Boolean IsInTransaction
 		{
 			get { return null != CurrentContext.GetData(TransactionScopeKey); }
+		}
+
+		/// <summary>
+		/// How far we are in transaction stack.
+		/// </summary>
+		public static Int32 TransactionsCount
+		{
+			get { return CurrentTransactionList.Count; }
+		}
+
+		/// <summary>
+		/// Begin a transaction.
+		/// </summary>
+		/// <returns></returns>
+		public static DisposableAction BeginTransaction()
+		{
+			if (!IsInTransaction)
+			{
+				List<Transaction> transactions = new List<Transaction>();
+				CurrentContext.SetData(TransactionScopeKey, transactions);
+			}
+			CurrentTransactionList.Add(new Transaction(DateTime.Now));
+			return new DisposableAction(CloseCurrentTransaction);
 		}
 
 		public static void DoomCurrentTransaction()
@@ -56,8 +74,10 @@ namespace DotNetMarche.Infrastructure
 			Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
 			if (Utils.ExceptionUtils.IsInExceptionHandler())
 				CurrentTransaction.Doom();
-			Transaction currentTransaction = (Transaction)CurrentContext.GetData(TransactionScopeKey);
-			CurrentContext.ReleaseData(TransactionScopeKey);
+			Transaction currentTransaction =CurrentTransaction;
+			CurrentTransactionList.RemoveAt(CurrentTransactionList.Count - 1);
+			if (CurrentTransactionList.Count == 0)
+				CurrentContext.ReleaseData(TransactionScopeKey);
 			currentTransaction.Complete();
 		}
 
@@ -76,7 +96,7 @@ namespace DotNetMarche.Infrastructure
 			{
 				//Let the current transaction handle this.
 				CurrentTransaction.Enlist(completeTransactionCallback);
-				return new TransactionToken();
+				return new TransactionToken(TransactionsCount - 1);
 			}
 			else
 			{
@@ -85,22 +105,71 @@ namespace DotNetMarche.Infrastructure
 			}
 		}
 
+		/// <summary>
+		/// Some components needs to enlist in previous transaction when we have nested transaction and lazy creation
+		/// of connection object.
+		/// </summary>
+		/// <param name="completeTransactionCallback"></param>
+		/// <param name="transactionIndex">The index of the transaction we want to enlist into</param>
+		/// <returns></returns>
+		public static TransactionToken Enlist(Action<Boolean> completeTransactionCallback, Int32 transactionIndex)
+		{
+			Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
+			CurrentTransactionList[transactionIndex].Enlist(completeTransactionCallback);
+			return new TransactionToken(transactionIndex);
+		}
+
 		#endregion
 
 		#region TransactionContext
 
 		public static class TransactionContext
 		{
+			/// <summary>
+			/// Set an object in the context of the current transaction.
+			/// </summary>
+			/// <param name="key"></param>
+			/// <param name="obj"></param>
 			public static void Set(String key, Object obj)
 			{
-				Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
+				Verify.That(IsInTransaction, "Cannot set from transaction context because there is not an active transaction");
 				CurrentTransaction.TransactionContext[key] = obj;
 			}
 
+			/// <summary>
+			/// Set an object in a particular transaction of the stack.
+			/// </summary>
+			/// <param name="key"></param>
+			/// <param name="obj"></param>
+			/// <param name="transactionIndex">The index of the transaction we want to access the context of</param>
+			public static void Set(String key, Object obj, Int32 transactionIndex)
+			{
+				Verify.That(TransactionsCount > transactionIndex, "You specified a wrong transaction index.");
+				CurrentTransactionList[transactionIndex].TransactionContext[key] = obj;
+			}
+
+			/// <summary>
+			/// Get an object from the context of the current transaction.
+			/// </summary>
+			/// <param name="key"></param>
+			/// <returns></returns>
 			public static Object Get(String key)
 			{
-				Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
+				Verify.That(IsInTransaction, "Cannot get from transaction context because there is not an active transaction");
 				return CurrentTransaction.TransactionContext.SafeGet(key);
+			}
+
+			/// <summary>
+			/// Some consumer of transaction could need to know if there is a particular object
+			/// stored in the context of a previous transaction.
+			/// </summary>
+			/// <param name="key">the key of the context</param>
+			/// <param name="transactionIndex">The index </param>
+			/// <returns>the objec in the corresponding transaction context</returns>
+			public static Object Get(String key, Int32 transactionIndex)
+			{
+				Verify.That(TransactionsCount > transactionIndex, "You specified a wrong transaction index.");
+				return CurrentTransactionList[transactionIndex].TransactionContext.SafeGet(key);
 			}
 		}
 		
@@ -116,14 +185,29 @@ namespace DotNetMarche.Infrastructure
 		/// </summary>
 		public class TransactionToken : IDisposable
 		{
+
+			private Int32 currentStackPosition;
+
+			/// <summary>
+			/// Used from inner inherited classes
+			/// </summary>
+			internal TransactionToken()
+			{
+			}
+
+			public TransactionToken(int currentStackPosition)
+			{
+				this.currentStackPosition = currentStackPosition;
+			}
+
 			public virtual void SetInTransactionContext(String key, Object obj)
 			{
-				CurrentTransaction.TransactionContext[key] = obj;
+				TransactionContext.Set(key, obj, currentStackPosition);
 			}
 
 			public virtual Object GetFromTransactionContext(String key)
 			{
-				return CurrentTransaction.TransactionContext.SafeGet(key);
+				return TransactionContext.Get(key, currentStackPosition);
 			}
 
 			public virtual void Doom()

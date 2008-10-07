@@ -68,6 +68,8 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 
 		#endregion
 
+		#region Basic Transaction Tests
+
 		/// <summary>
 		/// Verify that if we have no transaction we committ everything
 		/// </summary>
@@ -187,5 +189,30 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			DbAssert.OnQuery("Select count(*) cnt from FirstTable").That("cnt", Is.EqualTo(1)).ExecuteAssert();
 			DbAssert.OnQuery("Select count(*) cnt from SecondaryFirstTable").OnDb("secondary").That("cnt", Is.EqualTo(1)).ExecuteAssert();
 		}
+
+		#endregion
+
+		#region Multiple Transaction Tests
+
+		[Test]
+		public void MultipleTransactionBothRollback()
+		{
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				using (GlobalTransactionManager.BeginTransaction())
+				{
+					Int32 count = DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (1, 'test1')").ExecuteNonQuery();
+					Assert.That(count, Is.EqualTo(1));
+				}
+				using (GlobalTransactionManager.BeginTransaction())
+				{
+					Int32 count = DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (2, 'test2')").ExecuteNonQuery();
+					Assert.That(count, Is.EqualTo(1));
+				}
+				GlobalTransactionManager.DoomCurrentTransaction();
+			}
+			DbAssert.OnQuery("Select count(*) cnt from FirstTable").That("cnt", Is.EqualTo(0)).ExecuteAssert();
+		}
+		#endregion
 	}
 }

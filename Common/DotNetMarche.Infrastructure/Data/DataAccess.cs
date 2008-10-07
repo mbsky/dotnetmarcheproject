@@ -36,18 +36,52 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <returns></returns>
 		internal static GlobalTransactionManager.TransactionToken CreateConnection(string connectionName)
 		{
+			ConnectionData newConnData = null;
 			if (GlobalTransactionManager.IsInTransaction)
 			{
+				//We are in a transaction, check if at current connection stack level there is  a connection data.
 				Object connData = GlobalTransactionManager.TransactionContext.Get(GetKeyFromConnName(connectionName));
 				if (null != connData)
 				{
-				//We already created the connection for this database in this transaction.
-				return GlobalTransactionManager.Enlist(DoNothing);
+					//We already created the connection for this database in this transaction.
+					return GlobalTransactionManager.Enlist(DoNothing);
 				}
-			} 
-			//If we reach here we does not have a global transaction or we never creted connectino for this transaction
-			//This is the first time we connect to this database inside this transaction.
-			ConnectionData newConnData = new ConnectionData(connectionName);
+				//There is not a transaction in the current transaction stack level, are we in nested transaction?
+				if (GlobalTransactionManager.TransactionsCount > 1)
+				{
+					//The only connection data valid is the one at the first level, lets check if it is present.
+					connData = GlobalTransactionManager.TransactionContext.Get(GetKeyFromConnName(connectionName), 0);
+					if (null == connData)
+					{
+						//We never created the connection data
+						newConnData = new ConnectionData(connectionName);
+						GlobalTransactionManager.TransactionContext.Set(GetKeyFromConnName(connectionName), newConnData, 0);
+						GlobalTransactionManager.Enlist(newConnData.CloseConnection, 0);
+					} else
+					{
+						newConnData = (ConnectionData) connData;
+					}
+
+					GlobalTransactionManager.TransactionToken lasttoken = null;
+					//Now we have the connection data, we need to store this connection data in each connection that is active and
+					//that still not have start a transaction
+					for (Int32 Ix = 1; Ix < GlobalTransactionManager.TransactionsCount; ++Ix)
+					{
+						if (GlobalTransactionManager.TransactionContext.Get(GetKeyFromConnName(connectionName), Ix) == null)
+						{
+							//In this step of the stack there is no ConnectionData, store and increase the transaction
+							newConnData.BeginNestedTransaction();
+							lasttoken = GlobalTransactionManager.Enlist(newConnData.CloseConnection, Ix);
+							lasttoken.SetInTransactionContext(GetKeyFromConnName(connectionName), newConnData);
+						}
+					}
+					//Return the last token, the one corresponding to the current transaction level.
+					return lasttoken;
+				}	
+			}
+			
+			//We are not in nested transaction and there is not connection data, create for the first time
+			newConnData = new ConnectionData(connectionName);
 			GlobalTransactionManager.TransactionToken token =
 				GlobalTransactionManager.Enlist(newConnData.CloseConnection);
 			token.SetInTransactionContext(GetKeyFromConnName(connectionName), newConnData);
@@ -63,8 +97,14 @@ namespace DotNetMarche.Infrastructure.Data
 		private class ConnectionData
 		{
 			public readonly DbConnection Connection;
-			public readonly DbTransaction Transaction;
+			public readonly Stack<DbTransaction> TransactionStack = new Stack<DbTransaction>();
 			public readonly DbProviderFactory Factory;
+			private Boolean nested = false;
+
+			public DbTransaction CurrentTransaction
+			{
+				get { return TransactionStack.Peek(); }
+			}
 			/// <summary>
 			/// In the constructor we creates all the object we need to access the database.
 			/// </summary>
@@ -81,17 +121,35 @@ namespace DotNetMarche.Infrastructure.Data
 				Connection = Factory.CreateConnection();
 				Connection.ConnectionString = cn.ConnectionString;
 				Connection.Open();
-				Transaction = Connection.BeginTransaction();
+				TransactionStack.Push(Connection.BeginTransaction());
 			}
 
+			/// <summary>
+			/// Used for nested transaction, when we need to estabilish a nested transaction
+			/// we need to start another transaction on the same connection so we does
+			/// not really need to recreate every object
+			/// </summary>
+			public void BeginNestedTransaction()
+			{
+				TransactionStack.Push(Connection.BeginTransaction());
+			}
+
+			/// <summary>
+			/// This connection data should be closed, the transactino is to be committed
+			/// or rollbacked and then disposed, but the connectino should be disposed
+			/// only if we are not in a nested transaction.
+			/// </summary>
+			/// <param name="shouldCommit"></param>
 			public void CloseConnection(Boolean shouldCommit)
 			{
+				DbTransaction innerTransaction = TransactionStack.Pop();
 				if (shouldCommit)
-					Transaction.Commit();
-				else
-					Transaction.Rollback();
-				Transaction.Dispose();
-				Connection.Dispose();
+					innerTransaction.Commit();
+				innerTransaction.Dispose();
+				if (TransactionStack.Count == 0)
+				{
+					Connection.Dispose();
+				}
 			}
 		}
 
@@ -157,7 +215,7 @@ namespace DotNetMarche.Infrastructure.Data
 					{
 						command.CommandType = CommandType.Text;
 						command.Connection = connectionData.Connection;
-						command.Transaction = connectionData.Transaction;
+						command.Transaction = connectionData.CurrentTransaction;
 						functionToExecute(command, factory);
 					}
 				}
@@ -397,15 +455,15 @@ namespace DotNetMarche.Infrastructure.Data
 		{
 			using (GlobalTransactionManager.TransactionToken token = CreateConnection(q.ConnectionStringName))
 			{
-				ConnectionData connectionData = 
-					(ConnectionData) token.GetFromTransactionContext(
+				ConnectionData connectionData =
+					(ConnectionData)token.GetFromTransactionContext(
 						GetKeyFromConnName(q.ConnectionStringName));
 				try
 				{
 					using (q.Command)
 					{
 						q.Command.Connection = connectionData.Connection;
-						q.Command.Transaction = connectionData.Transaction;
+						q.Command.Transaction = connectionData.CurrentTransaction;
 						q.Command.CommandText = q.query.ToString();
 						executionCore();
 					}
