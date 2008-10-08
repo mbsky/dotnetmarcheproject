@@ -16,14 +16,16 @@ namespace DotNetMarche.Common.Test.Utils
 	{
 		private static readonly Type suType = Type.GetType("DotNetMarche.Common.Test.AuxClasses.SimpleUnknown, DotNetMarche.Common.Test");
 		private static readonly Object suInstance = Activator.CreateInstance(Type.GetType("DotNetMarche.Common.Test.AuxClasses.SimpleUnknown, DotNetMarche.Common.Test"));
-		
+
+
+
 		[Test]
 		public void TestFuncNoArgInt32()
 		{
 			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
 			Assert.That(func(suInstance), Is.EqualTo(1));
-		}		
-		
+		}
+
 		[Test]
 		public void LCGFuncNoArgInt32()
 		{
@@ -37,15 +39,15 @@ namespace DotNetMarche.Common.Test.Utils
 			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
 			func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
 			Assert.That(func(suInstance), Is.EqualTo(1));
-		}		
-		
+		}
+
 		[Test]
 		public void LCGDoubleCallFuncNoArgInt32()
 		{
 			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
 			func = LCGReflection.ReflectFunction<Int32>(suType, "AMethod");
 			Assert.That(func(suInstance), Is.EqualTo(1));
-		}	
+		}
 
 		[Test]
 		public void TestFuncNoArgString()
@@ -87,8 +89,8 @@ namespace DotNetMarche.Common.Test.Utils
 		{
 			Func<Object, Int32, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32, Int32>(suType, "BMethod");
 			Assert.That(func(suInstance, 4), Is.EqualTo(8));
-		}		
-		
+		}
+
 		[Test]
 		public void LcgTestFuncOneArgInt32()
 		{
@@ -96,13 +98,20 @@ namespace DotNetMarche.Common.Test.Utils
 			Assert.That(func(suInstance, 4), Is.EqualTo(8));
 		}
 
-[Test]
-public void TestFuncOneArgInt32Overload()
-{
-	Func<Object, String, Int32> func = ExpressionTreeReflection.ReflectFunction<String, Int32>(suType, "BMethod");
-	Assert.That(func(suInstance, "test"), Is.EqualTo(8));
-}		
+		[Test]
+		public void TestFuncOneArgInt32Overload()
+		{
+			Func<Object, String, Int32> func = ExpressionTreeReflection.ReflectFunction<String, Int32>(suType, "BMethod");
+			Assert.That(func(suInstance, "test"), Is.EqualTo(4));
+		}		
 		
+		[Test]
+		public void LcgTestFuncOneArgInt32Overload()
+		{
+			Func<Object, String, Int32> func = LCGReflection.ReflectFunction<String, Int32>(suType, "BMethod");
+			Assert.That(func(suInstance, "test0"), Is.EqualTo(5));
+		}
+
 		[Test]
 		public void TestActionNoParams()
 		{
@@ -110,8 +119,8 @@ public void TestFuncOneArgInt32Overload()
 			SimpleUnknown su = new SimpleUnknown();
 			func(su);
 			Assert.That(su.Val, Is.EqualTo(10));
-		}		
-		
+		}
+
 		[Test]
 		public void TestActionOneParamInt32()
 		{
@@ -119,8 +128,8 @@ public void TestFuncOneArgInt32Overload()
 			SimpleUnknown su = new SimpleUnknown();
 			func(su, "test");
 			Assert.That(su.Val, Is.EqualTo(4));
-		}		
-		
+		}
+
 		[Test]
 		public void TestReflectConstructors()
 		{
@@ -136,8 +145,8 @@ public void TestFuncOneArgInt32Overload()
 		public void TestPerformanceGainConstructors()
 		{
 			Func<Object> func = ExpressionTreeReflection.ReflectConstructor(suType);
-			ConstructorInfo cinfo = suType.GetConstructor( BindingFlags.Public | BindingFlags.Instance, null, new Type[] { }, null);
-			Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) cinfo.Invoke(new Object[] {}); });
+			ConstructorInfo cinfo = suType.GetConstructor(BindingFlags.Public | BindingFlags.Instance, null, new Type[] { }, null);
+			Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) cinfo.Invoke(new Object[] { }); });
 			Double ExpDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) func(); });
 			Console.WriteLine("Reflection = {0} Expression Tree {1}", RefDuration, ExpDuration);
 		}

@@ -7,19 +7,21 @@ namespace DotNetMarche.Common.Test.AuxClasses
 {
 	public class SimpleUnknown
 	{
+		private Int32 field = 1;
+
 		public Int32 AMethod()
 		{
-			return 1;
+			return field;
 		}
 
 		public Int32 BMethod(Int32 val)
 		{
-			return val * 2;
+			return val * 2 * field;
 		}		
 		
 		public Int32 BMethod(String val)
 		{
-			return val.Length * 2;
+			return val.Length * field;
 		}
 
 		public String SMethod()

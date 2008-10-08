@@ -20,23 +20,22 @@ namespace DotNetMarche.Utils
 		/// <param name="objType">The type of the object we want to reflect</param>
 		/// <param name="methodName">The name of the method we want to call</param>
 		/// <returns>A function object that you can use to invoke the method.</returns>
-		public static Func<Object, T> ReflectFunction<T>(Type objType, String methodName)
-		{
-			MethodInfo minfo = objType.GetMethod(
-				methodName,
-				BindingFlags.Instance | BindingFlags.Public,
-				null,
-				CallingConventions.Any,
-				new Type[] { },
-				null);
-			ParameterExpression param = Expression.Parameter(typeof(Object), "object");
-			Expression convertedParamo = Expression.Convert(param, objType);
-			Expression invoke = Expression.Call(convertedParamo, minfo);
-			LambdaExpression lambda = Expression.Lambda(invoke, param);
-			Expression<Func<Object, T>> dynamicSetterExpression = (Expression<Func<Object, T>>)lambda;
-			return dynamicSetterExpression.Compile();
-		}
-
+public static Func<Object, T> ReflectFunction<T>(Type objType, String methodName)
+{
+	MethodInfo minfo = objType.GetMethod(
+		methodName,
+		BindingFlags.Instance | BindingFlags.Public,
+		null,
+		CallingConventions.Any,
+		new Type[] { },
+		null);
+	ParameterExpression param = Expression.Parameter(typeof(Object), "object");
+	Expression convertedParamo = Expression.Convert(param, objType);
+	Expression invoke = Expression.Call(convertedParamo, minfo);
+	LambdaExpression lambda = Expression.Lambda(invoke, param);
+	Expression<Func<Object, T>> dynamicSetterExpression = (Expression<Func<Object, T>>)lambda;
+	return dynamicSetterExpression.Compile();
+}
 
 		/// <summary>
 		/// Reflect to call a method on a object that accept one parameter and return type T

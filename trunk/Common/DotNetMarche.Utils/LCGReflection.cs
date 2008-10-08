@@ -28,12 +28,11 @@ namespace DotNetMarche.Utils
 			DynamicMethod retmethod = new DynamicMethod(
 				objType.FullName + methodName,
 				typeof (T),
-				new [] {typeof(Object)},
-				typeof (LCGReflection),
-				true);
+				new [] {typeof(Object)});
 			ILGenerator ilgen = retmethod.GetILGenerator();
 			ilgen.Emit(OpCodes.Ldarg_0);
-			ilgen.Emit(OpCodes.Call, minfo);
+			ilgen.Emit(OpCodes.Castclass, objType);
+			ilgen.Emit(OpCodes.Callvirt, minfo);
 			ilgen.Emit(OpCodes.Ret);
 			return (Func<Object, T>) retmethod.CreateDelegate(typeof(Func<Object, T>));
 		}
@@ -53,16 +52,15 @@ namespace DotNetMarche.Utils
 				BindingFlags.Instance | BindingFlags.Public,
 				null,
 				CallingConventions.Any,
-				new Type[] { typeof(P1) },
+				new [] { typeof(P1) },
 				null);
 			DynamicMethod retmethod = new DynamicMethod(
 				objType.FullName + methodName,
 				typeof(T),
-				new[] { typeof(Object), typeof(P1) },
-				typeof(LCGReflection),
-				true);
+				new[] { typeof(Object), typeof(P1) });
 			ILGenerator ilgen = retmethod.GetILGenerator();
 			ilgen.Emit(OpCodes.Ldarg_0);
+			ilgen.Emit(OpCodes.Castclass, objType);
 			ilgen.Emit(OpCodes.Ldarg_1);
 			ilgen.Emit(OpCodes.Call, minfo);
 			ilgen.Emit(OpCodes.Ret);
