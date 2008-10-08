@@ -22,7 +22,30 @@ namespace DotNetMarche.Common.Test.Utils
 		{
 			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
 			Assert.That(func(suInstance), Is.EqualTo(1));
+		}		
+		
+		[Test]
+		public void LCGFuncNoArgInt32()
+		{
+			Func<Object, Int32> func = LCGReflection.ReflectFunction<Int32>(suType, "AMethod");
+			Assert.That(func(suInstance), Is.EqualTo(1));
 		}
+
+		[Test]
+		public void TestDoubleCallFuncNoArgInt32()
+		{
+			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
+			func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
+			Assert.That(func(suInstance), Is.EqualTo(1));
+		}		
+		
+		[Test]
+		public void LCGDoubleCallFuncNoArgInt32()
+		{
+			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
+			func = LCGReflection.ReflectFunction<Int32>(suType, "AMethod");
+			Assert.That(func(suInstance), Is.EqualTo(1));
+		}	
 
 		[Test]
 		public void TestFuncNoArgString()
@@ -38,10 +61,12 @@ namespace DotNetMarche.Common.Test.Utils
 		public void TestPerformanceGain()
 		{
 			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
+			Func<Object, Int32> lcgfunc = LCGReflection.ReflectFunction<Int32>(suType, "AMethod");
 			MethodInfo minfo = suType.GetMethod("AMethod", BindingFlags.Public | BindingFlags.Instance);
 			Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) minfo.Invoke(suInstance, new Object[] { }); });
 			Double ExpDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) func(suInstance); });
-			Console.WriteLine("Reflection = {0} Expression Tree {1}", RefDuration, ExpDuration);
+			Double LcgDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) lcgfunc(suInstance); });
+			Console.WriteLine("Reflection = {0} Expression Tree {1} LCG {2}", RefDuration, ExpDuration, LcgDuration);
 		}
 
 		/// <summary>
@@ -61,6 +86,13 @@ namespace DotNetMarche.Common.Test.Utils
 		public void TestFuncOneArgInt32()
 		{
 			Func<Object, Int32, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32, Int32>(suType, "BMethod");
+			Assert.That(func(suInstance, 4), Is.EqualTo(8));
+		}		
+		
+		[Test]
+		public void LcgTestFuncOneArgInt32()
+		{
+			Func<Object, Int32, Int32> func = LCGReflection.ReflectFunction<Int32, Int32>(suType, "BMethod");
 			Assert.That(func(suInstance, 4), Is.EqualTo(8));
 		}
 
