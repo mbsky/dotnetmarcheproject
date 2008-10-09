@@ -17,8 +17,6 @@ namespace DotNetMarche.Common.Test.Utils
 		private static readonly Type suType = Type.GetType("DotNetMarche.Common.Test.AuxClasses.SimpleUnknown, DotNetMarche.Common.Test");
 		private static readonly Object suInstance = Activator.CreateInstance(Type.GetType("DotNetMarche.Common.Test.AuxClasses.SimpleUnknown, DotNetMarche.Common.Test"));
 
-
-
 		[Test]
 		public void TestFuncNoArgInt32()
 		{
