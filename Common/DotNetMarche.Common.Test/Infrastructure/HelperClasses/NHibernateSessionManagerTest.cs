@@ -22,6 +22,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 	[TestFixture]
 	public class NHibernateSessionManagerTest
 	{
+		private const string SessionDataTypeName = "DotNetMarche.Infrastructure.Concrete.Repository.NHibernateSessionManager+SessionData, DotNetMarche.Infrastructure.Concrete";
 
 		#region Initialization and 4 phase test management
 
@@ -46,7 +47,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 			repo.ConnStrings.Add(
 				"NhConfig2", new ConnectionStringSettings(
 					"NhConfig2", "Data Source=:memory:;Version=3;New=True;", "System.Data.SQLite"));
-			
+
 			OverrideSettings = ConfigurationRegistry.Override(repo);
 
 			NHibernateSessionManager.GenerateDbFor("files//NhConfigFile1.cfg.xml");
@@ -88,7 +89,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 
 		[Test]
 		public void BasicGetSession()
-		{    
+		{
 			ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfig1.cfg.xml");
 			Assert.That(session, Is.Not.Null);
 		}
@@ -98,8 +99,8 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 		{
 			ISession session = NHibernateSessionManager.GetSession();
 			Assert.That(session, Is.Not.Null);
-		}		
-		
+		}
+
 		[Test, ExpectedException]
 		public void BasicGetSessionForWrongConfiguration()
 		{
@@ -112,8 +113,8 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 		{
 			ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfig1.cfg.xml");
 			Assert.That(overrideContext.storage.Count, Is.EqualTo(1));
-		}		
-		
+		}
+
 		[Test]
 		public void TwoSessionIsInTheContext()
 		{
@@ -158,7 +159,9 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 			mockRepository.ReplayAll();
 			String sessionkey = Invoker.InvokePrivate<String>(
 				typeof(NHibernateSessionManager), "GetContextSessionKeyForConfigFileName", "files\\NhConfig1.cfg.xml");
-			overrideContext.storage.Add(sessionkey, session);
+			Object obj = Invoker.CreatePrivateInstance(SessionDataTypeName);
+			Invoker.SetField(obj, "Session", session);
+			overrideContext.storage.Add(sessionkey, obj);
 			NHibernateSessionManager.CloseSessionFor("files\\NhConfig1.cfg.xml");
 		}
 
@@ -178,10 +181,14 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 			//Grab the key that session use to indicize the session, and preload the override context.
 			String sessionkey1 = Invoker.InvokePrivate<String>(
 				typeof(NHibernateSessionManager), "GetContextSessionKeyForConfigFileName", "files\\NhConfig1.cfg.xml");
-			overrideContext.storage.Add(sessionkey1, session);
+			Object obj = Invoker.CreatePrivateInstance(SessionDataTypeName);
+			Invoker.SetField(obj, "Session", session);
+			overrideContext.storage.Add(sessionkey1, obj);
 			String sessionkey2 = Invoker.InvokePrivate<String>(
 					typeof(NHibernateSessionManager), "GetContextSessionKeyForConfigFileName", "files\\NhConfig2.cfg.xml");
-			overrideContext.storage.Add(sessionkey2, session2);
+			obj = Invoker.CreatePrivateInstance(SessionDataTypeName);
+			Invoker.SetField(obj, "Session", session2);
+			overrideContext.storage.Add(sessionkey2, obj);
 			NHibernateSessionManager.CloseSessions();
 		}
 
@@ -201,7 +208,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 				using (ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
 				{
 					AnEntity e = AnEntity.CreateSome();
-					insertedId = (Int32) session.Save(e);
+					insertedId = (Int32)session.Save(e);
 				}
 				GlobalTransactionManager.DoomCurrentTransaction();
 			}
@@ -228,7 +235,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 					.ExecuteNonQuery();
 				using (ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
 				{
-					AnEntity e =  session.Load<AnEntity>(newId);
+					AnEntity e = session.Load<AnEntity>(newId);
 					Assert.That(e.Name, Is.EqualTo("xxx"));
 					Assert.That(e.Value, Is.EqualTo(108));
 				}
@@ -247,13 +254,33 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 				using (ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
 				{
 					AnEntity e = AnEntity.CreateSome();
-					insertedId = (Int32) session.Save(e);
+					insertedId = (Int32)session.Save(e);
 				}
 				//We are still in the transaction, ensure we can read the db in the same transaction
 				DbAssert.OnDb("main").WithQuery("select count(*) cnt from AnEntity where id = {id}")
 					.SetInt32Param("id", insertedId)
 					.That("cnt", Is.EqualTo(1)).ExecuteAssert();
 			}
+		}
+
+
+		[Test]
+		public void TestEnlistInGlobalTransactionReverseOrder()
+		{
+			Int32 insertedId;
+			using (ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
+			{
+				using (GlobalTransactionManager.BeginTransaction())
+				{
+					AnEntity e = AnEntity.CreateSome();
+					insertedId = (Int32)session.Save(e);
+					session.Flush();
+					GlobalTransactionManager.DoomCurrentTransaction();
+				}
+			}
+			DbAssert.OnQuery("select count(*) cnt from AnEntity where id = {id}")
+				.SetInt32Param("id", insertedId)
+				.That("cnt", Is.EqualTo(0)).ExecuteAssert();
 		}
 
 		#endregion

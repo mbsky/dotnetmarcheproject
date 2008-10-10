@@ -33,7 +33,15 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			public String ConnectionName;
 		}
 
+		private class SessionData
+		{
+			public ISession Session;
+			public String connectionName;
+		}
+
 		#endregion
+
+		#region Inner variables
 
 		private const String ContextSessionKey = "0C815000-9CC1-45c8-A143-71975F9F896B";
 		private static String GetContextSessionKeyForConfigFileName(String filename)
@@ -41,7 +49,60 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			return ContextSessionKey + filename;
 		}
 
+		private static NhibConfigData GetOrCreateConfigData(String configFileName)
+		{
+			NhibConfigData retvalue = factories.SafeGet(configFileName);
+			if (null == retvalue)
+			{
+				//This is the first time we ask for this configuration
+				NHibernate.Cfg.Configuration config = new NHibernate.Cfg.Configuration();
+				XDocument doc = XDocument.Load(configFileName);
+				XElement connStringElement = (from e in doc.Descendants()
+				                              where e.Attribute("name") != null && e.Attribute("name").Value == "connection.connection_string"
+				                              select e).Single();
+				String cnName = connStringElement.Value;
+				connStringElement.Value = ConfigurationRegistry.ConnectionString(connStringElement.Value).ConnectionString;
+				using (XmlReader reader = doc.CreateReader())
+				{
+					config.Configure(reader);
+				}
+				ISessionFactory factory = config.BuildSessionFactory();
+				retvalue = new NhibConfigData() { Configuration = config, SessionFactory = factory, ConnectionName = cnName };
+				factories.Add(configFileName, retvalue);
+			}
+			return retvalue;
+		}
+
 		private static Dictionary<String, NhibConfigData> factories = new Dictionary<String, NhibConfigData>();
+
+		#endregion
+
+		#region Initialization
+
+		static NHibernateSessionManager()
+		{
+			GlobalTransactionManager.TransactionOpened += OnTransactionStarted;
+		}
+
+		private static void OnTransactionStarted(Object sender, EventArgs e)
+		{
+			var openSessions = (from ck in CurrentContext.Enumerate()
+			                   where ck.Key.StartsWith(ContextSessionKey)
+			                   select ck.Value).Cast<SessionData>();
+			if (openSessions.Count() > 0)
+			{
+				foreach (var sessionData in openSessions)
+				{
+					DataAccess.ConnectionData data = DataAccess.GetActualConnectionData(sessionData.connectionName);
+					sessionData.Session.Disconnect();
+					sessionData.Session.Reconnect(data.Connection);
+				}
+			}
+		}
+
+		#endregion
+
+		#region Session Management
 
 		public static ISession GetSession()
 		{
@@ -65,21 +126,12 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 				{
 					session = configData.SessionFactory.OpenSession();
 				}
-				CurrentContext.SetData(GetContextSessionKeyForConfigFileName(configFileName), session);
+				CurrentContext.SetData(
+					GetContextSessionKeyForConfigFileName(configFileName), 
+					new SessionData() {Session = session, connectionName = configData.ConnectionName});
 				return session;
 			}
-			return (ISession)obj;
-		}
-
-		/// <summary>
-		/// Generate the database for the configuration required.
-		/// </summary>
-		/// <param name="configFileName"></param>
-		public static void GenerateDbFor(String configFileName)
-		{
-			NhibConfigData configData = GetOrCreateConfigData(configFileName);
-			SchemaExport se = new SchemaExport(configData.Configuration);
-			se.Create(false, true);
+			return ((SessionData) obj).Session;
 		}
 
 		/// <summary>
@@ -89,7 +141,8 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 		/// <param name="configFileName"></param>
 		public static void CloseSessionFor(string configFileName)
 		{
-			using (ISession session = (ISession)CurrentContext.GetData(GetContextSessionKeyForConfigFileName(configFileName)))
+			SessionData sd = (SessionData) CurrentContext.GetData(GetContextSessionKeyForConfigFileName(configFileName));
+			using (ISession session = sd.Session)
 			{
 				session.Flush();
 				CurrentContext.ReleaseData(GetContextSessionKeyForConfigFileName(configFileName));
@@ -111,31 +164,21 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			}
 		}
 
-		private static NhibConfigData GetOrCreateConfigData(String configFileName)
+		#endregion
+
+		#region Schema Management
+
+		/// <summary>
+		/// Generate the database for the configuration required.
+		/// </summary>
+		/// <param name="configFileName"></param>
+		public static void GenerateDbFor(String configFileName)
 		{
-			NhibConfigData retvalue = factories.SafeGet(configFileName);
-			if (null == retvalue)
-			{
-				//This is the first time we ask for this configuration
-				NHibernate.Cfg.Configuration config = new NHibernate.Cfg.Configuration();
-				XDocument doc = XDocument.Load(configFileName);
-				XElement connStringElement = (from e in doc.Descendants()
-														where e.Attribute("name") != null && e.Attribute("name").Value == "connection.connection_string"
-														select e).Single();
-				String cnName = connStringElement.Value;
-				connStringElement.Value = ConfigurationRegistry.ConnectionString(connStringElement.Value).ConnectionString;
-				using (XmlReader reader = doc.CreateReader())
-				{
-					config.Configure(reader);
-				}
-				ISessionFactory factory = config.BuildSessionFactory();
-				retvalue = new NhibConfigData() { Configuration = config, SessionFactory = factory, ConnectionName = cnName };
-				factories.Add(configFileName, retvalue);
-			}
-			return retvalue;
+			NhibConfigData configData = GetOrCreateConfigData(configFileName);
+			SchemaExport se = new SchemaExport(configData.Configuration);
+			se.Create(false, true);
 		}
 
-
-
+		#endregion
 	}
 }

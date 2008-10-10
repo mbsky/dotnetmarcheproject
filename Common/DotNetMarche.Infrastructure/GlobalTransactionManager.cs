@@ -13,6 +13,7 @@ namespace DotNetMarche.Infrastructure
 	/// </summary>
 	public static class GlobalTransactionManager
 	{
+
 		#region Basic Transaction Function
 
 		private const String TransactionScopeKey = "FF2DB3E7-1D02-4f60-9F78-CCD6DF7D2841";
@@ -55,6 +56,7 @@ namespace DotNetMarche.Infrastructure
 				CurrentContext.SetData(TransactionScopeKey, transactions);
 			}
 			CurrentTransactionList.Add(new Transaction(DateTime.Now));
+			OnTransactionOpened();
 			return new DisposableAction(CloseCurrentTransaction);
 		}
 
@@ -117,6 +119,18 @@ namespace DotNetMarche.Infrastructure
 			Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
 			CurrentTransactionList[transactionIndex].Enlist(completeTransactionCallback);
 			return new TransactionToken(transactionIndex);
+		}
+
+		#endregion
+
+		#region Events
+
+		public static event EventHandler TransactionOpened;
+		public static void OnTransactionOpened()
+		{
+			EventHandler temp = TransactionOpened;
+			if (null != temp)
+				temp(null, EventArgs.Empty);
 		}
 
 		#endregion
