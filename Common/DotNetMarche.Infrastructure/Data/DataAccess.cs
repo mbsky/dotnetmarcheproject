@@ -221,6 +221,7 @@ namespace DotNetMarche.Infrastructure.Data
 				}
 				catch
 				{
+                    //There is an exception, I doom the transaction.
 					token.Doom();
 					throw;
 				}

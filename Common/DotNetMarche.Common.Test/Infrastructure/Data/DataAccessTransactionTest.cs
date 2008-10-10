@@ -212,7 +212,69 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 				GlobalTransactionManager.DoomCurrentTransaction();
 			}
 			DbAssert.OnQuery("Select count(*) cnt from FirstTable").That("cnt", Is.EqualTo(0)).ExecuteAssert();
+		}		
+        
+        [Test]
+		public void MultipleTransactionSeeDataCommittedInNested()
+		{
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				using (GlobalTransactionManager.BeginTransaction())
+				{
+					Int32 count = DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (1, 'test1')").ExecuteNonQuery();
+					Assert.That(count, Is.EqualTo(1));
+				}
+                //First transaction is committed I should see data into db
+                GlobalTransactionManager.DoomCurrentTransaction();
+                DbAssert.OnQuery("Select count(*) cnt from FirstTable")
+                    .That("cnt", Is.EqualTo(1)).ExecuteAssert();
+			}
+            //Transaction is doomed, so the row disappeared
+            DbAssert.OnQuery("Select count(*) cnt from FirstTable")
+                    .That("cnt", Is.EqualTo(0)).ExecuteAssert();
+		}       
+        
+        [Test]
+		public void MultipleTransactionRollbackAndCommit()
+		{
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				using (GlobalTransactionManager.BeginTransaction())
+				{
+					DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (1, 'test1')").ExecuteNonQuery();
+					GlobalTransactionManager.DoomCurrentTransaction();
+				}
+                DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (1, 'test2')").ExecuteNonQuery();
+			}
+            //inner transaction is rollbacked, but the external one no, so I should see second row
+            DbAssert.OnQuery("Select count(*) cnt from FirstTable")
+                .That("cnt", Is.EqualTo(1)).ExecuteAssert();
+            DbAssert.OnQuery("Select field2 from FirstTable")
+                .That("field2", Is.EqualTo("test2")).ExecuteAssert();
 		}
+
+        [Test]
+        public void MultipleTransactionFirstRollbackThenCommitt()
+        {
+            using (GlobalTransactionManager.BeginTransaction())
+            {
+                using (GlobalTransactionManager.BeginTransaction())
+                {
+                    DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (1, 'test1')").ExecuteNonQuery();
+                    GlobalTransactionManager.DoomCurrentTransaction();
+                }
+                using (GlobalTransactionManager.BeginTransaction())
+                {
+                    DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (2, 'test2')").ExecuteNonQuery();
+                    DbAssert.OnQuery("Select count(*) cnt from FirstTable")
+                        .That("cnt", Is.EqualTo(1)).ExecuteAssert();
+                }
+                DbAssert.OnQuery("Select count(*) cnt from FirstTable")
+                        .That("cnt", Is.EqualTo(1)).ExecuteAssert();
+            }
+            DbAssert.OnQuery("Select count(*) cnt from FirstTable")
+                        .That("cnt", Is.EqualTo(1)).ExecuteAssert();
+        }	
 		#endregion
 	}
 }
