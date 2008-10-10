@@ -105,6 +105,33 @@ namespace DotNetMarche.TestHelpers.Reflection
 			PropertyInfo pi = obj.GetType().GetProperty(propertyName,
 				BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 			return (T)pi.GetValue(obj, new Object[] { });
+		}	
+		
+		public static void SetProp(object obj, string propertyName, Object value)
+		{
+			PropertyInfo pi = obj.GetType().GetProperty(propertyName,
+				BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+		 pi.SetValue(obj, value, new Object[] { });
+		}		
+		
+		public static T GetField<T>(object obj, string propertyName)
+		{
+			FieldInfo pi = obj.GetType().GetField(propertyName,
+				BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+			return (T)pi.GetValue(obj);
+		}	
+		
+		public static void SetField(object obj, string propertyName, Object value)
+		{
+			FieldInfo pi = obj.GetType().GetField(propertyName,
+				BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+		 pi.SetValue(obj, value);
+		}
+
+		public static Object CreatePrivateInstance(String typeName)
+		{
+			Type type = Type.GetType(typeName);
+			return Activator.CreateInstance(type);
 		}
 	}
 }
