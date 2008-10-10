@@ -19,7 +19,7 @@ namespace DotNetMarche.TestHelpers.Reflection
 		public static Tret InvokeFunc<Tret>(Func<Tret> func, Object obj, params Object[] parameters)
 		{
 			MethodInfo mi = Static.For(func);
-			return (Tret) mi.Invoke(obj, parameters);
+			return (Tret)mi.Invoke(obj, parameters);
 		}
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace DotNetMarche.TestHelpers.Reflection
 		public static Tret InvokePrivate<Tret>(String methodName, Object obj, params Object[] parameters)
 		{
 			MethodInfo mi = obj.GetType().GetMethod(methodName,
-			                                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+				BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 			return (Tret)mi.Invoke(obj, parameters);
 		}
 
@@ -96,8 +96,15 @@ namespace DotNetMarche.TestHelpers.Reflection
 		public static Tret InvokePrivate<Tret>(Type objectType, String methodName, params Object[] parameters)
 		{
 			MethodInfo mi = objectType.GetMethod(methodName,
-																 BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+				BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
 			return (Tret)mi.Invoke(null, parameters);
+		}
+
+		public static T GetProp<T>(object obj, string propertyName)
+		{
+			PropertyInfo pi = obj.GetType().GetProperty(propertyName,
+				BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+			return (T)pi.GetValue(obj, new Object[] { });
 		}
 	}
 }

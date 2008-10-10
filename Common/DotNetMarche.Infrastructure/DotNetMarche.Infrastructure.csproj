@@ -57,6 +57,7 @@
     <Compile Include="Base\IoC.cs" />
     <Compile Include="Base\SettingsRegistry.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
+    <Compile Include="Data\UnitOfWorkToken.cs" />
     <Compile Include="Exceptions\DotNetMarcheInfrastructureException.cs" />
     <Compile Include="Exceptions\VerificationFailedException.cs" />
     <Compile Include="GlobalTransactionManager.cs" />

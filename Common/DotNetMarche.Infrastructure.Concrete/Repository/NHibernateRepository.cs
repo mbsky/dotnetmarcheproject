@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DotNetMarche.Infrastructure.Data;
+using NHibernate;
 
 namespace DotNetMarche.Infrastructure.Concrete.Repository
 {
@@ -17,6 +18,10 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 		/// </summary>
 		public String ConfigurationFileName { get; set; }
 
+		private ISession CurrentSession
+		{
+			get { return NHibernateSessionManager.GetSessionFor(ConfigurationFileName); }
+		}
 		#endregion
 
 		#region IRepository<T> Members
@@ -28,17 +33,17 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 
 		public void Save(T obj)
 		{
-			throw new NotImplementedException();
+			CurrentSession.Save(obj);
 		}
 
 		public void Update(T obj)
 		{
-			throw new NotImplementedException();
+			CurrentSession.Update(obj);
 		}
 
 		public void SaveOrUpdate(T obj)
 		{
-			throw new NotImplementedException();
+			CurrentSession.SaveOrUpdate(obj);
 		}
 
 		public IQueryable<T> Query()

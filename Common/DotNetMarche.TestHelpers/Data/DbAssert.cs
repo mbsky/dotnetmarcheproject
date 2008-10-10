@@ -12,17 +12,40 @@ namespace DotNetMarche.TestHelpers.Data
 	{
 		#region Fields
 
-		private String query;
+		private SqlQuery query;
 
-		private Dictionary<String, Constraint> constraints = new Dictionary<String, Constraint>();
+		private readonly Dictionary<String, Constraint> constraints = new Dictionary<String, Constraint>();
 
-		private String connectionStringName;
+		internal DbAssert()
+		{
+		}
+
+		internal DbAssert(String connectionStringName, String queryText)
+		{
+			query = DataAccess.OnDb(connectionStringName).CreateQuery(queryText);
+		}
 
 		#endregion
 
 		public static DbAssert OnQuery(String query)
 		{
-			return new DbAssert(query);
+			return new DbAssert() {query = DataAccess.CreateQuery(query)};
+		}
+
+		public DbAssert WithQuery(String queryString)
+		{
+			if (null != query)
+				query.CreateQuery(queryString);
+			else
+				query = DataAccess.CreateQuery(queryString);
+			return this;
+		}
+
+
+		public DbAssert SetInt32Param(String paramName, Int32 value)
+		{
+			query.SetInt32Param(paramName, value);
+			return this;
 		}
 
 		public DbAssert That(String field, Constraint constraint)
@@ -31,14 +54,9 @@ namespace DotNetMarche.TestHelpers.Data
 			return this;
 		}
 
-		private DbAssert(string query)
-		{
-			this.query = query;
-		}
-
 		public void ExecuteAssert()
 		{
-			DataAccess.CreateQuery(query).OnDb(connectionStringName).ExecuteReader((dr) =>
+			query.ExecuteReader((dr) =>
 				{
 					Assert.That(dr.Read(), "Query " + query + " did not return suitable data");
 					foreach (KeyValuePair<String, Constraint> kvp in constraints)
@@ -53,10 +71,24 @@ namespace DotNetMarche.TestHelpers.Data
 		/// </summary>
 		/// <param name="connectionString"></param>
 		/// <returns></returns>
-		public DbAssert OnDb(String connectionString)
+		public static DbAssertOnDbStub OnDb(String connectionString)
 		{
-			connectionStringName = connectionString;
-			return this;
+			return new DbAssertOnDbStub(connectionString);
+		}
+	}
+
+	public class DbAssertOnDbStub
+	{
+		private String connectionString;
+
+		internal DbAssertOnDbStub(string connectionString)
+		{
+			this.connectionString = connectionString;
+		}
+
+		public DbAssert WithQuery(String query)
+		{
+			return new DbAssert(connectionString, query);
 		}
 	}
 }

@@ -80,6 +80,7 @@
     <Compile Include="Infrastructure\GenericHelpers.cs" />
     <Compile Include="Infrastructure\GlobalTransactionTest.cs" />
     <Compile Include="Infrastructure\HelperClasses\NHibernateSessionManagerTest.cs" />
+    <Compile Include="Infrastructure\Repository\Helpers\TSSInMemoryRepository.cs" />
     <Compile Include="Infrastructure\Repository\InMemoryRepositoryTest.cs" />
     <Compile Include="Infrastructure\Repository\NHibernateRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,6 +135,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Concrete\Files\CastleTest1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Infrastructure\Entities\AnEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\NhConfigFile1.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

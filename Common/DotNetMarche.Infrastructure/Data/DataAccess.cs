@@ -57,9 +57,10 @@ namespace DotNetMarche.Infrastructure.Data
 						newConnData = new ConnectionData(connectionName);
 						GlobalTransactionManager.TransactionContext.Set(GetKeyFromConnName(connectionName), newConnData, 0);
 						GlobalTransactionManager.Enlist(newConnData.CloseConnection, 0);
-					} else
+					}
+					else
 					{
-						newConnData = (ConnectionData) connData;
+						newConnData = (ConnectionData)connData;
 					}
 
 					GlobalTransactionManager.TransactionToken lasttoken = null;
@@ -77,9 +78,9 @@ namespace DotNetMarche.Infrastructure.Data
 					}
 					//Return the last token, the one corresponding to the current transaction level.
 					return lasttoken;
-				}	
+				}
 			}
-			
+
 			//We are not in nested transaction and there is not connection data, create for the first time
 			newConnData = new ConnectionData(connectionName);
 			GlobalTransactionManager.TransactionToken token =
@@ -180,19 +181,53 @@ namespace DotNetMarche.Infrastructure.Data
 		/// format is cached with the type of the parameter
 		/// </summary>
 		/// <param name="command"></param>
+		/// <param name="connectionStringName">Connection String name is needed because if 
+		/// we did not already get the format of the parameter we need the connection to 
+		/// retrieve the format from the schema.</param>
 		/// <returns></returns>
-		private static String GetParameterFormat(DbCommand command)
+		private static String GetParameterFormat(DbCommand command, String connectionStringName)
 		{
-
 			if (!mParametersFormat.ContainsKey(command.GetType()))
 			{
-				mParametersFormat.Add(
-					command.GetType(),
-					command.Connection.GetSchema("DataSourceInformation")
-						.Rows[0]["ParameterMarkerFormat"].ToString());
+				ConnectionStringSettings cn;
+				if (String.IsNullOrEmpty(connectionStringName))
+					cn = ConfigurationRegistry.MainConnectionString;
+				else
+					cn = ConfigurationRegistry.ConnectionString(connectionStringName);
+				DbProviderFactory Factory = DbProviderFactories.GetFactory(cn.ProviderName);
+				using (DbConnection conn = Factory.CreateConnection())
+				{
+					conn.ConnectionString = cn.ConnectionString;
+					conn.Open();
+					mParametersFormat.Add(
+										command.GetType(),
+										conn.GetSchema("DataSourceInformation")
+											.Rows[0]["ParameterMarkerFormat"].ToString());
+				}
 			}
 			return mParametersFormat[command.GetType()];
 		}
+
+		/// <summary>
+		/// Gets the format of the parameter, to avoid query the schema the parameter
+		/// format is cached with the type of the parameter
+		/// </summary>
+		/// <param name="command"></param>
+		/// <returns></returns>
+		private static String GetParameterFormat(DbCommand command)
+		{
+			if (!mParametersFormat.ContainsKey(command.GetType()))
+			{
+
+				mParametersFormat.Add(
+									command.GetType(),
+									command.Connection.GetSchema("DataSourceInformation")
+										.Rows[0]["ParameterMarkerFormat"].ToString());
+
+			}
+			return mParametersFormat[command.GetType()];
+		}
+
 		#endregion
 
 		#region Execution core
@@ -221,7 +256,7 @@ namespace DotNetMarche.Infrastructure.Data
 				}
 				catch
 				{
-                    //There is an exception, I doom the transaction.
+					//There is an exception, I doom the transaction.
 					token.Doom();
 					throw;
 				}
@@ -427,6 +462,15 @@ namespace DotNetMarche.Infrastructure.Data
 
 		public static String GetParameterName(
 			DbCommand command,
+			String parameterName,
+			String connectionStringName)
+		{
+
+			return String.Format(GetParameterFormat(command, connectionStringName), parameterName);
+		}
+
+		public static String GetParameterName(
+			DbCommand command,
 			String parameterName)
 		{
 
@@ -445,6 +489,11 @@ namespace DotNetMarche.Infrastructure.Data
 		public static SqlQuery CreateStored(string s)
 		{
 			return new SqlQuery(s, CommandType.StoredProcedure);
+		}
+
+		public static SqlQuery OnDb(String connectionStringName)
+		{
+			return new SqlQuery(connectionStringName);
 		}
 
 		/// <summary>
