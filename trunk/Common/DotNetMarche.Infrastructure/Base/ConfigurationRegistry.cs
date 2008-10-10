@@ -39,6 +39,7 @@ namespace DotNetMarche.Infrastructure.Base
 		/// <returns></returns>
 		public static ConnectionStringSettings ConnectionString(String name)
 		{
+			if (String.IsNullOrEmpty(name)) return MainConnectionString;
 			return registry.ConnectionString(name);
 		}
 	}

@@ -33,6 +33,7 @@ namespace DotNetMarche.Infrastructure.Data
 		internal SqlQuery(string query, CommandType cmdType)
 		{
 			InitQuery(cmdType, query);
+			ConnectionStringName = String.Empty;
 		}
 
 		internal SqlQuery(String connectionStringName)
