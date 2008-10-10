@@ -61,7 +61,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			Assert.That(count, Is.EqualTo(1));
 			DbAssert.OnQuery("Select count(*) cnt from testtable").That("cnt", Is.EqualTo(1)).ExecuteAssert();
 		}
-
+		 
 		[Test]
 		public void ChangeAnotherConnectionString()
 		{

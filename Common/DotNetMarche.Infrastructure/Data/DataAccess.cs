@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using DotNetMarche.Infrastructure.Base;
+using DotNetMarche.Infrastructure.Helpers;
 using Microsoft.Win32;
 
 namespace DotNetMarche.Infrastructure.Data
@@ -25,6 +26,19 @@ namespace DotNetMarche.Infrastructure.Data
 		internal static GlobalTransactionManager.TransactionToken CreateConnection()
 		{
 			return CreateConnection(null);
+		}
+
+		/// <summary>
+		/// This function can be invoked only inside a transaction, it ensure that the connection data
+		/// was correctly created and transaction initialized.
+		/// </summary>
+		/// <param name="connectionName"></param>
+		/// <returns></returns>
+		public static ConnectionData GetActualConnectionData(String connectionName)
+		{
+			Verify.That(GlobalTransactionManager.IsInTransaction,
+							"Cannot call GetActualConnectionData if we are not into a transaction");
+			return (ConnectionData)CreateConnection(connectionName).GetFromTransactionContext(GetKeyFromConnName(connectionName));
 		}
 
 		/// <summary>
@@ -91,21 +105,25 @@ namespace DotNetMarche.Infrastructure.Data
 
 		private static void DoNothing(Boolean b) { }
 
+		#endregion
+
+		#region Inner classes
+
 		/// <summary>
 		/// Keep all the objects needed to access the database in a single
 		/// class. 
 		/// </summary>
-		private class ConnectionData
+		public class ConnectionData
 		{
 			public readonly DbConnection Connection;
 			public readonly Stack<DbTransaction> TransactionStack = new Stack<DbTransaction>();
 			public readonly DbProviderFactory Factory;
-			private Boolean nested = false;
 
 			public DbTransaction CurrentTransaction
 			{
 				get { return TransactionStack.Peek(); }
 			}
+
 			/// <summary>
 			/// In the constructor we creates all the object we need to access the database.
 			/// </summary>
@@ -154,14 +172,28 @@ namespace DotNetMarche.Infrastructure.Data
 			}
 		}
 
+		public struct ConnectionObjects
+		{
+			private DbConnection connection;
+
+		}
+
 		#endregion
 
 		#region Static Initialization
 
+		/// <summary>
+		/// Some providers does not implements correctly the ParameterMarkerFormat
+		/// technique to find the syntax of the parameters
+		/// </summary>
+		private static Dictionary<String, String> wrongProviders;
+
 		static DataAccess()
 		{
-			mParametersFormat = new Dictionary<Type, String>();
-			mParametersFormat.Add(typeof(SqlCommand), "@{0}");
+			mParametersFormat = new Dictionary<String, String>();
+			wrongProviders = new Dictionary<String, String>();
+			wrongProviders.Add("System.Data.SqlClient.SqlCommand", "@{0}");
+			wrongProviders.Add("System.Data.SQLite.SQLiteCommand", ":{0}");
 		}
 
 		#endregion
@@ -174,7 +206,7 @@ namespace DotNetMarche.Infrastructure.Data
 		/// To cache the format we use a dictionary with command type as a key and
 		/// string format as value.
 		/// </summary>
-		private readonly static Dictionary<Type, String> mParametersFormat;
+		private readonly static Dictionary<String, String> mParametersFormat;
 
 		/// <summary>
 		/// Gets the format of the parameter, to avoid query the schema the parameter
@@ -187,45 +219,58 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <returns></returns>
 		private static String GetParameterFormat(DbCommand command, String connectionStringName)
 		{
-			if (!mParametersFormat.ContainsKey(command.GetType()))
+			if (!mParametersFormat.ContainsKey(connectionStringName))
 			{
-				ConnectionStringSettings cn;
-				if (String.IsNullOrEmpty(connectionStringName))
-					cn = ConfigurationRegistry.MainConnectionString;
-				else
-					cn = ConfigurationRegistry.ConnectionString(connectionStringName);
-				DbProviderFactory Factory = DbProviderFactories.GetFactory(cn.ProviderName);
-				using (DbConnection conn = Factory.CreateConnection())
+				String typeName = command.GetType().FullName;
+				if (wrongProviders.ContainsKey(typeName))
 				{
-					conn.ConnectionString = cn.ConnectionString;
-					conn.Open();
-					mParametersFormat.Add(
-										command.GetType(),
-										conn.GetSchema("DataSourceInformation")
-											.Rows[0]["ParameterMarkerFormat"].ToString());
+					mParametersFormat.Add(connectionStringName, wrongProviders[typeName]);
+				}
+				else
+				{
+					ConnectionStringSettings cn;
+					if (String.IsNullOrEmpty(connectionStringName))
+						cn = ConfigurationRegistry.MainConnectionString;
+					else
+						cn = ConfigurationRegistry.ConnectionString(connectionStringName);
+					DbProviderFactory Factory = DbProviderFactories.GetFactory(cn.ProviderName);
+					using (DbConnection conn = Factory.CreateConnection())
+					{
+						conn.ConnectionString = cn.ConnectionString;
+						conn.Open();
+						mParametersFormat.Add(
+											typeName,
+											conn.GetSchema("DataSourceInformation")
+												.Rows[0]["ParameterMarkerFormat"].ToString());
+					}
 				}
 			}
-			return mParametersFormat[command.GetType()];
+			return mParametersFormat[connectionStringName];
 		}
 
 		/// <summary>
 		/// Gets the format of the parameter, to avoid query the schema the parameter
-		/// format is cached with the type of the parameter
+		/// format is cached with the type of the parameter. This version is used 
+		/// for the old interface of DataAccess based on anonimous function.
 		/// </summary>
 		/// <param name="command"></param>
 		/// <returns></returns>
 		private static String GetParameterFormat(DbCommand command)
 		{
-			if (!mParametersFormat.ContainsKey(command.GetType()))
+			String typeName = command.GetType().FullName;
+			if (!mParametersFormat.ContainsKey(typeName))
 			{
-
-				mParametersFormat.Add(
-									command.GetType(),
-									command.Connection.GetSchema("DataSourceInformation")
-										.Rows[0]["ParameterMarkerFormat"].ToString());
-
+				if (wrongProviders.ContainsKey(typeName))
+				{
+					mParametersFormat.Add(typeName, wrongProviders[typeName]);
+				} else
+				{
+					mParametersFormat.Add(typeName,
+					command.Connection.GetSchema("DataSourceInformation")
+						.Rows[0]["ParameterMarkerFormat"].ToString());
+				}
 			}
-			return mParametersFormat[command.GetType()];
+			return mParametersFormat[typeName];
 		}
 
 		#endregion

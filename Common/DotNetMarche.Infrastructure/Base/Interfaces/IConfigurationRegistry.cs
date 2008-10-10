@@ -24,5 +24,6 @@ namespace DotNetMarche.Infrastructure.Base.Interfaces
 		/// <param name="name"></param>
 		/// <returns></returns>
 		ConnectionStringSettings ConnectionString(String name);
+
 	}
 }

@@ -28,7 +28,6 @@ namespace DotNetMarche.Common.Test.Infrastructure.Repository
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
 		{
-			NHibernateSessionManager.GenerateDbFor(ConfigFileName);
 			sut = new NHibernateRepository<AnEntity>();
 			sut.ConfigurationFileName = ConfigFileName;
 			repo = new InMemoryConfigurationRegistry();
@@ -36,6 +35,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.Repository
 				"main", new ConnectionStringSettings(
 					"main", "Data Source=DbFile1.db;Version=3", "System.Data.SQLite"));
 			OverrideSettings = ConfigurationRegistry.Override(repo);
+			NHibernateSessionManager.GenerateDbFor(ConfigFileName);
 		}
 
 		[TestFixtureTearDown]

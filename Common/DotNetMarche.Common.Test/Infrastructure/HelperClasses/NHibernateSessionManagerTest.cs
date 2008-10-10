@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using DotNetMarche.Common.Test.AuxClasses;
+using DotNetMarche.Common.Test.Infrastructure.Entities;
+using DotNetMarche.Infrastructure;
 using DotNetMarche.Infrastructure.Base;
+using DotNetMarche.Infrastructure.Concrete;
 using DotNetMarche.Infrastructure.Concrete.Repository;
+using DotNetMarche.Infrastructure.Data;
+using DotNetMarche.TestHelpers.Data;
 using DotNetMarche.TestHelpers.Reflection;
 using NHibernate;
 using NUnit.Framework;
@@ -19,21 +25,38 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 
 		#region Initialization and 4 phase test management
 
+		private InMemoryConfigurationRegistry repo;
 		private IDisposable OverrideContextCleanUp;
 		private TestContext overrideContext;
 		private MockRepository mockRepository;
+		private IDisposable OverrideSettings;
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
 		{
 			overrideContext = new TestContext();
 			OverrideContextCleanUp = CurrentContext.Override(overrideContext);
+			repo = new InMemoryConfigurationRegistry();
+			repo.ConnStrings.Add(
+				"main", new ConnectionStringSettings(
+					"main", "Data Source=DbFile1.db;Version=3", "System.Data.SQLite"));
+			repo.ConnStrings.Add(
+				"NhConfig1", new ConnectionStringSettings(
+					"NhConfig1", "Data Source=:memory:;Version=3;New=True;", "System.Data.SQLite"));
+			repo.ConnStrings.Add(
+				"NhConfig2", new ConnectionStringSettings(
+					"NhConfig2", "Data Source=:memory:;Version=3;New=True;", "System.Data.SQLite"));
+			
+			OverrideSettings = ConfigurationRegistry.Override(repo);
+
+			NHibernateSessionManager.GenerateDbFor("files//NhConfigFile1.cfg.xml");
 		}
 
 		[TestFixtureTearDown]
 		public void TestFixtureTearDown()
 		{
 			OverrideContextCleanUp.Dispose();
+			OverrideSettings.Dispose();
 		}
 
 		[SetUp]
@@ -51,6 +74,18 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 
 		#endregion
 
+		#region Helpers
+
+		private Int32 curId = 999;
+		private Int32 GetNewId()
+		{
+			return curId++;
+		}
+
+		#endregion
+
+		#region Basic Tests
+
 		[Test]
 		public void BasicGetSession()
 		{    
@@ -62,6 +97,13 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 		public void BasicGetSessionForDefaultConfiguration()
 		{
 			ISession session = NHibernateSessionManager.GetSession();
+			Assert.That(session, Is.Not.Null);
+		}		
+		
+		[Test, ExpectedException]
+		public void BasicGetSessionForWrongConfiguration()
+		{
+			ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigWrong.cfg.xml");
 			Assert.That(session, Is.Not.Null);
 		}
 
@@ -142,5 +184,78 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 			overrideContext.storage.Add(sessionkey2, session2);
 			NHibernateSessionManager.CloseSessions();
 		}
+
+		#endregion
+
+		#region Test With Global Transaction Manager
+
+		/// <summary>
+		/// Verify that the factory return a session that is enlisted in the global transaction.
+		/// </summary>
+		[Test]
+		public void TestEnlistInGlobalTransaction()
+		{
+			Int32 insertedId;
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				using (ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
+				{
+					AnEntity e = AnEntity.CreateSome();
+					insertedId = (Int32) session.Save(e);
+				}
+				GlobalTransactionManager.DoomCurrentTransaction();
+			}
+			DbAssert.OnQuery("select count(*) cnt from AnEntity where id = {id}")
+				.SetInt32Param("id", insertedId)
+				.That("cnt", Is.EqualTo(0)).ExecuteAssert();
+		}
+
+		/// <summary>
+		/// Verify that the factory return a session that is enlisted in the global transaction.
+		/// </summary>
+		[Test]
+		public void TestEnlistInGlobalTransactionReadDataAccessWrittenData()
+		{
+			Int32 insertedId;
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				Int32 newId = GetNewId();
+				DataAccess.OnDb("main")
+					.CreateQuery("insert into AnEntity (id, name, value) values ({pid}, {pname}, {pvalue})")
+					.SetInt32Param("pid", newId)
+					.SetStringParam("pname", "xxx")
+					.SetInt32Param("pvalue", 108)
+					.ExecuteNonQuery();
+				using (ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
+				{
+					AnEntity e =  session.Load<AnEntity>(newId);
+					Assert.That(e.Name, Is.EqualTo("xxx"));
+					Assert.That(e.Value, Is.EqualTo(108));
+				}
+			}
+		}
+
+		/// <summary>
+		/// Verify that the factory return a session that is enlisted in the global transaction.
+		/// </summary>
+		[Test]
+		public void TestEnlistInGlobalTransactionRead()
+		{
+			Int32 insertedId;
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				using (ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
+				{
+					AnEntity e = AnEntity.CreateSome();
+					insertedId = (Int32) session.Save(e);
+				}
+				//We are still in the transaction, ensure we can read the db in the same transaction
+				DbAssert.OnDb("main").WithQuery("select count(*) cnt from AnEntity where id = {id}")
+					.SetInt32Param("id", insertedId)
+					.That("cnt", Is.EqualTo(1)).ExecuteAssert();
+			}
+		}
+
+		#endregion
 	}
 }
