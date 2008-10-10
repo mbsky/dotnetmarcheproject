@@ -53,7 +53,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			dbFile = new FileInfo("DataAccessTransactionTest2.db");
 			if (dbFile.Exists) dbFile.Delete();
 			repo.ConnStrings.Add("secondary", new ConnectionStringSettings("secondary", "data source=" + dbFile.FullName, "System.Data.SQLite"));
-			DataAccess.CreateQuery("CREATE TABLE SecondaryFirstTable(field1 int, field2 varchar(50))").OnDb("secondary").ExecuteNonQuery();
+			DataAccess.OnDb("secondary").CreateQuery("CREATE TABLE SecondaryFirstTable(field1 int, field2 varchar(50))").ExecuteNonQuery();
 		}
 
 		/// <summary>
@@ -63,7 +63,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 		public void SetUp()
 		{
 			DataAccess.CreateQuery("DELETE FROM FirstTable").ExecuteNonQuery();
-			DataAccess.CreateQuery("DELETE FROM SecondaryFirstTable").OnDb("secondary").ExecuteNonQuery();
+			DataAccess.OnDb("secondary").CreateQuery("DELETE FROM SecondaryFirstTable").ExecuteNonQuery();
 		}
 
 		#endregion
@@ -114,14 +114,14 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			{
 				Int32 count = DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (1, 'test')").ExecuteNonQuery();
 				Assert.That(count, Is.EqualTo(1));
-				count = DataAccess.CreateQuery("Insert into SecondaryFirstTable (field1, field2) values (1, 'test')")
-					.OnDb("secondary")
+				count = DataAccess.OnDb("secondary")
+					.CreateQuery("Insert into SecondaryFirstTable (field1, field2) values (1, 'test')")
 					.ExecuteNonQuery();
 				Assert.That(count, Is.EqualTo(1));
 				GlobalTransactionManager.DoomCurrentTransaction();
 			}
 			DbAssert.OnQuery("Select count(*) cnt from FirstTable").That("cnt", Is.EqualTo(0)).ExecuteAssert();
-			DbAssert.OnQuery("Select count(*) cnt from SecondaryFirstTable").OnDb("secondary").That("cnt", Is.EqualTo(0)).ExecuteAssert();
+			DbAssert.OnDb("secondary").WithQuery("Select count(*) cnt from SecondaryFirstTable").That("cnt", Is.EqualTo(0)).ExecuteAssert();
 		}
 
 		/// <summary>
@@ -136,8 +136,8 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 				{
 					Int32 count = DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (1, 'test')").ExecuteNonQuery();
 					Assert.That(count, Is.EqualTo(1));
-					count = DataAccess.CreateQuery("Insert into SecondaryFirstTable (field1, field2) values (1, 'test')")
-						.OnDb("secondary")
+					count = DataAccess.OnDb("secondary")
+						.CreateQuery("Insert into SecondaryFirstTable (field1, field2) values (1, 'test')")
 						.ExecuteNonQuery();
 					Assert.That(count, Is.EqualTo(1));
 					throw new ApplicationException();
@@ -147,7 +147,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			}
 
 			DbAssert.OnQuery("Select count(*) cnt from FirstTable").That("cnt", Is.EqualTo(0)).ExecuteAssert();
-			DbAssert.OnQuery("Select count(*) cnt from SecondaryFirstTable").OnDb("secondary").That("cnt", Is.EqualTo(0)).ExecuteAssert();
+			DbAssert.OnDb("secondary").WithQuery("Select count(*) cnt from SecondaryFirstTable").That("cnt", Is.EqualTo(0)).ExecuteAssert();
 		}
 
 		/// <summary>
@@ -160,12 +160,12 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			{
 				DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (1, 'test')")
 					.ExecuteNonQuery();
-				DataAccess.CreateQuery("Insert into SecondaryFirstTable (field1, field2) values (1, 'test')")
-					.OnDb("secondary")
+				DataAccess.OnDb("secondary")
+					.CreateQuery("Insert into SecondaryFirstTable (field1, field2) values (1, 'test')")
 					.ExecuteNonQuery();
 				//VErify that in transaction all data is queryable
 				DbAssert.OnQuery("Select count(*) cnt from FirstTable").That("cnt", Is.EqualTo(1)).ExecuteAssert();
-				DbAssert.OnQuery("Select count(*) cnt from SecondaryFirstTable").OnDb("secondary").That("cnt", Is.EqualTo(1)).ExecuteAssert();
+				DbAssert.OnDb("secondary").WithQuery("Select count(*) cnt from SecondaryFirstTable").That("cnt", Is.EqualTo(1)).ExecuteAssert();
 				GlobalTransactionManager.DoomCurrentTransaction();
 			}
 		}
@@ -180,14 +180,14 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 			{
 				Int32 count = DataAccess.CreateQuery("Insert into FirstTable (field1, field2) values (1, 'test')").ExecuteNonQuery();
 				Assert.That(count, Is.EqualTo(1));
-				count = DataAccess.CreateQuery("Insert into SecondaryFirstTable (field1, field2) values (1, 'test')")
-					.OnDb("secondary")
+				count = DataAccess.OnDb("secondary")
+					.CreateQuery("Insert into SecondaryFirstTable (field1, field2) values (1, 'test')")
 					.ExecuteNonQuery();
 				Assert.That(count, Is.EqualTo(1));
 
 			}
 			DbAssert.OnQuery("Select count(*) cnt from FirstTable").That("cnt", Is.EqualTo(1)).ExecuteAssert();
-			DbAssert.OnQuery("Select count(*) cnt from SecondaryFirstTable").OnDb("secondary").That("cnt", Is.EqualTo(1)).ExecuteAssert();
+			DbAssert.OnDb("secondary").WithQuery("Select count(*) cnt from SecondaryFirstTable").That("cnt", Is.EqualTo(1)).ExecuteAssert();
 		}
 
 		#endregion

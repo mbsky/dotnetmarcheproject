@@ -27,7 +27,7 @@ namespace DotNetMarche.Infrastructure.Concrete
 
 		#region Internal structures
 
-		private Dictionary<Object, T> context = new Dictionary<Object, T>();
+		protected Dictionary<Object, T> context = new Dictionary<Object, T>();
 
 		/// <summary>
 		/// Used for generation of Id.

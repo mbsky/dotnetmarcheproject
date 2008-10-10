@@ -65,7 +65,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 		[Test]
 		public void ChangeAnotherConnectionString()
 		{
-			Int64 count = DataAccess.CreateQuery("select count(*) from Table1").OnDb("preload1").ExecuteScalar<Int64>();
+			Int64 count = DataAccess.OnDb("preload1").CreateQuery("select count(*) from Table1").ExecuteScalar<Int64>();
 			Assert.That(count, Is.EqualTo(2));
 		}		
 

@@ -7,6 +7,7 @@ using DotNetMarche.Infrastructure.Helpers;
 using NHibernate;
 using NHibernate.Cfg;
 using DotNetMarche.Utils;
+using NHibernate.Tool.hbm2ddl;
 
 namespace DotNetMarche.Infrastructure.Concrete.Repository
 {
@@ -43,12 +44,23 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			Object obj = CurrentContext.GetData(GetContextSessionKeyForConfigFileName(configFileName));
 			if (null == obj)
 			{
-				NhibConfigData configData = GetDataFromConfigName(configFileName);
+				NhibConfigData configData = GetOrCreateConfigData(configFileName);
 				ISession session = configData.SessionFactory.OpenSession();
 				CurrentContext.SetData(GetContextSessionKeyForConfigFileName(configFileName), session);
 				return session;
 			}
 			return (ISession)obj;
+		}
+
+		/// <summary>
+		/// Generate the database for the configuration required.
+		/// </summary>
+		/// <param name="configFileName"></param>
+		public static void GenerateDbFor(String configFileName)
+		{
+			NhibConfigData configData = GetOrCreateConfigData(configFileName);
+			SchemaExport se = new SchemaExport(configData.Configuration);
+			se.Create(false, true);
 		}
 
 		/// <summary>
@@ -80,7 +92,7 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			}
 		}
 
-		private static NhibConfigData GetDataFromConfigName(String configFileName)
+		private static NhibConfigData GetOrCreateConfigData(String configFileName)
 		{
 			NhibConfigData retvalue = factories.SafeGet(configFileName);
 			if (null == retvalue)

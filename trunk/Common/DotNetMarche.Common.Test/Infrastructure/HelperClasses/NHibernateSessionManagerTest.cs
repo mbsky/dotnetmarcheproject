@@ -133,6 +133,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 			Expect.Call(session2.Flush);
 			Expect.Call(session2.Dispose);
 			mockRepository.ReplayAll();
+			//Grab the key that session use to indicize the session, and preload the override context.
 			String sessionkey1 = Invoker.InvokePrivate<String>(
 				typeof(NHibernateSessionManager), "GetContextSessionKeyForConfigFileName", "files\\NhConfig1.cfg.xml");
 			overrideContext.storage.Add(sessionkey1, session);

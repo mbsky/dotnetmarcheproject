@@ -17,12 +17,27 @@ namespace DotNetMarche.Infrastructure.Data
 		internal StringBuilder query = new StringBuilder();
 		internal String ConnectionStringName { get; set; }
 
-		internal SqlQuery(string query, CommandType cmdType)
+		/// <summary>
+		/// Init all the data needed by the data access.
+		/// </summary>
+		/// <param name="cmdType"></param>
+		/// <param name="queryText"></param>
+		private void InitQuery(CommandType cmdType, string queryText)
 		{
 			Factory = DataAccess.GetFactory();
 			Command = Factory.CreateCommand();
 			Command.CommandType = cmdType;
-			this.query.Append(query);
+			query.Append(queryText);
+		}
+
+		internal SqlQuery(string query, CommandType cmdType)
+		{
+			InitQuery(cmdType, query);
+		}
+
+		internal SqlQuery(String connectionStringName)
+		{
+			ConnectionStringName = connectionStringName;
 		}
 
 		#endregion
@@ -105,7 +120,7 @@ namespace DotNetMarche.Infrastructure.Data
 
 		public void SetParam(string commandName, Object value, DbType type)
 		{
-			String paramName = DataAccess.GetParameterName(Command, commandName);
+			String paramName = DataAccess.GetParameterName(Command, commandName, ConnectionStringName);
 			if (Command.CommandType == CommandType.Text)
 				query.Replace("{" + commandName + "}", paramName);
 			DbParameter param = Factory.CreateParameter();
@@ -117,15 +132,14 @@ namespace DotNetMarche.Infrastructure.Data
 
 		#endregion
 
-		#region Database management
+		#region Fluent Itnerface for creation
 
-		public SqlQuery OnDb(String connectionStringName)
+		public SqlQuery CreateQuery(string s)
 		{
-			ConnectionStringName = connectionStringName;
+			InitQuery(CommandType.Text, s);
 			return this;
 		}
 
 		#endregion
-
 	}
 }

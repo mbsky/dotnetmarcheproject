@@ -14,8 +14,6 @@ namespace DotNetMarche.Infrastructure.Data
 	/// </summary>
 	public static class UnitOfWork
 	{
-		private class UnitOfWorkToken {}
-
 		private const String UnitOfWorkScopeKey = "482B5186-B41B-4f84-91F4-7C8E5835758F";
 
 		public static Boolean IsInUnitOfWork
@@ -27,7 +25,7 @@ namespace DotNetMarche.Infrastructure.Data
 		/// You can start nested disposable action.
 		/// </summary>
 		/// <returns></returns>
-		public static DisposableAction Start()
+		public static UnitOfWorkToken Start()
 		{
 			throw new NotImplementedException();
 			//if (IsInUnitOfWork)

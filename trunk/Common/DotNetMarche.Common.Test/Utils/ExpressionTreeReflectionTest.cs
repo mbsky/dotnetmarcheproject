@@ -57,17 +57,17 @@ namespace DotNetMarche.Common.Test.Utils
 		/// <summary>
 		/// Verify performance gain with expression tree instead of reflection.
 		/// </summary>
-		[Test, Explicit]
-		public void TestPerformanceGain()
-		{
-			Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
-			Func<Object, Int32> lcgfunc = LCGReflection.ReflectFunction<Int32>(suType, "AMethod");
-			MethodInfo minfo = suType.GetMethod("AMethod", BindingFlags.Public | BindingFlags.Instance);
-			Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) minfo.Invoke(suInstance, new Object[] { }); });
-			Double ExpDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) func(suInstance); });
-			Double LcgDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 100000; ++I) lcgfunc(suInstance); });
-			Console.WriteLine("Reflection = {0} Expression Tree {1} LCG {2}", RefDuration, ExpDuration, LcgDuration);
-		}
+[Test, Explicit]
+public void TestPerformanceGain()
+{
+	Func<Object, Int32> func = ExpressionTreeReflection.ReflectFunction<Int32>(suType, "AMethod");
+	Func<Object, Int32> lcgfunc = LCGReflection.ReflectFunction<Int32>(suType, "AMethod");
+	MethodInfo minfo = suType.GetMethod("AMethod", BindingFlags.Public | BindingFlags.Instance);
+	Double RefDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 1000000; ++I) minfo.Invoke(suInstance, new Object[] { }); });
+	Double ExpDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 1000000; ++I) func(suInstance); });
+	Double LcgDuration = With.PerformanceCounter(() => { for (Int32 I = 0; I < 1000000; ++I) lcgfunc(suInstance); });
+	Console.WriteLine("Reflection = {0} Expression Tree {1} LCG {2}", RefDuration, ExpDuration, LcgDuration);
+}
 
 		/// <summary>
 		/// Verify performance gain with expression tree instead of reflection.
