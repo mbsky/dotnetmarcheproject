@@ -12,6 +12,7 @@ using NHibernate.Cfg;
 using DotNetMarche.Utils;
 using NHibernate.Tool.hbm2ddl;
 using System.Xml.Linq;
+using DotNetMarche.Utils;
 
 namespace DotNetMarche.Infrastructure.Concrete.Repository
 {
@@ -58,8 +59,8 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 				NHibernate.Cfg.Configuration config = new NHibernate.Cfg.Configuration();
 				XDocument doc = XDocument.Load(configFileName);
 				XElement connStringElement = (from e in doc.Descendants()
-				                              where e.Attribute("name") != null && e.Attribute("name").Value == "connection.connection_string"
-				                              select e).Single();
+														where e.Attribute("name") != null && e.Attribute("name").Value == "connection.connection_string"
+														select e).Single();
 				String cnName = connStringElement.Value;
 				connStringElement.Value = ConfigurationRegistry.ConnectionString(connStringElement.Value).ConnectionString;
 				using (XmlReader reader = doc.CreateReader())
@@ -82,22 +83,48 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 		static NHibernateSessionManager()
 		{
 			GlobalTransactionManager.TransactionOpened += OnTransactionStarted;
+			GlobalTransactionManager.TransactionClosing += OnTransactionClosing;
 		}
 
+		/// <summary>
+		/// When a transaction start all session must be disconnected from the current connectino
+		/// and reconnect to a different connection.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private static void OnTransactionStarted(Object sender, EventArgs e)
 		{
-			var openSessions = (from ck in CurrentContext.Enumerate()
-			                   where ck.Key.StartsWith(ContextSessionKey)
-			                   select ck.Value).Cast<SessionData>();
-			if (openSessions.Count() > 0)
-			{
-				foreach (var sessionData in openSessions)
+			//if we are in a nested transaction we do not need to do nothing, we are working simply
+			//with more transaction level.
+			if (GlobalTransactionManager.TransactionsCount > 1) return;
+			//This is the first time that a transaction start, we need to change all connection with those
+			//of the DataAccess layer.
+			IterateThroughAllOpenSessionInContext(sd =>
 				{
-					DataAccess.ConnectionData data = DataAccess.GetActualConnectionData(sessionData.connectionName);
-					sessionData.Session.Disconnect();
-					sessionData.Session.Reconnect(data.Connection);
-				}
-			}
+					DataAccess.ConnectionData data = DataAccess.GetActualConnectionData(sd.connectionName);
+					sd.Session.Disconnect();
+					sd.Session.Reconnect(data.Connection);
+				});
+		}
+
+		/// <summary>
+		/// Monitor when a global transaction close, we need to disconnect from the current transaction
+		/// and reconnect.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private static void OnTransactionClosing(Object sender, EventArgs e)
+		{
+			//a transaction is closed, but we still are in a global transaction, we can still use the
+			//same connection because DataAccess layer use the same connection for all transaction level.
+			if (GlobalTransactionManager.TransactionsCount > 2) return;
+			//Ok, we are out of all transaction, we need to recreate a valid connection
+			IterateThroughAllOpenSessionInContext(sd =>
+				{
+					sd.Session.Disconnect();
+					sd.Session.Reconnect();
+				});
+
 		}
 
 		#endregion
@@ -112,26 +139,31 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 		public static ISession GetSessionFor(String configFileName)
 		{
 			Object obj = CurrentContext.GetData(GetContextSessionKeyForConfigFileName(configFileName));
-			if (null == obj)
+			if (null != obj)
 			{
-				NhibConfigData configData = GetOrCreateConfigData(configFileName);
-
-				ISession session = null;
-				if (GlobalTransactionManager.IsInTransaction)
-				{
-					DataAccess.ConnectionData data = DataAccess.GetActualConnectionData(configData.ConnectionName);
-					session = configData.SessionFactory.OpenSession(data.Connection);
-				}
-				else
-				{
-					session = configData.SessionFactory.OpenSession();
-				}
-				CurrentContext.SetData(
-					GetContextSessionKeyForConfigFileName(configFileName), 
-					new SessionData() {Session = session, connectionName = configData.ConnectionName});
-				return session;
+				//We have a session on the stack, but, it is valid?
+				ISession contextSession = ((SessionData)obj).Session;
+				if (contextSession.IsOpen) return contextSession;
+				//Session is not valid, remove from the context.
+				CurrentContext.ReleaseData(GetContextSessionKeyForConfigFileName(configFileName));
 			}
-			return ((SessionData) obj).Session;
+			//If we reach here we have no context connection or the context connection was disposed.
+			NhibConfigData configData = GetOrCreateConfigData(configFileName);
+
+			ISession session = null;
+			if (GlobalTransactionManager.IsInTransaction)
+			{
+				DataAccess.ConnectionData data = DataAccess.GetActualConnectionData(configData.ConnectionName);
+				session = configData.SessionFactory.OpenSession(data.Connection);
+			}
+			else
+			{
+				session = configData.SessionFactory.OpenSession();
+			}
+			CurrentContext.SetData(
+				GetContextSessionKeyForConfigFileName(configFileName),
+				new SessionData() { Session = session, connectionName = configData.ConnectionName });
+			return session;
 		}
 
 		/// <summary>
@@ -141,7 +173,7 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 		/// <param name="configFileName"></param>
 		public static void CloseSessionFor(string configFileName)
 		{
-			SessionData sd = (SessionData) CurrentContext.GetData(GetContextSessionKeyForConfigFileName(configFileName));
+			SessionData sd = (SessionData)CurrentContext.GetData(GetContextSessionKeyForConfigFileName(configFileName));
 			using (ISession session = sd.Session)
 			{
 				session.Flush();
@@ -162,6 +194,20 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 					CloseSessionFor(kvp.Key.Substring(ContextSessionKey.Length));
 				}
 			}
+		}
+
+		/// <summary>
+		/// Helper function that permits to iterate into all opened sessions. This management
+		/// function is useful because it does not invoke the callback for session that are
+		/// closed and still in the Context.
+		/// </summary>
+		/// <param name="action"></param>
+		private static void IterateThroughAllOpenSessionInContext(Action<SessionData> action)
+		{
+			var openSessions = (from ck in CurrentContext.Enumerate()
+									  where ck.Key.StartsWith(ContextSessionKey)
+									  select ck.Value).Cast<SessionData>();
+			openSessions.Where(sd => sd.Session.IsOpen).ToList().ForEach(action);
 		}
 
 		#endregion

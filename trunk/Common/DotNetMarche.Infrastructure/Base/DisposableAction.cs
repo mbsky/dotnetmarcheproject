@@ -28,7 +28,7 @@ namespace DotNetMarche.Infrastructure.Base
 
 		#region IDisposable Members
 
-		void IDisposable.Dispose()
+		public void Dispose()
 		{
 			if (mGuardFunction != null)
 				mGuardFunction();

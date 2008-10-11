@@ -6,6 +6,7 @@ using DotNetMarche.Common.Test.AuxClasses;
 using DotNetMarche.Infrastructure;
 using DotNetMarche.Infrastructure.Base;
 using DotNetMarche.Infrastructure.Logging;
+using DotNetMarche.TestHelpers.BaseTests;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
@@ -14,38 +15,26 @@ using RhinoIs = Rhino.Mocks.Constraints.Is;
 namespace DotNetMarche.Common.Test.Infrastructure
 {
 	[TestFixture]
-	public class GlobalTransactionTest
+	public class GlobalTransactionTest : BaseUtilityTest
 	{
 		#region Initialization and 4 phase test management
 
-		private IDisposable OverrideContextCleanUp;
 		private TestContext overrideContext;
 		private MockRepository mockRepository;
 
-		[TestFixtureSetUp]
-		public void TestFixtureSetUp()
+		protected override void OnTestFixtureSetUp()
 		{
 			overrideContext = new TestContext();
-			OverrideContextCleanUp = CurrentContext.Override(overrideContext);
+			DisposeAtTheEndOfFixture(CurrentContext.Override(overrideContext));
+			base.OnTestFixtureSetUp();
 		}
 
-		[TestFixtureTearDown]
-		public void TestFixtureTearDown()
-		{
-			OverrideContextCleanUp.Dispose();
-		}
-
-		[SetUp]
-		public void SetUp()
+		
+		protected override void OnSetUp()
 		{
 			overrideContext.storage.Clear();
 			mockRepository = new MockRepository();
-		}
-
-		[TearDown]
-		public void TearDown()
-		{
-			mockRepository.VerifyAll();
+			ExecuteAtTheEndOfTest(() => mockRepository.VerifyAll()); 
 		}
 
 		#endregion
@@ -55,6 +44,8 @@ namespace DotNetMarche.Common.Test.Infrastructure
 		public void Nope(Boolean b) { }
 
 		#endregion
+
+		#region Tests
 
 		[Test]
 		public void TransactionInContext()
@@ -261,6 +252,10 @@ namespace DotNetMarche.Common.Test.Infrastructure
 			}
 		}
 
+		/// <summary>
+		/// into the transaction we are raising an exception, the exception is handled outside
+		/// the transaction scope, so the transaction should be aborted.
+		/// </summary>
 		[Test]
 		public void ImplicitTransactionIsDoomedIfExceptionIsThrown()
 		{
@@ -281,7 +276,91 @@ namespace DotNetMarche.Common.Test.Infrastructure
 			}
 		}
 
+		[Test]
+		public void IfNoTransactionCountShouldBeZero()
+		{
+			Assert.That(GlobalTransactionManager.TransactionsCount, Is.EqualTo(0));
+		}
 
+		#endregion
 
+		#region Event verification
+
+		public interface ITranEvSink
+		{
+			void Handle(Object sender, EventArgs e);
+		}
+
+		/// <summary>
+		/// Verify that the TransactionOpening is called, and verify also that
+		/// the transactino count is zero, because a transaction should be still 
+		/// not created.
+		/// </summary>
+		[Test]
+		public void VerifyTransactionOpening()
+		{
+			ITranEvSink mock = mockRepository.CreateMock<ITranEvSink>();
+			Expect.Call(() => mock.Handle(null, EventArgs.Empty))
+				.IgnoreArguments()
+				.Callback(new Func<Object, EventArgs, Boolean>( (sender, e) => GlobalTransactionManager.TransactionsCount == 0));
+			GlobalTransactionManager.TransactionOpening += mock.Handle;
+			ExecuteAtTheEndOfTest(() => GlobalTransactionManager.TransactionOpening -= mock.Handle);
+			mockRepository.ReplayAll();
+			GlobalTransactionManager.BeginTransaction();
+		}
+
+		/// <summary>
+		/// Verify that the TransactionOpened is called, and verify also that
+		/// the transactino count is 1, because a transaction should be created
+		/// </summary>
+		[Test]
+		public void VerifyTransactionOpened()
+		{
+			ITranEvSink mock = mockRepository.CreateMock<ITranEvSink>();
+			Expect.Call(() => mock.Handle(null, EventArgs.Empty))
+				.IgnoreArguments()
+							.Callback(new Func<Object, EventArgs, Boolean>((sender, e) => GlobalTransactionManager.TransactionsCount == 1));
+			GlobalTransactionManager.TransactionOpened += mock.Handle;
+			ExecuteAtTheEndOfTest(() => GlobalTransactionManager.TransactionOpened -= mock.Handle);
+			mockRepository.ReplayAll();
+			GlobalTransactionManager.BeginTransaction();
+		}		
+		
+		/// <summary>
+		/// Verify that the TransactionClosing is called, and verify also that
+		/// the transactino count is 1, because a transaction is still active
+		/// </summary>
+		[Test]
+		public void VerifyTransactionClosing()
+		{
+			ITranEvSink mock = mockRepository.CreateMock<ITranEvSink>();
+			Expect.Call(() => mock.Handle(null, EventArgs.Empty)) 
+				.IgnoreArguments()
+							.Callback(new Func<Object, EventArgs, Boolean>((sender, e) => GlobalTransactionManager.TransactionsCount == 1));
+			GlobalTransactionManager.TransactionClosing += mock.Handle;
+			ExecuteAtTheEndOfTest(() => GlobalTransactionManager.TransactionClosing -= mock.Handle);
+			mockRepository.ReplayAll();
+			GlobalTransactionManager.BeginTransaction().Dispose();
+		}	
+		
+		/// <summary>
+		/// Verify that the TransactionClosing is called, and verify also that
+		/// the transactino count is 1, because a transaction is still active
+		/// </summary>
+		[Test]
+		public void VerifyTransactionClosed()
+		{
+			ITranEvSink mock = mockRepository.CreateMock<ITranEvSink>();
+			Expect.Call(() => mock.Handle(null, EventArgs.Empty))
+				.IgnoreArguments()
+							.Callback(new Func<Object, EventArgs, Boolean>((sender, e) => GlobalTransactionManager.TransactionsCount == 0));
+			GlobalTransactionManager.TransactionClosed  += mock.Handle;
+			ExecuteAtTheEndOfTest(() => GlobalTransactionManager.TransactionClosed -= mock.Handle);
+			mockRepository.ReplayAll();
+				GlobalTransactionManager.BeginTransaction().Dispose();
+
+		}
+
+		#endregion
 	}
 }

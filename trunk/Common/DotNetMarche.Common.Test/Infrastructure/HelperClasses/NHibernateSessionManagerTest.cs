@@ -283,6 +283,49 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 				.That("cnt", Is.EqualTo(0)).ExecuteAssert();
 		}
 
+		[Test]
+		public void TestSessionCanWorkWhenTransactionIsClosed()
+		{
+			Int32 insertedId;
+			using (ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
+			{
+				using (GlobalTransactionManager.BeginTransaction())
+				{
+					AnEntity e = AnEntity.CreateSome();
+					session.Save(e);
+					session.Flush();
+				}
+				//Now the transaction is closed, session still need to work correctly
+				AnEntity e1 = AnEntity.CreateSome();
+				insertedId = (Int32)session.Save(e1);
+				session.Flush();
+			}
+			//Need to see the second entity
+			DbAssert.OnQuery("select count(*) cnt from AnEntity where id = {id}")
+				.SetInt32Param("id", insertedId)
+				.That("cnt", Is.EqualTo(1)).ExecuteAssert();
+		}
+
+		#endregion
+
+		#region Automatic Disposed Session Management.
+
+		/// <summary>
+		/// If we ask a session to the sessionmanager, then we dispose the session outside of the 
+		/// sessino manager, when we ask again for the session we should have a new session because
+		/// the older is disposed
+		/// </summary>
+		[Test]
+		public void TestOuterDisposeOfTheSession()
+		{
+			ISession session1;
+			using (session1 = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
+			{
+			}
+			ISession session2 = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml");
+			Assert.That(session1, Is.Not.EqualTo(session2), "Same session returned even if we disposed outside the SessionManager");
+		}
+
 		#endregion
 	}
 }
