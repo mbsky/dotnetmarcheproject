@@ -41,7 +41,7 @@ namespace DotNetMarche.Infrastructure
 		/// </summary>
 		public static Int32 TransactionsCount
 		{
-			get { return CurrentTransactionList.Count; }
+			get { return CurrentTransactionList == null ? 0 : CurrentTransactionList.Count; }
 		}
 
 		/// <summary>
@@ -50,6 +50,7 @@ namespace DotNetMarche.Infrastructure
 		/// <returns></returns>
 		public static DisposableAction BeginTransaction()
 		{
+			OnTransactionOpening();
 			if (!IsInTransaction)
 			{
 				List<Transaction> transactions = new List<Transaction>();
@@ -74,6 +75,7 @@ namespace DotNetMarche.Infrastructure
 		private static void CloseCurrentTransaction()
 		{
 			Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
+			OnTransactionClosing();
 			if (Utils.ExceptionUtils.IsInExceptionHandler())
 				CurrentTransaction.Doom();
 			Transaction currentTransaction =CurrentTransaction;
@@ -81,6 +83,7 @@ namespace DotNetMarche.Infrastructure
 			if (CurrentTransactionList.Count == 0)
 				CurrentContext.ReleaseData(TransactionScopeKey);
 			currentTransaction.Complete();
+			OnTransactionClosed();
 		}
 
 		/// <summary>
@@ -129,6 +132,30 @@ namespace DotNetMarche.Infrastructure
 		public static void OnTransactionOpened()
 		{
 			EventHandler temp = TransactionOpened;
+			if (null != temp)
+				temp(null, EventArgs.Empty);
+		}			
+		
+		public static event EventHandler TransactionOpening;
+		public static void OnTransactionOpening()
+		{
+			EventHandler temp = TransactionOpening;
+			if (null != temp)
+				temp(null, EventArgs.Empty);
+		}		
+		
+		public static event EventHandler TransactionClosed;
+		public static void OnTransactionClosed()
+		{
+			EventHandler temp = TransactionClosed;
+			if (null != temp)
+				temp(null, EventArgs.Empty);
+		}		
+		
+		public static event EventHandler TransactionClosing;
+		public static void OnTransactionClosing()
+		{
+			EventHandler temp = TransactionClosing;
 			if (null != temp)
 				temp(null, EventArgs.Empty);
 		}
@@ -284,4 +311,14 @@ namespace DotNetMarche.Infrastructure
 
 		#endregion
 	}
+
+	#region Event Arguments
+
+	//public class TransactionOpenedEventArgs : EventArgs
+	//{
+		
+
+	//}
+
+	#endregion
 }
