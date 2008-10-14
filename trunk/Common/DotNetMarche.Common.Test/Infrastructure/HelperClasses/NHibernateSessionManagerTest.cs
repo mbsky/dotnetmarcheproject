@@ -227,12 +227,12 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 			using (GlobalTransactionManager.BeginTransaction())
 			{
 				Int32 newId = GetNewId();
-				DataAccess.OnDb("main")
-					.CreateQuery("insert into AnEntity (id, name, value) values ({pid}, {pname}, {pvalue})")
-					.SetInt32Param("pid", newId)
-					.SetStringParam("pname", "xxx")
-					.SetInt32Param("pvalue", 108)
-					.ExecuteNonQuery();
+DataAccess.OnDb("main")
+	.CreateQuery("insert into AnEntity (id, name, value) values ({pid}, {pname}, {pvalue})")
+	.SetInt32Param("pid", newId)
+	.SetStringParam("pname", "xxx")
+	.SetInt32Param("pvalue", 108)
+	.ExecuteNonQuery();
 				using (ISession session = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml"))
 				{
 					AnEntity e = session.Load<AnEntity>(newId);

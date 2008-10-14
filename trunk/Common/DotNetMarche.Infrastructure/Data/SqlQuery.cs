@@ -67,10 +67,27 @@ namespace DotNetMarche.Infrastructure.Data
 		public void ExecuteReader(Action<IDataReader> func)
 		{
 			DataAccess.Execute(this, () =>
-			                         	{
-			                         		using (IDataReader dr = Command.ExecuteReader())
-			                         			func(dr);
-			                         	});
+												{
+													using (IDataReader dr = Command.ExecuteReader())
+														func(dr);
+												});
+		}
+
+		/// <summary>
+		/// Execute reader is more complex, because we need to keep the datareader
+		/// open until the caller use it and be sure to dipose at the end of the use.
+		/// </summary>
+		/// <param name="func"></param>
+		public void ExecuteReader(Action<IDataRecord> func)
+		{
+			DataAccess.Execute(this, () =>
+												{
+													using (IDataReader dr = Command.ExecuteReader())
+													{
+														while (dr.Read())
+															func(dr);
+													}
+												});
 		}
 
 		public void FillDataTable(DataTable dt)

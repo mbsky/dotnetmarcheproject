@@ -89,8 +89,9 @@ namespace DotNetMarche.TestHelpers.BaseTests
          		{
          			d.Dispose();
          		}
-         		catch (Exception)
+         		catch (Exception ex)
          		{
+         			Console.Error.WriteLine(ex.Message);
          			ErrorOnDispose = true;
          		}
          	});
@@ -101,8 +102,9 @@ namespace DotNetMarche.TestHelpers.BaseTests
 				{
 					a();
 				}
-				catch (Exception)
+				catch (Exception ex)
 				{
+					Console.Error.WriteLine(ex.Message);
 					ErrorOnTearDownAction = true;
 				}
 			});
