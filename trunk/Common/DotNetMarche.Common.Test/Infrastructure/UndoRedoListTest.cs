@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DotNetMarche.Common.Test.AuxClasses;
 using DotNetMarche.Infrastructure;
+using DotNetMarche.Infrastructure.UI;
 using DotNetMarche.TestHelpers.BaseTests;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -207,6 +209,64 @@ namespace DotNetMarche.Common.Test.Infrastructure
 		}
 
 		#endregion
+
+		[Test]
+		public void NPCBaseRedo()
+		{
+			CustomerINotifyPC obj = new CustomerINotifyPC();
+			UndoRedoINPC sut = new UndoRedoINPC(obj);
+			obj.Name = "NewValue";
+			Assert.That(sut.UndoCount, Is.EqualTo(1));
+		}		
+		
+		[Test]
+		public void NPCBaseRedoActionName()
+		{
+			CustomerINotifyPC obj = new CustomerINotifyPC();
+			UndoRedoINPC sut = new UndoRedoINPC(obj);
+			obj.Name = "NewValue";
+			Assert.That(sut.ActionList.First(), Is.EqualTo("Property Name changed from [] to [NewValue]"));
+		}		
+		
+		[Test]
+		public void NPCBaseUndo()
+		{
+			CustomerINotifyPC obj = new CustomerINotifyPC();
+			UndoRedoINPC sut = new UndoRedoINPC(obj);
+			obj.Name = "NewValue";
+			sut.Undo();
+			Assert.That(obj.Name, Is.Null);
+		}	
+		
+		[Test]
+		public void NPCBaseUndoTwoLevel()
+		{
+			CustomerINotifyPC obj = new CustomerINotifyPC();
+			UndoRedoINPC sut = new UndoRedoINPC(obj);
+			obj.Name = "one";
+			obj.Name = "two";
+			sut.Undo();
+			Assert.That(obj.Name, Is.EqualTo("one"));
+			sut.Undo();
+			Assert.That(obj.Name, Is.Null);
+		}		
+		
+		[Test]
+		public void NPCBaseUndoTwoLevelAndRedo()
+		{
+			CustomerINotifyPC obj = new CustomerINotifyPC();
+			UndoRedoINPC sut = new UndoRedoINPC(obj);
+			obj.Name = "one";
+			obj.Name = "two";
+			sut.Undo();
+			Assert.That(obj.Name, Is.EqualTo("one"));
+			sut.Undo();
+			Assert.That(obj.Name, Is.Null);
+			sut.Redo();
+			Assert.That(obj.Name, Is.EqualTo("one"));
+			sut.Redo();
+			Assert.That(obj.Name, Is.EqualTo("two"));
+		}
 
 		#region Helpers
 

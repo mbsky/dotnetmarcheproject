@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuxClasses\ConsoleLogger.cs" />
+    <Compile Include="AuxClasses\CustomerINotifyPC.cs" />
     <Compile Include="AuxClasses\SimpleUnknown.cs" />
     <Compile Include="AuxClasses\TestContext.cs" />
     <Compile Include="Concrete\CastleWindsorIoCEngineTest.cs" />
