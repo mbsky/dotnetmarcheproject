@@ -6,7 +6,7 @@ using DotNetMarche.Infrastructure.Helpers;
 
 namespace DotNetMarche.Infrastructure
 {
-	class UndoRedoList
+	public class UndoRedoList
 	{
 		private class ActionStep
 		{
@@ -56,14 +56,14 @@ namespace DotNetMarche.Infrastructure
 			undoPosition++;
 		}
 
-		public void Redo()
+		public virtual void Redo()
 		{
 			Verify.That(RedoCount > 0, "Cannot undo any action, the RedoList is empty");
 			steps[undoPosition].RedoAction();
 			undoPosition++;
 		}
 
-		public void Undo()
+		public virtual void Undo()
 		{
 			Verify.That(UndoCount > 0, "Cannot undo any action, the UndoList is empty");
 			undoPosition--;
