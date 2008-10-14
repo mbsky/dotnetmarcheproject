@@ -283,7 +283,7 @@ namespace DotNetMarche.Infrastructure.Data
 		/// burden of creating connection, creating transaction and enlist command into a transaction.
 		/// </summary>
 		/// <param name="functionToExecute">The delegates that really executes the command.</param>
-		public static void Execute(Action<DbCommand, DbProviderFactory> functionToExecute)
+		internal static void Execute(Action<DbCommand, DbProviderFactory> functionToExecute)
 		{
 			DbProviderFactory factory = GetFactory();
 			using (GlobalTransactionManager.TransactionToken token = CreateConnection())
@@ -315,168 +315,169 @@ namespace DotNetMarche.Infrastructure.Data
 
 		#endregion
 
+		///This is the older interface not used anymore.
 		#region helper function
-		/// <summary>
-		/// This function Execute a command, it accepts a function with no parameter that
-		/// Prepare a command to be executed. It internally use the 
-		/// function that really executes the code.
-		/// </summary>
-		/// <typeparam name="T">return parameter type, it reflect the return type
-		/// of the delegates</typeparam>
-		/// <param name="functionToExecute">The function that prepares the command that should
-		/// be executed with execute scalar.</param>
-		/// <returns></returns>
-		public static T ExecuteScalar<T>(Action<DbCommand, DbProviderFactory> functionToExecute)
-		{
-			T result = default(T);
-			Execute(delegate(DbCommand command, DbProviderFactory factory)
-			{
-				functionToExecute(command, factory);
-				object o = command.ExecuteScalar();
-				//result = (T)o; //execute scalar mi ritorna un decimal...che non posso castare
-				result = (T)Convert.ChangeType(o, typeof(T));
-			});
-			return result;
-		}
+		///// <summary>
+		///// This function Execute a command, it accepts a function with no parameter that
+		///// Prepare a command to be executed. It internally use the 
+		///// function that really executes the code.
+		///// </summary>
+		///// <typeparam name="T">return parameter type, it reflect the return type
+		///// of the delegates</typeparam>
+		///// <param name="functionToExecute">The function that prepares the command that should
+		///// be executed with execute scalar.</param>
+		///// <returns></returns>
+		//public static T ExecuteScalar<T>(Action<DbCommand, DbProviderFactory> functionToExecute)
+		//{
+		//   T result = default(T);
+		//   Execute(delegate(DbCommand command, DbProviderFactory factory)
+		//   {
+		//      functionToExecute(command, factory);
+		//      object o = command.ExecuteScalar();
+		//      //result = (T)o; //execute scalar mi ritorna un decimal...che non posso castare
+		//      result = (T)Convert.ChangeType(o, typeof(T));
+		//   });
+		//   return result;
+		//}
 
-		public static List<T> ExecuteGetEntity<T>(Action<DbCommand, DbProviderFactory> functionToExecute, Func<IDataReader, T> select)
-		{
-			List<T> retvalue = new List<T>();
-			Execute((c, f) =>
-			{
-				functionToExecute(c, f);
-				using (IDataReader dr = c.ExecuteReader())
-				{
-					while (dr.Read())
-					{
-						retvalue.Add(select(dr));
-					}
-				}
-			});
-			return retvalue;
-		}
+		//public static List<T> ExecuteGetEntity<T>(Action<DbCommand, DbProviderFactory> functionToExecute, Func<IDataReader, T> select)
+		//{
+		//   List<T> retvalue = new List<T>();
+		//   Execute((c, f) =>
+		//   {
+		//      functionToExecute(c, f);
+		//      using (IDataReader dr = c.ExecuteReader())
+		//      {
+		//         while (dr.Read())
+		//         {
+		//            retvalue.Add(select(dr));
+		//         }
+		//      }
+		//   });
+		//   return retvalue;
+		//}
 
-		/// <summary>
-		/// Execute a command with no result.
-		/// </summary>
-		/// <param name="functionToExecute"></param>
-		public static Int32 ExecuteNonQuery(Action<DbCommand, DbProviderFactory> functionToExecute)
-		{
-			Int32 result = -1;
-			Execute(delegate(DbCommand command, DbProviderFactory factory)
-			{
-				functionToExecute(command, factory);
-				result = command.ExecuteNonQuery();
-			});
-			return result;
-		}
+		///// <summary>
+		///// Execute a command with no result.
+		///// </summary>
+		///// <param name="functionToExecute"></param>
+		//public static Int32 ExecuteNonQuery(Action<DbCommand, DbProviderFactory> functionToExecute)
+		//{
+		//   Int32 result = -1;
+		//   Execute(delegate(DbCommand command, DbProviderFactory factory)
+		//   {
+		//      functionToExecute(command, factory);
+		//      result = command.ExecuteNonQuery();
+		//   });
+		//   return result;
+		//}
 
 
-		/// <summary>
-		/// This is the function that permits to use a datareader without any risk
-		/// to forget datareader open.
-		/// </summary>
-		/// <param name="commandPrepareFunction">The delegate should accepts 3 parameter, 
-		/// the command to configure, a factory to create parameters, and finally another
-		/// delegate of a function that returns the datareader.</param>
-		public static void ExecuteReader(
-			Action<DbCommand, DbProviderFactory, Func<IDataReader>> commandPrepareFunction)
-		{
+		///// <summary>
+		///// This is the function that permits to use a datareader without any risk
+		///// to forget datareader open.
+		///// </summary>
+		///// <param name="commandPrepareFunction">The delegate should accepts 3 parameter, 
+		///// the command to configure, a factory to create parameters, and finally another
+		///// delegate of a function that returns the datareader.</param>
+		//public static void ExecuteReader(
+		//   Action<DbCommand, DbProviderFactory, Func<IDataReader>> commandPrepareFunction)
+		//{
 
-			Execute(delegate(DbCommand command, DbProviderFactory factory)
-			{
-				//The code to execute only assures that the eventually created datareader would be
-				//closed in a finally block.
-				IDataReader dr = null;
-				try
-				{
-					commandPrepareFunction(command, factory,
-											  delegate()
-											  {
-												  dr = command.ExecuteReader();
-												  return dr;
-											  });
-				}
-				finally
-				{
-					if (dr != null) dr.Dispose();
-				}
-			});
-		}
+		//   Execute(delegate(DbCommand command, DbProviderFactory factory)
+		//   {
+		//      //The code to execute only assures that the eventually created datareader would be
+		//      //closed in a finally block.
+		//      IDataReader dr = null;
+		//      try
+		//      {
+		//         commandPrepareFunction(command, factory,
+		//                             delegate()
+		//                             {
+		//                                dr = command.ExecuteReader();
+		//                                return dr;
+		//                             });
+		//      }
+		//      finally
+		//      {
+		//         if (dr != null) dr.Dispose();
+		//      }
+		//   });
+		//}
 
-		public static void FillDataset(
-			DataTable table,
-			Action<DbCommand, DbProviderFactory> commandPrepareFunction)
-		{
+		//public static void FillDataset(
+		//   DataTable table,
+		//   Action<DbCommand, DbProviderFactory> commandPrepareFunction)
+		//{
 
-			Execute(
-				delegate(DbCommand command, DbProviderFactory factory)
-				{
-					commandPrepareFunction(command, factory);
-					using (DbDataAdapter da = factory.CreateDataAdapter())
-					{
-						da.SelectCommand = command;
-						da.Fill(table);
-					}
-				});
-		}
+		//   Execute(
+		//      delegate(DbCommand command, DbProviderFactory factory)
+		//      {
+		//         commandPrepareFunction(command, factory);
+		//         using (DbDataAdapter da = factory.CreateDataAdapter())
+		//         {
+		//            da.SelectCommand = command;
+		//            da.Fill(table);
+		//         }
+		//      });
+		//}
 
-		public static void ExecuteDataset<T>(
-			String tableName,
-			Action<DbCommand, DbProviderFactory, Func<T>> commandPrepareFunction)
-			where T : DataSet, new()
-		{
+		//public static void ExecuteDataset<T>(
+		//   String tableName,
+		//   Action<DbCommand, DbProviderFactory, Func<T>> commandPrepareFunction)
+		//   where T : DataSet, new()
+		//{
 
-			Execute(delegate(DbCommand command, DbProviderFactory factory)
-			{
-				//The code to execute only assures that the eventually created datareader would be
-				//closed in a finally block.
-				using (T ds = new T())
-				{
-					commandPrepareFunction(command, factory,
-											  delegate()
-											  {
-												  using (DbDataAdapter da = factory.CreateDataAdapter())
-												  {
-													  da.SelectCommand = command;
-													  da.Fill(ds, tableName);
-												  }
-												  return ds;
-											  });
-				}
+		//   Execute(delegate(DbCommand command, DbProviderFactory factory)
+		//   {
+		//      //The code to execute only assures that the eventually created datareader would be
+		//      //closed in a finally block.
+		//      using (T ds = new T())
+		//      {
+		//         commandPrepareFunction(command, factory,
+		//                             delegate()
+		//                             {
+		//                                using (DbDataAdapter da = factory.CreateDataAdapter())
+		//                                {
+		//                                   da.SelectCommand = command;
+		//                                   da.Fill(ds, tableName);
+		//                                }
+		//                                return ds;
+		//                             });
+		//      }
 
-			});
-		}
+		//   });
+		//}
 
-		/// <summary>
-		/// This is the function that permits to use a datareader without any risk
-		/// to forget datareader open.
-		/// </summary>
-		/// <param name="commandPrepareFunction"></param>
-		public static void ExecuteDataset(
-			Action<DbCommand, DbProviderFactory, Func<DataSet>> commandPrepareFunction)
-		{
+		///// <summary>
+		///// This is the function that permits to use a datareader without any risk
+		///// to forget datareader open.
+		///// </summary>
+		///// <param name="commandPrepareFunction"></param>
+		//public static void ExecuteDataset(
+		//   Action<DbCommand, DbProviderFactory, Func<DataSet>> commandPrepareFunction)
+		//{
 
-			Execute(delegate(DbCommand command, DbProviderFactory factory)
-			{
-				//The code to execute only assures that the eventually created datareader would be
-				//closed in a finally block.
-				using (DataSet ds = new DataSet())
-				{
-					commandPrepareFunction(command, factory,
-											  delegate()
-											  {
-												  using (DbDataAdapter da = factory.CreateDataAdapter())
-												  {
-													  da.SelectCommand = command;
-													  da.Fill(ds);
-												  }
-												  return ds;
-											  });
-				}
+		//   Execute(delegate(DbCommand command, DbProviderFactory factory)
+		//   {
+		//      //The code to execute only assures that the eventually created datareader would be
+		//      //closed in a finally block.
+		//      using (DataSet ds = new DataSet())
+		//      {
+		//         commandPrepareFunction(command, factory,
+		//                             delegate()
+		//                             {
+		//                                using (DbDataAdapter da = factory.CreateDataAdapter())
+		//                                {
+		//                                   da.SelectCommand = command;
+		//                                   da.Fill(ds);
+		//                                }
+		//                                return ds;
+		//                             });
+		//      }
 
-			});
-		}
+		//   });
+		//}
 
 		#endregion
 
