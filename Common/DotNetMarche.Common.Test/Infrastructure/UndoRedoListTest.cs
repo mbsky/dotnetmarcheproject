@@ -268,7 +268,50 @@ namespace DotNetMarche.Common.Test.Infrastructure
 			Assert.That(obj.Name, Is.EqualTo("two"));
 		}
 
-		#region Helpers
+        [Test]
+        public void NPCBaseUndoChangeAndRedo()
+        {
+            CustomerINotifyPC obj = new CustomerINotifyPC();
+            UndoRedoINPC sut = new UndoRedoINPC(obj);
+            obj.Name = "one";
+            obj.Name = "two";
+            obj.Name = "three";
+            sut.Undo();
+            Assert.That(obj.Name, Is.EqualTo("two"));
+            sut.Undo();
+            Assert.That(obj.Name, Is.EqualTo("one"));
+            obj.Name = "four";
+            sut.Undo();
+            Assert.That(obj.Name, Is.EqualTo("one"));
+            sut.Redo();
+            Assert.That(obj.Name, Is.EqualTo("four"));
+        }
+
+        [Test, ExpectedException(typeof(DotNetMarche.Infrastructure.Exceptions.VerificationFailedException))]
+        public void NPCBaseRedoCountLimitExceeded()
+        {
+            CustomerINotifyPC obj = new CustomerINotifyPC();
+            UndoRedoINPC sut = new UndoRedoINPC(obj);
+            obj.Name = "one";
+            sut.Undo();
+            Assert.That(obj.Name, Is.Null);
+            sut.Redo();
+            Assert.That(obj.Name, Is.EqualTo("one"));
+            sut.Redo();
+            Assert.That(obj.Name, Is.EqualTo("one"));
+        }
+
+        [Test, ExpectedException(typeof(DotNetMarche.Infrastructure.Exceptions.VerificationFailedException))]
+        public void NPCBaseUndoCountLimitExceeded()
+        {
+            CustomerINotifyPC obj = new CustomerINotifyPC();
+            UndoRedoINPC sut = new UndoRedoINPC(obj);
+            obj.Name = "one";
+            sut.Undo();
+            Assert.That(obj.Name, Is.Null);
+            sut.Undo();
+        }
+        #region Helpers
 
 		private void NoAction()
 		{
