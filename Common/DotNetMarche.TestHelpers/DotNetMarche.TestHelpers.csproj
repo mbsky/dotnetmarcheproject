@@ -54,10 +54,15 @@
   <ItemGroup>
     <Compile Include="BaseTests\BaseUtilityTest.cs" />
     <Compile Include="BaseTests\DbTest.cs" />
+    <Compile Include="Comparison\ObjectComparer.cs" />
+    <Compile Include="Constraints\ObjectEqualConstraint.cs" />
     <Compile Include="Data\DbAssert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Invoker.cs" />
     <Compile Include="Reflection\Static.cs" />
+    <Compile Include="SyntaxHelpers\ConstraintBuilder.cs" />
+    <Compile Include="SyntaxHelpers\Is.cs" />
+    <Compile Include="SyntaxHelpers\OriginalIs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">

@@ -73,6 +73,7 @@
     <Compile Include="Data\Repository.cs" />
     <Compile Include="Data\SqlQuery.cs" />
     <Compile Include="Helpers\EntityIdFinder.cs" />
+    <Compile Include="Helpers\GenericComparer.cs" />
     <Compile Include="Helpers\IdGenerator.cs" />
     <Compile Include="Helpers\Verify.cs" />
     <Compile Include="Logging\ILogger.cs" />
