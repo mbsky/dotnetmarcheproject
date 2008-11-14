@@ -33,19 +33,71 @@ namespace DotNetMarche.Infrastructure.Logging.Concrete
 				level = LogLevel.Error;
 			else 
 				level = LogLevel.Critical;
+
+
 		}
 
 		#region ILogger Members
 
-		public void Log(LogLevel level, string message, Exception ex)
-		{
-			//LoggingEvent evt = 
-			//mainLog.Logger.Log()
-		}
-
 		public LogLevel ActualLevel
 		{
-			get { throw new NotImplementedException(); }
+			get { return level; }
+		}
+
+		#endregion
+
+
+		#region ILogger Members
+
+
+		public void LogVerbose(string message, Exception ex)
+		{
+			mainLog.Debug(message, ex);
+		}
+
+		public void LogInfo(string message, Exception ex)
+		{
+			mainLog.Info(message, ex);
+		}
+
+		public void LogWarning(string message, Exception ex)
+		{
+			mainLog.Warn(message, ex);
+		}
+
+		public void LogError(string message, Exception ex)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void LogCritical(string message, Exception ex)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void LogVerbose(string message)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void LogInfo(string message)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void LogWarning(string message)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void LogError(string message)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void LogCritical(string message)
+		{
+			throw new NotImplementedException();
 		}
 
 		#endregion

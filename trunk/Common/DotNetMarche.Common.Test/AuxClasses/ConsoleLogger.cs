@@ -24,5 +24,60 @@ namespace DotNetMarche.Common.Test.AuxClasses
 		}
 
 		#endregion
+
+		#region ILogger Members
+
+
+		public void LogVerbose(string message, Exception ex)
+		{
+			Log(LogLevel.Verbose, message, ex);
+		}
+
+		public void LogInfo(string message, Exception ex)
+		{
+			Log(LogLevel.Info, message, ex);
+		}
+
+		public void LogWarning(string message, Exception ex)
+		{
+			Log(LogLevel.Warning, message, ex);
+		}
+
+		public void LogError(string message, Exception ex)
+		{
+			Log(LogLevel.Error, message, ex);
+		}
+
+		public void LogCritical(string message, Exception ex)
+		{
+			Log(LogLevel.Critical, message, ex);
+		}
+
+		public void LogVerbose(string message)
+		{
+			Log(LogLevel.Verbose, message, null);
+		}
+
+		public void LogInfo(string message)
+		{
+			Log(LogLevel.Info, message, null);
+		}
+
+		public void LogWarning(string message)
+		{
+			Log(LogLevel.Warning, message, null);
+		}
+
+		public void LogError(string message)
+		{
+			Log(LogLevel.Error, message, null);
+		}
+
+		public void LogCritical(string message)
+		{
+			Log(LogLevel.Critical, message, null);
+		}
+
+		#endregion
 	}
 }

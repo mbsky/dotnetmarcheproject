@@ -225,9 +225,9 @@ namespace DotNetMarche.Common.Test.Infrastructure
 			Exception ex = new ArgumentException();
 			Expect.Call(() => mock1(true)).Throw(ex); //Sets the expectation
 			ILogger mockLogger = mockRepository.CreateMock<ILogger>();
-			Expect.Call(mockLogger.ActualLevel).Return(LogLevel.Info);
-			Expect.Call(() => mockLogger.Log(LogLevel.Error, "", ex))
-				.Constraints(RhinoIs.Equal(LogLevel.Error), RhinoIs.Anything(), RhinoIs.Equal(ex));
+			Expect.Call(mockLogger.ActualLevel).Repeat.Any().Return(LogLevel.Info);
+			Expect.Call(() => mockLogger.LogError("", ex))
+				.Constraints(RhinoIs.Anything(), RhinoIs.Equal(ex));
 			mockRepository.ReplayAll();
 			using (Logger.Override(mockLogger))
 			{
