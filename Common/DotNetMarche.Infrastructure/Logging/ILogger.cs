@@ -15,9 +15,21 @@ namespace DotNetMarche.Infrastructure.Logging
 		Critical = 5,
 	}
 
+	/// <summary>
+	/// Generic interface of a logger.
+	/// </summary>
 	public interface ILogger
 	{
 		LogLevel ActualLevel { get;  }
-		void Log(LogLevel level, String message, Exception ex);
+		void LogVerbose(String message, Exception ex);
+		void LogInfo(String message, Exception ex);
+		void LogWarning(String message, Exception ex);
+		void LogError(String message, Exception ex);
+		void LogCritical(String message, Exception ex);
+		void LogVerbose(String message);
+		void LogInfo(String message);
+		void LogWarning(String message);
+		void LogError(String message);
+		void LogCritical(String message);
 	}
 }

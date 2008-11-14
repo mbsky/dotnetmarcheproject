@@ -16,10 +16,21 @@ namespace DotNetMarche.Infrastructure.Logging
 			logger = IoC.Resolve<ILogger>();
 		}
 
+		internal static Boolean VerboseEnabled;
+		internal static Boolean InfoEnabled;
+		internal static Boolean WarningEnabled;
+		internal static Boolean ErrorEnabled;
+		internal static Boolean CriticalEnabled;
+
 		internal static DisposableAction Override(ILogger overrideLogger)
 		{
 			ILogger current = logger;
 			logger = overrideLogger;
+			if (logger.ActualLevel <= LogLevel.Verbose) VerboseEnabled = true;
+			if (logger.ActualLevel <= LogLevel.Info) InfoEnabled = true;
+			if (logger.ActualLevel <= LogLevel.Warning) WarningEnabled = true;
+			if (logger.ActualLevel <= LogLevel.Error) ErrorEnabled = true;
+			if (logger.ActualLevel <= LogLevel.Critical) CriticalEnabled = true;
 			return new DisposableAction(() => Logger.logger = current);
 		}
 
@@ -29,26 +40,26 @@ namespace DotNetMarche.Infrastructure.Logging
 
 		public static void Verbose(String message, Exception ex)
 		{
-			if (logger.ActualLevel <= LogLevel.Verbose)
-				logger.Log(LogLevel.Verbose, message, ex);
+			if (VerboseEnabled)
+				logger.LogVerbose(message, ex);
 		}
 
 		public static void Verbose(String message)
 		{
-			if (logger.ActualLevel <= LogLevel.Verbose)
-				logger.Log(LogLevel.Verbose, message, null);
+			if (VerboseEnabled)
+				logger.LogVerbose(message, null);
 		}
 
 		public static void VerboseFormat(String message, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Verbose)
-				logger.Log(LogLevel.Verbose, String.Format(message, parameters), null);
+			if (VerboseEnabled)
+				logger.LogVerbose(String.Format(message, parameters), null);
 		}
 
 		public static void VerboseFormat(String message, Exception ex, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Verbose)
-				logger.Log(LogLevel.Verbose, String.Format(message, parameters), ex);
+			if (VerboseEnabled)
+				logger.LogVerbose(String.Format(message, parameters), ex);
 		}
 
 		#endregion		
@@ -58,26 +69,26 @@ namespace DotNetMarche.Infrastructure.Logging
 
 		public static void Warning(String message, Exception ex)
 		{
-			if (logger.ActualLevel <= LogLevel.Warning)
-				logger.Log(LogLevel.Warning, message, ex);
+			if (WarningEnabled)
+				logger.LogWarning(message, ex);
 		}
 
 		public static void Warning(String message)
 		{
-			if (logger.ActualLevel <= LogLevel.Warning)
-				logger.Log(LogLevel.Warning, message, null);
+			if (WarningEnabled)
+				logger.LogWarning(message, null);
 		}
 
 		public static void WarningFormat(String message, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Warning)
-				logger.Log(LogLevel.Warning, String.Format(message, parameters), null);
+			if (WarningEnabled)
+				logger.LogWarning( String.Format(message, parameters), null);
 		}
 
 		public static void WarningFormat(String message, Exception ex, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Warning)
-				logger.Log(LogLevel.Warning, String.Format(message, parameters), ex);
+			if (WarningEnabled)
+				logger.LogWarning(String.Format(message, parameters), ex);
 		}
 
 		#endregion
@@ -86,26 +97,26 @@ namespace DotNetMarche.Infrastructure.Logging
 
 		public static void Info(String message, Exception ex)
 		{
-			if (logger.ActualLevel <= LogLevel.Info)
-				logger.Log(LogLevel.Info, message, ex);
+			if (InfoEnabled)
+				logger.LogInfo(message, ex);
 		}
 
 		public static void Info(String message)
 		{
-			if (logger.ActualLevel <= LogLevel.Info)
-				logger.Log(LogLevel.Info, message, null);
+			if (InfoEnabled)
+				logger.LogInfo(message, null);
 		}
 
 		public static void InfoFormat(String message, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Info)
-				logger.Log(LogLevel.Info, String.Format(message, parameters), null);
+			if (InfoEnabled)
+				logger.LogInfo(String.Format(message, parameters), null);
 		}
 
 		public static void InfoFormat(String message, Exception ex, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Info)
-				logger.Log(LogLevel.Info, String.Format(message, parameters), ex);
+			if (InfoEnabled)
+				logger.LogInfo(String.Format(message, parameters), ex);
 		}
 
 		#endregion	
@@ -114,26 +125,26 @@ namespace DotNetMarche.Infrastructure.Logging
 
 		public static void Error(String message, Exception ex)
 		{
-			if (logger.ActualLevel <= LogLevel.Error)
-				logger.Log(LogLevel.Error, message, ex);
+			if (ErrorEnabled)
+				logger.LogError(message, ex);
 		}
 
 		public static void Error(String message)
 		{
-			if (logger.ActualLevel <= LogLevel.Error)
-				logger.Log(LogLevel.Error, message, null);
+			if (ErrorEnabled)
+				logger.LogError(message, null);
 		}
 
 		public static void ErrorFormat(String message, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Error)
-				logger.Log(LogLevel.Error, String.Format(message, parameters), null);
+			if (ErrorEnabled)
+				logger.LogError(String.Format(message, parameters), null);
 		}
 
 		public static void ErrorFormat(String message, Exception ex, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Error)
-				logger.Log(LogLevel.Error, String.Format(message, parameters), ex);
+			if (ErrorEnabled)
+				logger.LogError(String.Format(message, parameters), ex);
 		}
 
 		#endregion
@@ -142,26 +153,26 @@ namespace DotNetMarche.Infrastructure.Logging
 
 		public static void Critical(String message, Exception ex)
 		{
-			if (logger.ActualLevel <= LogLevel.Critical)
-				logger.Log(LogLevel.Critical, message, ex);
+			if (CriticalEnabled)
+				logger.LogCritical(message, ex);
 		}
 
 		public static void Critical(String message)
 		{
-			if (logger.ActualLevel <= LogLevel.Critical)
-				logger.Log(LogLevel.Critical, message, null);
+			if (CriticalEnabled)
+				logger.LogCritical( message, null);
 		}
 
 		public static void CriticalFormat(String message, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Critical)
-				logger.Log(LogLevel.Critical, String.Format(message, parameters), null);
+			if (CriticalEnabled)
+				logger.LogCritical( String.Format(message, parameters), null);
 		}
 
 		public static void CriticalFormat(String message, Exception ex, params Object[] parameters)
 		{
-			if (logger.ActualLevel <= LogLevel.Critical)
-				logger.Log(LogLevel.Critical, String.Format(message, parameters), ex);
+			if (CriticalEnabled)
+				logger.LogCritical(String.Format(message, parameters), ex);
 		}
 
 		#endregion
