@@ -87,6 +87,12 @@
     <Compile Include="Infrastructure\UndoRedoListTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers\ObjectComparerTest.cs" />
+    <Compile Include="Utils\Expressions\AuxClasses\Customer.cs" />
+    <Compile Include="Utils\Expressions\ExpressionConverterExtTest.cs" />
+    <Compile Include="Utils\Expressions\ExpressionConverters.cs" />
+    <Compile Include="Utils\Expressions\ExpressionExecutor.cs" />
+    <Compile Include="Utils\Expressions\ExpressionTest.cs" />
+    <Compile Include="Utils\Expressions\StringAdvancedTokenizerTest.cs" />
     <Compile Include="Utils\ExpressionTreeReflectionTest.cs" />
   </ItemGroup>
   <ItemGroup>

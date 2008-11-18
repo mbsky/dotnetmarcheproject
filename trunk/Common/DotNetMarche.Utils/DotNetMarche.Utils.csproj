@@ -49,13 +49,28 @@
   <ItemGroup>
     <Compile Include="BasicExtensions.cs" />
     <Compile Include="ExceptionUtils.cs" />
+    <Compile Include="Expressions\Concrete\StringAdvancedTokenizer.cs" />
+    <Compile Include="Expressions\Concrete\StringBasicTokenizer.cs" />
+    <Compile Include="Expressions\Concrete\StringTokenConverter.cs" />
+    <Compile Include="Expressions\ExpressionConverterExt.cs" />
+    <Compile Include="Expressions\ITokenConverter.cs" />
+    <Compile Include="Expressions\ITokenizer.cs" />
     <Compile Include="ExpressionTreeReflection.cs" />
+    <Compile Include="Expressions\BasicOperatorCheckerFactory.cs" />
+    <Compile Include="Expressions\Conversion.cs" />
+    <Compile Include="Expressions\ExpressionConverter.cs" />
+    <Compile Include="Expressions\IOperatorsChecker.cs" />
+    <Compile Include="Expressions\Concrete\StandardOperatorsChecker.cs" />
+    <Compile Include="Expressions\PostfixExecutor.cs" />
     <Compile Include="LCGReflection.cs" />
     <Compile Include="PerfTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DotNetMarche.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Linq\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
