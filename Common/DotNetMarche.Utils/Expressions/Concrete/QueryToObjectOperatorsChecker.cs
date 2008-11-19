@@ -13,13 +13,15 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		{
 			precedences = new Dictionary<String, Int32>();
 			
-			precedences.Add("&&", 10);
 			precedences.Add("||", 10);
-			precedences.Add(">", 20);
-			precedences.Add(">=", 20);
-			precedences.Add("<", 20);
-			precedences.Add("<=", 20);
-			precedences.Add("==", 50);
+			precedences.Add("&&", 15);
+			precedences.Add("==", 20);
+			precedences.Add("!=", 20);
+			precedences.Add(">", 30);
+			precedences.Add(">=", 30);
+			precedences.Add("<", 30);
+			precedences.Add("<=", 30);
+			
 			precedences.Add("!", 100);
 			precedences.Add("like", 15);
 		}

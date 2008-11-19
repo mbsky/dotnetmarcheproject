@@ -12,6 +12,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 
 		private int I;
 		private bool isInQuote;
+		private string curToken;
 
 		public StringAdvancedTokenizer(IOperatorsChecker<string> opChecker)
 		{
@@ -28,7 +29,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		public List<string> Tokenize(string expressionSource)
 		{
 			List<String> retValue = new List<String>();
-			String curToken = String.Empty;
+			curToken = String.Empty;
 			I = 0;
 			String opToken;
 			isInQuote = false;
@@ -52,11 +53,14 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 					{
 						HandleQuote(expressionSource);
 					}
-					curToken += expressionSource[I];
+					else
+					{
+						curToken += expressionSource[I];
+					}
 				}
 				++I;
 			}
-			retValue.Add(curToken);
+			TokenComplete(retValue, ref curToken);
 			return retValue;
 		}
 
@@ -67,8 +71,10 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 				//It can be the closing quote or a double quote.
 				if (I < expressionSource.Length - 2 && expressionSource[this.I + 1] == '\'')
 				{
+					curToken += '\'';
 					I++;
-				} else
+				}
+				else
 				{
 					isInQuote = false;
 				}
@@ -97,7 +103,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		/// <returns></returns>
 		private bool NextTokenIsOperator(string expressionSource, out String operatorToken)
 		{
-			if (opChecker.IsOperator(expressionSource[I].ToString()))
+			if (IsSingleCharOperator(expressionSource[I].ToString()))
 			{
 				operatorToken = expressionSource[I].ToString();
 				return true;
@@ -117,6 +123,13 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 
 			operatorToken = String.Empty;
 			return operatorToken.Length > 0;
+		}
+
+		private bool IsSingleCharOperator(string expressionSource)
+		{
+			return opChecker.IsOperator(expressionSource) ||
+				opChecker.IsOpenBracket(expressionSource) ||
+				opChecker.IsClosedBracket(expressionSource);
 		}
 
 		#endregion

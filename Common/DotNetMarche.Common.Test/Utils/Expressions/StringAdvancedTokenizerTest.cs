@@ -62,26 +62,44 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		[Test]
 		public void TestQuotedString()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "==", "'test space'" }, sut.Tokenize("Test == 'test space'"));
+			CollectionAssert.AreEquivalent(new[] { "Test", "==", "test space" }, sut.Tokenize("Test == 'test space'"));
 		}		
 		
 		[Test]
 		public void TestStringOperators()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "like" , "'test space%'" }, sut.Tokenize("Test like 'test space%'"));
+			CollectionAssert.AreEquivalent(new[] { "Test", "like" , "test space%" }, sut.Tokenize("Test like 'test space%'"));
 		}
 
 		[Test]
 		public void TestTwoQuotedString()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "+", "'test space'", "+", "'other space'" }, 
+			CollectionAssert.AreEquivalent(new[] { "Test", "+", "test space", "+", "other space" }, 
 				sut.Tokenize("Test + 'test space' + 'other space'"));
 		}
 
 		[Test]
 		public void TestQuotedStringDoubleQuotes()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "==", "'test sp'ace'" }, sut.Tokenize("Test == 'test sp''ace'"));
+			CollectionAssert.AreEquivalent(new[] { "Test", "==", "test sp'ace" }, sut.Tokenize("Test == 'test sp''ace'"));
+		}
+
+		#endregion
+
+		#region Parenthesis
+
+		[Test]
+		public void TestBaseParenthesis()
+		{
+			CollectionAssert.AreEquivalent(new[] { "1", "+", "(", "2", "+", "3", ")" },
+				sut.Tokenize("1 + ( 2 + 3 )"));
+		}
+
+		[Test]
+		public void TestBaseParenthesis2()
+		{
+			CollectionAssert.AreEquivalent(new[] { "1", "+", "(", "2", "+", "3", ")" },
+				sut.Tokenize("1+(2+3)"));
 		}
 
 		#endregion
