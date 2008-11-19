@@ -15,18 +15,21 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 	public class PostfixExpressionToLambda<T>
 	{
 		private static PropertyInfo[] propertyNames;
-
+		private static String[] operators;
+		private static String[] unaryoperators;
 		static PostfixExpressionToLambda()
 		{
 			Type t = typeof(T);
 			propertyNames = t.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+			operators = new[] { "==", ">", "<" };
+			unaryoperators = new String[] { };
 		}
 
 		private readonly ParameterExpression inputObj;
 
 		public PostfixExpressionToLambda()
 		{
-			inputObj = Expression.Parameter(typeof (T), "object");
+			inputObj = Expression.Parameter(typeof(T), "object");
 		}
 
 		/// <summary>
@@ -42,13 +45,19 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		public Expression<Func<T, RetType>> Execute<RetType>(IList<String> postfixExpression)
 		{
 			Stack<Expression> stack = new Stack<Expression>();
+			Expression tempexpression;
 			foreach (String token in postfixExpression)
 			{
 				//First of all check if is a name of a property of the object
 				if (propertyNames.Any(p => p.Name == token))
 				{
 					stack.Push(Expression.Property(inputObj, token));
-				} else
+				}
+				else if (IsBinaryOperator(token))
+				{
+					ExecuteBinaryOperator(token, stack);
+				}
+				else
 				{
 					stack.Push(Expression.Constant(token));
 				}
@@ -82,6 +91,44 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			if (stack.Count > 0) throw new ArgumentException("The postfix expression is malformed");
 			LambdaExpression lambda = Expression.Lambda(final, inputObj);
 			return (Expression<Func<T, RetType>>)lambda;
+		}
+
+		private void ExecuteBinaryOperator(string token, Stack<Expression> stack)
+		{
+			Expression op2 = stack.Pop();
+			Expression op1 = stack.Pop();
+			if (op2.Type != op1.Type && (op2 is ConstantExpression || op1 is ConstantExpression))
+			{
+				if (op2 is ConstantExpression)
+				{
+					ConstantExpression cex2 = op2 as ConstantExpression;
+					op2 = Expression.Constant(Convert.ChangeType(cex2.Value, op1.Type));
+				} else
+				{
+						ConstantExpression cex1 = op1 as ConstantExpression;
+					op1 = Expression.Constant(Convert.ChangeType(cex1.Value, op2.Type));
+				}
+			}
+			switch (token)
+			{
+				case "==":
+					stack.Push(Expression.Equal(op1, op2));
+					break;
+				case ">":
+					stack.Push(Expression.GreaterThan(op1, op2));
+					break;
+				case "<":
+					stack.Push(Expression.LessThan(op1, op2));
+					break;
+				default:
+					throw new ArgumentException("The operator " + token + " is not supported");
+					break;
+			}
+		}
+
+		private static Boolean IsBinaryOperator(string token)
+		{
+			return operators.Contains(token) && !unaryoperators.Contains(token);
 		}
 	}
 }

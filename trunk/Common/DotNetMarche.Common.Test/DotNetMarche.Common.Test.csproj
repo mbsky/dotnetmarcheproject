@@ -95,6 +95,7 @@
     <Compile Include="Utils\Expressions\ExpressionTest.cs" />
     <Compile Include="Utils\Expressions\StringAdvancedTokenizerTest.cs" />
     <Compile Include="Utils\ExpressionTreeReflectionTest.cs" />
+    <Compile Include="Utils\Linq\DynamicLinqTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\DotNetMarche.snk">

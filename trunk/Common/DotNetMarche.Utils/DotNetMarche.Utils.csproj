@@ -55,6 +55,7 @@
     <Compile Include="Expressions\Concrete\StringBasicTokenizer.cs" />
     <Compile Include="Expressions\Concrete\StringToExpressionTokenConverter.cs" />
     <Compile Include="Expressions\Concrete\StringTokenConverter.cs" />
+    <Compile Include="Linq\DynamicLinq.cs" />
     <Compile Include="Expressions\ExpressionConverterExt.cs" />
     <Compile Include="Expressions\ITokenConverter.cs" />
     <Compile Include="Expressions\ITokenizer.cs" />
@@ -66,14 +67,12 @@
     <Compile Include="Expressions\Concrete\StandardOperatorsChecker.cs" />
     <Compile Include="Expressions\PostfixExecutor.cs" />
     <Compile Include="LCGReflection.cs" />
+    <Compile Include="Linq\DynamicLinqExtension.cs" />
     <Compile Include="PerfTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DotNetMarche.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Linq\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
