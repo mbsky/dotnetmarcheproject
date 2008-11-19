@@ -49,8 +49,11 @@
   <ItemGroup>
     <Compile Include="BasicExtensions.cs" />
     <Compile Include="ExceptionUtils.cs" />
+    <Compile Include="Expressions\Concrete\PostfixExpressionToLambda.cs" />
+    <Compile Include="Expressions\Concrete\QueryToObjectOperatorsChecker.cs" />
     <Compile Include="Expressions\Concrete\StringAdvancedTokenizer.cs" />
     <Compile Include="Expressions\Concrete\StringBasicTokenizer.cs" />
+    <Compile Include="Expressions\Concrete\StringToExpressionTokenConverter.cs" />
     <Compile Include="Expressions\Concrete\StringTokenConverter.cs" />
     <Compile Include="Expressions\ExpressionConverterExt.cs" />
     <Compile Include="Expressions\ITokenConverter.cs" />

@@ -21,6 +21,8 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 			sut = new StringAdvancedTokenizer(opChecker);
 		}
 
+		#region Basic Test Suite
+
 		[Test]  
 		public void TestOnlyLiteral() 
 		{
@@ -56,5 +58,32 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		{
 			CollectionAssert.AreEquivalent(new[] { "1", "+", "2" }, sut.Tokenize("1 + 2"));
 		}
+
+		[Test]
+		public void TestQuotedString()
+		{
+			CollectionAssert.AreEquivalent(new[] { "Test", "==", "'test space'" }, sut.Tokenize("Test == 'test space'"));
+		}		
+		
+		[Test]
+		public void TestStringOperators()
+		{
+			CollectionAssert.AreEquivalent(new[] { "Test", "like" , "'test space%'" }, sut.Tokenize("Test like 'test space%'"));
+		}
+
+		[Test]
+		public void TestTwoQuotedString()
+		{
+			CollectionAssert.AreEquivalent(new[] { "Test", "+", "'test space'", "+", "'other space'" }, 
+				sut.Tokenize("Test + 'test space' + 'other space'"));
+		}
+
+		[Test]
+		public void TestQuotedStringDoubleQuotes()
+		{
+			CollectionAssert.AreEquivalent(new[] { "Test", "==", "'test sp'ace'" }, sut.Tokenize("Test == 'test sp''ace'"));
+		}
+
+		#endregion
 	}
 }

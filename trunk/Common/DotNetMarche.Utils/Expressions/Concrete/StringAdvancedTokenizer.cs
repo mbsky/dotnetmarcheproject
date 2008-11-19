@@ -10,6 +10,9 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 
 		private IOperatorsChecker<String> opChecker;
 
+		private int I;
+		private bool isInQuote;
+
 		public StringAdvancedTokenizer(IOperatorsChecker<string> opChecker)
 		{
 			this.opChecker = opChecker;
@@ -26,16 +29,17 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		{
 			List<String> retValue = new List<String>();
 			String curToken = String.Empty;
-			Int32 I = 0;
+			I = 0;
 			String opToken;
+			isInQuote = false;
 			while (I < expressionSource.Length)
 			{
 				//if next char is separator handle it
-				if (char.IsSeparator(expressionSource[I]))
+				if (char.IsSeparator(expressionSource[I]) && !isInQuote)
 				{
 					TokenComplete(retValue, ref curToken);
 				}
-				else if (NextTokenIsOperator(I, expressionSource, out opToken))
+				else if (NextTokenIsOperator(expressionSource, out opToken))
 				{
 					TokenComplete(retValue, ref curToken);
 					retValue.Add(opToken);
@@ -43,12 +47,36 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 				}
 				else
 				{
+					//We must check for double quote, if we have a quote go to IsInQuote status where separator gets ignored.
+					if (expressionSource[I] == '\'')
+					{
+						HandleQuote(expressionSource);
+					}
 					curToken += expressionSource[I];
 				}
 				++I;
 			}
 			retValue.Add(curToken);
 			return retValue;
+		}
+
+		private void HandleQuote(string expressionSource)
+		{
+			if (isInQuote)
+			{
+				//It can be the closing quote or a double quote.
+				if (I < expressionSource.Length - 2 && expressionSource[this.I + 1] == '\'')
+				{
+					I++;
+				} else
+				{
+					isInQuote = false;
+				}
+			}
+			else
+			{
+				isInQuote = true;
+			}
 		}
 
 		private static void TokenComplete(ICollection<string> retValue, ref string curToken)
@@ -67,7 +95,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		/// <param name="expressionSource"></param>
 		/// <param name="operatorToken">Read token</param>
 		/// <returns></returns>
-		private bool NextTokenIsOperator(int I, string expressionSource, out String operatorToken)
+		private bool NextTokenIsOperator(string expressionSource, out String operatorToken)
 		{
 			if (opChecker.IsOperator(expressionSource[I].ToString()))
 			{
