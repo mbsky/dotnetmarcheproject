@@ -55,6 +55,7 @@
     <Compile Include="Expressions\Concrete\StringBasicTokenizer.cs" />
     <Compile Include="Expressions\Concrete\StringToExpressionTokenConverter.cs" />
     <Compile Include="Expressions\Concrete\StringTokenConverter.cs" />
+    <Compile Include="Linq\Creational.cs" />
     <Compile Include="Linq\DynamicLinq.cs" />
     <Compile Include="Expressions\ExpressionConverterExt.cs" />
     <Compile Include="Expressions\ITokenConverter.cs" />
