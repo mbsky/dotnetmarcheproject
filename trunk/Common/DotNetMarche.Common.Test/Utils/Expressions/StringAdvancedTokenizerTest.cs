@@ -17,7 +17,7 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			IOperatorsChecker<String> opChecker = new StandardOperatorsChecker();
+			IOperatorsChecker<String> opChecker = new QueryToObjectOperatorsChecker();
 			sut = new StringAdvancedTokenizer(opChecker);
 		}
 
@@ -66,9 +66,15 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		}		
 		
 		[Test]
-		public void TestStringOperators()
+		public void TestStringOperatorsAndOperatorShouldNotMatchInQuotes()
 		{
 			CollectionAssert.AreEquivalent(new[] { "Test", "like" , "test space%" }, sut.Tokenize("Test like 'test space%'"));
+		}
+
+		[Test]
+		public void TestStringOperators()
+		{
+			CollectionAssert.AreEquivalent(new[] { "Test", "like", "test space" }, sut.Tokenize("Test like 'test space'"));
 		}
 
 		[Test]
@@ -82,6 +88,12 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		public void TestQuotedStringDoubleQuotes()
 		{
 			CollectionAssert.AreEquivalent(new[] { "Test", "==", "test sp'ace" }, sut.Tokenize("Test == 'test sp''ace'"));
+		}
+
+		[Test]
+		public void TestNotEqual()
+		{
+			CollectionAssert.AreEquivalent(new[] { "Test", "!=", "test space" }, sut.Tokenize("Test != 'test space'"));
 		}
 
 		#endregion
