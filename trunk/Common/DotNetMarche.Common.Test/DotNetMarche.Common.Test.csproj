@@ -71,6 +71,7 @@
     <Compile Include="AuxClasses\TestContext.cs" />
     <Compile Include="Concrete\CastleWindsorIoCEngineTest.cs" />
     <Compile Include="Concrete\Classes\IoCBase.cs" />
+    <Compile Include="Concrete\SomeTests.cs" />
     <Compile Include="Infrastructure\ContextTest.cs" />
     <Compile Include="Infrastructure\Data\DataAccessTest.cs" />
     <Compile Include="Infrastructure\Data\DataAccessTransactionTest.cs" />

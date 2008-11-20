@@ -89,6 +89,7 @@ namespace DotNetMarche.TestHelpers.Threading
 				status.Switcher.SignalException();
 			} catch (Exception ex)
 			{
+				status.Switcher.FailedAssertion = new AssertionException("Action throw exception", ex);
 				status.Switcher.SignalException();
 			}
 			finally
