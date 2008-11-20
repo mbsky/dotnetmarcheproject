@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DotNetMarche.Utils.Expressions;
+using System.Linq;
 
 namespace DotNetMarche.Utils.Expressions.Concrete
 {
@@ -49,5 +50,23 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		}
 
 
+
+		#region IEnumerable<string> Members
+
+		public IEnumerator<string> GetEnumerator()
+		{
+			return precedences.Select(kvp => kvp.Key).GetEnumerator();
+		}
+
+		#endregion
+
+		#region IEnumerable Members
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+		#endregion
 	}
 }

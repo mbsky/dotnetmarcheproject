@@ -15,14 +15,21 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 	public class PostfixExpressionToLambda<T>
 	{
 		private static PropertyInfo[] propertyNames;
-		private static String[] operators;
 		private static String[] unaryoperators;
+
+		private static Dictionary<String, Func<Expression, Expression, Expression>> 
+			binaryOpFactory = new Dictionary<String, Func<Expression, Expression, Expression>> ();
 		static PostfixExpressionToLambda()
 		{
 			Type t = typeof(T);
 			propertyNames = t.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
-			operators = new[] { "==", ">", "<" };
 			unaryoperators = new String[] { };
+			binaryOpFactory.Add("==", Expression.Equal);
+			binaryOpFactory.Add(">", Expression.GreaterThan);
+			binaryOpFactory.Add("<", Expression.LessThan);
+			binaryOpFactory.Add(">=", Expression.GreaterThanOrEqual);
+			binaryOpFactory.Add("<=", Expression.LessThanOrEqual);
+			binaryOpFactory.Add("!=", Expression.NotEqual);
 		}
 
 		private readonly ParameterExpression inputObj;
@@ -61,31 +68,6 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 				{
 					stack.Push(Expression.Constant(token));
 				}
-
-				//if (opChecker.IsBinaryOperator(token))
-				//{
-				//   Double op2 = stack.Pop();
-				//   Double op1 = stack.Pop();
-				//   switch (token)
-				//   {
-				//      case "*":
-				//         stack.Push(op1 * op2);
-				//         break;
-				//      case "-":
-				//         stack.Push(op1 - op2);
-				//         break;
-				//      case "+":
-				//         stack.Push(op1 + op2);
-				//         break;
-				//      case "/":
-				//         stack.Push(op1 / op2);
-				//         break;
-				//   }
-				//}
-				//else
-				//{
-				//   stack.Push(Double.Parse(token));
-				//}
 			}
 			Expression final = stack.Pop();
 			if (stack.Count > 0) throw new ArgumentException("The postfix expression is malformed");
@@ -95,6 +77,8 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 
 		private void ExecuteBinaryOperator(string token, Stack<Expression> stack)
 		{
+			if (!binaryOpFactory.ContainsKey(token))					
+				throw new ArgumentException("The operator " + token + " is not supported");
 			Expression op2 = stack.Pop();
 			Expression op1 = stack.Pop();
 			if (op2.Type != op1.Type && (op2 is ConstantExpression || op1 is ConstantExpression))
@@ -109,26 +93,12 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 					op1 = Expression.Constant(Convert.ChangeType(cex1.Value, op2.Type));
 				}
 			}
-			switch (token)
-			{
-				case "==":
-					stack.Push(Expression.Equal(op1, op2));
-					break;
-				case ">":
-					stack.Push(Expression.GreaterThan(op1, op2));
-					break;
-				case "<":
-					stack.Push(Expression.LessThan(op1, op2));
-					break;
-				default:
-					throw new ArgumentException("The operator " + token + " is not supported");
-					break;
-			}
+			stack.Push(binaryOpFactory[token](op1, op2));
 		}
 
 		private static Boolean IsBinaryOperator(string token)
 		{
-			return operators.Contains(token) && !unaryoperators.Contains(token);
+			return binaryOpFactory.ContainsKey(token) && !unaryoperators.Contains(token);
 		}
 	}
 }

@@ -21,7 +21,14 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			precedences.Add(">=", 30);
 			precedences.Add("<", 30);
 			precedences.Add("<=", 30);
-			
+
+			precedences.Add("+", 70);
+			precedences.Add("-", 70);
+
+			precedences.Add("*", 70);
+			precedences.Add("/", 70);
+			precedences.Add("%", 70);
+
 			precedences.Add("!", 100);
 			precedences.Add("like", 15);
 		}
@@ -51,6 +58,23 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			return precedences.ContainsKey(token);
 		}
 
+		#region IEnumerable<string> Members
+
+		public IEnumerator<string> GetEnumerator()
+		{
+			return precedences.Select(kvp => kvp.Key).GetEnumerator();
+		}
+
+		#endregion
+
+		#region IEnumerable Members
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+		#endregion
 
 	}
 }

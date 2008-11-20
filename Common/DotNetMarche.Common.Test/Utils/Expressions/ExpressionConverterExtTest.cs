@@ -188,6 +188,17 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 			Assert.That(f(aCustomer), Is.True);
 		}
 
+		/// <summary>
+		/// if you use a property that does not exists the expression should throw an exception.
+		/// </summary>
+		[Test, ExpectedException]
+		public void TestConditionWithWrongProperty()
+		{
+			Expression<Func<Customer, Boolean>> exp = sutpfex.Execute<Boolean>(new[] { "14", "NotExistingProperty", ">" });
+			Func<Customer, Boolean> f = exp.Compile();
+			Assert.That(f(aCustomer), Is.True);
+		}
+
 		#endregion
 
 		#region Parser
@@ -198,6 +209,33 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("Name == 'Gian Maria'");
 			Assert.That(f(aCustomer), Is.True);
 		}
+
+		[Test, ExpectedException]
+		public void TestDynNotExistingProperty()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("NotExistingProperty == 'Gian Maria'");
+			Assert.That(f(aCustomer), Is.True);
+		}
+
+		[Test]
+		public void TestDynNotEqual()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("Name != 'Gian Maria'");
+			Assert.That(f(aCustomer), Is.False);
+		}
+
+		[Test]
+		public void TestDynLesserThanOrEqual()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("Age <= 14");
+			Assert.That(f(aCustomer), Is.True);
+		}
+
+		#endregion
+
+		#region Logic Operators
+
+
 
 		#endregion
 

@@ -7,12 +7,25 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 {
 	public class StringAdvancedTokenizer : ITokenizer<String, String>
 	{
+		private const int MaxOperatorLength = 6;
 
 		private IOperatorsChecker<String> opChecker;
 
-		private int I;
-		private bool isInQuote;
-		private string curToken;
+		private struct AnalysisData
+		{
+			public int I;
+			public bool isInQuote;
+			public string curToken;
+			public String expressionSource;
+			public List<String> tokens;
+
+			public Char CurrentChar
+			{
+				get { return expressionSource[I]; }
+			}
+		}
+
+
 
 		public StringAdvancedTokenizer(IOperatorsChecker<string> opChecker)
 		{
@@ -28,108 +41,111 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		/// <returns></returns>
 		public List<string> Tokenize(string expressionSource)
 		{
-			List<String> retValue = new List<String>();
-			curToken = String.Empty;
-			I = 0;
+			AnalysisData data = new AnalysisData()
+										{
+											curToken = String.Empty,
+											I = 0,
+											isInQuote = false,
+											expressionSource = expressionSource,
+											tokens = new List<String>()
+										};
 			String opToken;
-			isInQuote = false;
-			while (I < expressionSource.Length)
+			while (data.I < data.expressionSource.Length)
 			{
 				//if next char is separator handle it
-				if (char.IsSeparator(expressionSource[I]) && !isInQuote)
+				if (char.IsSeparator(data.CurrentChar) && !data.isInQuote)
 				{
-					TokenComplete(retValue, ref curToken);
+					TokenComplete(ref data);
 				}
-				else if (NextTokenIsOperator(expressionSource, out opToken))
+				else if (!data.isInQuote && NextTokenIsOperator(ref data, out opToken))
 				{
-					TokenComplete(retValue, ref curToken);
-					retValue.Add(opToken);
-					I += opToken.Length - 1;
+					TokenComplete(ref data);
+					data.tokens.Add(opToken);
+					data.I += opToken.Length - 1;
 				}
 				else
 				{
 					//We must check for double quote, if we have a quote go to IsInQuote status where separator gets ignored.
-					if (expressionSource[I] == '\'')
+					if (data.CurrentChar == '\'')
 					{
-						HandleQuote(expressionSource);
+						HandleQuote(ref data);
 					}
 					else
 					{
-						curToken += expressionSource[I];
+						data.curToken += data.CurrentChar;
 					}
 				}
-				++I;
+				++data.I;
 			}
-			TokenComplete(retValue, ref curToken);
-			return retValue;
+			TokenComplete(ref data);
+			return data.tokens;
 		}
 
-		private void HandleQuote(string expressionSource)
+		private void HandleQuote(ref AnalysisData data)
 		{
-			if (isInQuote)
+			if (data.isInQuote)
 			{
 				//It can be the closing quote or a double quote.
-				if (I < expressionSource.Length - 2 && expressionSource[this.I + 1] == '\'')
+				if (data.I < data.expressionSource.Length - 2 && data.expressionSource[data.I + 1] == '\'')
 				{
-					curToken += '\'';
-					I++;
+					data.curToken += '\'';
+					data.I++;
 				}
 				else
 				{
-					isInQuote = false;
+					data.isInQuote = false;
 				}
 			}
 			else
 			{
-				isInQuote = true;
+				data.isInQuote = true;
 			}
 		}
 
-		private static void TokenComplete(ICollection<string> retValue, ref string curToken)
+		private static void TokenComplete(ref AnalysisData data)
 		{
-			if (!String.IsNullOrEmpty(curToken))
+			if (!String.IsNullOrEmpty(data.curToken))
 			{
-				retValue.Add(curToken);
-				curToken = String.Empty;
+				data.tokens.Add(data.curToken);
+				data.curToken = String.Empty;
 			}
 		}
 
 		/// <summary>
-		/// Check if the next token is an operator
+		/// Check if the next token is an operator, it should match the longer operator 
+		/// that match, this is needed not to miss the != operator.
 		/// </summary>
-		/// <param name="I"></param>
-		/// <param name="expressionSource"></param>
-		/// <param name="operatorToken">Read token</param>
 		/// <returns></returns>
-		private bool NextTokenIsOperator(string expressionSource, out String operatorToken)
+		private bool NextTokenIsOperator(ref AnalysisData data, out String operatorToken)
 		{
-			if (IsSingleCharOperator(expressionSource[I].ToString()))
+			//First of all we should check if we have parenthesis 
+			if (IsOpenOrCloseBracket(data))
 			{
-				operatorToken = expressionSource[I].ToString();
+				operatorToken = data.CurrentChar.ToString();
 				return true;
 			}
-			Int32 len = 2;
-			String readAhead;
-			while (len < 6 && len + I < expressionSource.Length)
+
+			//For any operator of the operatorchecker take the bigger that match
+			foreach (String op in opChecker.OrderByDescending(s => s.Length))
 			{
-				readAhead = expressionSource.Substring(I, len);
-				if (opChecker.IsOperator(readAhead))
+				if (data.expressionSource.IndexOf(op, data.I, Math.Min(MaxOperatorLength, data.expressionSource.Length - data.I)) == data.I)
 				{
-					operatorToken = readAhead;
+					operatorToken = op;
 					return true;
 				}
-				len++;
 			}
-
 			operatorToken = String.Empty;
-			return operatorToken.Length > 0;
+			return false;
 		}
 
-		private bool IsSingleCharOperator(string expressionSource)
+		/// <summary>
+		/// Todo, this work only with single char bracket, it should be enough for simple parsers
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		private bool IsOpenOrCloseBracket(AnalysisData data)
 		{
-			return opChecker.IsOperator(expressionSource) ||
-				opChecker.IsOpenBracket(expressionSource) ||
-				opChecker.IsClosedBracket(expressionSource);
+			return opChecker.IsOpenBracket(data.CurrentChar.ToString()) || opChecker.IsClosedBracket(data.CurrentChar.ToString());
 		}
 
 		#endregion
