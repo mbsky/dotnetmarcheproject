@@ -66,9 +66,13 @@ namespace DotNetMarche.TestHelpers.Threading
 				ThisEvent.Set();
 		}
 
+		private Boolean IsSignaling = false;
 		internal void SignalNext()
 		{
+			if (IsSignaling) return; //Avoid stack overflow if all switchers are broken
+			IsSignaling = true;
 			NextSwitcher.Signal();
+			IsSignaling = false;
 		}
 
 		private Boolean isBroken = false;
