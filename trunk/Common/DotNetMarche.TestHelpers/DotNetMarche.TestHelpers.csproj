@@ -63,11 +63,18 @@
     <Compile Include="SyntaxHelpers\ConstraintBuilder.cs" />
     <Compile Include="SyntaxHelpers\Is.cs" />
     <Compile Include="SyntaxHelpers\OriginalIs.cs" />
+    <Compile Include="Threading\ContextSwitcher.cs" />
+    <Compile Include="Threading\ContextSwitcherHost.cs" />
+    <Compile Include="Threading\ParallelFunctionTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">
       <Project>{75E2529D-95B2-4440-AE35-CEF39D8412F5}</Project>
       <Name>DotNetMarche.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
+      <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
+      <Name>DotNetMarche.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
