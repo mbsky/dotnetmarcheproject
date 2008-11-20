@@ -23,6 +23,28 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			{
 				get { return expressionSource[I]; }
 			}
+
+			/// <summary>
+			/// Check if the next char is a given char.
+			/// </summary>
+			/// <param name="charToCheck"></param>
+			/// <returns></returns>
+			public Boolean NextCharIs(Char charToCheck)
+			{
+				return
+					I < expressionSource.Length - 2 && //Check for lenght of the string
+					expressionSource[I + 1] == charToCheck;
+			}
+
+			/// <summary>
+			/// Check if token is match in the current position
+			/// </summary>
+			/// <param name="token"></param>
+			/// <returns></returns>
+			public Boolean TokenMatch(String token)
+			{
+				return expressionSource.IndexOf(token, I, Math.Min(MaxOperatorLength, expressionSource.Length - I)) == I;
+			}
 		}
 
 
@@ -86,7 +108,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			if (data.isInQuote)
 			{
 				//It can be the closing quote or a double quote.
-				if (data.I < data.expressionSource.Length - 2 && data.expressionSource[data.I + 1] == '\'')
+				if (data.NextCharIs('\''))
 				{
 					data.curToken += '\'';
 					data.I++;
@@ -128,7 +150,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			//For any operator of the operatorchecker take the bigger that match
 			foreach (String op in opChecker.OrderByDescending(s => s.Length))
 			{
-				if (data.expressionSource.IndexOf(op, data.I, Math.Min(MaxOperatorLength, data.expressionSource.Length - data.I)) == data.I)
+				if (data.TokenMatch(op))
 				{
 					operatorToken = op;
 					return true;
