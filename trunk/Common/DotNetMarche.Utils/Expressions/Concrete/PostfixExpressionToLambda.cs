@@ -19,6 +19,10 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 
 		private static Dictionary<String, Func<Expression, Expression, Expression>> 
 			binaryOpFactory = new Dictionary<String, Func<Expression, Expression, Expression>> ();
+
+		private static Dictionary<String, Func<Expression, Expression>>
+			unaryOpFactory = new Dictionary<String, Func<Expression, Expression>>();
+
 		static PostfixExpressionToLambda()
 		{
 			Type t = typeof(T);
@@ -30,6 +34,10 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			binaryOpFactory.Add(">=", Expression.GreaterThanOrEqual);
 			binaryOpFactory.Add("<=", Expression.LessThanOrEqual);
 			binaryOpFactory.Add("!=", Expression.NotEqual);
+			binaryOpFactory.Add("&&", Expression.And);
+			binaryOpFactory.Add("||", Expression.Or);
+
+			unaryOpFactory.Add("!", Expression.Not);
 		}
 
 		private readonly ParameterExpression inputObj;
@@ -64,6 +72,10 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 				{
 					ExecuteBinaryOperator(token, stack);
 				}
+				else if (IsUnaryOperator(token))
+				{
+					ExecuteUnaryOperator(token, stack);
+				}
 				else
 				{
 					stack.Push(Expression.Constant(token));
@@ -73,6 +85,11 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			if (stack.Count > 0) throw new ArgumentException("The postfix expression is malformed");
 			LambdaExpression lambda = Expression.Lambda(final, inputObj);
 			return (Expression<Func<T, RetType>>)lambda;
+		}
+
+		private void ExecuteUnaryOperator(string token, Stack<Expression> stack)
+		{
+			stack.Push(unaryOpFactory[token](stack.Pop()));
 		}
 
 		private void ExecuteBinaryOperator(string token, Stack<Expression> stack)
@@ -98,7 +115,12 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 
 		private static Boolean IsBinaryOperator(string token)
 		{
-			return binaryOpFactory.ContainsKey(token) && !unaryoperators.Contains(token);
+			return binaryOpFactory.ContainsKey(token);
+		}
+
+		private static Boolean IsUnaryOperator(string token)
+		{
+			return unaryOpFactory.ContainsKey(token);
 		}
 	}
 }
