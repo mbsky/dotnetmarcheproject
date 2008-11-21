@@ -188,6 +188,16 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 			Assert.That(f(aCustomer), Is.True);
 		}
 
+		[Test]
+		public void TestConditionNot()
+		{
+			Expression<Func<Customer, Boolean>> exp = sutpfex.Execute<Boolean>(new[] { "Name", "Gian Maria", "!=" });
+			Func<Customer, Boolean> f = exp.Compile();
+			Assert.That(f(aCustomer), Is.False);
+		}
+
+
+
 		/// <summary>
 		/// if you use a property that does not exists the expression should throw an exception.
 		/// </summary>
@@ -229,6 +239,55 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		{
 			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("Age <= 14");
 			Assert.That(f(aCustomer), Is.True);
+		}
+
+		[Test]
+		public void TestDynNotCondition()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("!(Name == 'Gian Maria')");
+			Assert.That(f(aCustomer), Is.False);
+		}
+
+		[Test]
+		public void TestDynNotCondition2()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("!(Name == 'Gianf Maria')");
+			Assert.That(f(aCustomer), Is.True);
+		}
+
+		[Test]
+		public void TestLogicAnd()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("Name == 'Gian Maria' && Age > 5");
+			Assert.That(f(aCustomer), Is.True);
+		}
+
+		[Test]
+		public void TestLogicAndWithParenthesis()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("Name == 'Gian Maria' && !(Age < 10)");
+			Assert.That(f(aCustomer), Is.True);
+		}
+
+		[Test]
+		public void TestPrecedenceAndOrString()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("Name == 'Gian Maria' && Age == 10 || 1 == 0");
+			Assert.That(f(aCustomer), Is.True);
+		}
+
+		[Test]
+		public void TestPrecedenceAndOrString2()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("Name == 'Gian Maria' || 1 == 0 && Age != 10");
+			Assert.That(f(aCustomer), Is.True);
+		}
+
+		[Test]
+		public void TestPrecedenceAndOrString2P()
+		{
+			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("(Name == 'Gian Maria' || 1 == 0 )&& Age != 10");
+			Assert.That(f(aCustomer), Is.False);
 		}
 
 		#endregion
