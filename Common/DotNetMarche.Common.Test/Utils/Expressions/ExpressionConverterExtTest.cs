@@ -255,6 +255,10 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 			Assert.That(f(aCustomer), Is.True);
 		}
 
+		#endregion
+
+		#region Logic Operators
+
 		[Test]
 		public void TestLogicAnd()
 		{
@@ -290,12 +294,27 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 			Assert.That(f(aCustomer), Is.False);
 		}
 
+
 		#endregion
 
-		#region Logic Operators
+		#region Test Parameters
 
-
-
+		[Test]
+		public void BasicAddWithParameter()
+		{
+			Expression<Func<Customer, Object, Boolean>> exp = sutpfex.Execute<Object, Boolean>(new[] { "Name", ":name", "==" });
+			Func<Customer, Object, Boolean> f = exp.Compile();
+			Assert.That(f(aCustomer, "Gian Maria"), Is.True);
+		}		
+		
+		[Test]
+		public void BasicAddWithParameterIsFalse()
+		{
+			Expression<Func<Customer, Object, Boolean>> exp = sutpfex.Execute<Object, Boolean>(new[] { "Name", ":name", "==" });
+			Func<Customer, Object, Boolean> f = exp.Compile();
+			Assert.That(f(aCustomer, "Gianf Maria"), Is.False);
+		}
+	
 		#endregion
 
 	}

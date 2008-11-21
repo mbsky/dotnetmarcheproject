@@ -59,7 +59,35 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		/// <returns></returns>
 		public Expression<Func<T, RetType>> Execute<RetType>(IList<String> postfixExpression)
 		{
+			LambdaExpression lambda = GenerateExpressionFromPostfixList(postfixExpression);
+			return (Expression<Func<T, RetType>>)lambda;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="P1">Type of the first parameter.</typeparam>
+		/// <typeparam name="RetType"></typeparam>
+		/// <param name="postfixExpression"></param>
+		/// <returns></returns>
+		public Expression<Func<T, P1, RetType>> Execute<P1, RetType>(IList<String> postfixExpression)
+		{
+			LambdaExpression lambda = GenerateExpressionFromPostfixList(postfixExpression);
+			return (Expression<Func<T, P1, RetType>>)lambda;
+		}
+
+		/// <summary>
+		/// This is the core function, it generates the Lambda.
+		/// </summary>
+		/// <param name="postfixExpression"></param>
+		/// <returns></returns>
+		private LambdaExpression GenerateExpressionFromPostfixList(IList<string> postfixExpression)
+		{
 			Stack<Expression> stack = new Stack<Expression>();
+			Dictionary<String, ParameterExpression> parameters = new Dictionary<String, ParameterExpression>();
+			List<ParameterExpression> parametersList = new List<ParameterExpression>();
+
+			parametersList.Add(inputObj);
 			Expression tempexpression;
 			foreach (String token in postfixExpression)
 			{
@@ -76,6 +104,10 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 				{
 					ExecuteUnaryOperator(token, stack);
 				}
+				else if (IsParameter(token))
+				{
+					ExecuteParameter(token, stack, parameters, parametersList);
+				}
 				else
 				{
 					stack.Push(Expression.Constant(token));
@@ -83,8 +115,18 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			}
 			Expression final = stack.Pop();
 			if (stack.Count > 0) throw new ArgumentException("The postfix expression is malformed");
-			LambdaExpression lambda = Expression.Lambda(final, inputObj);
-			return (Expression<Func<T, RetType>>)lambda;
+			return Expression.Lambda(final, parametersList.ToArray());
+		}
+
+		private void ExecuteParameter(string token, Stack<Expression> stack, Dictionary<string, ParameterExpression> parameters, List<ParameterExpression> parametersList)
+		{
+			if (!parameters.ContainsKey(token))
+			{
+				ParameterExpression parameter = Expression.Parameter(typeof (Object), token);
+				parameters.Add(token, parameter);
+				parametersList.Add(parameter);
+			}
+			stack.Push(parameters[token]);
 		}
 
 		private void ExecuteUnaryOperator(string token, Stack<Expression> stack)
@@ -121,6 +163,11 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		private static Boolean IsUnaryOperator(string token)
 		{
 			return unaryOpFactory.ContainsKey(token);
+		}
+
+		private static Boolean IsParameter(string token)
+		{
+			return token.StartsWith(":");
 		}
 	}
 }
