@@ -36,8 +36,18 @@ namespace DotNetMarche.Common.Test.Utils.Linq
 			IEnumerable<Customer> result = customerList.Where("Age < 30");
 			CollectionAssert.Contains(result, customerList[2]);
 			Assert.That(result.Count(), Is.EqualTo(1));
+		}
+
+
+		[Test]
+		public void TestWhereWithParam()
+		{
+			IEnumerable<Customer> result = customerList.Where("Name == :name", "Guardian");
+			CollectionAssert.Contains(result, customerList[0]);
+			Assert.That(result.Count(), Is.EqualTo(1));
 		}		
-		
+
+
 		//[Test]
 		//public void TestWhere2F()
 		//{
