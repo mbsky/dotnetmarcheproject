@@ -115,5 +115,24 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		}
 
 		#endregion
+
+
+		#region Parameters
+
+		[Test]
+		public void TestParameter()
+		{
+			CollectionAssert.AreEquivalent(new[] { "1", "+", ":param" },
+				sut.Tokenize("1 + :param"));
+		}
+
+		[Test]
+		public void TestParameterNoSpace()
+		{
+			CollectionAssert.AreEquivalent(new[] { "1", "+", ":param" },
+				sut.Tokenize("1+:param"));
+		}
+		
+		#endregion
 	}
 }
