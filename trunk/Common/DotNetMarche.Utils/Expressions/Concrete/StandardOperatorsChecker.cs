@@ -14,6 +14,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		private static Dictionary<String, Int32> precedences;
 		static StandardOperatorsChecker() {
 			precedences = new Dictionary<String, Int32>();
+            precedences.Add(".", 200);
 			precedences.Add("+", 10);
 			precedences.Add("-", 10);
 			precedences.Add("*", 20);
@@ -27,6 +28,11 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		public Boolean IsUnaryOperator(String token) {
 			return token == "@" || token == "#";
 		}
+
+        public Boolean IsMemberAccessOperator(String token)
+        {
+            return token == ".";
+        }
 
 		public Boolean IsBinaryOperator(String token) {
 			return precedences.ContainsKey(token);

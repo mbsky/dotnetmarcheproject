@@ -12,7 +12,8 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		static QueryToObjectOperatorsChecker()
 		{
 			precedences = new Dictionary<String, Int32>();
-			
+
+            precedences.Add(".", 200);
 			precedences.Add("||", 10);
 			precedences.Add("&&", 15);
 			precedences.Add("==", 20);
@@ -40,6 +41,11 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		public Boolean IsBinaryOperator(String token) {
 			return precedences.ContainsKey(token);
 		}
+
+        public Boolean IsMemberAccessOperator(String token)
+        {
+            return token == ".";
+        }
 
 		public Boolean OperatorAHasMorePrecedenceThanB(String a, String b) {
 			return precedences[a] > precedences[b];

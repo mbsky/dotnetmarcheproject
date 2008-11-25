@@ -29,6 +29,20 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 			Assert.That(sut.InfixToPostfix(Expression), Is.EqualTo("a b +"));
 		}
 
+        [Test]
+        public void TestBasicMemberAccessConversion()
+        {
+            String Expression = "( a.b )";
+            Assert.That(sut.InfixToPostfix(Expression), Is.EqualTo("a b ."));
+        }
+
+        [Test]
+        public void TestComplexMemberAccessConversion()
+        {
+            String Expression = "( a.b == c.d.e )";
+            Assert.That(sut.InfixToPostfix(Expression), Is.EqualTo("a b . c d e . . =="));
+        }
+
 		[Test]
 		public void TestSimpleconversion2()
 		{

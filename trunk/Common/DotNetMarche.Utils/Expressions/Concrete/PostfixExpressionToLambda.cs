@@ -96,22 +96,26 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 				{
 					stack.Push(Expression.Property(inputObj, token));
 				}
-				else if (IsBinaryOperator(token))
-				{
-					ExecuteBinaryOperator(token, stack);
-				}
-				else if (IsUnaryOperator(token))
-				{
-					ExecuteUnaryOperator(token, stack);
-				}
-				else if (IsParameter(token))
-				{
-					ExecuteParameter(token, stack, parameters, parametersList);
-				}
-				else
-				{
-					stack.Push(Expression.Constant(token));
-				}
+                else if (IsMemberAccessOperator(token))
+                {
+                    ExecuteMemberAccessOperator(token, stack);
+                }
+                else if (IsBinaryOperator(token))
+                {
+                    ExecuteBinaryOperator(token, stack);
+                }
+                else if (IsUnaryOperator(token))
+                {
+                    ExecuteUnaryOperator(token, stack);
+                }
+                else if (IsParameter(token))
+                {
+                    ExecuteParameter(token, stack, parameters, parametersList);
+                }
+                else
+                {
+                    stack.Push(Expression.Constant(token));
+                }
 			}
 			Expression final = stack.Pop();
 			if (stack.Count > 0) throw new ArgumentException("The postfix expression is malformed");
@@ -134,6 +138,20 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			stack.Push(unaryOpFactory[token](stack.Pop()));
 		}
 
+        private void ExecuteMemberAccessOperator(string token, Stack<Expression> stack)
+        {
+            if (!IsMemberAccessOperator(token))
+                throw new ArgumentException("The operator " + token + " is not supported");
+
+            Expression op2 = stack.Pop();
+            Expression op1 = stack.Pop();
+
+            if ((op1 is MemberExpression) && (op2 is ConstantExpression))
+            {
+                stack.Push(Expression.Property(op1,((ConstantExpression)op2).Value.ToString()));
+            }
+        }
+
 		private void ExecuteBinaryOperator(string token, Stack<Expression> stack)
 		{
 			if (!binaryOpFactory.ContainsKey(token))					
@@ -154,6 +172,11 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			}
 			stack.Push(binaryOpFactory[token](op1, op2));
 		}
+
+        private static Boolean IsMemberAccessOperator(string token)
+        {
+            return token==".";
+        }
 
 		private static Boolean IsBinaryOperator(string token)
 		{

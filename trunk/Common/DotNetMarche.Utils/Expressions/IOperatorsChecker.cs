@@ -24,6 +24,13 @@ namespace DotNetMarche.Utils.Expressions
 		/// <returns></returns>
 		Boolean IsUnaryOperator(T token);
 
+        /// <summary>
+        /// Return true if the token is equal to the Member access operator
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Boolean IsMemberAccessOperator(T token);
+
 		/// <summary>
 		/// return true if Operator A has more precedence respect operator B
 		/// </summary>

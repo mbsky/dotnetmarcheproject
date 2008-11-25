@@ -26,74 +26,79 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		[Test]  
 		public void TestOnlyLiteral() 
 		{
-			CollectionAssert.AreEquivalent(new[] {"TEST"},sut.Tokenize("TEST") );
+			CollectionAssert.AreEqual(new[] {"TEST"},sut.Tokenize("TEST") );
 		}
 
 		[Test] 
 		public void TestSimpleAdd() 
 		{
-			CollectionAssert.AreEquivalent(new[] {"1", "+", "2"}, sut.Tokenize("1+2"));
+			CollectionAssert.AreEqual(new[] {"1", "+", "2"}, sut.Tokenize("1+2"));
 		}
 
 		[Test] 
 		public void TestForMultiCharOperator() 
 		{
-			CollectionAssert.AreEquivalent(new[] { "A", "==", "B" }, sut.Tokenize("A==B"));
+			CollectionAssert.AreEqual(new[] { "A", "==", "B" }, sut.Tokenize("A==B"));
 		}
 
 		[Test]
 		public void TestForSeparator()
 		{
-			CollectionAssert.AreEquivalent(new[] { "A", "B" }, sut.Tokenize("A B"));
+			CollectionAssert.AreEqual(new[] { "A", "B" }, sut.Tokenize("A B"));
 		}
 
 		[Test]
 		public void TestForSeparatorMultichar()
 		{
-			CollectionAssert.AreEquivalent(new[] { "A", "B" }, sut.Tokenize("A  B"));
+			CollectionAssert.AreEqual(new[] { "A", "B" }, sut.Tokenize("A  B"));
 		}
 
 		[Test]
 		public void TestSimpleAddWithSpaces()
 		{
-			CollectionAssert.AreEquivalent(new[] { "1", "+", "2" }, sut.Tokenize("1 + 2"));
+			CollectionAssert.AreEqual(new[] { "1", "+", "2" }, sut.Tokenize("1 + 2"));
 		}
 
+        [Test]
+        public void TestMemberAccessOperator()
+        {
+            CollectionAssert.AreEqual(new[] { "Custormer", ".", "Name" }, sut.Tokenize("Custormer.Name"));
+        }
 		[Test]
 		public void TestQuotedString()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "==", "test space" }, sut.Tokenize("Test == 'test space'"));
+			CollectionAssert.AreEqual(new[] { "Test", "==", "test space" }, sut.Tokenize("Test == 'test space'"));
 		}		
 		
 		[Test]
 		public void TestStringOperatorsAndOperatorShouldNotMatchInQuotes()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "like" , "test space%" }, sut.Tokenize("Test like 'test space%'"));
+			CollectionAssert.AreEqual(new[] { "Test", "like" , "test space%" }, sut.Tokenize("Test like 'test space%'"));
 		}
 
 		[Test]
 		public void TestStringOperators()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "like", "test space" }, sut.Tokenize("Test like 'test space'"));
+			CollectionAssert.AreEqual(new[] { "Test", "like", "test space" }, sut.Tokenize("Test like 'test space'"));
 		}
 
 		[Test]
 		public void TestTwoQuotedString()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "+", "test space", "+", "other space" }, 
+			CollectionAssert.AreEqual(new[] { "Test", "+", "test space", "+", "other space" }, 
 				sut.Tokenize("Test + 'test space' + 'other space'"));
 		}
 
 		[Test]
 		public void TestQuotedStringDoubleQuotes()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "==", "test sp'ace" }, sut.Tokenize("Test == 'test sp''ace'"));
+			CollectionAssert.AreEqual(new[] { "Test", "==", "test sp'ace" }, sut.Tokenize("Test == 'test sp''ace'"));
 		}
 
 		[Test]
 		public void TestNotEqual()
 		{
-			CollectionAssert.AreEquivalent(new[] { "Test", "!=", "test space" }, sut.Tokenize("Test != 'test space'"));
+			CollectionAssert.AreEqual(new[] { "Test", "!=", "test space" }, sut.Tokenize("Test != 'test space'"));
 		}
 
 		#endregion
@@ -103,14 +108,14 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		[Test]
 		public void TestBaseParenthesis()
 		{
-			CollectionAssert.AreEquivalent(new[] { "1", "+", "(", "2", "+", "3", ")" },
+			CollectionAssert.AreEqual(new[] { "1", "+", "(", "2", "+", "3", ")" },
 				sut.Tokenize("1 + ( 2 + 3 )"));
 		}
 
 		[Test]
 		public void TestBaseParenthesis2()
 		{
-			CollectionAssert.AreEquivalent(new[] { "1", "+", "(", "2", "+", "3", ")" },
+			CollectionAssert.AreEqual(new[] { "1", "+", "(", "2", "+", "3", ")" },
 				sut.Tokenize("1+(2+3)"));
 		}
 
@@ -122,14 +127,14 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		[Test]
 		public void TestParameter()
 		{
-			CollectionAssert.AreEquivalent(new[] { "1", "+", ":param" },
+			CollectionAssert.AreEqual(new[] { "1", "+", ":param" },
 				sut.Tokenize("1 + :param"));
 		}
 
 		[Test]
 		public void TestParameterNoSpace()
 		{
-			CollectionAssert.AreEquivalent(new[] { "1", "+", ":param" },
+			CollectionAssert.AreEqual(new[] { "1", "+", ":param" },
 				sut.Tokenize("1+:param"));
 		}
 		

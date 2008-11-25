@@ -49,7 +49,16 @@ namespace DotNetMarche.Utils.Expressions
 					stack.Push(token);
 				}
 				else {
-					result.Append(token + ' ');
+                    //handle member access operator Eg.: Order.Customer.Name
+                    string[] properties = token.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (properties.Length > 0)
+                    { 
+                        for (int j=0;j<properties.Length;j++)
+                            result.Append(properties[j] + ' ');
+
+                        for (int j = 1; j<properties.Length; j++)
+                            result.Append("."+ ' ');    
+                    }
 					while (stack.Count > 0 && opChecker.IsUnaryOperator(stack.Peek()))
 						result.Append(stack.Pop() + ' ');
 				}

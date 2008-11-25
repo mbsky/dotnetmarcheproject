@@ -20,6 +20,14 @@ namespace DotNetMarche.Common.Test.Utils.Linq
 			new Customer() {Name = "Gnosi", Age=100},
 		};
 
+        private Order[] orderList = new Order[] 
+        { 
+            new Order() { Customer = new Customer() { Name = "Roberto", Age = 21 } },
+            new Order() { Customer = new Customer() { Name = "Guardian", Age = 33 } },
+            new Order() { Customer = new Customer() { Name = "Alk", Age = 34 } },
+            new Order() { Customer = new Customer() { Name = "Diego", Age = 30 } }
+        };
+
 		[Test]
 		public void TestWhere()
 		{
@@ -38,6 +46,14 @@ namespace DotNetMarche.Common.Test.Utils.Linq
 			Assert.That(result.Count(), Is.EqualTo(1));
 		}
 
+		[Test]
+		public void TestWhere3()
+		{
+			IEnumerable<Order> result = orderList.Where("Customer.Age < 33");
+			CollectionAssert.Contains(result, orderList[0]);
+            CollectionAssert.Contains(result, orderList[3]);
+            Assert.That(result.Count(), Is.EqualTo(2));
+		}
 
 		[Test]
 		public void TestWhereWithParam()
