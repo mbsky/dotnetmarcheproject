@@ -54,49 +54,63 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		public void TestBasicAdd()
 		{
 			IList<String> postfix = sut.InfixToPostfix("A + B");
-			CollectionAssert.AreEquivalent(postfix, new [] { "A", "B", "+" });
+            CollectionAssert.AreEqual(postfix, new[] { "A", "B", "+" });
 		}
+
+        [Test]
+        public void TestBasicMemberAccess()
+        {
+            IList<String> postfix = sut.InfixToPostfix("A.B");
+            CollectionAssert.AreEqual(postfix, new[] { "A", "B", "." });
+        }
+
+        [Test]
+        public void TestComplexMemberAccess()
+        {
+            IList<String> postfix = sut.InfixToPostfix("A.B == C.D.E");
+            CollectionAssert.AreEqual(new[] { "A", "B", ".", "C", "D", ".", "E", ".", "==" }, postfix);
+        }
 
 		[Test]
 		public void TestPrecedence()
 		{
 			IList<String> postfix = sut.InfixToPostfix("A + B * C");
-			CollectionAssert.AreEquivalent(new [] { "A", "B", "C", "*", "+" }, postfix);
+			CollectionAssert.AreEqual(new[] { "A", "B", "C", "*", "+" }, postfix);
 		}
 
 		[Test]
 		public void TestPrecedenceParentesis()
 		{
 			IList<String> postfix = sut.InfixToPostfix("(A + B) * C");
-			CollectionAssert.AreEquivalent(new[] { "A", "B", "+" , "C", "*" }, postfix );
+            CollectionAssert.AreEqual(new[] { "A", "B", "+", "C", "*" }, postfix);
 		}
 
 		[Test]
 		public void TestPrecedenceNot()
 		{
 			IList<String> postfix = sut.InfixToPostfix("!A && B");
-			CollectionAssert.AreEquivalent(new[] { "A", "!", "B", "&&"}, postfix);
+            CollectionAssert.AreEqual(new string[] { "A", "!", "B", "&&" }, postfix);
 		}
 
 		[Test]
 		public void TestPrecedenceNot2()
 		{
 			IList<String> postfix = sut.InfixToPostfix("!A && !B");
-			CollectionAssert.AreEquivalent(new[] { "A", "!", "B", "!", "&&" }, postfix);
+            CollectionAssert.AreEqual(new[] { "A", "!", "B", "!", "&&" }, postfix);
 		}
 
 		[Test]
 		public void TestPrecedenceAndOr()
 		{
 			IList<String> postfix = sut.InfixToPostfix("A && B || C");
-			CollectionAssert.AreEquivalent(new[] { "A", "B", "&&", "C", "||" }, postfix);
+            CollectionAssert.AreEqual(new[] { "A", "B", "&&", "C", "||" }, postfix);
 		}
 
 		[Test]
 		public void TestPrecedenceAndOr2()
 		{
 			IList<String> postfix = sut.InfixToPostfix("A || B && C");
-			CollectionAssert.AreEquivalent(new[] { "A", "B", "C", "&&", "||" }, postfix);
+            CollectionAssert.AreEqual(new[] { "A", "B", "C", "&&", "||" }, postfix);
 		}
 
 		#endregion
@@ -131,18 +145,27 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		#region PostfixExpressionToLambda
 
 		private Customer aCustomer = new Customer() { Name = "Gian Maria", Age = 10 };
-
+        private Order aOrder = new Order() { Customer = new Customer() { Name = "Roberto", Age = 21 } }; //He is very young boy... 
 		/// <summary>
 		/// This test verify that a simple expression with only name access the Name
 		/// property of the object.
 		/// </summary>
 		[Test]
-		public void TestBasicMemberAccess()
+		public void TestMemberAccess()
 		{
 			Expression<Func<Customer, String>> exp = sutpfex.Execute<String>(new[] { "Name" });
 			Func<Customer, String> f = exp.Compile();
 			Assert.That(f(aCustomer), Is.EqualTo("Gian Maria"));
 		}
+
+        [Test]
+        public void TestInnerMemberAccess()
+        {
+            PostfixExpressionToLambda<Order> sut = new PostfixExpressionToLambda<Order>();
+            Expression<Func<Order, String>> exp = sut.Execute<String>(new[] { "Customer", "Name", "." });
+            Func<Order, String> f = exp.Compile();
+            Assert.That(f(aOrder), Is.EqualTo("Roberto"));
+        }
 
 		/// <summary>
 		/// This test verify that a simple expression with only name access the Name
@@ -255,7 +278,20 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 			Assert.That(f(aCustomer), Is.True);
 		}
 
-		#endregion
+        [Test]
+        public void TestDynMemberAccess()
+        {
+            Func<Order, Boolean> f = DynamicLinq.ParseToFunction<Order, Boolean>("Customer.Name == 'Roberto'");
+            Assert.That(f(aOrder), Is.True);
+        }
+
+        [Test]
+        public void TestDynMemberAccess2()
+        {
+            Func<Order, Boolean> f = DynamicLinq.ParseToFunction<Order, Boolean>("!(Customer.Name == 'Roberto')");
+            Assert.That(f(aOrder), Is.False);
+        }
+        #endregion
 
 		#region Logic Operators
 
@@ -293,7 +329,6 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 			Func<Customer, Boolean> f = DynamicLinq.ParseToFunction<Customer, Boolean>("(Name == 'Gian Maria' || 1 == 0 )&& Age != 10");
 			Assert.That(f(aCustomer), Is.False);
 		}
-
 
 		#endregion
 
