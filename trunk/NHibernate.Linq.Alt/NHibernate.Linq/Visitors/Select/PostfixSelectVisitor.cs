@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Expressions;
+using NHibernate.Criterion;
 using System.Reflection;
 using LE = System.Linq.Expressions;
 

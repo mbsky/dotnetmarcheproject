@@ -16,7 +16,7 @@ using NUnit.Framework.SyntaxHelpers;
 namespace DotNetMarche.Common.Test.Infrastructure.Repository
 {
 	[TestFixture]
-	public class NHibernateRepositoryTest
+	public class NHibernateRepositoryTest : DotNetMarche.TestHelpers.BaseTests.BaseUtilityTest
 	{
 		#region Test Management
 
@@ -25,8 +25,11 @@ namespace DotNetMarche.Common.Test.Infrastructure.Repository
 		private InMemoryConfigurationRegistry repo;
 		private NHibernateRepository<AnEntity> sut;
 
-		[TestFixtureSetUp]
-		public void TestFixtureSetUp()
+		/// <summary>
+		/// In the test fixture setup I simply ovveride the configuration registry
+		/// using an in memory configuration with a fixed connection string.
+		/// </summary>
+		protected override void OnTestFixtureSetUp()
 		{
 			sut = new NHibernateRepository<AnEntity>();
 			sut.ConfigurationFileName = ConfigFileName;
@@ -34,14 +37,10 @@ namespace DotNetMarche.Common.Test.Infrastructure.Repository
 			repo.ConnStrings.Add(
 				"main", new ConnectionStringSettings(
 					"main", "Data Source=DbFile1.db;Version=3", "System.Data.SQLite"));
-			OverrideSettings = ConfigurationRegistry.Override(repo);
+			DisposeAtTheEndOfFixture(ConfigurationRegistry.Override(repo));
 			NHibernateSessionManager.GenerateDbFor(ConfigFileName);
-		}
-
-		[TestFixtureTearDown]
-		public void TestFixtureTearDown()
-		{
-			OverrideSettings.Dispose();
+			
+			base.OnTestFixtureSetUp();
 		}
 
 		#endregion
@@ -54,6 +53,9 @@ namespace DotNetMarche.Common.Test.Infrastructure.Repository
 			Assert.That(Invoker.GetProp<Int32>(ent, "Id"), Is.Not.EqualTo(0));
 		}
 
+		/// <summary>
+		/// Test saving data into database
+		/// </summary>
 		[Test]
 		public void TestSaveSaveAllData()
 		{
@@ -64,6 +66,15 @@ namespace DotNetMarche.Common.Test.Infrastructure.Repository
 				.That("Name", Is.EqualTo("Name"))
 				.That("Value", Is.EqualTo(99))
 				.ExecuteAssert();
+		}
+
+		[Test]
+		public void TestBasicQueryableForSession()
+		{
+			var result = from AnEntity en in sut.Query()
+			             where en.Name == "Alkampfer"
+			             select en;
+			Assert.That(result.Count(), Is.EqualTo(0));
 		}
 	}
 

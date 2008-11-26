@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Expressions;
+
 using System.Reflection;
+using NHibernate.Criterion;
 using LE = System.Linq.Expressions;
-using NHEX = NHibernate.Expressions;
+using NHEX = NHibernate.Criterion;
 namespace NHibernate.Linq.Visitors.Select {
 	/// <summary>
 	/// Find aggregator.

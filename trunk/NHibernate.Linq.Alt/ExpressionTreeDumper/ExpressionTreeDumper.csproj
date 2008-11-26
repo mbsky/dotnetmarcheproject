@@ -34,11 +34,11 @@
   <ItemGroup>
     <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibs\Castle.Core.dll</HintPath>
+      <HintPath>..\..\ExternalLibs\NHibernate\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibs\Castle.DynamicProxy2.dll</HintPath>
+      <HintPath>..\..\ExternalLibs\NHibernate\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.0.3, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -48,13 +48,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibs\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=2.0.0.1001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibs\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.XmlSerializers, Version=2.0.0.1001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibs\NHibernate.XmlSerializers.dll</HintPath>
+      <HintPath>..\..\ExternalLibs\NHibernate\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -147,9 +143,9 @@
       <Project>{B09778CE-44FD-4BE2-AB1E-9AFDFACB8279}</Project>
       <Name>NHibernate.Linq.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NHibernate.Linq2NhBySql\NHibernate.Linq2NhBySql.csproj">
-      <Project>{2CF9A83A-BC40-4485-A763-BFF59B2EBDAD}</Project>
-      <Name>NHibernate.Linq2NhBySql</Name>
+    <ProjectReference Include="..\NHibernate.Linq\NHibernate.Linq.csproj">
+      <Project>{3644D8EE-4D7C-4306-A5AD-4E73D16A3D45}</Project>
+      <Name>NHibernate.Linq</Name>
     </ProjectReference>
     <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj">
       <Project>{A99E0AEA-8FA5-4C32-9B0B-E84DC5AB30F4}</Project>

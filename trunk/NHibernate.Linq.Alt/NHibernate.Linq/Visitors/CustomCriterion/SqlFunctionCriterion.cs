@@ -11,7 +11,7 @@ using NHibernate.Type;
 
 namespace NHibernate.Linq.Visitors.CustomCriterion
 {
-    public class SqlFunctionCriterion : NHibernate.Expressions.AbstractCriterion
+	public class SqlFunctionCriterion : NHibernate.Criterion.AbstractCriterion
     {
 
         private Object mValueToCompareTo;
@@ -58,11 +58,11 @@ namespace NHibernate.Linq.Visitors.CustomCriterion
         /// <returns></returns>
         public override NHibernate.Engine.TypedValue[] GetTypedValues(
             NHibernate.ICriteria criteria,
-            NHibernate.Expressions.ICriteriaQuery criteriaQuery)
+				NHibernate.Criterion.ICriteriaQuery criteriaQuery)
         {
 
             return new TypedValue[] {
-				new TypedValue(GetITypeFromCLRType(mValueToCompareTo.GetType()), mValueToCompareTo)};
+				new TypedValue(GetITypeFromCLRType(mValueToCompareTo.GetType()), mValueToCompareTo, EntityMode.Poco)};
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace NHibernate.Linq.Visitors.CustomCriterion
         /// <returns></returns>
         public override NHibernate.SqlCommand.SqlString ToSqlString(
             NHibernate.ICriteria criteria,
-            NHibernate.Expressions.ICriteriaQuery criteriaQuery,
+				NHibernate.Criterion.ICriteriaQuery criteriaQuery,
             IDictionary<string, IFilter> enabledFilters)
         {
 
@@ -92,9 +92,9 @@ namespace NHibernate.Linq.Visitors.CustomCriterion
                     BuildUnknownExpression(mFunction, mSqlFunctionParameter));
             }
             ISQLFunction func = (ISQLFunction)dialect.Functions[mFunction];
-            String functionResolved = func.Render(mSqlFunctionParameter, criteriaQuery.Factory);
+            SqlString functionResolved = func.Render(mSqlFunctionParameter, criteriaQuery.Factory);
             //Now we have the cast operation required.
-            return CreateQueryString(functionResolved);
+            return CreateQueryString(functionResolved.ToString());
         }
 
         private String BuildUnknownExpression(String function, Object[] parameters)

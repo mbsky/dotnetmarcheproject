@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using NHibernate.Linq2NhBySql;
 
 namespace NHibernate.Linq.Tests.Entities
 {

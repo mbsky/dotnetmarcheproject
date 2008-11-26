@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DotNetMarche.Infrastructure.Data;
 using NHibernate;
+using NHibernate.Linq;
 
 namespace DotNetMarche.Infrastructure.Concrete.Repository
 {
@@ -28,7 +29,7 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 
 		public T GetById(object id)
 		{
-			throw new NotImplementedException();
+			return CurrentSession.Get<T>(id);
 		}
 
 		public void Save(T obj)
@@ -48,7 +49,7 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 
 		public IQueryable<T> Query()
 		{
-			throw new NotImplementedException();
+			return CurrentSession.Linq<T>();
 		}
 
 		#endregion

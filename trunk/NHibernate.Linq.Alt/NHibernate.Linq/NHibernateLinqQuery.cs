@@ -6,14 +6,14 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using NHibernate.Engine;
-using NHibernate.Expressions;
+using NHibernate.Criterion;
 using NHibernate.Impl;
 //using NHibernate.Linq.Expressions;
 using NHibernate.Loader.Criteria;
 using NHibernate.Transform;
 using NHibernate.Type;
 using LinqExpression = System.Linq.Expressions.Expression;
-using NHExpression = NHibernate.Expressions.Expression;
+using NHExpression = NHibernate.Criterion.Expression;
 
 namespace NHibernate.Linq
 {
@@ -73,7 +73,7 @@ namespace NHibernate.Linq
                     criteriaQuery = new CriteriaQueryTranslator(
                         (ISessionFactoryImplementor)session.SessionFactory,
                         (CriteriaImpl)rootCriteria,
-                        typeof(TResult), "this");
+                        typeof(TResult).Name, "this");
                 }
                 return criteriaQuery;
             }

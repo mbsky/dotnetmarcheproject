@@ -1,12 +1,11 @@
 ﻿using System;
 using MbUnit.Framework;
+using NHibernate.Linq.SqlClient;
 using NHibernate.Linq.Tests.Entities;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
-using NHibernate.Linq2NhBySql;
-using NHibernate.Linq2NhBySql.SqlClient;
-using NEX = NHibernate.Expressions;
+using NEX = NHibernate.Criterion;
 
 namespace NHibernate.Linq.Tests
 {

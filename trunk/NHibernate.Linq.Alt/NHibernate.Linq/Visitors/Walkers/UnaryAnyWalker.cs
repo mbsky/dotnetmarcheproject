@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Expressions;
+using NHibernate.Criterion;
 
 namespace NHibernate.Linq.Visitors
 {
@@ -18,11 +18,11 @@ namespace NHibernate.Linq.Visitors
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="stack"></param>
         /// <returns></returns>
         internal override WalkedToken Walk(WalkedToken token)
         {
-            if (token.TokenType != TokenType.PropertyPath)
+        	if (token == null) throw new ArgumentNullException("token");
+        	if (token.TokenType != TokenType.PropertyPath)
                 throw new ApplicationException("Cannot apply any to token of type " + token.TokenType);
             return WalkedToken.FromCriterion(Expression.IsNotEmpty(token.GetValue<String>()));
         }

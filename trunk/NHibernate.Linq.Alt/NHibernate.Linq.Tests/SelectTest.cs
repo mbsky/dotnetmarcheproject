@@ -3,7 +3,7 @@ using System.Linq;
 using MbUnit.Framework;
 using NHibernate.Linq.Tests.Entities;
 using System.Collections.Generic;
-using NHibernate.Linq2NhBySql;
+
 
 namespace NHibernate.Linq.Tests
 {
