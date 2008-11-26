@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
 using System.Diagnostics;
-using NHEX = NHibernate.Expressions;
+using NHEX = NHibernate.Criterion;
 using System.Reflection;
 
 namespace NHibernate.Linq.Visitors {

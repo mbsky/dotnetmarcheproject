@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
-using NHex = NHibernate.Expressions;
 using System.Reflection;
+using NHibernate.Criterion;
 
 namespace NHibernate.Linq.Visitors
 {
@@ -17,15 +17,15 @@ namespace NHibernate.Linq.Visitors
         /// This is the signature of a function that takes a string and an object
         /// and create a nhibernate expression.
         /// </summary>
-        Func<String, Object, NHex.ICriterion> expCreator;
+        Func<String, Object, ICriterion> expCreator;
         /// <summary>
         /// This create a comparison between two properties.
         /// </summary>
-        Func<String, String, NHex.ICriterion> expPropertyComparisonCreator;
+        Func<String, String, ICriterion> expPropertyComparisonCreator;
 
         internal BaseBinaryOperatorWalker(
-            Func<String, Object, NHex.ICriterion> expCreator,
-            Func<String, String, NHex.ICriterion> expPropertyComparisonCreator,
+            Func<String, Object, ICriterion> expCreator,
+            Func<String, String, ICriterion> expPropertyComparisonCreator,
             ICriteria criterion)
             : base(criterion)
         {
@@ -53,7 +53,7 @@ namespace NHibernate.Linq.Visitors
             String propertyName = w.MethodName;
             ///Handle null value because it should be treated differently.
             if (value == null)
-                return WalkedToken.FromCriterion(new NHibernate.Expressions.NullExpression(propertyName));
+                return WalkedToken.FromCriterion(new NullExpression(propertyName));
 
             if (!w.FinalType.IsAssignableFrom(value.GetType())) 
                 if (w.FinalType == typeof(Int32))
@@ -87,7 +87,7 @@ namespace NHibernate.Linq.Visitors
         {
             CustomCriterion.SqlFunctionCriterion crit = (CustomCriterion.SqlFunctionCriterion)left.Criterion;
             //configureSqlCustomCriterion(crit);
-            NHibernate.Expressions.ICriterion outCriterion = expCreator("", null);
+				NHibernate.Criterion.ICriterion outCriterion = expCreator("", null);
             crit.StrOperator =  outCriterion.GetType().GetProperty(
                 "Op", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(outCriterion, null) as String;

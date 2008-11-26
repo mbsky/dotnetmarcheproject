@@ -36,7 +36,7 @@ namespace NHibernate.Linq.Visitors
         /// This overriding access has the duty to create a valid
         /// criterion for boolean property used as a single criterion.
         /// </summary>
-        public override NHibernate.Expressions.ICriterion Criterion
+		  public override NHibernate.Criterion.ICriterion Criterion
         {
             get
             {
@@ -65,11 +65,11 @@ namespace NHibernate.Linq.Visitors
 
         #region Single use of a boolean property
 
-        private NHibernate.Expressions.ICriterion CreateCriterionForSingleMemberAccess()
+		  private NHibernate.Criterion.ICriterion CreateCriterionForSingleMemberAccess()
         {
             if (!(FinalType == typeof(Boolean))) 
                 throw new ApplicationException("This node cannot create a criterion");
-            base.criterion = NHibernate.Expressions.Expression.Eq(this.MethodName, true);
+				base.criterion = NHibernate.Criterion.Expression.Eq(this.MethodName, true);
             return base.criterion;
         }
 

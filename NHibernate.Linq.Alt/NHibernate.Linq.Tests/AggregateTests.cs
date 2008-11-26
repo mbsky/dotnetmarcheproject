@@ -2,7 +2,8 @@
 using System.Text;
 using MbUnit.Framework;
 using System.Linq;
-using NHibernate.Linq2NhBySql.SqlClient;
+using NHibernate.Linq.SqlClient;
+
 
 namespace NHibernate.Linq.Tests
 {

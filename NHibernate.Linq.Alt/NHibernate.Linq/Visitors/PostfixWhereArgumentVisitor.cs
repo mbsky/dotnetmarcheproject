@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate.Criterion;
 using NHibernate.Linq.Visitors;
-using NHibernate;
-using NHibernate.Expressions;
+
 
 namespace NHibernate.Linq
 {

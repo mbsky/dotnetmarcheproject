@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Linq.Expressions;
-using NHex = NHibernate.Expressions;
+using NHibernate.Criterion;
+using NHex = NHibernate.Criterion;
 
 namespace NHibernate.Linq.Visitors
 {
@@ -102,7 +103,7 @@ namespace NHibernate.Linq.Visitors
 
         internal BinaryWalker FromBinary(BinaryExpression exp)
         {
-            Func<String, Object, NHex.ICriterion> f;
+            Func<String, Object, ICriterion> f;
             switch (exp.NodeType)
             {
                 case ExpressionType.Equal:

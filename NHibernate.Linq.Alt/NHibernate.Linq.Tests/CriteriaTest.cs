@@ -4,7 +4,7 @@ using NHibernate.Linq.Tests.Entities;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
-using NEX = NHibernate.Expressions;
+using NEX = NHibernate.Criterion;
 
 namespace NHibernate.Linq.Tests
 {

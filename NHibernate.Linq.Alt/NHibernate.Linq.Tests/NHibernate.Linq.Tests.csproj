@@ -11,6 +11,8 @@
     <AssemblyName>NHibernate.Linq.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>DotNetMarche.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,9 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\NHibernate\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibs\Castle.DynamicProxy2.dll</HintPath>
+      <HintPath>..\..\ExternalLibs\NHibernate\Castle.DynamicProxy2.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -43,13 +49,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibs\MbUnit\MbUnit.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=1.2.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibs\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.XmlSerializers, Version=2.0.0.1001, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibs\NHibernate.XmlSerializers.dll</HintPath>
+      <HintPath>..\..\ExternalLibs\NHibernate\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -94,17 +96,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NHibernate.Linq2NhBySql\NHibernate.Linq2NhBySql.csproj">
-      <Project>{2CF9A83A-BC40-4485-A763-BFF59B2EBDAD}</Project>
-      <Name>NHibernate.Linq2NhBySql</Name>
+    <None Include="App.config" />
+    <None Include="DotNetMarche.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NHibernate.Linq\NHibernate.Linq.csproj">
+      <Project>{3644D8EE-4D7C-4306-A5AD-4E73D16A3D45}</Project>
+      <Name>NHibernate.Linq</Name>
     </ProjectReference>
     <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj">
       <Project>{A99E0AEA-8FA5-4C32-9B0B-E84DC5AB30F4}</Project>
       <Name>Northwind.Entities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

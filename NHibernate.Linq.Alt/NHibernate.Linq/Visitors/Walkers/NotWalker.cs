@@ -13,7 +13,7 @@ namespace NHibernate.Linq.Visitors
         internal override WalkedToken Walk(WalkedToken token)
         {
 
-            return WalkedToken.FromCriterion( NHibernate.Expressions.Expression.Not(token.Criterion));
+			  return WalkedToken.FromCriterion(NHibernate.Criterion.Expression.Not(token.Criterion));
         }
     }
 }

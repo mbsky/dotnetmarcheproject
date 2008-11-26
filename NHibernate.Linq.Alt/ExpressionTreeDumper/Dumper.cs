@@ -8,7 +8,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Windows.Forms;
 using NHibernate.Linq;
-using NHibernate.Linq2NhBySql.SqlClient;
+using NHibernate.Linq.SqlClient;
+
 
 namespace ExpressionTreeDumper
 {
@@ -65,9 +66,9 @@ namespace ExpressionTreeDumper
             exps.Add(new KeyValuePair<string, Expression>("user.RegisteredAt == d", w2));
 
             NHibernate.Linq.Tests.Entities.NorthwindContext db = new NHibernate.Linq.Tests.Entities.NorthwindContext(null);
-            Expression<Func<Northwind.Entities.Employee, Boolean>> e2 =
-               e => db.Methods.Substring(e.FirstName, 1, 2) == "An";
-            exps.Add(new KeyValuePair<string, Expression>("db.Methods.Substring(e.FirstName, 1, 2) == \"An\"", e2));
+				//Expression<Func<Northwind.Entities.Employee, Boolean>> e2 =
+				//   e => db.Methods.Substring(e.FirstName, 1, 2) == "An";
+            //exps.Add(new KeyValuePair<string, Expression>("db.Methods.Substring(e.FirstName, 1, 2) == \"An\"", e2));
 
             Expression<Func<NHibernate.Linq.Tests.Entities.User, Boolean>> w3 =
                user => user.RegisteredAt == new DateTime(2000, 1, 1);
