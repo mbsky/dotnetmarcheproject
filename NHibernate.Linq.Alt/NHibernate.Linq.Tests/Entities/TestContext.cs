@@ -1,0 +1,17 @@
+﻿using System.Linq;
+using NHibernate.Linq2NhBySql;
+
+namespace NHibernate.Linq.Tests.Entities
+{
+	public class TestContext : NHibernateContext
+	{
+		public TestContext(ISession session) : base(session)
+		{
+		}
+
+		public IOrderedQueryable<User> Users
+		{
+			get { return Session.Linq<User>(); }
+		}
+	}
+}
