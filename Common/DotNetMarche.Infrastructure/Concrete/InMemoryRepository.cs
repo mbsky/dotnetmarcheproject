@@ -38,10 +38,15 @@ namespace DotNetMarche.Infrastructure.Concrete
 
 		#region IRepository<T> Members
 
-		public T GetById(object id)
+		public T GetById(object id, Boolean getProxy)
 		{
 			if (!context.ContainsKey(id)) return default(T);
 			return context[id];
+		}
+
+		public T GetById(object id)
+		{
+			return GetById(id, false);
 		}
 
 		public void Save(T obj)
@@ -61,6 +66,11 @@ namespace DotNetMarche.Infrastructure.Concrete
 		}
 
 		public IQueryable<T> Query()
+		{
+			throw new NotImplementedException();
+		}
+
+		 public IEnumerable<T> Query(String queryText)
 		{
 			throw new NotImplementedException();
 		}

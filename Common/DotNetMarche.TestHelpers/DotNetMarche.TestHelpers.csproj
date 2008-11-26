@@ -57,6 +57,7 @@
     <Compile Include="Comparison\ObjectComparer.cs" />
     <Compile Include="Constraints\ObjectEqualConstraint.cs" />
     <Compile Include="Data\DbAssert.cs" />
+    <Compile Include="Generator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Invoker.cs" />
     <Compile Include="Reflection\Static.cs" />

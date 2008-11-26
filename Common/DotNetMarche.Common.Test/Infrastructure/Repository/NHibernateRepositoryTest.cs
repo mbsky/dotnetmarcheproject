@@ -12,6 +12,7 @@ using DotNetMarche.TestHelpers.Data;
 using DotNetMarche.TestHelpers.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using DotNetMarche.Utils.Linq;
 
 namespace DotNetMarche.Common.Test.Infrastructure.Repository
 {
@@ -63,18 +64,29 @@ namespace DotNetMarche.Common.Test.Infrastructure.Repository
 			sut.Save(ent);
 			DbAssert.OnQuery("select Id, Name, Value from AnEntity where Id ={Id}")
 				.SetInt32Param("Id", Invoker.GetProp<Int32>(ent, "Id"))
-				.That("Name", Is.EqualTo("Name"))
-				.That("Value", Is.EqualTo(99))
+				.That("Name", Is.EqualTo(ent.Name))
+				.That("Value", Is.EqualTo(ent.Value))
 				.ExecuteAssert();
 		}
 
 		[Test]
 		public void TestBasicQueryableForSession()
 		{
+			AnEntity ent = AnEntity.CreateSome();
+			sut.Save(ent);
 			var result = from AnEntity en in sut.Query()
-			             where en.Name == "Alkampfer"
+			             where en.Name == ent.Name 
 			             select en;
-			Assert.That(result.Count(), Is.EqualTo(0));
+			Assert.That(result.Count(), Is.EqualTo(1));
+		}
+
+		[Test]
+		public void TestBasicQueryableForSessionWithLinqExtension()
+		{
+			AnEntity ent = AnEntity.CreateSome();
+			sut.Save(ent);
+			IEnumerable<AnEntity> result = sut.Query("Name == " + ent.Name);
+			Assert.That(result.Count(), Is.EqualTo(1));
 		}
 	}
 

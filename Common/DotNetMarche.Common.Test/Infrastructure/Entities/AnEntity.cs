@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DotNetMarche.TestHelpers;
 
 namespace DotNetMarche.Common.Test.Infrastructure.Entities
 {
@@ -18,7 +19,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.Entities
 
 		public static AnEntity CreateSome()
 		{
-			return new AnEntity() { Name = "Name", Value = 99 };
+			return new AnEntity() { Name = Generator.RandomStringUnique(10), Value = 99 };
 		}
 
 		public static AnEntity CreateWithIdOnly(Int32 id)
