@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Northwind.Entities.AbstractCustomer">
+    <Position X="0.75" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAEAQAAAgAAAAAAIIAAgAAAAEAIAAAACAAACIAAEAAA=</HashCode>
+      <FileName>Customer.hbm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Northwind.Entities.AbstractEmployee">
+    <Position X="6.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMgAEAAoAAAAGRIIAAAAAQACCIAAQACAAAAAAAAAAg=</HashCode>
+      <FileName>Employee.hbm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Northwind.Entities.AbstractOrder">
+    <Position X="3.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAABBAAAAAAAAAIBAAICABCAAEAgBAAAAEAAAAACA=</HashCode>
+      <FileName>Order.hbm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Customer" />
+      <Property Name="Employee" />
+      <Property Name="Shipper" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Northwind.Entities.AbstractOrderDetail">
+    <Position X="1" Y="4" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Northwind.Entities.AbstractOrderDetail.OrderDetailKey" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>OrderDetail.hbm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAgAAgAAAAAA=</HashCode>
+      <FileName>OrderDetail.hbm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Northwind.Entities.Customer" Collapsed="true">
+    <Position X="3.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Customer.hbm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Northwind.Entities.Employee" Collapsed="true">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Employee.hbm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Northwind.Entities.AbstractShipper">
+    <Position X="5.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAQAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Shipper.hbm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Northwind.Entities.Shipper" Collapsed="true">
+    <Position X="3.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shipper.hbm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
