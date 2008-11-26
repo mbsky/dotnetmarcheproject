@@ -12,6 +12,11 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 
 		public T GetById(object id)
 		{
+			return GetById(id, false);
+		}
+
+		public T GetById(object id, Boolean getProxy)
+		{
 			throw new NotImplementedException();
 		}
 
@@ -31,6 +36,11 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 		}
 
 		public IQueryable<T> Query()
+		{
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<T> Query(String queryText)
 		{
 			throw new NotImplementedException();
 		}

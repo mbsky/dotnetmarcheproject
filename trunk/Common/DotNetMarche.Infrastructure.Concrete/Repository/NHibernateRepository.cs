@@ -5,6 +5,7 @@ using System.Text;
 using DotNetMarche.Infrastructure.Data;
 using NHibernate;
 using NHibernate.Linq;
+using DotNetMarche.Utils.Linq;
 
 namespace DotNetMarche.Infrastructure.Concrete.Repository
 {
@@ -32,6 +33,14 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			return CurrentSession.Get<T>(id);
 		}
 
+		public T GetById(object id, Boolean getProxy)
+		{
+			if (!getProxy)
+				return GetById(id);
+			else
+				return CurrentSession.Load<T>(id);
+		}
+
 		public void Save(T obj)
 		{
 			CurrentSession.Save(obj);
@@ -50,6 +59,12 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 		public IQueryable<T> Query()
 		{
 			return CurrentSession.Linq<T>();
+		}
+
+		public IEnumerable<T> Query(String queryText)
+		{
+			IOrderedQueryable<T> queryable = CurrentSession.Linq<T>();
+			return queryable.Where(queryText);
 		}
 
 		#endregion
