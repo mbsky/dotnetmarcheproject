@@ -37,6 +37,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ExternalLibs\Testing\Nunit\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.4.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\Testing\Rhino\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -53,7 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTests\BaseUtilityTest.cs" />
+    <Compile Include="BaseTests\BaseUtilityTestWithHelper.cs" />
     <Compile Include="BaseTests\DbTest.cs" />
+    <Compile Include="BaseTests\Helpers\RhinoMockTestHelper.cs" />
+    <Compile Include="BaseTests\ITestHelper.cs" />
     <Compile Include="Comparison\ObjectComparer.cs" />
     <Compile Include="Constraints\ObjectEqualConstraint.cs" />
     <Compile Include="Data\DbAssert.cs" />

@@ -56,6 +56,7 @@
     <Compile Include="Base\Interfaces\IInversionOfControlContainer.cs" />
     <Compile Include="Base\IoC.cs" />
     <Compile Include="Base\SettingsRegistry.cs" />
+    <Compile Include="Caching\GlobalCache.cs" />
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Caching\NullCache.cs" />
     <Compile Include="Data\UnitOfWork.cs" />

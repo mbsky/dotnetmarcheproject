@@ -24,5 +24,13 @@
 			lifestyle="Singleton"
 			default="true">
 		</component>
+
+		<component
+				id="NullCache"
+				service="DotNetMarche.Infrastructure.Caching.ICache, DotNetMarche.Infrastructure"
+				type="DotNetMarche.Infrastructure.Caching.NullCache, DotNetMarche.Infrastructure"
+				lifestyle="Singleton"
+				default="true">
+		</component>
 	</components>
 </CastleWindsor>

@@ -17,14 +17,19 @@ namespace DotNetMarche.Infrastructure.Caching
 			return null;
 		}
 
+		public T Get<T>(object key)
+		{
+			return default(T);
+		}
+
 		public object this[object key]
 		{
 			get { return Get(key); }
 		}
 
-		public void Insert(object key, object areaKey, object value, DateTime absoluteExpirationDate, TimeSpan slidingExpirationDate)
+		public object Insert(object key, object areaKey, object value, DateTime? absoluteExpirationDate, TimeSpan? slidingExpirationDate)
 		{
-			
+			return value;
 		}
 
 		public void Evict(object key)

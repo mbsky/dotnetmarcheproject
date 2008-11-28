@@ -13,10 +13,10 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 	{
 
 		private StringAdvancedTokenizer sut;
-
+		 
 		[TestFixtureSetUp]
 		public void SetUp()
-		{
+		{ 
 			IOperatorsChecker<String> opChecker = new QueryToObjectOperatorsChecker();
 			sut = new StringAdvancedTokenizer(opChecker);
 		}

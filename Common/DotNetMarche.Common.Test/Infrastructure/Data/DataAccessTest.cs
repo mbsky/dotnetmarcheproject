@@ -120,5 +120,11 @@ namespace DotNetMarche.Common.Test.Infrastructure.Data
 		}
 
 		#endregion
+
+		#region Cache Test
+
+
+
+		#endregion
 	}
 }

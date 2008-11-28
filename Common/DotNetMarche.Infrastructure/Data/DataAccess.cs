@@ -560,7 +560,7 @@ namespace DotNetMarche.Infrastructure.Data
 					{
 						q.Command.Connection = connectionData.Connection;
 						q.Command.Transaction = connectionData.CurrentTransaction;
-						q.Command.CommandText = q.query.ToString();
+						q.Command.CommandText = q.Query;
 						executionCore();
 					}
 				}

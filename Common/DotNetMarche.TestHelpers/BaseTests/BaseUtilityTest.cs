@@ -33,7 +33,6 @@ namespace DotNetMarche.TestHelpers.BaseTests
 		[TestFixtureTearDown]
 		public void TestFixtureTearDown()
 		{
-			OnTestFixtureTearDown();
 			Boolean ErrorOnDispose = false;
 			fixtureDisposableList.ForEach(d =>
 			{
@@ -60,6 +59,7 @@ namespace DotNetMarche.TestHelpers.BaseTests
 			});
 			Assert.That(ErrorOnDispose == false, "Some disposable object generates errors during Fixture Tear Down");
 			Assert.That(ErrorOnTearDownAction == false, "Some tear down action generates errors during Fixture Tear Down");
+			OnTestFixtureTearDown();
 		}
 
 		protected virtual void OnTestFixtureTearDown()
@@ -81,7 +81,6 @@ namespace DotNetMarche.TestHelpers.BaseTests
 		[TearDown]
 		public void TearDown()
 		{
-			OnTearDown();
 			Boolean ErrorOnDispose = false;
 			singleTestDisposableList.ForEach(d =>
          	{
@@ -110,6 +109,7 @@ namespace DotNetMarche.TestHelpers.BaseTests
 			});
 			Assert.That(ErrorOnDispose == false, "Some disposable object generates errors during Test Tear Down");
 			Assert.That(ErrorOnTearDownAction == false, "Some tear down action generates errors during Test Tear Down");
+			OnTearDown();
 		}
 
 		protected virtual void OnTearDown()
