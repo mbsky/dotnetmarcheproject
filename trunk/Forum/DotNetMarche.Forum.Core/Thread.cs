@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DotNetMarche.Ui
+namespace DotNetMarche.Forum.Core
 {
-	public class Class1
+	class Thread
 	{
 	}
 }
