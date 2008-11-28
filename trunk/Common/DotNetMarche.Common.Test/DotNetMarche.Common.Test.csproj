@@ -72,6 +72,7 @@
     <Compile Include="Concrete\CastleWindsorIoCEngineTest.cs" />
     <Compile Include="Concrete\Classes\IoCBase.cs" />
     <Compile Include="Concrete\SomeTests.cs" />
+    <Compile Include="Infrastructure\Data\DataAccessNoTransaction.cs" />
     <Compile Include="Ui\BindingListTest.cs" />
     <Compile Include="Infrastructure\ContextTest.cs" />
     <Compile Include="Infrastructure\Data\DataAccessTest.cs" />

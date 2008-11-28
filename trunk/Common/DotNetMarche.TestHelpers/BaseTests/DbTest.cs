@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace DotNetMarche.TestHelpers.BaseTests
 {
-	public class DbTest
+	public class DbTest 
 	{
 		private IDisposable scope;
 
@@ -34,5 +34,6 @@ namespace DotNetMarche.TestHelpers.BaseTests
 		{
 			scope.Dispose();
 		}
+
 	}
 }

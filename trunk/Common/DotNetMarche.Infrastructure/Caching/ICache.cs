@@ -19,6 +19,14 @@ namespace DotNetMarche.Infrastructure.Caching
 
 		/// <summary>
 		/// <see cref="Get"/>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		T Get<T>(Object key);
+
+		/// <summary>
+		/// <see cref="Get"/>
 		/// Gets or set a value from the cache.
 		/// </summary>
 		/// <param name="key"></param>
@@ -37,7 +45,7 @@ namespace DotNetMarche.Infrastructure.Caching
 		/// item before that time if needed</param>
 		/// <param name="slidingExpirationDate">a sliding expiration time.</param>
 		/// <returns></returns>
-		void Insert(Object key, Object areaKey, Object value, DateTime absoluteExpirationDate, TimeSpan slidingExpirationDate);
+		Object Insert(Object key, Object areaKey, Object value, DateTime? absoluteExpirationDate, TimeSpan? slidingExpirationDate);
 
 		/// <summary>
 		/// Evict an object from the cache, if the object is not there nothing gets done.
