@@ -112,25 +112,25 @@ namespace DotNetMarche.Infrastructure.Data
 			return this;
 		}
 
-		public SqlQuery SetInt32Param(string commandName, Int32 value)
+		public SqlQuery SetInt32Param(string commandName, Int32? value)
 		{
 			SetParam(commandName, value, DbType.Int32);
 			return this;
 		}
 
-		public SqlQuery SetDateTimeParam(string commandName, DateTime value)
+		public SqlQuery SetDateTimeParam(string commandName, DateTime? value)
 		{
 			SetParam(commandName, value, DbType.DateTime);
 			return this;
 		}
 
-		public SqlQuery SetSingleParam(string commandName, Single value)
+		public SqlQuery SetSingleParam(string commandName, Single? value)
 		{
 			SetParam(commandName, value, DbType.Single);
 			return this;
 		}
 
-		public SqlQuery SetDoubleParam(string commandName, Double value)
+		public SqlQuery SetDoubleParam(string commandName, Double? value)
 		{
 			SetParam(commandName, value, DbType.Double);
 			return this;
@@ -144,7 +144,7 @@ namespace DotNetMarche.Infrastructure.Data
 			DbParameter param = Factory.CreateParameter();
 			param.DbType = type;
 			param.ParameterName = paramName;
-			param.Value = value;
+			param.Value = value ?? DBNull.Value;
 			Command.Parameters.Add(param);
 		}
 

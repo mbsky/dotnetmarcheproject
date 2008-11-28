@@ -30,6 +30,8 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <returns></returns>
 		T GetById(Object id);
 
+		#region Lifecycle management
+
 		/// <summary>
 		/// Save the object into the storage medium
 		/// </summary>
@@ -48,6 +50,10 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <param name="obj"></param>
 		void SaveOrUpdate(T obj);
 
+		#endregion
+
+		#region Query interface
+
 		/// <summary>
 		/// provide access with the LINQ to Repository concrete interface.
 		/// </summary>
@@ -60,5 +66,7 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <param name="queryText"></param>
 		/// <returns></returns>
 		IEnumerable<T> Query(String queryText);
+
+		#endregion
 	}
 }
