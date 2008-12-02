@@ -7,7 +7,7 @@ using DotNetMarche.Infrastructure.Castle;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace DotNetMarche.Common.Test.Concrete
+namespace DotNetMarche.Common.Test.Concrete.Castle
 {
 	[TestFixture]
 	public class CastleWindsorIoCEngineTest
@@ -16,12 +16,12 @@ namespace DotNetMarche.Common.Test.Concrete
 		private CastleWindsorIoCEngine CastleTest1;
 		[TestFixtureSetUp]
 		public void TestFixtureSetUp()
-		{
+		{   
 			CastleTest1 = new CastleWindsorIoCEngine("Concrete\\files\\CastleTest1.xml");
-		}
+		} 
 
 		#region Tests with configuration file 1
-
+		 
 		[Test]
 		public void TestResolveBase()
 		{

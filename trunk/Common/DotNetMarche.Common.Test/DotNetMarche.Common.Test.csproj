@@ -33,9 +33,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\Castle\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ExternalLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\Castle\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\Castle\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -69,7 +81,12 @@
     <Compile Include="AuxClasses\CustomerINotifyPC.cs" />
     <Compile Include="AuxClasses\SimpleUnknown.cs" />
     <Compile Include="AuxClasses\TestContext.cs" />
-    <Compile Include="Concrete\CastleWindsorIoCEngineTest.cs" />
+    <Compile Include="Concrete\Castle\CastleWindsorIoCEngineTest.cs" />
+    <Compile Include="Concrete\Castle\Classes\DisposableComponent.cs" />
+    <Compile Include="Concrete\Castle\Classes\DisposableSingleton.cs" />
+    <Compile Include="Concrete\Castle\Classes\DisposableTEst.cs" />
+    <Compile Include="Concrete\Castle\Classes\ITest.cs" />
+    <Compile Include="Concrete\Castle\LifeCycleTests.cs" />
     <Compile Include="Concrete\Classes\IoCBase.cs" />
     <Compile Include="Concrete\SomeTests.cs" />
     <Compile Include="Infrastructure\Data\DataAccessNoTransaction.cs" />
@@ -175,6 +192,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Files\NhConfigWrong.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Concrete\Castle\Config\Config1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Concrete\Castle\Config\ConfigurationCustom.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
