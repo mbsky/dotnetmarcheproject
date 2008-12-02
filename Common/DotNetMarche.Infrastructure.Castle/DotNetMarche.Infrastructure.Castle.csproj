@@ -64,7 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CastleWindsorIoCEngine.cs" />
+    <Compile Include="ContexLifeCycle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingleContextLifeCycle.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">
