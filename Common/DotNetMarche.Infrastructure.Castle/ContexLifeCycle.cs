@@ -9,6 +9,12 @@ using DotNetMarche.Infrastructure.Base;
 
 namespace DotNetMarche.Infrastructure.Castle
 {
+	/// <summary>
+	/// Need to change the way context is handled.
+	/// TODO: Create a global IoC context to handle with castle. Maybe you can leave this component 
+	///       to be used alone, while another version can have a dependencies on infrastructure with the
+	///		 context.
+	/// </summary>
 	public class ContextLifecycle : AbstractLifestyleManager
 	{
 
