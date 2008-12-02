@@ -14,9 +14,8 @@ using NHibernate.Tool.hbm2ddl;
 using System.Xml.Linq;
 using DotNetMarche.Utils;
 
-namespace DotNetMarche.Infrastructure.Concrete.Repository
+namespace DotNetMarche.Infrastructure.NHibernate
 {
-
 	/// <summary>
 	/// Manage nhibernate session lifecycle, this component work in a 
 	/// simple fashion, you ask for a session for the first time, the 
@@ -30,7 +29,7 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 		private class NhibConfigData
 		{
 			public ISessionFactory SessionFactory { get; set; }
-			public NHibernate.Cfg.Configuration Configuration { get; set; }
+			public global::NHibernate.Cfg.Configuration Configuration { get; set; }
 			public String ConnectionName;
 		}
 
@@ -56,11 +55,11 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			if (null == retvalue)
 			{
 				//This is the first time we ask for this configuration
-				NHibernate.Cfg.Configuration config = new NHibernate.Cfg.Configuration();
+				global::NHibernate.Cfg.Configuration config = new global::NHibernate.Cfg.Configuration();
 				XDocument doc = XDocument.Load(configFileName);
 				XElement connStringElement = (from e in doc.Descendants()
-														where e.Attribute("name") != null && e.Attribute("name").Value == "connection.connection_string"
-														select e).Single();
+				                              where e.Attribute("name") != null && e.Attribute("name").Value == "connection.connection_string"
+				                              select e).Single();
 				String cnName = connStringElement.Value;
 				connStringElement.Value = ConfigurationRegistry.ConnectionString(connStringElement.Value).ConnectionString;
 				using (XmlReader reader = doc.CreateReader())
@@ -100,11 +99,11 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			//This is the first time that a transaction start, we need to change all connection with those
 			//of the DataAccess layer.
 			IterateThroughAllOpenSessionInContext(sd =>
-				{
-					DataAccess.ConnectionData data = DataAccess.GetActualConnectionData(sd.connectionName);
-					sd.Session.Disconnect();
-					sd.Session.Reconnect(data.Connection);
-				});
+			                                      	{
+			                                      		DataAccess.ConnectionData data = DataAccess.GetActualConnectionData(sd.connectionName);
+			                                      		sd.Session.Disconnect();
+			                                      		sd.Session.Reconnect(data.Connection);
+			                                      	});
 		}
 
 		/// <summary>
@@ -120,10 +119,10 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 			if (GlobalTransactionManager.TransactionsCount > 2) return;
 			//Ok, we are out of all transaction, we need to recreate a valid connection
 			IterateThroughAllOpenSessionInContext(sd =>
-				{
-					sd.Session.Disconnect();
-					sd.Session.Reconnect();
-				});
+			                                      	{
+			                                      		sd.Session.Disconnect();
+			                                      		sd.Session.Reconnect();
+			                                      	});
 
 		}
 
@@ -205,8 +204,8 @@ namespace DotNetMarche.Infrastructure.Concrete.Repository
 		private static void IterateThroughAllOpenSessionInContext(Action<SessionData> action)
 		{
 			var openSessions = (from ck in CurrentContext.Enumerate()
-									  where ck.Key.StartsWith(ContextSessionKey)
-									  select ck.Value).Cast<SessionData>();
+			                    where ck.Key.StartsWith(ContextSessionKey)
+			                    select ck.Value).Cast<SessionData>();
 			openSessions.Where(sd => sd.Session.IsOpen).ToList().ForEach(action);
 		}
 

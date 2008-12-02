@@ -8,8 +8,8 @@ using DotNetMarche.Common.Test.Infrastructure.Entities;
 using DotNetMarche.Infrastructure;
 using DotNetMarche.Infrastructure.Base;
 using DotNetMarche.Infrastructure.Concrete;
-using DotNetMarche.Infrastructure.Concrete.Repository;
 using DotNetMarche.Infrastructure.Data;
+using DotNetMarche.Infrastructure.NHibernate;
 using DotNetMarche.TestHelpers.Data;
 using DotNetMarche.TestHelpers.Reflection;
 using NHibernate;
@@ -22,7 +22,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 	[TestFixture]
 	public class NHibernateSessionManagerTest
 	{
-		private const string SessionDataTypeName = "DotNetMarche.Infrastructure.Concrete.Repository.NHibernateSessionManager+SessionData, DotNetMarche.Infrastructure.Concrete";
+		private const string SessionDataTypeName = "DotNetMarche.Infrastructure.NHibernate.NHibernateSessionManager+SessionData, DotNetMarche.Infrastructure.NHibernate";
 
 		#region Initialization and 4 phase test management
 
@@ -157,6 +157,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses
 			Expect.Call(session.Flush);
 			Expect.Call(session.Dispose);
 			mockRepository.ReplayAll();
+			//Need to invoke private method to get the session key to insert mock object.
 			String sessionkey = Invoker.InvokePrivate<String>(
 				typeof(NHibernateSessionManager), "GetContextSessionKeyForConfigFileName", "files\\NhConfig1.cfg.xml");
 			Object obj = Invoker.CreatePrivateInstance(SessionDataTypeName);
