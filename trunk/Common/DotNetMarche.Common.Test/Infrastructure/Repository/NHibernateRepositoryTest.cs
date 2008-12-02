@@ -7,7 +7,7 @@ using System.Text;
 using DotNetMarche.Common.Test.Infrastructure.Entities;
 using DotNetMarche.Infrastructure.Base;
 using DotNetMarche.Infrastructure.Concrete;
-using DotNetMarche.Infrastructure.Concrete.Repository;
+using DotNetMarche.Infrastructure.NHibernate;
 using DotNetMarche.TestHelpers.Data;
 using DotNetMarche.TestHelpers.Reflection;
 using NUnit.Framework;

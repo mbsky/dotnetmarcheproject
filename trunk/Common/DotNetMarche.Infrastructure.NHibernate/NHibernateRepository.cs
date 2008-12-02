@@ -7,7 +7,7 @@ using NHibernate;
 using NHibernate.Linq;
 using DotNetMarche.Utils.Linq;
 
-namespace DotNetMarche.Infrastructure.Concrete.Repository
+namespace DotNetMarche.Infrastructure.NHibernate
 {
 	public class NHibernateRepository<T> : IRepository<T>
 	{

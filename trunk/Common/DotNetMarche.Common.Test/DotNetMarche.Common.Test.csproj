@@ -116,6 +116,10 @@
       <Project>{0BDB9FC6-22E3-4DCF-9748-31A07623DC83}</Project>
       <Name>DotNetMarche.Infrastructure.Concrete</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Infrastructure.NHibernate\DotNetMarche.Infrastructure.NHibernate.csproj">
+      <Project>{889DBFDD-C300-4BEF-A479-B08C7B499BAC}</Project>
+      <Name>DotNetMarche.Infrastructure.NHibernate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">
       <Project>{75E2529D-95B2-4440-AE35-CEF39D8412F5}</Project>
       <Name>DotNetMarche.Infrastructure</Name>
