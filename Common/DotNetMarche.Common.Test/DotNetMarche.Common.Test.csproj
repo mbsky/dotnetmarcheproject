@@ -108,6 +108,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DotNetMarche.Infrastructure.Castle\DotNetMarche.Infrastructure.Castle.csproj">
+      <Project>{7FE59E22-8870-461A-BB92-7B9D25F25BCA}</Project>
+      <Name>DotNetMarche.Infrastructure.Castle</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNetMarche.Infrastructure.Concrete\DotNetMarche.Infrastructure.Concrete.csproj">
       <Project>{0BDB9FC6-22E3-4DCF-9748-31A07623DC83}</Project>
       <Name>DotNetMarche.Infrastructure.Concrete</Name>
