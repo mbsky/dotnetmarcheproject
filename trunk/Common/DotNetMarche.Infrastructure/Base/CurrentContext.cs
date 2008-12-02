@@ -6,6 +6,9 @@ using DotNetMarche.Infrastructure.Base.Interfaces;
 
 namespace DotNetMarche.Infrastructure.Base
 {
+	/// <summary>
+	/// This is the static accessor of the current context.
+	/// </summary>
 	public static class CurrentContext
 	{
 
