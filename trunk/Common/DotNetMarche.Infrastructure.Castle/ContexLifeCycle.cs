@@ -39,12 +39,12 @@ namespace DotNetMarche.Infrastructure.Castle
 		/// </summary>
 		private Context CurrentContext
 		{
-			get { return GetCurrentThreadContext() ?? defaultContext; }
+			get { return GetCurrentContext() ?? defaultContext; }
 		}
 
-		private static Context GetCurrentThreadContext()
+		private static Context GetCurrentContext()
 		{
-			return CallContext.GetData(dataId) as Context;
+			return Base.CurrentContext.GetData(dataId) as Context;
 		}
 
 		#endregion
@@ -55,16 +55,16 @@ namespace DotNetMarche.Infrastructure.Castle
 		/// Begin a thread context, now all call to resolve are cached in the context.
 		/// </summary>
 		/// <returns></returns>
-		public static DisposableAction BeginThreadContext()
+		public static DisposableAction BeginContext()
 		{
-			Context c = GetCurrentThreadContext();
+			Context c = GetCurrentContext();
 			if (c != null)
-				throw new InvalidOperationException("Another thread context was already begun");
-			CallContext.SetData(dataId, new Context());
+				throw new InvalidOperationException("Another IoC Context was already begun");
+			Base.CurrentContext.SetData(dataId, new Context());
 			return new DisposableAction(delegate()
 			{
-				GetCurrentThreadContext().Dispose();
-				CallContext.FreeNamedDataSlot(dataId);
+				GetCurrentContext().Dispose();
+				Base.CurrentContext.ReleaseData(dataId);
 			});
 		}
 

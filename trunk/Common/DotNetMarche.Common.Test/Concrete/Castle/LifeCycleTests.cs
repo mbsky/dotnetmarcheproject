@@ -72,7 +72,7 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 			DisposableComponent tran2;
 			using (WindsorContainer ioc = new WindsorContainer(new XmlInterpreter(@"Concrete\Castle\Config\ConfigurationCustom.xml")))
 			{
-				using (ContextLifecycle.BeginThreadContext())
+				using (ContextLifecycle.BeginContext())
 				{
 					tran = ioc.Resolve<DisposableComponent>("TransientDisposableCon");
 					tran2 = ioc.Resolve<DisposableComponent>("TransientDisposableCon");
@@ -94,7 +94,7 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 			DisposableComponent tran;
 			using (WindsorContainer ioc = new WindsorContainer(new XmlInterpreter(@"Concrete\Castle\Config\ConfigurationCustom.xml")))
 			{
-				using (ContextLifecycle.BeginThreadContext())
+				using (ContextLifecycle.BeginContext())
 				{
 					tran = ioc.Resolve<DisposableComponent>("TransientDisposableCon");
 				}
@@ -177,7 +177,7 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 			DisposableComponent tran3;
 			using (WindsorContainer ioc = new WindsorContainer(new XmlInterpreter(@"Concrete\Castle\Config\ConfigurationCustom.xml")))
 			{
-				using (ContextLifecycle.BeginThreadContext())
+				using (ContextLifecycle.BeginContext())
 				{
 					tran1 = ioc.Resolve<DisposableComponent>("TransientDisposableCon");
 					tran2 = ioc.Resolve<DisposableComponent>("TransientDisposableCon");
@@ -208,7 +208,7 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 			DisposableComponent tran3;
 			using (WindsorContainer ioc = new WindsorContainer(new XmlInterpreter(@"Concrete\Castle\Config\ConfigurationCustom.xml")))
 			{
-				using (ContextLifecycle.BeginThreadContext())
+				using (ContextLifecycle.BeginContext())
 				{
 					tran1 = ioc.Resolve<DisposableComponent>("TransientDisposableCon");
 					tran2 = ioc.Resolve<DisposableComponent>("TransientDisposableCon");
@@ -300,7 +300,7 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 			NotDisposableComponent tran;
 			using (WindsorContainer ioc = new WindsorContainer(new XmlInterpreter(@"Concrete\Castle\Config\ConfigurationCustom.xml")))
 			{
-				using (ContextLifecycle.BeginThreadContext())
+				using (ContextLifecycle.BeginContext())
 				{
 					tran = ioc.Resolve<NotDisposableComponent>("NotDisposableSingleton");
 				}
@@ -319,7 +319,7 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 			NotDisposableComponent tran1, tran2;
 			using (WindsorContainer ioc = new WindsorContainer(new XmlInterpreter(@"Concrete\Castle\Config\ConfigurationCustom.xml")))
 			{
-				using (ContextLifecycle.BeginThreadContext())
+				using (ContextLifecycle.BeginContext())
 				{
 					tran1 = ioc.Resolve<NotDisposableComponent>("NotDisposableSingleton");
 					tran2 = ioc.Resolve<NotDisposableComponent>("NotDisposableSingleton");
@@ -338,7 +338,7 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 			DisposableComponent tran1, tran2;
 			using (WindsorContainer ioc = new WindsorContainer(new XmlInterpreter(@"Concrete\Castle\Config\ConfigurationCustom.xml")))
 			{
-				using (ContextLifecycle.BeginThreadContext())
+				using (ContextLifecycle.BeginContext())
 				{
 					tran1 = ioc.Resolve<DisposableComponent>("SingletonDisposableCon");
 					tran2 = ioc.Resolve<DisposableComponent>("SingletonDisposableCon");
@@ -357,7 +357,7 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 			DisposableComponent tran1, tran2;
 			using (WindsorContainer ioc = new WindsorContainer(new XmlInterpreter(@"Concrete\Castle\Config\ConfigurationCustom.xml")))
 			{
-				using (ContextLifecycle.BeginThreadContext())
+				using (ContextLifecycle.BeginContext())
 				{
 					tran1 = ioc.Resolve<DisposableComponent>("SingletonDisposableCon");
 					tran2 = ioc.Resolve<DisposableComponent>("SingletonDisposableCon");
