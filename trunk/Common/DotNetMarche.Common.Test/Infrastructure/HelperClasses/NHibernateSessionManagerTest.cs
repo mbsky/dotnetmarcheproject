@@ -328,5 +328,41 @@ DataAccess.OnDb("main")
 		}
 
 		#endregion
+
+		#region Rollback Management
+
+		/// <summary>
+		/// When a transaction rollback all session that are attached to that transaction
+		/// should be disposed because the inner context is not valid anymore
+		/// </summary>
+		[Test]
+		public void VerifyThatSessionIsDisposedWhenRollbackOccurred()
+		{
+			ISession session1;
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				session1 = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml");
+				GlobalTransactionManager.DoomCurrentTransaction();
+			}
+			Assert.That(session1.IsOpen, Is.False);
+		}
+
+		/// <summary>
+		/// <see cref="VerifyThatSessionIsDisposedWhenRollbackOccurred"/>. This test verify that the
+		/// session id disposed even if the session was originally created outside the transaction context
+		/// </summary>
+		[Test]
+		public void VerifyThatSessionIsDisposedWhenRollbackOccurredEvenIfCreatedOutsideTransaction()
+		{
+			ISession session1 = NHibernateSessionManager.GetSessionFor("files\\NhConfigFile1.cfg.xml");
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				GlobalTransactionManager.DoomCurrentTransaction();
+			}
+			Assert.That(session1.IsOpen, Is.False);
+		}
+
+
+		#endregion
 	}
 }

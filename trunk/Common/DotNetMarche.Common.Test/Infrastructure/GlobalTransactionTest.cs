@@ -341,8 +341,74 @@ namespace DotNetMarche.Common.Test.Infrastructure
 			ExecuteAtTheEndOfTest(() => GlobalTransactionManager.TransactionClosing -= mock.Handle);
 			mockRepository.ReplayAll();
 			GlobalTransactionManager.BeginTransaction().Dispose();
-		}	
+		}
+
+		/// <summary>
+		/// Verify that the event is called with the right isdoomed
+		/// </summary>
+		[Test]
+		public void VerifyTransactionClosingDoomedFalse()
+		{
+			ITranEvSink mock = mockRepository.CreateMock<ITranEvSink>();
+			Expect.Call(() => mock.Handle(null, null))
+				.Constraints(RhinoIs.Null(), RhinoIs.Matching<TransactionClosingEventArgs>(args => args.IsDoomed == false));
+			GlobalTransactionManager.TransactionClosing += mock.Handle;
+			ExecuteAtTheEndOfTest(() => GlobalTransactionManager.TransactionClosing -= mock.Handle);
+			mockRepository.ReplayAll();
+			GlobalTransactionManager.BeginTransaction().Dispose();
+		}			
 		
+		/// <summary>
+		/// Verify that the event is called with the right isdoomed
+		/// </summary>
+		[Test]
+		public void VerifyTransactionClosingDoomedTrue()
+		{
+			ITranEvSink mock = mockRepository.CreateMock<ITranEvSink>();
+			Expect.Call(() => mock.Handle(null, null))
+				.Constraints(RhinoIs.Null(), RhinoIs.Matching<TransactionClosingEventArgs>(args => args.IsDoomed == true));
+			GlobalTransactionManager.TransactionClosing += mock.Handle;
+			ExecuteAtTheEndOfTest(() => GlobalTransactionManager.TransactionClosing -= mock.Handle);
+			mockRepository.ReplayAll();
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				GlobalTransactionManager.DoomCurrentTransaction();
+			}
+		}		
+		
+		/// <summary>
+		/// Verify that the event is called with the right isdoomed
+		/// </summary>
+		[Test]
+		public void VerifyTransactionClosedDoomedFalse()
+		{
+			ITranEvSink mock = mockRepository.CreateMock<ITranEvSink>();
+			Expect.Call(() => mock.Handle(null, null))
+				.Constraints(RhinoIs.Null(), RhinoIs.Matching<TransactionClosedEventArgs>(args => args.IsDoomed == false));
+			GlobalTransactionManager.TransactionClosed += mock.Handle;
+			ExecuteAtTheEndOfTest(() => GlobalTransactionManager.TransactionClosed -= mock.Handle);
+			mockRepository.ReplayAll();
+			GlobalTransactionManager.BeginTransaction().Dispose();
+		}			
+		
+		/// <summary>
+		/// Verify that the event is called with the right isdoomed
+		/// </summary>
+		[Test]
+		public void VerifyTransactionClosedDoomedTrue()
+		{
+			ITranEvSink mock = mockRepository.CreateMock<ITranEvSink>();
+			Expect.Call(() => mock.Handle(null, null))
+				.Constraints(RhinoIs.Null(), RhinoIs.Matching<TransactionClosedEventArgs>(args => args.IsDoomed == true));
+			GlobalTransactionManager.TransactionClosed += mock.Handle;
+			ExecuteAtTheEndOfTest(() => GlobalTransactionManager.TransactionClosed -= mock.Handle);
+			mockRepository.ReplayAll();
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				GlobalTransactionManager.DoomCurrentTransaction();
+			}
+		}	
+
 		/// <summary>
 		/// Verify that the TransactionClosing is called, and verify also that
 		/// the transactino count is 1, because a transaction is still active

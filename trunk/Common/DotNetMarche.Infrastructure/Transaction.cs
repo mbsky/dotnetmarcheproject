@@ -22,7 +22,7 @@ namespace DotNetMarche.Infrastructure
 		/// <summary>
 		/// Tells if the transaction is to be committed or rollbacked
 		/// </summary>
-		private Boolean IsDoomed { get; set; }
+		internal Boolean IsDoomed { get; set; }
 
 		public Transaction(DateTime transactionStart)
 		{

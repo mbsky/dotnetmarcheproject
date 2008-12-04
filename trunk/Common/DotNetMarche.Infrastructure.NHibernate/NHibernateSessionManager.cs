@@ -58,8 +58,8 @@ namespace DotNetMarche.Infrastructure.NHibernate
 				global::NHibernate.Cfg.Configuration config = new global::NHibernate.Cfg.Configuration();
 				XDocument doc = XDocument.Load(configFileName);
 				XElement connStringElement = (from e in doc.Descendants()
-				                              where e.Attribute("name") != null && e.Attribute("name").Value == "connection.connection_string"
-				                              select e).Single();
+														where e.Attribute("name") != null && e.Attribute("name").Value == "connection.connection_string"
+														select e).Single();
 				String cnName = connStringElement.Value;
 				connStringElement.Value = ConfigurationRegistry.ConnectionString(connStringElement.Value).ConnectionString;
 				using (XmlReader reader = doc.CreateReader())
@@ -86,7 +86,7 @@ namespace DotNetMarche.Infrastructure.NHibernate
 		}
 
 		/// <summary>
-		/// When a transaction start all session must be disconnected from the current connectino
+		/// When a transaction start all session must be disconnected from the current connection
 		/// and reconnect to a different connection.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -99,11 +99,11 @@ namespace DotNetMarche.Infrastructure.NHibernate
 			//This is the first time that a transaction start, we need to change all connection with those
 			//of the DataAccess layer.
 			IterateThroughAllOpenSessionInContext(sd =>
-			                                      	{
-			                                      		DataAccess.ConnectionData data = DataAccess.GetActualConnectionData(sd.connectionName);
-			                                      		sd.Session.Disconnect();
-			                                      		sd.Session.Reconnect(data.Connection);
-			                                      	});
+			{
+				DataAccess.ConnectionData data = DataAccess.GetActualConnectionData(sd.connectionName);
+				sd.Session.Disconnect();
+				sd.Session.Reconnect(data.Connection);
+			});
 		}
 
 		/// <summary>
@@ -112,18 +112,30 @@ namespace DotNetMarche.Infrastructure.NHibernate
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private static void OnTransactionClosing(Object sender, EventArgs e)
+		private static void OnTransactionClosing(Object sender, TransactionClosingEventArgs e)
 		{
-			//a transaction is closed, but we still are in a global transaction, we can still use the
-			//same connection because DataAccess layer use the same connection for all transaction level.
-			if (GlobalTransactionManager.TransactionsCount > 2) return;
-			//Ok, we are out of all transaction, we need to recreate a valid connection
-			IterateThroughAllOpenSessionInContext(sd =>
-			                                      	{
-			                                      		sd.Session.Disconnect();
-			                                      		sd.Session.Reconnect();
-			                                      	});
+			//First of all check if the transaction is rollbacked, this means that we need to dispose all
+			//Sessions because all sessions are no longer usable.
+			if (e.IsDoomed)
+			{
+				IterateThroughAllOpenSessionInContext(sd => sd.Session.Dispose());
+			}
+			else
+			{
+				//a transaction is about to be committed, flush everything
+				IterateThroughAllOpenSessionInContext(sd => sd.Session.Flush());
+				
+				//if we  are still in a global transaction, we can still use the
+				//same connection because DataAccess layer use the same connection for all transaction level.
+				if (GlobalTransactionManager.TransactionsCount > 2) return;
 
+				//Ok, we are out of all transaction, we need to recreate a valid connection for each session.
+				IterateThroughAllOpenSessionInContext(sd =>
+				{
+					sd.Session.Disconnect();
+					sd.Session.Reconnect();
+				});
+			}
 		}
 
 		#endregion
@@ -204,8 +216,8 @@ namespace DotNetMarche.Infrastructure.NHibernate
 		private static void IterateThroughAllOpenSessionInContext(Action<SessionData> action)
 		{
 			var openSessions = (from ck in CurrentContext.Enumerate()
-			                    where ck.Key.StartsWith(ContextSessionKey)
-			                    select ck.Value).Cast<SessionData>();
+									  where ck.Key.StartsWith(ContextSessionKey)
+									  select ck.Value).Cast<SessionData>();
 			openSessions.Where(sd => sd.Session.IsOpen).ToList().ForEach(action);
 		}
 
