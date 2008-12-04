@@ -7,7 +7,8 @@ namespace DotNetMarche.Utils.Expressions
 	/// 
 	/// </summary>
 	/// <typeparam name="T">represents the token type.</typeparam>
-	public interface IOperatorsChecker<T> : IEnumerable<T> {
+	public interface IOperatorsChecker<T> : IEnumerable<T>
+	{
 
 		/// <summary>
 		/// Tells if the current token is an operator or a bracket or a value
@@ -23,13 +24,6 @@ namespace DotNetMarche.Utils.Expressions
 		/// <param name="token"></param>
 		/// <returns></returns>
 		Boolean IsUnaryOperator(T token);
-
-        /// <summary>
-        /// Return true if the token is equal to the Member access operator
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Boolean IsMemberAccessOperator(T token);
 
 		/// <summary>
 		/// return true if Operator A has more precedence respect operator B
@@ -53,15 +47,5 @@ namespace DotNetMarche.Utils.Expressions
 		/// <param name="token"></param>
 		/// <returns></returns>
 		Boolean IsClosedBracket(T token);
-
-		/// <summary>
-		/// return a value that tells if the token is a known operator. Remember that parenthesis
-		/// should be considered as operators.
-		/// </summary>
-		/// <param name="token"></param>
-		/// <returns></returns>
-		Boolean IsOperator(T token);
-
-
 	}
 }

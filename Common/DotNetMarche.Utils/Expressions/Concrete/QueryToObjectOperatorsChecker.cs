@@ -35,17 +35,12 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		}
 
 		public Boolean IsUnaryOperator(String token) {
-			return token == "!";
+			return token == "!" || token == ".";
 		}
 
 		public Boolean IsBinaryOperator(String token) {
 			return precedences.ContainsKey(token);
 		}
-
-        public Boolean IsMemberAccessOperator(String token)
-        {
-            return token == ".";
-        }
 
 		public Boolean OperatorAHasMorePrecedenceThanB(String a, String b) {
 			return precedences[a] > precedences[b];
@@ -57,11 +52,6 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 
 		public bool IsClosedBracket(string token) {
 			return String.Compare(")", token, true) == 0;
-		}
-
-		public bool IsOperator(string token)
-		{
-			return precedences.ContainsKey(token);
 		}
 
 		#region IEnumerable<string> Members

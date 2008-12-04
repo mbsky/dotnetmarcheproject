@@ -90,6 +90,17 @@
     <Compile Include="Concrete\Classes\IoCBase.cs" />
     <Compile Include="Concrete\SomeTests.cs" />
     <Compile Include="Infrastructure\Data\DataAccessNoTransaction.cs" />
+    <Compile Include="TestHelpers\Fluent\BracketTest.cs" />
+    <Compile Include="TestHelpers\Fluent\CollectionTest.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityComparer.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\AnEntity.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\AnotherEntity.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\ComposedTwoProps.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\SimpleThreeProps.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\SimpleTwoProps.cs" />
+    <Compile Include="TestHelpers\Fluent\ExpressionTest.cs" />
+    <Compile Include="TestHelpers\Fluent\Extension\BaseTest.cs" />
+    <Compile Include="TestHelpers\Fluent\TestCompositeProperty.cs" />
     <Compile Include="Ui\BindingListTest.cs" />
     <Compile Include="Infrastructure\ContextTest.cs" />
     <Compile Include="Infrastructure\Data\DataAccessTest.cs" />
