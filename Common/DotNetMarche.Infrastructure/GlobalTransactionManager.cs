@@ -75,15 +75,16 @@ namespace DotNetMarche.Infrastructure
 		private static void CloseCurrentTransaction()
 		{
 			Verify.That(IsInTransaction, "Cannot doom the transaction because there is not an active transaction");
-			OnTransactionClosing();
 			if (Utils.ExceptionUtils.IsInExceptionHandler())
 				CurrentTransaction.Doom();
-			Transaction currentTransaction =CurrentTransaction;
+			Boolean IsDoomed = CurrentTransaction.IsDoomed;
+			OnTransactionClosing(IsDoomed);
+			Transaction currentTransaction = CurrentTransaction;
 			CurrentTransactionList.RemoveAt(CurrentTransactionList.Count - 1);
 			if (CurrentTransactionList.Count == 0)
 				CurrentContext.ReleaseData(TransactionScopeKey);
 			currentTransaction.Complete();
-			OnTransactionClosed();
+			OnTransactionClosed(IsDoomed);
 		}
 
 		/// <summary>
@@ -144,20 +145,20 @@ namespace DotNetMarche.Infrastructure
 				temp(null, EventArgs.Empty);
 		}		
 		
-		public static event EventHandler TransactionClosed;
-		public static void OnTransactionClosed()
+		public static event EventHandler<TransactionClosedEventArgs> TransactionClosed;
+		public static void OnTransactionClosed(Boolean isDoomed)
 		{
-			EventHandler temp = TransactionClosed;
+			EventHandler<TransactionClosedEventArgs> temp = TransactionClosed;
 			if (null != temp)
-				temp(null, EventArgs.Empty);
+				temp(null, new TransactionClosedEventArgs(isDoomed));
 		}		
 		
-		public static event EventHandler TransactionClosing;
-		public static void OnTransactionClosing()
+		public static event EventHandler<TransactionClosingEventArgs> TransactionClosing;
+		public static void OnTransactionClosing(Boolean isDoomed)
 		{
-			EventHandler temp = TransactionClosing;
+			EventHandler<TransactionClosingEventArgs> temp = TransactionClosing;
 			if (null != temp)
-				temp(null, EventArgs.Empty);
+				temp(null, new TransactionClosingEventArgs(isDoomed));
 		}
 
 		#endregion
