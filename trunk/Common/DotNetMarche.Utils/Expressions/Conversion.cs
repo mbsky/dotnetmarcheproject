@@ -5,6 +5,9 @@ using DotNetMarche.Utils.Expressions.Concrete;
 
 namespace DotNetMarche.Utils.Expressions
 {
+	/// <summary>
+	/// old standard conversion class
+	/// </summary>
 	public class Conversion {
 
 		private IOperatorsChecker<String> opChecker = new StandardOperatorsChecker();

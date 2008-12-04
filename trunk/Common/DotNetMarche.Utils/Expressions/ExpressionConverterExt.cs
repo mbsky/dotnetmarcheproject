@@ -65,7 +65,7 @@ namespace DotNetMarche.Utils.Expressions
 				else {
 					result.Add(tokenConverter.Convert(token));
 					////We found an element, apply all the unary operator find until now.
-                    while (stack.Count > 0 && (opChecker.IsUnaryOperator(stack.Peek()) || opChecker.IsMemberAccessOperator(stack.Peek())))
+                    while (stack.Count > 0 && (opChecker.IsUnaryOperator(stack.Peek())))
 						result.Add(tokenConverter.Convert(stack.Pop()));
 				}
 			}
