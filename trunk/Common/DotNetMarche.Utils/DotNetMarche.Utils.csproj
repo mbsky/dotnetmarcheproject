@@ -48,6 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicExtensions.cs" />
+    <Compile Include="Constraint\BinaryConstraint.cs" />
+    <Compile Include="Constraint\ConstraintBase.cs" />
+    <Compile Include="Constraint\DecoratorConstraint.cs" />
+    <Compile Include="Constraint\IConstraint.cs" />
     <Compile Include="ExceptionUtils.cs" />
     <Compile Include="Expressions\Concrete\PostfixExpressionToLambda.cs" />
     <Compile Include="Expressions\Concrete\QueryToObjectOperatorsChecker.cs" />
