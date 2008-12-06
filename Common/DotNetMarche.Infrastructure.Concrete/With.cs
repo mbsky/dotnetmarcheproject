@@ -15,5 +15,13 @@ namespace DotNetMarche.Infrastructure.Concrete
 			action();
 			return timer.Stop();
 		}
+
+		public static void Transaction(Action action)
+		{
+			using (GlobalTransactionManager.BeginTransaction())
+			{
+				action();
+			}
+		}
 	}
 }
