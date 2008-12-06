@@ -23,7 +23,7 @@ namespace DotNetMarche.NunitExtension.Tests
 			Console.WriteLine("TESTB");
 		}
 
-		[Test]
+		[Test] 
 		public void TestC()
 		{
 			Console.WriteLine("TESTC");

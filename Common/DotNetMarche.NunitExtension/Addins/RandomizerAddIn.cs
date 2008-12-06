@@ -13,9 +13,7 @@ namespace DotNetMarche.NunitExtension.Addins
 	[NUnitAddin(Name ="Randomizer")]
 	public class RandomizerAddIn : NUnitTestFixtureBuilder, IAddin 
 	{
-
 		public const string RandomizerTestAttribute = "DotNetMarche.NunitExtension.Attributes.RandomizeTestOrderFixtureAttribute";
-
 
 		#region IAddin Members
 
@@ -42,24 +40,5 @@ namespace DotNetMarche.NunitExtension.Addins
 		{
 			return new RandomizerTestFixture(type);
 		}
-		
-
-
-		//protected override void AddTestCases(Type fixtureType)
-		//{
-		//   IList methods = GetCandidateTestMethods(fixtureType);
-		//   Random rnd = new Random();
-		//   IEnumerable<Int32> rand = Enumerable.Range(0, 10).OrderBy(n => rnd.Next());
-
-		//   foreach (Int32 index in rand)
-		//   {
-		//      Test test = BuildTestCase((MethodInfo) methods[index]);
-
-		//      if (test != null)
-		//      {
-		//         this.suite.Add(test);
-		//      }
-		//   }
-		//}
 	}
 }
