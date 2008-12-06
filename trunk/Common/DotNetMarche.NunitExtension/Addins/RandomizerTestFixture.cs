@@ -39,11 +39,11 @@ namespace DotNetMarche.NunitExtension.Addins
 
 		private List<Test> randomList;
 		
-		private void RunAllTests(
-		 TestSuiteResult suiteResult, EventListener listener, ITestFilter filter)
-		{
-			Random rnd = new Random();
-			foreach (Test test in ArrayList.Synchronized(Tests).Cast<Test>().OrderBy(ts => rnd.Next()))
+private void RunAllTests(
+ TestSuiteResult suiteResult, EventListener listener, ITestFilter filter)
+{
+	Random rnd = new Random();
+	foreach (Test test in ArrayList.Synchronized(Tests).Cast<Test>().OrderBy(ts => rnd.Next()))
 			{
 				if (filter.Pass(test))
 				{
