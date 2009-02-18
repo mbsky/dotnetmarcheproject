@@ -13,7 +13,7 @@ namespace DotNetMarche.Utils.Constraint
 			get { return originalConstraint; }
 			set { originalConstraint = value; }
 		}
-		protected IConstraint originalConstraint;
+		private IConstraint originalConstraint;
 
 		public void SetConstraint(IConstraint constraint)
 		{

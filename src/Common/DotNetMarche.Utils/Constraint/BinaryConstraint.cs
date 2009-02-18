@@ -16,14 +16,14 @@ namespace DotNetMarche.Utils.Constraint
 			get { return leftConstraint; }
 			set { leftConstraint = value; }
 		}
-		protected IConstraint leftConstraint;
+      private IConstraint leftConstraint;
 
 		protected IConstraint RightConstraint
 		{
 			get { return rightConstraint; }
 			set { rightConstraint = value; }
 		}
-		protected IConstraint rightConstraint;
+      private IConstraint rightConstraint;
 
 		public virtual IConstraint SetConstraint(IConstraint left, IConstraint right)
 		{
