@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DotNetMarche.Utils</RootNamespace>
+    <AssemblyName>DotNetMarche.Utils</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\DotNetMarche.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BasicExtensions.cs" />
+    <Compile Include="Constraint\BinaryConstraint.cs" />
+    <Compile Include="Constraint\ConstraintBase.cs" />
+    <Compile Include="Constraint\DecoratorConstraint.cs" />
+    <Compile Include="Constraint\IConstraint.cs" />
+    <Compile Include="ExceptionUtils.cs" />
+    <Compile Include="Expressions\Concrete\PostfixExpressionToLambda.cs" />
+    <Compile Include="Expressions\Concrete\QueryToObjectOperatorsChecker.cs" />
+    <Compile Include="Expressions\Concrete\StringAdvancedTokenizer.cs" />
+    <Compile Include="Expressions\Concrete\StringBasicTokenizer.cs" />
+    <Compile Include="Expressions\Concrete\StringToExpressionTokenConverter.cs" />
+    <Compile Include="Expressions\Concrete\StringTokenConverter.cs" />
+    <Compile Include="Linq\Creational.cs" />
+    <Compile Include="Linq\DynamicLinq.cs" />
+    <Compile Include="Expressions\ExpressionConverterExt.cs" />
+    <Compile Include="Expressions\ITokenConverter.cs" />
+    <Compile Include="Expressions\ITokenizer.cs" />
+    <Compile Include="ExpressionTreeReflection.cs" />
+    <Compile Include="Expressions\BasicOperatorCheckerFactory.cs" />
+    <Compile Include="Expressions\Conversion.cs" />
+    <Compile Include="Expressions\ExpressionConverter.cs" />
+    <Compile Include="Expressions\IOperatorsChecker.cs" />
+    <Compile Include="Expressions\Concrete\StandardOperatorsChecker.cs" />
+    <Compile Include="Expressions\PostfixExecutor.cs" />
+    <Compile Include="LCGReflection.cs" />
+    <Compile Include="Linq\DynamicLinqExtension.cs" />
+    <Compile Include="PerfTimer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

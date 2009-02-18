@@ -1,0 +1,1 @@
+To use NunitExtension copy the DotnetMarche.NunitExtension.dll into subdirectory addins of nunit installation folder.

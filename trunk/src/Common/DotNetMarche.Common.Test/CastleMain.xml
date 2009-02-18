@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CastleWindsor>
+	<components>
+		<component
+			id="DefaultConfiguration"
+			service="DotNetMarche.Infrastructure.Base.Interfaces.IConfigurationRegistry, DotNetMarche.Infrastructure"
+			type="DotNetMarche.Infrastructure.Concrete.InMemoryConfigurationRegistry, DotNetMarche.Infrastructure"
+			lifestyle="Singleton"
+			default="true">
+		</component>
+
+		<component
+			id="DefaultContext"
+			service="DotNetMarche.Infrastructure.Base.Interfaces.IContext, DotNetMarche.Infrastructure"
+			type="DotNetMarche.Infrastructure.Concrete.RemotingCallContext, DotNetMarche.Infrastructure"
+			lifestyle="Singleton"
+			default="true">
+		</component>		
+		
+		<component
+			id="DefaultLogger"
+			service="DotNetMarche.Infrastructure.Logging.ILogger, DotNetMarche.Infrastructure"
+			type="DotNetMarche.Common.Test.AuxClasses.ConsoleLogger, DotNetMarche.Common.Test"
+			lifestyle="Singleton"
+			default="true">
+		</component>
+
+		<component
+				id="NullCache"
+				service="DotNetMarche.Infrastructure.Caching.ICache, DotNetMarche.Infrastructure"
+				type="DotNetMarche.Infrastructure.Caching.NullCache, DotNetMarche.Infrastructure"
+				lifestyle="Singleton"
+				default="true">
+		</component>
+	</components>
+</CastleWindsor>
