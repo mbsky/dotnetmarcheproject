@@ -88,7 +88,6 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			List<ParameterExpression> parametersList = new List<ParameterExpression>();
 
 			parametersList.Add(inputObj);
-			Expression tempexpression;
 			foreach (String token in postfixExpression)
 			{
 				//First of all check if is a name of a property of the object
