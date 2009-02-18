@@ -5,36 +5,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A683B43B-197C-46AA-8F8C-5524F5DB683E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Common.Test", "..\DotNetMarche.Common.Test\DotNetMarche.Common.Test.csproj", "{DAD2E577-1E79-4FDA-962D-980D9B7204EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Common.Test", "DotNetMarche.Common.Test\DotNetMarche.Common.Test.csproj", "{DAD2E577-1E79-4FDA-962D-980D9B7204EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting", "{0F09525B-A90D-4563-9F3B-5B5FD5D858C2}"
 	ProjectSection(SolutionItems) = preProject
-		Readme.txt = Readme.txt
+		DotNetMarche.Common\Readme.txt = DotNetMarche.Common\Readme.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.TestHelpers", "..\DotNetMarche.TestHelpers\DotNetMarche.TestHelpers.csproj", "{A0D3CD36-443B-4899-A455-7B4BFC955383}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.TestHelpers", "DotNetMarche.TestHelpers\DotNetMarche.TestHelpers.csproj", "{A0D3CD36-443B-4899-A455-7B4BFC955383}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.NunitExtension", "..\DotNetMarche.NunitExtension\DotNetMarche.NunitExtension.csproj", "{446EA380-C50C-444A-8276-F69E29F3CABB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.NunitExtension", "DotNetMarche.NunitExtension\DotNetMarche.NunitExtension.csproj", "{446EA380-C50C-444A-8276-F69E29F3CABB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.NunitExtension.Tests", "..\DotNetMarche.NunitExtension.Tests\DotNetMarche.NunitExtension.Tests.csproj", "{7AA5DD2B-2F71-4DA9-95B1-0E3F30427A8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.NunitExtension.Tests", "DotNetMarche.NunitExtension.Tests\DotNetMarche.NunitExtension.Tests.csproj", "{7AA5DD2B-2F71-4DA9-95B1-0E3F30427A8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Utils", "..\DotNetMarche.Utils\DotNetMarche.Utils.csproj", "{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Utils", "DotNetMarche.Utils\DotNetMarche.Utils.csproj", "{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Ui", "..\DotNetMarche.Ui\DotNetMarche.Ui.csproj", "{6B9D71DA-7069-4B13-A4AE-9261DF520950}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Ui", "DotNetMarche.Ui\DotNetMarche.Ui.csproj", "{6B9D71DA-7069-4B13-A4AE-9261DF520950}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9010F242-9D3D-44EC-A14C-809D0BDAA11E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure", "..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj", "{75E2529D-95B2-4440-AE35-CEF39D8412F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure", "DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj", "{75E2529D-95B2-4440-AE35-CEF39D8412F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Concrete", "Concrete", "{0BCD8FBB-564F-40B2-83BA-0D9AEF4FCDEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure.Concrete", "..\DotNetMarche.Infrastructure.Concrete\DotNetMarche.Infrastructure.Concrete.csproj", "{0BDB9FC6-22E3-4DCF-9748-31A07623DC83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure.Concrete", "DotNetMarche.Infrastructure.Concrete\DotNetMarche.Infrastructure.Concrete.csproj", "{0BDB9FC6-22E3-4DCF-9748-31A07623DC83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure.Castle", "..\DotNetMarche.Infrastructure.Castle\DotNetMarche.Infrastructure.Castle.csproj", "{7FE59E22-8870-461A-BB92-7B9D25F25BCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure.Castle", "DotNetMarche.Infrastructure.Castle\DotNetMarche.Infrastructure.Castle.csproj", "{7FE59E22-8870-461A-BB92-7B9D25F25BCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure.EnterpriseLibrary", "..\DotNetMarche.Infrastructure.EnterpriseLibrary\DotNetMarche.Infrastructure.EnterpriseLibrary.csproj", "{26BC5DE5-5BE6-43C4-814A-AA432A938394}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure.EnterpriseLibrary", "DotNetMarche.Infrastructure.EnterpriseLibrary\DotNetMarche.Infrastructure.EnterpriseLibrary.csproj", "{26BC5DE5-5BE6-43C4-814A-AA432A938394}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure.NHibernate", "..\DotNetMarche.Infrastructure.NHibernate\DotNetMarche.Infrastructure.NHibernate.csproj", "{889DBFDD-C300-4BEF-A479-B08C7B499BAC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Infrastructure.NHibernate", "DotNetMarche.Infrastructure.NHibernate\DotNetMarche.Infrastructure.NHibernate.csproj", "{889DBFDD-C300-4BEF-A479-B08C7B499BAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
