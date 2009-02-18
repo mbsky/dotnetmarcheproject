@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DAD2E577-1E79-4FDA-962D-980D9B7204EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DotNetMarche.Common.Test</RootNamespace>
+    <AssemblyName>DotNetMarche.Common.Test</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\DotNetMarche.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ExternalLibs\Castle\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ExternalLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ExternalLibs\Castle\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ExternalLibs\Castle\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ExternalLibs\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ExternalLibs\Testing\Nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.4.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ExternalLibs\Testing\Rhino\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.59.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuxClasses\ConsoleLogger.cs" />
+    <Compile Include="AuxClasses\CustomerINotifyPC.cs" />
+    <Compile Include="AuxClasses\SimpleUnknown.cs" />
+    <Compile Include="AuxClasses\TestContext.cs" />
+    <Compile Include="Concrete\Castle\CastleWindsorIoCEngineTest.cs" />
+    <Compile Include="Concrete\Castle\Classes\DisposableComponent.cs" />
+    <Compile Include="Concrete\Castle\Classes\DisposableSingleton.cs" />
+    <Compile Include="Concrete\Castle\Classes\DisposableTEst.cs" />
+    <Compile Include="Concrete\Castle\Classes\ITest.cs" />
+    <Compile Include="Concrete\Castle\LifeCycleTests.cs" />
+    <Compile Include="Concrete\Classes\IoCBase.cs" />
+    <Compile Include="Concrete\SomeTests.cs" />
+    <Compile Include="Infrastructure\Data\DataAccessNoTransaction.cs" />
+    <Compile Include="TestHelpers\Fluent\BracketTest.cs" />
+    <Compile Include="TestHelpers\Fluent\CollectionTest.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityComparer.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\AnEntity.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\AnotherEntity.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\ComposedTwoProps.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\SimpleThreeProps.cs" />
+    <Compile Include="TestHelpers\Fluent\EntityForTest\SimpleTwoProps.cs" />
+    <Compile Include="TestHelpers\Fluent\ExpressionTest.cs" />
+    <Compile Include="TestHelpers\Fluent\Extension\BaseTest.cs" />
+    <Compile Include="TestHelpers\Fluent\TestCompositeProperty.cs" />
+    <Compile Include="Ui\BindingListTest.cs" />
+    <Compile Include="Infrastructure\ContextTest.cs" />
+    <Compile Include="Infrastructure\Data\DataAccessTest.cs" />
+    <Compile Include="Infrastructure\Data\DataAccessTransactionTest.cs" />
+    <Compile Include="Infrastructure\Entities\AnEntity.cs" />
+    <Compile Include="Infrastructure\Entities\ForEntityIdFinder\IdNotNamedId.cs" />
+    <Compile Include="Infrastructure\Entities\ForEntityIdFinder\IdWithField.cs" />
+    <Compile Include="Infrastructure\Entities\ForEntityIdFinder\PublicIdEntity.cs" />
+    <Compile Include="Infrastructure\GenericHelpers.cs" />
+    <Compile Include="Infrastructure\GlobalTransactionTest.cs" />
+    <Compile Include="Infrastructure\HelperClasses\NHibernateSessionManagerTest.cs" />
+    <Compile Include="Infrastructure\Repository\Helpers\TSSInMemoryRepository.cs" />
+    <Compile Include="Infrastructure\Repository\InMemoryRepositoryTest.cs" />
+    <Compile Include="Infrastructure\Repository\NHibernateRepositoryTest.cs" />
+    <Compile Include="Infrastructure\UndoRedoListTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestHelpers\ObjectComparerTest.cs" />
+    <Compile Include="TestHelpers\ParallelFunctionTesterTest.cs" />
+    <Compile Include="Utils\Expressions\AuxClasses\Customer.cs" />
+    <Compile Include="Utils\Expressions\AuxClasses\Order.cs" />
+    <Compile Include="Utils\Expressions\ExpressionConverterExtTest.cs" />
+    <Compile Include="Utils\Expressions\ExpressionConverters.cs" />
+    <Compile Include="Utils\Expressions\ExpressionExecutor.cs" />
+    <Compile Include="Utils\Expressions\ExpressionTest.cs" />
+    <Compile Include="Utils\Expressions\StringAdvancedTokenizerTest.cs" />
+    <Compile Include="Utils\ExpressionTreeReflectionTest.cs" />
+    <Compile Include="Utils\Linq\DynamicLinqTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\DotNetMarche.snk">
+      <Link>DotNetMarche.snk</Link>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetMarche.Infrastructure.Castle\DotNetMarche.Infrastructure.Castle.csproj">
+      <Project>{7FE59E22-8870-461A-BB92-7B9D25F25BCA}</Project>
+      <Name>DotNetMarche.Infrastructure.Castle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Infrastructure.Concrete\DotNetMarche.Infrastructure.Concrete.csproj">
+      <Project>{0BDB9FC6-22E3-4DCF-9748-31A07623DC83}</Project>
+      <Name>DotNetMarche.Infrastructure.Concrete</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Infrastructure.NHibernate\DotNetMarche.Infrastructure.NHibernate.csproj">
+      <Project>{889DBFDD-C300-4BEF-A479-B08C7B499BAC}</Project>
+      <Name>DotNetMarche.Infrastructure.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">
+      <Project>{75E2529D-95B2-4440-AE35-CEF39D8412F5}</Project>
+      <Name>DotNetMarche.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.TestHelpers\DotNetMarche.TestHelpers.csproj">
+      <Project>{A0D3CD36-443B-4899-A455-7B4BFC955383}</Project>
+      <Name>DotNetMarche.TestHelpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Ui\DotNetMarche.Ui.csproj">
+      <Project>{6B9D71DA-7069-4B13-A4AE-9261DF520950}</Project>
+      <Name>DotNetMarche.Ui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
+      <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
+      <Name>DotNetMarche.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CastleMain.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Infrastructure\Data\Preload\preload1.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\NhConfig1.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\NhConfig2.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Concrete\Files\CastleTest1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Infrastructure\Entities\AnEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\NhConfigFile1.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\NhConfigWrong.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Concrete\Castle\Config\Config1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Concrete\Castle\Config\ConfigurationCustom.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Infrastructure\Constraint\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
