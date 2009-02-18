@@ -1,0 +1,108 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3644D8EE-4D7C-4306-A5AD-4E73D16A3D45}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NHibernate.Linq</RootNamespace>
+    <AssemblyName>NHibernate.Linq</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>DotNetMarche.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Pvisitor </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ExternalLibs\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DisposableAction.cs" />
+    <Compile Include="ExpressionVisitor.cs" />
+    <Compile Include="NHibernateExtensions.cs" />
+    <Compile Include="IDbMethods.cs" />
+    <Compile Include="NHibernateContext.cs" />
+    <Compile Include="NHibernateLinqQuery.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\Query.cs" />
+    <Compile Include="Query\QueryProvider.cs" />
+    <Compile Include="Query\TypeSystem.cs" />
+    <Compile Include="SqlClient\SqlClientExtensions.cs" />
+    <Compile Include="Utils\Expression.cs" />
+    <Compile Include="Utils\LinqGroupingResultTransformer.cs" />
+    <Compile Include="Utils\Nhibernate.cs" />
+    <Compile Include="Visitors\NominateVisitor.cs" />
+    <Compile Include="Visitors\Evaluator.cs" />
+    <Compile Include="Visitors\QueryTranslator.cs" />
+    <Compile Include="Visitors\Select\GroupVisitor.cs" />
+    <Compile Include="Visitors\Select\ProjectionResult.cs" />
+    <Compile Include="Visitors\Walkers\AndWalker.cs" />
+    <Compile Include="Visitors\Select\PostfixSelectVisitor.cs" />
+    <Compile Include="Visitors\Walkers\UnaryAnyWalker.cs" />
+    <Compile Include="Visitors\Walkers\AnyWalker.cs" />
+    <Compile Include="Visitors\Walkers\BaseBinaryOperatorWalker.cs" />
+    <Compile Include="Visitors\Walkers\BinaryWalker.cs" />
+    <Compile Include="Visitors\Walkers\CastWalker.cs" />
+    <Compile Include="Visitors\Walkers\ConstantWalker.cs" />
+    <Compile Include="Visitors\Walkers\ConstructorWalker.cs" />
+    <Compile Include="Visitors\CustomCriterion\SqlFunctionCriterion.cs" />
+    <Compile Include="Visitors\Delegates.cs" />
+    <Compile Include="Visitors\Walkers\MemberAccessWalker.cs" />
+    <Compile Include="Visitors\Walkers\MemberInvocationWalker.cs" />
+    <Compile Include="Visitors\Walkers\NotWalker.cs" />
+    <Compile Include="Visitors\Walkers\OrWalker.cs" />
+    <Compile Include="Visitors\PostfixExpressionVisitor.cs" />
+    <Compile Include="Visitors\PostfixWhereArgumentVisitor.cs" />
+    <Compile Include="Visitors\Walkers\QueueWalker.cs" />
+    <Compile Include="Visitors\SqlFunctionWalkedToken.cs" />
+    <Compile Include="Visitors\Walkers\SqlFunctionWalker.cs" />
+    <Compile Include="Visitors\Walkers\StackWalker.cs" />
+    <Compile Include="Visitors\StringFunctionsWalker.cs" />
+    <Compile Include="Visitors\TokenType.cs" />
+    <Compile Include="Visitors\Walkers\UnaryWalker.cs" />
+    <Compile Include="Visitors\Utils.cs" />
+    <Compile Include="Visitors\WalkedToken.cs" />
+    <Compile Include="Visitors\Walkers\Walker.cs" />
+    <Compile Include="Visitors\WalkerFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DotNetMarche.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
