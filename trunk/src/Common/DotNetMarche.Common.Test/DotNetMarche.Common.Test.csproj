@@ -130,9 +130,6 @@
     <Compile Include="Utils\Linq\DynamicLinqTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\DotNetMarche.snk">
-      <Link>DotNetMarche.snk</Link>
-    </None>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>

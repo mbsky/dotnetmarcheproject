@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Common.Test", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting", "{0F09525B-A90D-4563-9F3B-5B5FD5D858C2}"
 	ProjectSection(SolutionItems) = preProject
-		DotNetMarche.Common\Readme.txt = DotNetMarche.Common\Readme.txt
+		Readme.txt = Readme.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.TestHelpers", "DotNetMarche.TestHelpers\DotNetMarche.TestHelpers.csproj", "{A0D3CD36-443B-4899-A455-7B4BFC955383}"
