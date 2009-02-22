@@ -50,10 +50,12 @@
    
    <!--the path of the keyfile used to sign assemblies-->
    <property name="assembly.keyfile" value="${path::get-full-path(path.root)}/dotnetmarche.snk" />
-
+  
    <!--Various common directories for the project-->
    <property name="path.libraries" value="${path::get-full-path(path.root)}/ExternalLibs" overwrite="false" />
-   
+   <property name="path.libraries.familyspecific" value="${path::combine(path.libraries, framework::get-family(framework::get-target-framework()))}" dynamic="true" />
+   <property name="path.libraries.frameworkspecific" value="${path::combine(path.libraries.familyspecific, version::to-string(framework::get-version(framework::get-target-framework())))}" dynamic="true" />
+
    <!-- These are properties bound to testing -->
    <property name="test.enable" value="true" overwrite="false" />
    <property name="test.makebuilfail" value="true" overwrite="false" />
@@ -79,7 +81,7 @@
    <!-- 
 		These are used to set the correct attributes in AssemblyInfo.cs.  
 	-->
-   <property name="project.company" value="DotNetMarche " />
+   <property name="project.company" value="DotNetMarche" />
 
    <!--These properties defines constant for the build-->
    <property name="build.defines" value="TRACE" />
@@ -98,12 +100,12 @@
       <property name="build.debug"	value="None" overwrite="false" />
       <property name="build.optimize" value="true" overwrite="false" />
    </target>
-
+ 
    <target name="set-project-configuration">
       <property name="project.config" value="debug" overwrite="false" />
       <if test="${not(target::exists('set-' + project.config + '-project-configuration'))}">
          <fail message="Unknown configuration: '${project.config}'" />
-      </if>
+      </if> 
       <property name="build.warnaserrors" value="true" overwrite="false" />
       <property name="build.warnmissingdocs" value="false" overwrite="false" />
       <call target="set-${project.config}-project-configuration" />
@@ -161,6 +163,7 @@
    <!--Initializes all the path needed for the build process.-->
    <target name="path.init">
       <mkdir dir="${build.dir}" />
+      <mkdir dir="${testresults.dir}" />
    </target>
    
    <target name="common.init"
