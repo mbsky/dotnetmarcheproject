@@ -14,7 +14,7 @@
 [assembly: global::System.Data.Objects.DataClasses.EdmRelationshipAttribute("PhotoAlbumModel", "FK_PhotoComment_Users", "Users", global::System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DotNetMarche.PhotoAlbum.Model.Users), "PhotoComment", global::System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DotNetMarche.PhotoAlbum.Model.PhotoComment))]
 
 // Original file name:
-// Generation date: 2/25/2009 4:54:28 PM
+// Generation date: 2/25/2009 8:24:19 PM
 namespace DotNetMarche.PhotoAlbum.Model
 {
     

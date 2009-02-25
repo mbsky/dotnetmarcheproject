@@ -33,5 +33,53 @@ namespace DotNetMarche.PhotoAlbum.Model.Properties {
                 return ((string)(this["PhotoAlbumConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\Photos")]
+        public string PhisicalPhotoPath {
+            get {
+                return ((string)(this["PhisicalPhotoPath"]));
+            }
+            set {
+                this["PhisicalPhotoPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public int MaxPhotoWidth {
+            get {
+                return ((int)(this["MaxPhotoWidth"]));
+            }
+            set {
+                this["MaxPhotoWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public int MaxPhotoHeight {
+            get {
+                return ((int)(this["MaxPhotoHeight"]));
+            }
+            set {
+                this["MaxPhotoHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public int ThumbSize {
+            get {
+                return ((int)(this["ThumbSize"]));
+            }
+            set {
+                this["ThumbSize"] = value;
+            }
+        }
     }
 }

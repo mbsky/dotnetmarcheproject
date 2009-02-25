@@ -291,20 +291,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram Name="Context">
-        <EntityTypeShape EntityType="PhotoAlbumModel.Photo" Width="1.5" PointX="3" PointY="0.875" Height="2.0853483072916665" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhotoAlbumModel.PhotoAlbum" Width="1.5" PointX="0.75" PointY="1" Height="1.9210009765624998" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhotoAlbumModel.PhotoComment" Width="1.5" PointX="5.25" PointY="1.125" Height="1.7566536458333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoAlbumModel.Photo" Width="1.5" PointX="3.625" PointY="0.5" Height="2.0853483072916665" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoAlbumModel.PhotoAlbum" Width="1.5" PointX="1.125" PointY="0.5" Height="1.9210009765624998" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoAlbumModel.PhotoComment" Width="1.5" PointX="6.375" PointY="0.625" Height="1.7566536458333335" IsExpanded="true" />
         <EntityTypeShape EntityType="PhotoAlbumModel.sysdiagrams" Width="1.5" PointX="8.625" PointY="1.125" Height="1.7566536458333335" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhotoAlbumModel.Users" Width="1.5" PointX="3" PointY="4.375" Height="1.2636116536458335" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoAlbumModel.Users" Width="1.5" PointX="4.625" PointY="3.875" Height="1.2636116536458335" IsExpanded="true" />
         <AssociationConnector Association="PhotoAlbumModel.FK_Photo_PhotoAlbum" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="1.9605004882812498" />
-          <ConnectorPoint PointX="3" PointY="1.9605004882812498" /></AssociationConnector>
+          <ConnectorPoint PointX="2.625" PointY="1.4605004882812498" />
+          <ConnectorPoint PointX="3.625" PointY="1.4605004882812498" /></AssociationConnector>
         <AssociationConnector Association="PhotoAlbumModel.FK_PhotoComment_Photo" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="2.0033268229166667" />
-          <ConnectorPoint PointX="5.25" PointY="2.0033268229166667" /></AssociationConnector>
+          <ConnectorPoint PointX="5.125" PointY="1.5033268229166668" />
+          <ConnectorPoint PointX="6.375" PointY="1.5033268229166668" /></AssociationConnector>
         <AssociationConnector Association="PhotoAlbumModel.FK_PhotoComment_Users" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="5.0068058268229167" />
-          <ConnectorPoint PointX="6" PointY="5.0068058268229167" />
-          <ConnectorPoint PointX="6" PointY="2.8816536458333335" /></AssociationConnector></Diagram></edmx:Diagrams>
+          <ConnectorPoint PointX="6.125" PointY="4.5068058268229167" />
+          <ConnectorPoint PointX="7.125" PointY="4.5068058268229167" />
+          <ConnectorPoint PointX="7.125" PointY="2.3816536458333335" /></AssociationConnector></Diagram></edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
