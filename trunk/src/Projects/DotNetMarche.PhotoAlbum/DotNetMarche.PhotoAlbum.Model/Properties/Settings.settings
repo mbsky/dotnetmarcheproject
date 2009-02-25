@@ -10,5 +10,17 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\Data\PhotoAlbum.mdf;Integrated Security=True;User Instance=True</Value>
     </Setting>
+    <Setting Name="PhisicalPhotoPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.\Photos</Value>
+    </Setting>
+    <Setting Name="MaxPhotoWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">800</Value>
+    </Setting>
+    <Setting Name="MaxPhotoHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="ThumbSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
