@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.PhotoAlbum.Ui.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.PhotoAlbum.Test", "DotNetMarche.PhotoAlbum.Test\DotNetMarche.PhotoAlbum.Test.csproj", "{9708D629-C86A-4B80-AF0E-C069E0CDAFCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Utils", "..\..\Common\DotNetMarche.Utils\DotNetMarche.Utils.csproj", "{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{9708D629-C86A-4B80-AF0E-C069E0CDAFCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9708D629-C86A-4B80-AF0E-C069E0CDAFCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9708D629-C86A-4B80-AF0E-C069E0CDAFCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

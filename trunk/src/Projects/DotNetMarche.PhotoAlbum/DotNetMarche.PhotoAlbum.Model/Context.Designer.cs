@@ -12,9 +12,10 @@
 [assembly: global::System.Data.Objects.DataClasses.EdmRelationshipAttribute("PhotoAlbumModel", "FK_Photo_PhotoAlbum", "PhotoAlbum", global::System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DotNetMarche.PhotoAlbum.Model.PhotoAlbum), "Photo", global::System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DotNetMarche.PhotoAlbum.Model.Photo))]
 [assembly: global::System.Data.Objects.DataClasses.EdmRelationshipAttribute("PhotoAlbumModel", "FK_PhotoComment_Photo", "Photo", global::System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DotNetMarche.PhotoAlbum.Model.Photo), "PhotoComment", global::System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DotNetMarche.PhotoAlbum.Model.PhotoComment))]
 [assembly: global::System.Data.Objects.DataClasses.EdmRelationshipAttribute("PhotoAlbumModel", "FK_PhotoComment_Users", "Users", global::System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DotNetMarche.PhotoAlbum.Model.Users), "PhotoComment", global::System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DotNetMarche.PhotoAlbum.Model.PhotoComment))]
+[assembly: global::System.Data.Objects.DataClasses.EdmRelationshipAttribute("PhotoAlbumModel", "FK_PhotoAlbum_Users", "Users", global::System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DotNetMarche.PhotoAlbum.Model.Users), "PhotoAlbum", global::System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DotNetMarche.PhotoAlbum.Model.PhotoAlbum))]
 
 // Original file name:
-// Generation date: 2/25/2009 8:24:19 PM
+// Generation date: 2/28/2009 3:20:35 PM
 namespace DotNetMarche.PhotoAlbum.Model
 {
     
@@ -177,13 +178,15 @@ namespace DotNetMarche.PhotoAlbum.Model
         /// <param name="fileName">Initial value of FileName.</param>
         /// <param name="originalFileName">Initial value of OriginalFileName.</param>
         /// <param name="uploadDate">Initial value of UploadDate.</param>
-        public static Photo CreatePhoto(global::System.Guid id, string fileName, string originalFileName, global::System.DateTime uploadDate)
+        /// <param name="thumbNailFileName">Initial value of ThumbNailFileName.</param>
+        public static Photo CreatePhoto(global::System.Guid id, string fileName, string originalFileName, global::System.DateTime uploadDate, string thumbNailFileName)
         {
             Photo photo = new Photo();
             photo.Id = id;
             photo.FileName = fileName;
             photo.OriginalFileName = originalFileName;
             photo.UploadDate = uploadDate;
+            photo.ThumbNailFileName = thumbNailFileName;
             return photo;
         }
         /// <summary>
@@ -301,6 +304,29 @@ namespace DotNetMarche.PhotoAlbum.Model
         private global::System.DateTime _UploadDate;
         partial void OnUploadDateChanging(global::System.DateTime value);
         partial void OnUploadDateChanged();
+        /// <summary>
+        /// There are no comments for Property ThumbNailFileName in the schema.
+        /// </summary>
+        [global::System.Data.Objects.DataClasses.EdmScalarPropertyAttribute(IsNullable=false)]
+        [global::System.Runtime.Serialization.DataMemberAttribute()]
+        public string ThumbNailFileName
+        {
+            get
+            {
+                return this._ThumbNailFileName;
+            }
+            set
+            {
+                this.OnThumbNailFileNameChanging(value);
+                this.ReportPropertyChanging("ThumbNailFileName");
+                this._ThumbNailFileName = global::System.Data.Objects.DataClasses.StructuralObject.SetValidValue(value, false);
+                this.ReportPropertyChanged("ThumbNailFileName");
+                this.OnThumbNailFileNameChanged();
+            }
+        }
+        private string _ThumbNailFileName;
+        partial void OnThumbNailFileNameChanging(string value);
+        partial void OnThumbNailFileNameChanged();
         /// <summary>
         /// There are no comments for PhotoAlbum in the schema.
         /// </summary>
@@ -520,6 +546,43 @@ namespace DotNetMarche.PhotoAlbum.Model
                 if ((value != null))
                 {
                     ((global::System.Data.Objects.DataClasses.IEntityWithRelationships)(this)).RelationshipManager.InitializeRelatedCollection<Photo>("PhotoAlbumModel.FK_Photo_PhotoAlbum", "Photo", value);
+                }
+            }
+        }
+        /// <summary>
+        /// There are no comments for Users in the schema.
+        /// </summary>
+        [global::System.Data.Objects.DataClasses.EdmRelationshipNavigationPropertyAttribute("PhotoAlbumModel", "FK_PhotoAlbum_Users", "Users")]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute()]
+        [global::System.Xml.Serialization.SoapIgnoreAttribute()]
+        [global::System.Runtime.Serialization.DataMemberAttribute()]
+        public Users Users
+        {
+            get
+            {
+                return ((global::System.Data.Objects.DataClasses.IEntityWithRelationships)(this)).RelationshipManager.GetRelatedReference<Users>("PhotoAlbumModel.FK_PhotoAlbum_Users", "Users").Value;
+            }
+            set
+            {
+                ((global::System.Data.Objects.DataClasses.IEntityWithRelationships)(this)).RelationshipManager.GetRelatedReference<Users>("PhotoAlbumModel.FK_PhotoAlbum_Users", "Users").Value = value;
+            }
+        }
+        /// <summary>
+        /// There are no comments for Users in the schema.
+        /// </summary>
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        [global::System.Runtime.Serialization.DataMemberAttribute()]
+        public global::System.Data.Objects.DataClasses.EntityReference<Users> UsersReference
+        {
+            get
+            {
+                return ((global::System.Data.Objects.DataClasses.IEntityWithRelationships)(this)).RelationshipManager.GetRelatedReference<Users>("PhotoAlbumModel.FK_PhotoAlbum_Users", "Users");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((global::System.Data.Objects.DataClasses.IEntityWithRelationships)(this)).RelationshipManager.InitializeRelatedReference<Users>("PhotoAlbumModel.FK_PhotoAlbum_Users", "Users", value);
                 }
             }
         }
@@ -849,10 +912,12 @@ namespace DotNetMarche.PhotoAlbum.Model
         /// Create a new Users object.
         /// </summary>
         /// <param name="userId">Initial value of UserId.</param>
-        public static Users CreateUsers(global::System.Guid userId)
+        /// <param name="userAvatar">Initial value of UserAvatar.</param>
+        public static Users CreateUsers(global::System.Guid userId, string userAvatar)
         {
             Users users = new Users();
             users.UserId = userId;
+            users.UserAvatar = userAvatar;
             return users;
         }
         /// <summary>
@@ -879,6 +944,29 @@ namespace DotNetMarche.PhotoAlbum.Model
         partial void OnUserIdChanging(global::System.Guid value);
         partial void OnUserIdChanged();
         /// <summary>
+        /// There are no comments for Property UserAvatar in the schema.
+        /// </summary>
+        [global::System.Data.Objects.DataClasses.EdmScalarPropertyAttribute(IsNullable=false)]
+        [global::System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserAvatar
+        {
+            get
+            {
+                return this._UserAvatar;
+            }
+            set
+            {
+                this.OnUserAvatarChanging(value);
+                this.ReportPropertyChanging("UserAvatar");
+                this._UserAvatar = global::System.Data.Objects.DataClasses.StructuralObject.SetValidValue(value, false);
+                this.ReportPropertyChanged("UserAvatar");
+                this.OnUserAvatarChanged();
+            }
+        }
+        private string _UserAvatar;
+        partial void OnUserAvatarChanging(string value);
+        partial void OnUserAvatarChanged();
+        /// <summary>
         /// There are no comments for PhotoComment in the schema.
         /// </summary>
         [global::System.Data.Objects.DataClasses.EdmRelationshipNavigationPropertyAttribute("PhotoAlbumModel", "FK_PhotoComment_Users", "PhotoComment")]
@@ -896,6 +984,27 @@ namespace DotNetMarche.PhotoAlbum.Model
                 if ((value != null))
                 {
                     ((global::System.Data.Objects.DataClasses.IEntityWithRelationships)(this)).RelationshipManager.InitializeRelatedCollection<PhotoComment>("PhotoAlbumModel.FK_PhotoComment_Users", "PhotoComment", value);
+                }
+            }
+        }
+        /// <summary>
+        /// There are no comments for PhotoAlbum in the schema.
+        /// </summary>
+        [global::System.Data.Objects.DataClasses.EdmRelationshipNavigationPropertyAttribute("PhotoAlbumModel", "FK_PhotoAlbum_Users", "PhotoAlbum")]
+        [global::System.Xml.Serialization.XmlIgnoreAttribute()]
+        [global::System.Xml.Serialization.SoapIgnoreAttribute()]
+        [global::System.Runtime.Serialization.DataMemberAttribute()]
+        public global::System.Data.Objects.DataClasses.EntityCollection<PhotoAlbum> PhotoAlbum
+        {
+            get
+            {
+                return ((global::System.Data.Objects.DataClasses.IEntityWithRelationships)(this)).RelationshipManager.GetRelatedCollection<PhotoAlbum>("PhotoAlbumModel.FK_PhotoAlbum_Users", "PhotoAlbum");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((global::System.Data.Objects.DataClasses.IEntityWithRelationships)(this)).RelationshipManager.InitializeRelatedCollection<PhotoAlbum>("PhotoAlbumModel.FK_PhotoAlbum_Users", "PhotoAlbum", value);
                 }
             }
         }

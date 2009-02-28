@@ -37,6 +37,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.Entity">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -52,6 +55,7 @@
     <Compile Include="Constraint\ConstraintBase.cs" />
     <Compile Include="Constraint\DecoratorConstraint.cs" />
     <Compile Include="Constraint\IConstraint.cs" />
+    <Compile Include="EntityFramework\EntityKeyExtension.cs" />
     <Compile Include="ExceptionUtils.cs" />
     <Compile Include="Expressions\Concrete\PostfixExpressionToLambda.cs" />
     <Compile Include="Expressions\Concrete\QueryToObjectOperatorsChecker.cs" />
@@ -59,6 +63,7 @@
     <Compile Include="Expressions\Concrete\StringBasicTokenizer.cs" />
     <Compile Include="Expressions\Concrete\StringToExpressionTokenConverter.cs" />
     <Compile Include="Expressions\Concrete\StringTokenConverter.cs" />
+    <Compile Include="GenericUtils.cs" />
     <Compile Include="Linq\Creational.cs" />
     <Compile Include="Linq\DynamicLinq.cs" />
     <Compile Include="Expressions\ExpressionConverterExt.cs" />

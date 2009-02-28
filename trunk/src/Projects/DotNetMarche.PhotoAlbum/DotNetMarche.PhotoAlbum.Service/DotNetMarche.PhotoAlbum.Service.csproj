@@ -48,11 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\PhisicalImageInfo.cs" />
     <Compile Include="IPhotoAlbumService.cs" />
     <Compile Include="PhotoAlbumService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ISecurityService.cs" />
+    <Compile Include="SecurityService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
+      <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
+      <Name>DotNetMarche.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNetMarche.PhotoAlbum.Model\DotNetMarche.PhotoAlbum.Model.csproj">
       <Project>{FEF740EF-2932-43BB-8E86-8B3ED1C33E06}</Project>
       <Name>DotNetMarche.PhotoAlbum.Model</Name>

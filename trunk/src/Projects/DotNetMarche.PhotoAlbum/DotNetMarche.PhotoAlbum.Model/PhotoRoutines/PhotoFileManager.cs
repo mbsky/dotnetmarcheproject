@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -28,7 +29,7 @@ namespace DotNetMarche.PhotoAlbum.Model.PhotoRoutines
       {
          Func<String> current = NameRandomGenerator;
          NameRandomGenerator = newGenerator;
-         return new DisposableAction(() => NameRandomGenerator = current  );
+         return new DisposableAction(() => NameRandomGenerator = current);
       }
 
       public static string GenerateName()
@@ -36,7 +37,7 @@ namespace DotNetMarche.PhotoAlbum.Model.PhotoRoutines
          String randomFileName = null;
          while (String.IsNullOrEmpty(randomFileName) || File.Exists(randomFileName))
          {
-            
+
             randomFileName = Path.ChangeExtension(
                Path.Combine(
                   Properties.Settings.Default.PhisicalPhotoPath,
@@ -60,6 +61,17 @@ namespace DotNetMarche.PhotoAlbum.Model.PhotoRoutines
          }
          image.Save(fileName, ImageFormat.Jpeg);
          return fileName;
+      }
+
+      public static Stream GetImage(String imageFileId)
+      {
+         FileInfo fi = new FileInfo(
+            Path.ChangeExtension(
+               Path.Combine(Properties.Settings.Default.PhisicalPhotoPath, imageFileId),
+               ".jpg"));
+         if (fi.DirectoryName != Properties.Settings.Default.PhisicalPhotoPath)
+            throw new SecurityException("Security shield violation.");
+         return new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.Read);
       }
    }
 }
