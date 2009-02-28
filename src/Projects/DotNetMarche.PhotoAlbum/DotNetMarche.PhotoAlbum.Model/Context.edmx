@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PhotoAlbumModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+    <Schema Namespace="PhotoAlbumModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
         <EntityContainer Name="PhotoAlbumModelStoreContainer">
           <EntitySet Name="Photo" EntityType="PhotoAlbumModel.Store.Photo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PhotoAlbum" EntityType="PhotoAlbumModel.Store.PhotoAlbum" store:Type="Tables" Schema="dbo" />
@@ -14,6 +14,10 @@
           <AssociationSet Name="FK_Photo_PhotoAlbum" Association="PhotoAlbumModel.Store.FK_Photo_PhotoAlbum">
             <End Role="PhotoAlbum" EntitySet="PhotoAlbum" />
             <End Role="Photo" EntitySet="Photo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoAlbum_Users" Association="PhotoAlbumModel.Store.FK_PhotoAlbum_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PhotoAlbum" EntitySet="PhotoAlbum" />
           </AssociationSet>
           <AssociationSet Name="FK_PhotoComment_Photo" Association="PhotoAlbumModel.Store.FK_PhotoComment_Photo">
             <End Role="Photo" EntitySet="Photo" />
@@ -34,6 +38,7 @@
           <Property Name="OriginalFileName" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="Description" Type="nvarchar" MaxLength="2000" />
           <Property Name="UploadDate" Type="datetime" Nullable="false" />
+          <Property Name="ThumbNailFileName" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="PhotoAlbum">
           <Key>
@@ -44,6 +49,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="2000" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="PhotoComment">
           <Key>
@@ -70,6 +76,7 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserAvatar" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <Association Name="FK_Photo_PhotoAlbum">
           <End Role="PhotoAlbum" Type="PhotoAlbumModel.Store.PhotoAlbum" Multiplicity="1" />
@@ -80,6 +87,18 @@
             </Principal>
             <Dependent Role="Photo">
               <PropertyRef Name="PhotoAlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoAlbum_Users">
+          <End Role="Users" Type="PhotoAlbumModel.Store.Users" Multiplicity="1" />
+          <End Role="PhotoAlbum" Type="PhotoAlbumModel.Store.PhotoAlbum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="PhotoAlbum">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -107,8 +126,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PhotoAlbumModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
@@ -130,7 +148,9 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="PhotoComment" EntitySet="PhotoComment" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="FK_PhotoAlbum_Users" Association="PhotoAlbumModel.FK_PhotoAlbum_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PhotoAlbum" EntitySet="PhotoAlbum" /></AssociationSet></EntityContainer>
         <EntityType Name="Photo">
           <Key>
             <PropertyRef Name="Id" />
@@ -142,7 +162,7 @@
           <Property Name="UploadDate" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="PhotoAlbum" Relationship="PhotoAlbumModel.FK_Photo_PhotoAlbum" FromRole="Photo" ToRole="PhotoAlbum" />
           <NavigationProperty Name="PhotoComment" Relationship="PhotoAlbumModel.FK_PhotoComment_Photo" FromRole="Photo" ToRole="PhotoComment" />
-        </EntityType>
+          <Property Name="ThumbNailFileName" Type="String" Nullable="false" /></EntityType>
         <EntityType Name="PhotoAlbum">
           <Key>
             <PropertyRef Name="Id" />
@@ -153,7 +173,7 @@
           <Property Name="CreationDate" Type="DateTime" Nullable="false" />
           <Property Name="Status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Photo" Relationship="PhotoAlbumModel.FK_Photo_PhotoAlbum" FromRole="PhotoAlbum" ToRole="Photo" />
-        </EntityType>
+          <NavigationProperty Name="Users" Relationship="PhotoAlbumModel.FK_PhotoAlbum_Users" FromRole="PhotoAlbum" ToRole="Users" /></EntityType>
         <EntityType Name="PhotoComment">
           <Key>
             <PropertyRef Name="Id" />
@@ -180,7 +200,8 @@
           </Key>
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="PhotoComment" Relationship="PhotoAlbumModel.FK_PhotoComment_Users" FromRole="Users" ToRole="PhotoComment" />
-        </EntityType>
+          <Property Name="UserAvatar" Type="String" Nullable="false" />
+          <NavigationProperty Name="PhotoAlbum" Relationship="PhotoAlbumModel.FK_PhotoAlbum_Users" FromRole="Users" ToRole="PhotoAlbum" /></EntityType>
         <Association Name="FK_Photo_PhotoAlbum">
           <End Role="PhotoAlbum" Type="PhotoAlbumModel.PhotoAlbum" Multiplicity="1" />
           <End Role="Photo" Type="PhotoAlbumModel.Photo" Multiplicity="*" />
@@ -193,7 +214,9 @@
           <End Role="Users" Type="PhotoAlbumModel.Users" Multiplicity="1" />
           <End Role="PhotoComment" Type="PhotoAlbumModel.PhotoComment" Multiplicity="*" />
         </Association>
-      </Schema>
+        <Association Name="FK_PhotoAlbum_Users">
+          <End Type="PhotoAlbumModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="PhotoAlbumModel.PhotoAlbum" Role="PhotoAlbum" Multiplicity="*" /></Association></Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -202,6 +225,7 @@
           <EntitySetMapping Name="Photo">
             <EntityTypeMapping TypeName="IsTypeOf(PhotoAlbumModel.Photo)">
               <MappingFragment StoreEntitySet="Photo">
+                <ScalarProperty Name="ThumbNailFileName" ColumnName="ThumbNailFileName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="OriginalFileName" ColumnName="OriginalFileName" />
@@ -244,6 +268,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="IsTypeOf(PhotoAlbumModel.Users)">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserAvatar" ColumnName="UserAvatar" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -272,7 +297,11 @@
               <ScalarProperty Name="Id" ColumnName="Id" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          <AssociationSetMapping Name="FK_PhotoAlbum_Users" TypeName="PhotoAlbumModel.FK_PhotoAlbum_Users" StoreEntitySet="PhotoAlbum">
+            <EndProperty Name="PhotoAlbum">
+              <ScalarProperty Name="Id" ColumnName="Id" /></EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="UserId" ColumnName="UserId" /></EndProperty></AssociationSetMapping></EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -295,16 +324,20 @@
         <EntityTypeShape EntityType="PhotoAlbumModel.PhotoAlbum" Width="1.5" PointX="1.125" PointY="0.5" Height="1.9210009765624998" IsExpanded="true" />
         <EntityTypeShape EntityType="PhotoAlbumModel.PhotoComment" Width="1.5" PointX="6.375" PointY="0.625" Height="1.7566536458333335" IsExpanded="true" />
         <EntityTypeShape EntityType="PhotoAlbumModel.sysdiagrams" Width="1.5" PointX="8.625" PointY="1.125" Height="1.7566536458333335" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhotoAlbumModel.Users" Width="1.5" PointX="4.625" PointY="3.875" Height="1.2636116536458335" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoAlbumModel.Users" Width="1.5" PointX="3.5" PointY="3.375" Height="1.5923063151041657" IsExpanded="true" />
         <AssociationConnector Association="PhotoAlbumModel.FK_Photo_PhotoAlbum" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.625" PointY="1.4605004882812498" />
-          <ConnectorPoint PointX="3.625" PointY="1.4605004882812498" /></AssociationConnector>
+          <ConnectorPoint PointX="2.625" PointY="1.5426741536458333" />
+          <ConnectorPoint PointX="3.625" PointY="1.5426741536458333" /></AssociationConnector>
         <AssociationConnector Association="PhotoAlbumModel.FK_PhotoComment_Photo" ManuallyRouted="false">
           <ConnectorPoint PointX="5.125" PointY="1.5033268229166668" />
           <ConnectorPoint PointX="6.375" PointY="1.5033268229166668" /></AssociationConnector>
         <AssociationConnector Association="PhotoAlbumModel.FK_PhotoComment_Users" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.125" PointY="4.5068058268229167" />
-          <ConnectorPoint PointX="7.125" PointY="4.5068058268229167" />
-          <ConnectorPoint PointX="7.125" PointY="2.3816536458333335" /></AssociationConnector></Diagram></edmx:Diagrams>
+          <ConnectorPoint PointX="5" PointY="4.1711531575520828" />
+          <ConnectorPoint PointX="7.125" PointY="4.1711531575520828" />
+          <ConnectorPoint PointX="7.125" PointY="2.3816536458333335" /></AssociationConnector>
+        <AssociationConnector Association="PhotoAlbumModel.FK_PhotoAlbum_Users" >
+          <ConnectorPoint PointX="3.5" PointY="4.1711531575520828" />
+          <ConnectorPoint PointX="1.875" PointY="4.1711531575520828" />
+          <ConnectorPoint PointX="1.875" PointY="2.5853483072916665" /></AssociationConnector></Diagram></edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
