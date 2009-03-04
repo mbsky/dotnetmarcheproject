@@ -15,5 +15,11 @@ namespace DotNetMarche.PhotoAlbum.Service
       /// </summary>
       /// <param name="userId"></param>
       void CreateUser(Guid userId);
+
+      /// <summary>
+      /// Given a guid, return corresponding user
+      /// </summary>
+      /// <returns></returns>
+      Model.Users GetUserFromUserId(Guid userId);
    }
 }

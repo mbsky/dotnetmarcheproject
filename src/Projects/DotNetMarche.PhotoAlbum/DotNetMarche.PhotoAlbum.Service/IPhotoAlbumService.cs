@@ -19,5 +19,7 @@ namespace DotNetMarche.PhotoAlbum.Service
       Stream GetImage(String imageFileId);
 
       IList<Model.PhotoAlbum> GetAll(Guid userId);
+
+      IList<Model.Photo> GetAllPhotoForAlbum(Guid albumId);
    }
 }

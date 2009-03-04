@@ -7,25 +7,31 @@ using System.Web.Security;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources
 {
-    [DataObject(true)]
+   [DataObject(true)]
    public class PhotoAlbum
    {
-       [DataObjectMethod(DataObjectMethodType.Select)]
-       public IList<Model.PhotoAlbum> GetAll(Guid userId)
-       {
-          return Services.PhotoManagerService.GetAll(userId);
-       }
+      [DataObjectMethod(DataObjectMethodType.Select)]
+      public IList<Model.PhotoAlbum> GetAll(Guid userId)
+      {
+         return Services.PhotoManagerService.GetAll(userId);
+      }
 
-       [DataObjectMethod(DataObjectMethodType.Insert)]
-       public Boolean Insert(Model.PhotoAlbum album)
-       {
-          return Services.PhotoManagerService.CreateOrUpdatePhotoAlbum(album);
-       }
+      [DataObjectMethod(DataObjectMethodType.Insert)]
+      public Boolean Insert(Model.PhotoAlbum album)
+      {
+         return Services.PhotoManagerService.CreateOrUpdatePhotoAlbum(album);
+      }
 
-       [DataObjectMethod(DataObjectMethodType.Update)]
-       public Boolean Update(Model.PhotoAlbum album)
-       {
-          return Services.PhotoManagerService.CreateOrUpdatePhotoAlbum(album);
-       }
+      [DataObjectMethod(DataObjectMethodType.Update)]
+      public Boolean Update(Model.PhotoAlbum album)
+      {
+         return Services.PhotoManagerService.CreateOrUpdatePhotoAlbum(album);
+      }
+
+      [DataObjectMethod(DataObjectMethodType.Select)]
+      public IList<Model.Photo> GetPhotoForAlbum(Guid albumId)
+      {
+         return Services.PhotoManagerService.GetAllPhotoForAlbum(albumId);
+      }
    }
 }
