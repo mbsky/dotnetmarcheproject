@@ -37,6 +37,11 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
          return instance.GetAll(userId);
       }
 
+      public static IList<Model.Photo> GetAllPhotoForAlbum(Guid albumId)
+      {
+         return instance.GetAllPhotoForAlbum(albumId);
+      }
+
       #endregion
    }
 }

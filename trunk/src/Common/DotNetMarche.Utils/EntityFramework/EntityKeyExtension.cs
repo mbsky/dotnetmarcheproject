@@ -37,7 +37,9 @@ namespace DotNetMarche.Utils.EntityFramework
              type.KeyMembers.Select((k, i) => new KeyValuePair<string, object>(k.Name, keyValue[i]));
 
          // Create the  key for a specific SalesOrderHeader object. 
-         return new EntityKey(context.GetType().Name + "." + typeof(T).Name, entityKeyValues);
+         EntityKey key = new EntityKey(context.GetType().Name + "." + typeof(T).Name, entityKeyValues);
+
+         return key;
       }
 
       public static T LoadByKey<T>(this ObjectContext context, params Object[] keyValue) where T : EntityObject
