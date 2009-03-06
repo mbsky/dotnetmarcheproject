@@ -42,7 +42,9 @@ namespace DotNetMarche.Utils.EntityFramework
          return key;
       }
 
-      public static T LoadByKey<T>(this ObjectContext context, params Object[] keyValue) where T : EntityObject
+      public static T LoadByKey<Ctx, T>(this Ctx context, params Object[] keyValue) 
+         where T : EntityObject 
+         where Ctx : ObjectContext
       {
 
          return (T)context.GetObjectByKey(context.CreateKeyFor<T>(keyValue));

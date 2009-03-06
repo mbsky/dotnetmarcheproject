@@ -19,7 +19,7 @@ namespace DotNetMarche.PhotoAlbum.Service
       {
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
 
-         if (album.EntityState == EntityState.Detached)
+         if (album.EntityState == EntityState.Added)
             context.AddToPhotoAlbum(album);
          else
             context.Attach(album);
@@ -29,7 +29,7 @@ namespace DotNetMarche.PhotoAlbum.Service
       public bool AddPhotoToAlbum(string fileName, Guid albumId)
       {
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
-         Model.PhotoAlbum album = context.LoadByKey<Model.PhotoAlbum>(albumId);
+         Model.PhotoAlbum album = context.LoadByKey<Model.PhotoAlbumEntities, Model.PhotoAlbum>(albumId);
          Photo photo = PhotoPostProcessor.ProcessPhoto(fileName);
          photo.PhotoAlbum = album;
          context.AddToPhoto(photo);
