@@ -11,87 +11,69 @@
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls {
     
     
-    public partial class PhotoAlbumManager {
+    public partial class SinglePhotoThumbnail {
         
         /// <summary>
-        /// odsPhotoAlbum control.
+        /// pnlContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource odsPhotoAlbum;
+        protected global::System.Web.UI.WebControls.Panel pnlContent;
         
         /// <summary>
-        /// odsPhoto control.
+        /// imgThumb control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource odsPhoto;
+        protected global::System.Web.UI.WebControls.Image imgThumb;
         
         /// <summary>
-        /// grdPhotoAlbum control.
+        /// lblDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdPhotoAlbum;
+        protected global::System.Web.UI.WebControls.Label lblDescription;
         
         /// <summary>
-        /// Label1 control.
+        /// txtEdit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.TextBox txtEdit;
         
         /// <summary>
-        /// txtNameForNewElement control.
+        /// btnMoveBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNameForNewElement;
+        protected global::System.Web.UI.WebControls.ImageButton btnMoveBack;
         
         /// <summary>
-        /// Label2 control.
+        /// btnEdit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.ImageButton btnEdit;
         
         /// <summary>
-        /// txtdescriptionForNewElement control.
+        /// btnMoveForward control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtdescriptionForNewElement;
-        
-        /// <summary>
-        /// btnAddNewElement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddNewElement;
-        
-        /// <summary>
-        /// frmEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView frmEdit;
+        protected global::System.Web.UI.WebControls.ImageButton btnMoveForward;
     }
 }

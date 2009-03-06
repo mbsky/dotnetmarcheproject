@@ -1,0 +1,16 @@
+﻿#photolist 
+{
+   float: left;
+   width: 99%;
+   height: 200px;
+   overflow: scroll;
+   border: 2px ridge #00457b;
+}
+
+#photo 
+{
+  float: none;
+  width: 200px;
+  height: 200px;
+  overflow: auto;
+}

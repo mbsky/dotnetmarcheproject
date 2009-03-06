@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Routing;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Handler
 {
    public class PhotoLoader : IHttpHandler
    {
-      public PhotoLoader(string photoId)
-      {
-         this.PhotoId = photoId;
-      }
 
-      public String PhotoId { get; set; }
 
       #region IHttpHandler Members
 
@@ -28,7 +24,9 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Handler
       /// <param name="context"></param>
       public void ProcessRequest(HttpContext context)
       {
-         using (Stream image = Services.PhotoManagerService.GetImage(PhotoId))
+         RequestContext routeContext =  (RequestContext) HttpContext.Current.Items["routeContext"];
+         String imageId = routeContext.RouteData.Values["photoid"].ToString();
+         using (Stream image = Services.PhotoManagerService.GetImage(imageId))
          {
             Byte[] buffer = new byte[8192];
             Int32 readCount;

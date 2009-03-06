@@ -1,12 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PhotoAlbumManager.ascx.cs"
    Inherits="DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls.PhotoAlbumManager" %>
-<%--<span class="baseSpan">Select a file to upload</span>
-<asp:FileUpload ID="FileUpload1" runat="server" />--%>
-<%@ Register 
-   Namespace="DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.Parameters"
-   Assembly="DotNetMarche.PhotoAlbum.Ui.AspNet"
-   TagPrefix="cc1" %>
-
+<%@ Register Src="SinglePhotoThumbnail.ascx" TagName="SinglePhotoThumbnail" TagPrefix="uc1" %>
+<%@ Register Namespace="DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.Parameters"
+   Assembly="DotNetMarche.PhotoAlbum.Ui.AspNet" TagPrefix="cc1" %>
 <asp:ObjectDataSource ID="odsPhotoAlbum" runat="server" DataObjectTypeName="DotNetMarche.PhotoAlbum.Model.PhotoAlbum"
    InsertMethod="Insert" OldValuesParameterFormatString="original_{0}" SelectMethod="GetAll"
    TypeName="DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.PhotoAlbum" UpdateMethod="Update">
@@ -15,16 +11,15 @@
    </SelectParameters>
 </asp:ObjectDataSource>
 <asp:ObjectDataSource ID="odsPhoto" runat="server" OldValuesParameterFormatString="original_{0}"
-   SelectMethod="GetPhotoForAlbum" 
-   TypeName="DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.PhotoAlbum">
+   SelectMethod="GetAlbumWithPhoto" TypeName="DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.PhotoAlbum">
    <SelectParameters>
-      <asp:ControlParameter ControlID="grdPhotoAlbum" DbType="Guid" Name="albumId" PropertyName="SelectedValue" />
+      <asp:ControlParameter ControlID="grdPhotoAlbum" DbType="Guid" Name="albumId" PropertyName="SelectedValue"
+         DefaultValue="" />
    </SelectParameters>
 </asp:ObjectDataSource>
-
 <div id="listOfPhotoAlbum">
    <asp:GridView ID="grdPhotoAlbum" runat="server" AutoGenerateColumns="False" DataSourceID="odsPhotoAlbum"
-      DataKeyNames="Id" style="margin-top: 0px">
+      DataKeyNames="Id" Style="margin-top: 0px">
       <Columns>
          <asp:CommandField ShowEditButton="True" ShowSelectButton="True" />
          <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -49,17 +44,25 @@
       Width="70px" />
 </div>
 <div id="editPhotoAlbum">
-   <asp:Repeater ID="Repeater1" runat="server" DataSourceID="odsPhoto">
+   <asp:FormView ID="frmEdit" runat="server" DataSourceID="odsPhoto">
       <ItemTemplate>
-         <div id='<%# "photo_id" + Eval("Id") %>'>
-            <img src='<%# "photo/" + Eval("ThumbNailFileName") + ".jpg" %>' alt='<%# Eval("OriginalFileName") + " " + Eval("Description") %>' />
+         <div id="editAlbumData">
+            <asp:Label ID="lblTitle" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+         </div>
+         <div id="photolist">
+            <asp:Repeater ID="rptPhoto" runat="server" DataSource='<%# Eval("Photo") %>'>
+               <ItemTemplate>
+                  <uc1:SinglePhotoThumbnail ID="SinglePhotoThumbnail1" runat="server" sdfgsdfgsdfgs="SDFGSDFGS"
+                     Photo='<%# Container.DataItem %>' OnDataChanged="SinglePhoto_DataChanged" />
+               </ItemTemplate>
+            </asp:Repeater>
+         </div>
+         <asp:Label ID="Label3" runat="server" Text='Aggiungi foto'></asp:Label>
+         <div id="fileUpload">
+            <asp:FileUpload ID="upPhoto" runat="server" />
+            <asp:Button ID="btnUploadPhoto" runat="server" CommandArgument='<%# Eval("Id") %>'
+               Text="Upload" OnClick="btnUploadPhoto_Click" />
          </div>
       </ItemTemplate>
-      <FooterTemplate>
-         <div id="addNewPhotoToAlbum">
-            <span>Add new photo to album</span>
-            <asp:FileUpload ID="FileUpload1" runat="server" />
-         </div>
-      </FooterTemplate>
-   </asp:Repeater>
+   </asp:FormView>
 </div>

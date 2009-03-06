@@ -12,8 +12,8 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Handler
 
       public IHttpHandler GetHttpHandler(RequestContext requestContext)
       {
-         String imageId = requestContext.RouteData.Values["photoid"].ToString();
-         return new PhotoLoader(imageId);
+         HttpContext.Current.Items["routeContext"] = requestContext;
+         return new PhotoLoader();
       }
 
       #endregion

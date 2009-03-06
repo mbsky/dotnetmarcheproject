@@ -14,12 +14,20 @@ namespace DotNetMarche.PhotoAlbum.Service
    {
       Boolean CreateOrUpdatePhotoAlbum(Model.PhotoAlbum album);
 
-      Boolean AddPhotoToAlbum(String fileName, Guid albumId);
+      Boolean AddPhotoToAlbum(String fileName, String originalFileName, Guid albumId);
 
       Stream GetImage(String imageFileId);
 
       IList<Model.PhotoAlbum> GetAll(Guid userId);
 
+      Model.PhotoAlbum GetPhotoAlbumWithPhoto(Guid albumId);
+
       IList<Model.Photo> GetAllPhotoForAlbum(Guid albumId);
+
+      Boolean MovePhotoBack(Guid photoId);
+
+      Boolean MovePhotoForward(Guid photoId);
+
+      Boolean ChangePhotoDescription(Guid photoId, String newDescription);
    }
 }

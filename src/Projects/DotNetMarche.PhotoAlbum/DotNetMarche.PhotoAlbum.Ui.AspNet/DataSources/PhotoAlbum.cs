@@ -28,10 +28,15 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources
          return Services.PhotoManagerService.CreateOrUpdatePhotoAlbum(album);
       }
 
+      /// <summary>
+      /// REturn the album with photo.
+      /// </summary>
+      /// <param name="albumId"></param>
+      /// <returns></returns>
       [DataObjectMethod(DataObjectMethodType.Select)]
-      public IList<Model.Photo> GetPhotoForAlbum(Guid albumId)
+      public Model.PhotoAlbum GetAlbumWithPhoto(Guid albumId)
       {
-         return Services.PhotoManagerService.GetAllPhotoForAlbum(albumId);
+         return Services.PhotoManagerService.GetPhotoAlbumWithPhoto(albumId);
       }
    }
 }

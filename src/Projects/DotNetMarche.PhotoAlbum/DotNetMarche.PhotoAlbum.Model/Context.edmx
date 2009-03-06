@@ -39,6 +39,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="2000" />
           <Property Name="UploadDate" Type="datetime" Nullable="false" />
           <Property Name="ThumbNailFileName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="PhotoIndex" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PhotoAlbum">
           <Key>
@@ -162,7 +163,8 @@
           <Property Name="UploadDate" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="PhotoAlbum" Relationship="PhotoAlbumModel.FK_Photo_PhotoAlbum" FromRole="Photo" ToRole="PhotoAlbum" />
           <NavigationProperty Name="PhotoComment" Relationship="PhotoAlbumModel.FK_PhotoComment_Photo" FromRole="Photo" ToRole="PhotoComment" />
-          <Property Name="ThumbNailFileName" Type="String" Nullable="false" /></EntityType>
+          <Property Name="ThumbNailFileName" Type="String" Nullable="false" />
+          <Property Name="PhotoIndex" Type="Int32" Nullable="false" /></EntityType>
         <EntityType Name="PhotoAlbum">
           <Key>
             <PropertyRef Name="Id" />
@@ -225,6 +227,7 @@
           <EntitySetMapping Name="Photo">
             <EntityTypeMapping TypeName="IsTypeOf(PhotoAlbumModel.Photo)">
               <MappingFragment StoreEntitySet="Photo">
+                <ScalarProperty Name="PhotoIndex" ColumnName="PhotoIndex" />
                 <ScalarProperty Name="ThumbNailFileName" ColumnName="ThumbNailFileName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />

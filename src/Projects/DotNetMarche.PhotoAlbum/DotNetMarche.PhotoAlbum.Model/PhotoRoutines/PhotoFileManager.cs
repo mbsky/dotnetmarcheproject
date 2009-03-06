@@ -20,7 +20,7 @@ namespace DotNetMarche.PhotoAlbum.Model.PhotoRoutines
        {
           RNGCryptoServiceProvider provider =
              new RNGCryptoServiceProvider();
-          Byte[] name = new byte[32];
+          Byte[] name = new byte[16];
           provider.GetBytes(name);
           return BitConverter.ToString(name).Replace("-", "");
        };
@@ -69,7 +69,7 @@ namespace DotNetMarche.PhotoAlbum.Model.PhotoRoutines
             Path.ChangeExtension(
                Path.Combine(Properties.Settings.Default.PhisicalPhotoPath, imageFileId),
                ".jpg"));
-         if (fi.DirectoryName != Properties.Settings.Default.PhisicalPhotoPath)
+         if (fi.DirectoryName != Path.GetFullPath(Properties.Settings.Default.PhisicalPhotoPath))
             throw new SecurityException("Security shield violation.");
          return new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.Read);
       }
