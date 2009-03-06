@@ -30,7 +30,7 @@ namespace DotNetMarche.PhotoAlbum.Service
       {
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
          EntityKey key3 = context.CreateKeyFor<Users>(userId);
-         return context.LoadByKey<Model.PhotoAlbumEntities, Users>(userId);
+         return (Users) context.GetObjectByKey(key3);
 
       }
 

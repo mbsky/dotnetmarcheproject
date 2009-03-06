@@ -67,7 +67,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationInitialization.cs" />
     <Compile Include="CreateUser.aspx.cs">
       <DependentUpon>CreateUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -77,6 +76,9 @@
     </Compile>
     <Compile Include="DataSources\Parameters\CurrentUserIdParameter.cs" />
     <Compile Include="DataSources\PhotoAlbum.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Handler\MyPhotoRouter.cs" />
     <Compile Include="Handler\PhotoLoader.cs" />
     <Compile Include="Home.aspx.cs">
@@ -114,6 +116,13 @@
     <Compile Include="Photo\Controls\PhotoAlbumManager.ascx.designer.cs">
       <DependentUpon>PhotoAlbumManager.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Photo\Controls\SinglePhotoThumbnail.ascx.cs">
+      <DependentUpon>SinglePhotoThumbnail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Photo\Controls\SinglePhotoThumbnail.ascx.designer.cs">
+      <DependentUpon>SinglePhotoThumbnail.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Photo\PhotoAlbumManager.aspx.cs">
       <DependentUpon>PhotoAlbumManager.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -131,12 +140,18 @@
     <Content Include="App_Data\PhotoAlbum_log.LDF">
       <DependentUpon>PhotoAlbum.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Themes\Basic\Basic.css" />
     <Content Include="CreateUser.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
+    <Content Include="images\EditComment.png" />
+    <Content Include="images\MoveBack.png" />
+    <Content Include="images\MoveForward.png" />
     <Content Include="Login.aspx" />
     <Content Include="Main.Master" />
     <Content Include="Photo\Controls\PhotoAlbumEdit.ascx" />
     <Content Include="Photo\Controls\PhotoAlbumManager.ascx" />
+    <Content Include="Photo\Controls\SinglePhotoThumbnail.ascx" />
     <Content Include="Photo\PhotoAlbumManager.aspx" />
   </ItemGroup>
   <ItemGroup>

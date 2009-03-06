@@ -6,7 +6,7 @@ using DotNetMarche.PhotoAlbum.Service;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
 {
-   public static class PhotoManagerService 
+   public static class PhotoManagerService
    {
       private static readonly IPhotoAlbumService instance;
 
@@ -22,9 +22,9 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
          return instance.CreateOrUpdatePhotoAlbum(album);
       }
 
-      public static bool AddPhotoToAlbum(string fileName, Guid albumId)
+      public static bool AddPhotoToAlbum(string fileName, String originalFileName, Guid albumId)
       {
-         return instance.AddPhotoToAlbum(fileName, albumId);
+         return instance.AddPhotoToAlbum(fileName,originalFileName, albumId);
       }
 
       public static System.IO.Stream GetImage(string imageFileId)
@@ -42,6 +42,25 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
          return instance.GetAllPhotoForAlbum(albumId);
       }
 
+      public static Model.PhotoAlbum GetPhotoAlbumWithPhoto(Guid albumId)
+      {
+         return instance.GetPhotoAlbumWithPhoto(albumId);
+      }
+
+      public static Boolean MovePhotoBack(Guid photoId)
+   {
+      return instance.MovePhotoBack(photoId);
+   }
+
+      public static Boolean MovePhotoForward(Guid photoId)
+      {
+         return instance.MovePhotoForward(photoId);
+      }
+
+      public static Boolean ChangePhotoDescription(Guid photoId, String newDescription)
+      {
+         return instance.ChangePhotoDescription(photoId, newDescription);
+      }
       #endregion
    }
 }

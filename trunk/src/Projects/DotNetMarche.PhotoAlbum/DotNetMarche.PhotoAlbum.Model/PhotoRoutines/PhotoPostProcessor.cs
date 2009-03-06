@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using DotNetMarche.Utils;
 
 namespace DotNetMarche.PhotoAlbum.Model.PhotoRoutines
@@ -17,7 +18,9 @@ namespace DotNetMarche.PhotoAlbum.Model.PhotoRoutines
       /// 
       /// </summary>
       /// <param name="fileName"></param>
-      public static Photo ProcessPhoto(String fileName)
+      /// <param name="originalFileName">When you upload the file you probably save
+      /// it in temp folder, so you can pass a different file name to be set as the original one</param>
+      public static Photo ProcessPhoto(String fileName, String originalFileName)
       {
          //First of all resize the original image and create thumbnail
          using (Bitmap resized = resizeManager.ResizeBitmap(fileName))
@@ -30,9 +33,9 @@ namespace DotNetMarche.PhotoAlbum.Model.PhotoRoutines
             return new Photo()
                       {
                          Id = GenericUtils.CreateSequentialGuid(),
-                         FileName = FileName,
-                         OriginalFileName = FileName,
-                         ThumbNailFileName = ThumbFileName,
+                         FileName = Path.GetFileNameWithoutExtension(FileName),
+                         ThumbNailFileName = Path.GetFileNameWithoutExtension(ThumbFileName),
+                         OriginalFileName = originalFileName,
                          UploadDate = DateTime.Now,
                       };
          }

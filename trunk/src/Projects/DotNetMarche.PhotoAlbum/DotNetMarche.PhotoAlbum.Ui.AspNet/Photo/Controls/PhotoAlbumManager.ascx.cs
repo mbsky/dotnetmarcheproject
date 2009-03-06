@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
 {
@@ -17,11 +19,38 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
                                         CreationDate = DateTime.Now,
                                         Description = txtdescriptionForNewElement.Text,
                                         Name = txtNameForNewElement.Text,
-                                        Users =  Services.SecurityService.GetUserFromUserId(
-                                          (Guid) Membership.GetUser().ProviderUserKey)
+                                        Users = Services.SecurityService.GetUserFromUserId(
+                                          (Guid)Membership.GetUser().ProviderUserKey)
                                      };
-         Services.PhotoManagerService.CreateOrUpdatePhotoAlbum(album);
-         grdPhotoAlbum.DataBind();
+         if (Services.PhotoManagerService.CreateOrUpdatePhotoAlbum(album))
+         {
+            grdPhotoAlbum.DataBind();
+            txtNameForNewElement.Text = "";
+            txtdescriptionForNewElement.Text = "";
+         }
+      }
+
+      /// <summary>
+      /// Upload the photo.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      protected void btnUploadPhoto_Click(object sender, EventArgs e)
+      {
+         FileUpload upload = (FileUpload)frmEdit.FindControl("upPhoto");
+         String tempFileName = Path.ChangeExtension(
+            Path.GetTempFileName(),
+            Path.GetExtension(upload.FileName));
+         upload.SaveAs(tempFileName);
+         if (Services.PhotoManagerService.AddPhotoToAlbum(tempFileName, upload.FileName, (Guid)grdPhotoAlbum.SelectedValue))
+         {
+            frmEdit.DataBind();
+         }
+      }
+
+      protected void SinglePhoto_DataChanged(object sender, EventArgs e)
+      {
+         frmEdit.DataBind();
       }
    }
 }

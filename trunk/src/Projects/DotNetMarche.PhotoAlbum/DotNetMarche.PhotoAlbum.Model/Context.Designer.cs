@@ -15,7 +15,7 @@
 [assembly: global::System.Data.Objects.DataClasses.EdmRelationshipAttribute("PhotoAlbumModel", "FK_PhotoAlbum_Users", "Users", global::System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DotNetMarche.PhotoAlbum.Model.Users), "PhotoAlbum", global::System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DotNetMarche.PhotoAlbum.Model.PhotoAlbum))]
 
 // Original file name:
-// Generation date: 2/28/2009 3:20:35 PM
+// Generation date: 3/6/2009 10:33:56 PM
 namespace DotNetMarche.PhotoAlbum.Model
 {
     
@@ -179,7 +179,8 @@ namespace DotNetMarche.PhotoAlbum.Model
         /// <param name="originalFileName">Initial value of OriginalFileName.</param>
         /// <param name="uploadDate">Initial value of UploadDate.</param>
         /// <param name="thumbNailFileName">Initial value of ThumbNailFileName.</param>
-        public static Photo CreatePhoto(global::System.Guid id, string fileName, string originalFileName, global::System.DateTime uploadDate, string thumbNailFileName)
+        /// <param name="photoIndex">Initial value of PhotoIndex.</param>
+        public static Photo CreatePhoto(global::System.Guid id, string fileName, string originalFileName, global::System.DateTime uploadDate, string thumbNailFileName, int photoIndex)
         {
             Photo photo = new Photo();
             photo.Id = id;
@@ -187,6 +188,7 @@ namespace DotNetMarche.PhotoAlbum.Model
             photo.OriginalFileName = originalFileName;
             photo.UploadDate = uploadDate;
             photo.ThumbNailFileName = thumbNailFileName;
+            photo.PhotoIndex = photoIndex;
             return photo;
         }
         /// <summary>
@@ -327,6 +329,29 @@ namespace DotNetMarche.PhotoAlbum.Model
         private string _ThumbNailFileName;
         partial void OnThumbNailFileNameChanging(string value);
         partial void OnThumbNailFileNameChanged();
+        /// <summary>
+        /// There are no comments for Property PhotoIndex in the schema.
+        /// </summary>
+        [global::System.Data.Objects.DataClasses.EdmScalarPropertyAttribute(IsNullable=false)]
+        [global::System.Runtime.Serialization.DataMemberAttribute()]
+        public int PhotoIndex
+        {
+            get
+            {
+                return this._PhotoIndex;
+            }
+            set
+            {
+                this.OnPhotoIndexChanging(value);
+                this.ReportPropertyChanging("PhotoIndex");
+                this._PhotoIndex = global::System.Data.Objects.DataClasses.StructuralObject.SetValidValue(value);
+                this.ReportPropertyChanged("PhotoIndex");
+                this.OnPhotoIndexChanged();
+            }
+        }
+        private int _PhotoIndex;
+        partial void OnPhotoIndexChanging(int value);
+        partial void OnPhotoIndexChanged();
         /// <summary>
         /// There are no comments for PhotoAlbum in the schema.
         /// </summary>

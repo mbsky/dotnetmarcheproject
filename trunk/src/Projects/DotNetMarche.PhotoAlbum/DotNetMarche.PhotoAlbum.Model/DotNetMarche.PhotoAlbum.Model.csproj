@@ -74,6 +74,7 @@
       <DependentUpon>Context.edmx</DependentUpon>
     </Compile>
     <Compile Include="DisposableAction.cs" />
+    <Compile Include="IdManagement.cs" />
     <Compile Include="PhotoRoutines\PhotoFileManager.cs" />
     <Compile Include="PhotoRoutines\PhotoPostProcessor.cs" />
     <Compile Include="PhotoRoutines\PhotoSizeManager.cs" />

@@ -26,12 +26,15 @@ namespace DotNetMarche.PhotoAlbum.Service
          return context.SaveChanges() > 0;
       }
 
-      public bool AddPhotoToAlbum(string fileName, Guid albumId)
-      {
+      public bool AddPhotoToAlbum(string fileName, String originalFileName, Guid albumId)
+      { 
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
-         Model.PhotoAlbum album = context.LoadByKey<Model.PhotoAlbumEntities, Model.PhotoAlbum>(albumId);
-         Photo photo = PhotoPostProcessor.ProcessPhoto(fileName);
+         Model.PhotoAlbum album = (Model.PhotoAlbum) context.GetObjectByKey(
+            context.CreateKeyFor<Model.PhotoAlbum>(albumId));
+         Photo photo = PhotoPostProcessor.ProcessPhoto(fileName, originalFileName);
          photo.PhotoAlbum = album;
+         album.Photo.Load();
+         photo.PhotoIndex = album.Photo.Count() + 1;
          context.AddToPhoto(photo);
          return context.SaveChanges() > 0;
       }
@@ -56,8 +59,67 @@ namespace DotNetMarche.PhotoAlbum.Service
                  select photo).ToList();
       }
 
+      public Model.PhotoAlbum GetPhotoAlbumWithPhoto(Guid albumId)
+      {
+         Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
+         Object entity;
+         if (!context.TryGetObjectByKey(context.CreateKeyFor<Model.PhotoAlbum>(albumId), out entity))
+            return null;
+
+         Model.PhotoAlbum album = (Model.PhotoAlbum) entity;
+         album.Photo.Load();
+         album.Photo.ReorderEntities(p => p.PhotoIndex);
+         return album;
+      }
+
       #endregion
 
 
+
+      #region IPhotoAlbumService Members
+
+
+      public bool MovePhotoBack(Guid photoId)
+      {
+         Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
+         Photo photo = (Photo) context.GetObjectByKey(context.CreateKeyFor<Photo>(photoId));
+         if (photo.PhotoIndex < 2) return false;
+         photo.PhotoAlbumReference.Load();
+         Int32 otherPhotoIndex = photo.PhotoIndex - 1;
+         Photo photoAtTheLeft = (from Photo p in context.Photo
+                                 where p.PhotoIndex == otherPhotoIndex &&
+                                       p.PhotoAlbum.Id  == photo.PhotoAlbum.Id 
+                                 select p).First();
+         photoAtTheLeft.PhotoIndex++;
+         photo.PhotoIndex--;
+         return true;
+      }
+
+      public bool MovePhotoForward(Guid photoId)
+      {
+         Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
+         Photo photo = (Photo)context.GetObjectByKey(context.CreateKeyFor<Photo>(photoId));
+         photo.PhotoAlbumReference.Load();
+         photo.PhotoAlbum.Photo.Load();
+         if (photo.PhotoIndex > photo.PhotoAlbum.Photo.Count - 1 ) return false;
+         Int32 otherPhotoIndex = photo.PhotoIndex + 1;
+         Photo photoAtTheLeft = (from Photo p in context.Photo
+                                 where p.PhotoIndex == otherPhotoIndex &&
+                                       p.PhotoAlbum.Id == photo.PhotoAlbum.Id
+                                 select p).First();
+         photoAtTheLeft.PhotoIndex--;
+         photo.PhotoIndex++;
+         return true;
+      }
+
+      public bool ChangePhotoDescription(Guid photoId, string newDescription)
+      {
+         Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
+         Photo photo = (Photo)context.GetObjectByKey(context.CreateKeyFor<Photo>(photoId));
+         photo.Description = newDescription;
+         return true;
+      }
+
+      #endregion
    }
 }

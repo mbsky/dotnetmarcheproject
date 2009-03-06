@@ -56,6 +56,7 @@
     <Compile Include="Constraint\DecoratorConstraint.cs" />
     <Compile Include="Constraint\IConstraint.cs" />
     <Compile Include="EntityFramework\EntityKeyExtension.cs" />
+    <Compile Include="EntityFramework\BasicExtension.cs" />
     <Compile Include="ExceptionUtils.cs" />
     <Compile Include="Expressions\Concrete\PostfixExpressionToLambda.cs" />
     <Compile Include="Expressions\Concrete\QueryToObjectOperatorsChecker.cs" />
