@@ -14,15 +14,6 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls {
     public partial class SinglePhotoThumbnail {
         
         /// <summary>
-        /// pnlContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlContent;
-        
-        /// <summary>
         /// imgThumb control.
         /// </summary>
         /// <remarks>
