@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Routing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.Handler;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
 {
@@ -47,10 +48,8 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
 
       private void SyncInterface(Model.Photo photo)
       {
-         String path;
-         RouteValueDictionary rv = new RouteValueDictionary { { "photoid", photo.ThumbNailFileName } };
 
-         imgThumb.ImageUrl = RouteTable.Routes.GetVirtualPath(null, rv).VirtualPath;
+         imgThumb.ImageUrl = PhotoLoader.GenerateLinkForPhoto(photo.ThumbNailFileName);
          imgThumb.AlternateText = photo.OriginalFileName + " " + photo.Description;
          lblDescription.Text = photo.Description ?? "No description";
       }

@@ -18,4 +18,16 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Handler
 
       #endregion
    }
+
+   public class MyAvatarRouter : IRouteHandler
+   {
+      #region IRouteHandler Members
+
+      public IHttpHandler GetHttpHandler(RequestContext requestContext)
+      {
+         return new AvatarHandler();
+      }
+
+      #endregion
+   }
 }

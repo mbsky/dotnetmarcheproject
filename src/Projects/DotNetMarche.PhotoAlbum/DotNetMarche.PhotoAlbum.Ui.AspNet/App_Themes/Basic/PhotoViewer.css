@@ -1,0 +1,32 @@
+﻿#thumbstrip
+{
+  position: absolute;
+  width: 160px;
+  height: 800px;
+  overflow: scroll;
+  border: 2px ridge #00457b;
+  margin-right: 10px;
+  text-align: center;
+}
+
+#photoselector 
+{
+     border: 1px solid #555555;
+     margin: 2px;
+   }
+#thumbstrip input 
+{
+   padding: 5px 5px 5px 5px;
+}
+
+#maincontent
+{
+   position: absolute;
+   left: 175px;
+   border: 2px ridge #555555;
+}
+
+#maincontent img
+{
+   padding: 9px 9px 9px 9px;
+}

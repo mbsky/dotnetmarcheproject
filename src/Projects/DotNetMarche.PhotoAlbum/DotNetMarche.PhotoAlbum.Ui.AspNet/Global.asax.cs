@@ -17,6 +17,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet
          using (RouteTable.Routes.GetWriteLock())
          {
             RouteTable.Routes.Add(new Route("Photo/{photoid}.axd", new MyPhotoRouter()));
+            RouteTable.Routes.Add(new Route("Avatar.axd", new MyAvatarRouter()));
          }
       }
 
