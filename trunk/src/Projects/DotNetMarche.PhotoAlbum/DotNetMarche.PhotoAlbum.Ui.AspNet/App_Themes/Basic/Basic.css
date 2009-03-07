@@ -9,8 +9,30 @@
 
 #photo 
 {
-  float: none;
-  width: 200px;
-  height: 200px;
+  float: left;
+  width: 160px;
   overflow: auto;
+  text-align: center;
+  border:1px solid #3B5998;
+  padding: 4px;
+  margin: 4px;
+}
+
+#photo span 
+{
+   display: block;
+   font-size:13px;
+   text-align:center
+}
+
+#photo textarea 
+{
+   display: block;
+   font-size:13px;
+   text-align:center
+}
+
+.thumbimage 
+{
+   text-align: center;
 }

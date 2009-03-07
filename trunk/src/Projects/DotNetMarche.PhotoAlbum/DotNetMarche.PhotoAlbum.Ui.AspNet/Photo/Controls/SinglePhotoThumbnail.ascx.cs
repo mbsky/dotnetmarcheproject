@@ -66,6 +66,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
          {
             txtEdit.Visible = true;
             lblDescription.Visible = false;
+            txtEdit.Text = lblDescription.Text;
          }
          else
          {
