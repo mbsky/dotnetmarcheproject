@@ -11,24 +11,15 @@
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo {
     
     
-    public partial class PhotoAlbumManager {
+    public partial class AlbumViewer {
         
         /// <summary>
-        /// odsPhotoAlbum control.
+        /// AlbumViewer1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource odsPhotoAlbum;
-        
-        /// <summary>
-        /// GridView1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls.AlbumViewer AlbumViewer1;
     }
 }

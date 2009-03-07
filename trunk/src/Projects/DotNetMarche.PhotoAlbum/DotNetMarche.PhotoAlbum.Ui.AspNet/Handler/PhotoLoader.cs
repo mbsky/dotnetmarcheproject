@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.Services;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Handler
 {
@@ -26,7 +27,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Handler
       {
          RequestContext routeContext =  (RequestContext) HttpContext.Current.Items["routeContext"];
          String imageId = routeContext.RouteData.Values["photoid"].ToString();
-         using (Stream image = Services.PhotoManagerService.GetImage(imageId))
+         using (Stream image = PhotoManagerService.GetImage(imageId))
          {
             Byte[] buffer = new byte[8192];
             Int32 readCount;
@@ -37,5 +38,11 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Handler
       }
 
       #endregion
+
+      public static String GenerateLinkForPhoto(String fileName)
+      {
+         RouteValueDictionary rv = new RouteValueDictionary { { "photoid", fileName } };
+         return RouteTable.Routes.GetVirtualPath(null, rv).VirtualPath;
+      }
    }
 }

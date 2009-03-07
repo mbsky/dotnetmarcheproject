@@ -38,5 +38,16 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources
       {
          return Services.PhotoManagerService.GetPhotoAlbumWithPhoto(albumId);
       }
+
+      /// <summary>
+      /// REturn the album with photo.
+      /// </summary>
+      /// <param name="albumId"></param>
+      /// <returns></returns>
+      [DataObjectMethod(DataObjectMethodType.Select)]
+      public IList<Model.Photo> GetPhotoForAlbum(Guid albumId)
+      {
+         return Services.PhotoManagerService.GetAllPhotoForAlbum(albumId);
+      }
    }
 }

@@ -56,6 +56,7 @@ namespace DotNetMarche.PhotoAlbum.Service
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
          return (from Photo photo in context.Photo
                  where photo.PhotoAlbum.Id == albumId
+                 orderby photo.PhotoIndex
                  select photo).ToList();
       }
 

@@ -79,6 +79,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handler\AvatarHandler.cs" />
     <Compile Include="Handler\MyPhotoRouter.cs" />
     <Compile Include="Handler\PhotoLoader.cs" />
     <Compile Include="Home.aspx.cs">
@@ -101,6 +102,20 @@
     </Compile>
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Photo\AlbumViewer.aspx.cs">
+      <DependentUpon>AlbumViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Photo\AlbumViewer.aspx.designer.cs">
+      <DependentUpon>AlbumViewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Photo\Controls\AlbumViewer.ascx.cs">
+      <DependentUpon>AlbumViewer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Photo\Controls\AlbumViewer.ascx.designer.cs">
+      <DependentUpon>AlbumViewer.ascx</DependentUpon>
     </Compile>
     <Compile Include="Photo\Controls\PhotoAlbumEdit.ascx.cs">
       <DependentUpon>PhotoAlbumEdit.ascx</DependentUpon>
@@ -141,6 +156,7 @@
       <DependentUpon>PhotoAlbum.mdf</DependentUpon>
     </Content>
     <Content Include="App_Themes\Basic\Basic.css" />
+    <Content Include="App_Themes\Basic\PhotoViewer.css" />
     <Content Include="CreateUser.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
@@ -149,6 +165,8 @@
     <Content Include="images\MoveForward.png" />
     <Content Include="Login.aspx" />
     <Content Include="Main.Master" />
+    <Content Include="Photo\AlbumViewer.aspx" />
+    <Content Include="Photo\Controls\AlbumViewer.ascx" />
     <Content Include="Photo\Controls\PhotoAlbumEdit.ascx" />
     <Content Include="Photo\Controls\PhotoAlbumManager.ascx" />
     <Content Include="Photo\Controls\SinglePhotoThumbnail.ascx" />
