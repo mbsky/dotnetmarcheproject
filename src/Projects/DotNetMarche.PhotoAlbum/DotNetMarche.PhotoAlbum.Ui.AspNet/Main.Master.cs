@@ -13,5 +13,10 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet
       {
 
       }
+
+      protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
+      {
+
+      }
    }
 }
