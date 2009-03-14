@@ -2,7 +2,7 @@
 using System.IO;
 using System.Web.Security;
 using System.Web.UI.WebControls;
-
+using System.Linq;
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
 {
    public partial class PhotoAlbumManager : System.Web.UI.UserControl
@@ -10,6 +10,20 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
       protected void Page_Load(object sender, EventArgs e)
       {
 
+      }
+
+      protected void SelectButton_OnClick(object sender, EventArgs e)
+      {
+         Button b = (Button) sender;
+         Guid selectedId = new Guid(b.CommandArgument);
+         for (int i = 0; i < grdPhotoAlbum.DataKeys.Count; i++)
+         {
+            if (selectedId.Equals(grdPhotoAlbum.DataKeys[i].Value))
+            {
+               grdPhotoAlbum.SelectedIndex = i;
+               return;
+            }
+         }
       }
 
       protected void btnAddNewElement_Click(object sender, EventArgs e)

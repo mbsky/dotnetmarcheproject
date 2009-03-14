@@ -29,6 +29,7 @@ div[id^=photo] textarea
 {
    display: block;
    font-size: 13px;
+   width: 156px;
    text-align: center;
 }
 
