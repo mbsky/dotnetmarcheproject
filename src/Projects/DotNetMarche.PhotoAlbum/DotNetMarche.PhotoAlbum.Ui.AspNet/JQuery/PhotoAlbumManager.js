@@ -1,5 +1,4 @@
 ﻿/// <reference path="jquery.js">
-
 $(document).ready(function() {
    $('div[id^=photo] img').log('images')
       .draggable({
@@ -10,7 +9,7 @@ $(document).ready(function() {
          accept: 'div[id^=photo] img',
          hoverClass: 'drophoverimg',
          drop: function(event, ui) {
-            console.log('%o %o', event, ui);
+//            console.log('%o %o', event, ui);
             var first = ui.draggable.parent()[0];
             var second = $(this).parent()[0];
             DotNetMarche.PhotoAlbum.Ui.AspNet.Services.PhotoManager
@@ -21,9 +20,6 @@ $(document).ready(function() {
                          if (result) {
                             //call succeeded we need to swap the image in the DOM
                             $(first).swap(second);
-//                            var p = $(first).pre();
-//                            //1 move the first just before the second one.
-//                            this.before(b);
                          } else {
                             alert('Error during save.');
                          }
@@ -33,25 +29,19 @@ $(document).ready(function() {
                     });
          }
       });
-
 });
-
-
-
 
 $(function() {
    $('div[id^=photo] input').log('edit buttons').hide();
 
-
-
-   //Edit photo functinoality
+   //Edit photo functionality
    $('div[id^=photo] span')
       .click(function() {
          //We must begin editing of the field.
          //Grab id of the photo from the name of the div.
          var photoid = $(this).parent()[0].id.substring(6);
          //Find the actual text of the photo.
-         var span = $(this).hide();
+         var span = $(this).fadeOut(500, function() { editbox.fadeIn(500); });
          var editbox = $('<textarea id="editCurrent" photoid="' + photoid + '">' + span.text() + '</textarea>')
                .insertAfter(this)
                .keydown(function(event) {
@@ -81,10 +71,16 @@ $(function() {
                         return false; //abort the result of the event.
                   }
                })
-               .show();
+               .hide();
          editbox[0].endedit = function() {
-            span.show();
-            $(editbox).remove();
+            $(editbox).fadeOut(500, function() {
+               span.fadeIn(500);
+               editbox.remove()
+            });
          };
       });
 });
+
+// $(function() {
+//   $('#listOfPhotoAlbum').
+// }  

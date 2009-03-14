@@ -21,7 +21,12 @@
    <asp:GridView ID="grdPhotoAlbum" runat="server" AutoGenerateColumns="False" DataSourceID="odsPhotoAlbum"
       DataKeyNames="Id" Style="margin-top: 0px">
       <Columns>
-         <asp:CommandField ShowEditButton="True" ShowSelectButton="True" />
+         <asp:TemplateField>
+         <ItemTemplate>
+            <asp:Button ID="Button1" runat="server" Text="Select" CommandArgument='<%# Eval("Id") %>' OnClick="SelectButton_OnClick" />
+         </ItemTemplate>
+         </asp:TemplateField>
+         <asp:CommandField ShowEditButton="True" ButtonType="Button" />
          <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
          <asp:BoundField DataField="Description" HeaderText="Description" SortExpression="Description" />
          <asp:BoundField DataField="CreationDate" HeaderText="CreationDate" SortExpression="CreationDate"

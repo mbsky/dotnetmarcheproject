@@ -3,7 +3,10 @@
 (function($) {
 
    $.fn.log = function(msg) {
-      console.log("%s: %o", msg, this);
+      if (typeof console == "undefined" || typeof console.log == "undefined") var console = { log: function() { } }; 
+      if (console) {
+         console.log("%s: %o", msg, this);
+      }
       return this;
    }
 })(jQuery);
@@ -17,7 +20,7 @@
       b.parentNode.insertBefore(a, b);
       t.parentNode.insertBefore(b, t);
       t.parentNode.removeChild(t);
-      return this; 
+      return this;
    };
 })(jQuery);
 

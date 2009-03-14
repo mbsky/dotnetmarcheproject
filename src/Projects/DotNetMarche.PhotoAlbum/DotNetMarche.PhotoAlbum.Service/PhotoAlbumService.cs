@@ -22,7 +22,14 @@ namespace DotNetMarche.PhotoAlbum.Service
          if (album.EntityState == EntityState.Added)
             context.AddToPhotoAlbum(album);
          else
+         {
+            if (album.EntityKey == null)
+            {
+               album.EntityKey = context.CreateKeyFor<Model.PhotoAlbum>(album.Id);
+            }
             context.Attach(album);
+         }
+         
          return context.SaveChanges() > 0;
       }
 
