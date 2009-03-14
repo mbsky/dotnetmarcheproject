@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SinglePhotoThumbnail.ascx.cs"
    Inherits="DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls.SinglePhotoThumbnail" %>
-<div id="photo">
+<div id='<%= "photo_" + Photo.Id %>'>
       <asp:Image ID="imgThumb" runat="server" CssClass="thumbimage" />
       <asp:Label ID="lblDescription" runat="server" Text=""></asp:Label>
       <asp:TextBox ID="txtEdit" runat="server" TextMode="MultiLine" Visible="false"></asp:TextBox>

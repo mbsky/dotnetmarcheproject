@@ -7,7 +7,7 @@
    border: 2px ridge #00457b;
 }
 
-#photo 
+div[id^=photo] 
 {
   float: left;
   width: 160px;
@@ -18,14 +18,14 @@
   margin: 4px;
 }
 
-#photo span 
+div[id^=photo]  span 
 {
    display: block;
    font-size:13px;
    text-align:center;
 }
 
-#photo textarea 
+div[id^=photo]  textarea 
 {
    display: block;
    font-size:13px;

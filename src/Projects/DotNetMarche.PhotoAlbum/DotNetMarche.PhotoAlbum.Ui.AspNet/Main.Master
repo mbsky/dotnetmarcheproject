@@ -8,6 +8,13 @@
 </head>
 <body>
    <form id="form1" runat="server">
+   <asp:ScriptManager ID="ScriptManager1" runat="server">
+      <Scripts>
+         <asp:ScriptReference  Path="~/JQuery/jquery-1.2.6.js" />
+         <asp:ScriptReference  Path="~/JQuery/jqueryext.js" />
+      </Scripts>
+   
+   </asp:ScriptManager>
    <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="MainSiteMapProvider" ShowStartingNode="false" />
    
    <div id="siteLocator">
