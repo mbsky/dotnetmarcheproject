@@ -28,6 +28,8 @@ namespace DotNetMarche.PhotoAlbum.Service
 
       Boolean MovePhotoForward(Guid photoId);
 
+      Boolean SwapPhotoPosition(Guid photoId1, Guid photoId2);
+
       Boolean ChangePhotoDescription(Guid photoId, String newDescription);
    }
 }

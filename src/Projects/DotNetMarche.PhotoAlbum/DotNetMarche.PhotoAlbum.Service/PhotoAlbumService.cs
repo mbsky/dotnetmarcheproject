@@ -113,6 +113,16 @@ namespace DotNetMarche.PhotoAlbum.Service
          return true;
       }
 
+      public Boolean SwapPhotoPosition(Guid photoId1, Guid photoId2)
+      {
+         Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
+         Photo photo1 = (Photo)context.GetObjectByKey(context.CreateKeyFor<Photo>(photoId1));
+         Photo photo2 = (Photo)context.GetObjectByKey(context.CreateKeyFor<Photo>(photoId2));
+         Int32 indexofPhoto1 = photo1.PhotoIndex;
+         photo1.PhotoIndex = photo2.PhotoIndex;
+         photo2.PhotoIndex = indexofPhoto1;
+         return true;
+      }
       public bool ChangePhotoDescription(Guid photoId, string newDescription)
       {
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();

@@ -200,6 +200,9 @@
     <Content Include="JQuery\jquery.js" />
     <Content Include="JQuery\jqueryext.js" />
     <Content Include="JQuery\PhotoAlbumManager.js" />
+    <Content Include="JQuery\ui.core.js" />
+    <Content Include="JQuery\ui.draggable.js" />
+    <Content Include="JQuery\ui.droppable.js" />
     <Content Include="Services\PhotoManager.asmx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

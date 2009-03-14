@@ -61,6 +61,12 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
       {
          return instance.ChangePhotoDescription(photoId, newDescription);
       }
+
+      public static  Boolean SwapPhotoPosition(Guid photoId1, Guid photoId2)
+      {
+         return instance.SwapPhotoPosition(photoId1, photoId2);
+      }
+
       #endregion
    }
 }

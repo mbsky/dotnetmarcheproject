@@ -69,5 +69,11 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
       {
          return PhotoManagerService.ChangePhotoDescription(photoId, newDescription);
       }
+
+      [WebMethod]
+      public  Boolean SwapPhotoPosition(Guid photoId1, Guid photoId2)
+      {
+         return PhotoManagerService.SwapPhotoPosition(photoId1, photoId2);
+      }
    }
 }
