@@ -10,24 +10,25 @@
    <form id="form1" runat="server">
    <asp:ScriptManager ID="ScriptManager1" runat="server">
       <Scripts>
-         <asp:ScriptReference  Path="~/JQuery/jquery-1.2.6.js" />
-         <asp:ScriptReference  Path="~/JQuery/jqueryext.js" />
+         <asp:ScriptReference Path="~/JQuery/jquery-1.2.6.js" />
+         <asp:ScriptReference Path="~/JQuery/jqueryext.js" />
+         <asp:ScriptReference Path="~/JQuery/ui.core.js" />
+         <asp:ScriptReference Path="~/JQuery/ui.draggable.js" />
+         <asp:ScriptReference Path="~/JQuery/ui.droppable.js" />
+         
       </Scripts>
-   
    </asp:ScriptManager>
-   <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="MainSiteMapProvider" ShowStartingNode="false" />
-   
+   <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="MainSiteMapProvider"
+      ShowStartingNode="false" />
    <div id="siteLocator">
-   <asp:SiteMapPath ID="SiteMapPath1" runat="server" Font-Names="Verdana" Font-Size="0.8em"
-      PathSeparator=" : ">
-      <PathSeparatorStyle Font-Bold="True" ForeColor="#990000" />
-      <CurrentNodeStyle ForeColor="#333333" />
-      <NodeStyle Font-Bold="True" ForeColor="#990000" />
-      <RootNodeStyle Font-Bold="True" ForeColor="#FF8000" />
-   </asp:SiteMapPath>
+      <asp:SiteMapPath ID="SiteMapPath1" runat="server" Font-Names="Verdana" Font-Size="0.8em"
+         PathSeparator=" : ">
+         <PathSeparatorStyle Font-Bold="True" ForeColor="#990000" />
+         <CurrentNodeStyle ForeColor="#333333" />
+         <NodeStyle Font-Bold="True" ForeColor="#990000" />
+         <RootNodeStyle Font-Bold="True" ForeColor="#FF8000" />
+      </asp:SiteMapPath>
    </div>
-   
-   
    <div id="headher">
       Welcome:
       <asp:LoginName ID="LoginName1" runat="server" />
@@ -35,8 +36,8 @@
    <div id="menu">
       <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1">
          <DataBindings>
-            <asp:MenuItemBinding DataMember="SiteMapNode" NavigateUrlField="Url" 
-               TextField="Title" ToolTipField="Description" />
+            <asp:MenuItemBinding DataMember="SiteMapNode" NavigateUrlField="Url" TextField="Title"
+               ToolTipField="Description" />
          </DataBindings>
       </asp:Menu>
    </div>

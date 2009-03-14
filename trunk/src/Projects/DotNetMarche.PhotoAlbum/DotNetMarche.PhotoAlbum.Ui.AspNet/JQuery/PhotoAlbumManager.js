@@ -1,8 +1,50 @@
 ﻿/// <reference path="jquery.js">
 
+$(document).ready(function() {
+   $('div[id^=photo] img').log('images')
+      .draggable({
+         helper: 'clone',
+         opacity: 0.5
+      })
+      .droppable({
+         accept: 'div[id^=photo] img',
+         hoverClass: 'drophoverimg',
+         drop: function(event, ui) {
+            console.log('%o %o', event, ui);
+            var first = ui.draggable.parent()[0];
+            var second = $(this).parent()[0];
+            DotNetMarche.PhotoAlbum.Ui.AspNet.Services.PhotoManager
+                  .SwapPhotoPosition(
+                      first.id.substring(6),
+                      second.id.substring(6),
+                      function(result, context, method) {
+                         if (result) {
+                            //call succeeded we need to swap the image in the DOM
+                            $(first).swap(second);
+//                            var p = $(first).pre();
+//                            //1 move the first just before the second one.
+//                            this.before(b);
+                         } else {
+                            alert('Error during save.');
+                         }
+                      },
+                    function(error, context, method) {
+                       alert('Exception during the save.');
+                    });
+         }
+      });
+
+});
+
+
+
+
 $(function() {
    $('div[id^=photo] input').log('edit buttons').hide();
 
+
+
+   //Edit photo functinoality
    $('div[id^=photo] span')
       .click(function() {
          //We must begin editing of the field.
