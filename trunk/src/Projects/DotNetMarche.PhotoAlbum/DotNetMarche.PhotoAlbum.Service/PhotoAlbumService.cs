@@ -118,7 +118,7 @@ namespace DotNetMarche.PhotoAlbum.Service
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
          Photo photo = (Photo)context.GetObjectByKey(context.CreateKeyFor<Photo>(photoId));
          photo.Description = newDescription;
-         return true;
+         return context.SaveChanges() > 0;
       }
 
       #endregion
