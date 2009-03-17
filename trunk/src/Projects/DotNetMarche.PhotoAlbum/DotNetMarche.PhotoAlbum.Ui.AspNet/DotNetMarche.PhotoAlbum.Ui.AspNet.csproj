@@ -195,6 +195,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Browsers\CSSFriendlyAdapters.browser" />
+    <Content Include="App_Themes\Basic\Master.css" />
+    <Content Include="Avatara\fd622e8d-370d-42a3-9073-71cc41861623.jpg" />
     <Content Include="JQuery\jquery-1.2.6.debug.js" />
     <Content Include="JQuery\jquery-1.2.6.js" />
     <Content Include="JQuery\jquery.js" />

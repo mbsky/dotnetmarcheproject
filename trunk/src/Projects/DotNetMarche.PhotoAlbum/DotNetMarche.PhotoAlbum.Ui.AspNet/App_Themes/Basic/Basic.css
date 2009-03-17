@@ -5,12 +5,15 @@
    height: 200px;
    overflow: scroll;
    border: 2px ridge #00457b;
+   font-family: Verdana;
+   font-size:10px;
 }
 
 div[id^=photo]
 {
    float: left;
-   width: 160px;
+   width: 154px;
+   height: 150px;
    overflow: auto;
    text-align: center;
    border: 1px solid #3B5998;
@@ -21,15 +24,15 @@ div[id^=photo]
 div[id^=photo] span
 {
    display: block;
-   font-size: 13px;
    text-align: center;
 }
 
 div[id^=photo] textarea
 {
    display: block;
-   font-size: 13px;
-   width: 156px;
+   font-family: Verdana;
+   font-size:11px;
+   width: 150px;
    text-align: center;
 }
 
@@ -44,3 +47,42 @@ div[id^=photo] textarea
    border: 4px solid #FF0000;
    width: 160px;
 }
+
+.intitle 
+{
+   font-family: Verdana;
+   font-size: 18px;
+   font-weight: bold;
+   border-bottom: 10px;
+   padding-bottom: 10px;
+   margin-bottom: 10px;
+}
+
+input
+{
+   font-family: Verdana;
+   font-size: 10px;   
+   margin: 3px;
+}
+
+
+textarea 
+{
+   font-size: 11px;   
+   font-family: Verdana;
+}
+
+span 
+{
+   font-size: 11px;   
+   font-family: Verdana;
+   margin: 3px;
+}
+
+button 
+{
+   font-size: 11px;   
+   margin: 10px;
+   font-family: Verdana;
+}
+
