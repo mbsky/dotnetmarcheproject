@@ -8,13 +8,13 @@
    </SelectParameters>
 </asp:ObjectDataSource>
 <div id="albumviewer">
-   <div id="maincontent">
+   <div id="thephoto">
       <asp:Image ID="imgMain" runat="server" />
    </div>
    <div id="thumbstrip">
       <asp:Repeater ID="Repeater1" runat="server" DataSourceID="odsPhotoAlbum">
          <ItemTemplate>
-            <div id="photoselector">
+            <div id="selectorphoto">
                <asp:ImageButton ID="ImageButton1" runat="server" CssClass="thumbimage" photoname='<%# GeneratePhotoUrl(Eval("FileName")) %>'
                   OnClick="ChangePhoto" ImageUrl='<%# GeneratePhotoUrl(Eval("ThumbnailFileName")) %>' />
             </div>

@@ -43,8 +43,7 @@
    <asp:Label ID="Label1" runat="server" Text="Name"></asp:Label>
    <asp:TextBox ID="txtNameForNewElement" runat="server"></asp:TextBox>
    <asp:Label ID="Label2" runat="server" Text="Description"></asp:Label>
-   <asp:TextBox ID="txtdescriptionForNewElement" runat="server" TextMode="MultiLine"
-      Height="57px"></asp:TextBox>
+   <asp:TextBox ID="txtdescriptionForNewElement" runat="server" TextMode="MultiLine"></asp:TextBox>
    <asp:Button ID="btnAddNewElement" runat="server" Text="AddNew" OnClick="btnAddNewElement_Click"
       Width="70px" />
 </div>
@@ -52,7 +51,7 @@
    <asp:FormView ID="frmEdit" runat="server" DataSourceID="odsPhoto">
       <ItemTemplate>
          <div id="editAlbumData">
-            <asp:Label ID="lblTitle" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+            <asp:Label ID="lblTitle" CssClass="intitle" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
          </div>
          <div id="photolist">
             <asp:Repeater ID="rptPhoto" runat="server" DataSource='<%# Eval("Photo") %>'>
@@ -62,9 +61,10 @@
                </ItemTemplate>
             </asp:Repeater>
          </div>
-         <asp:Label ID="Label3" runat="server" Text='Aggiungi foto'></asp:Label>
+
          <div id="fileUpload">
-            <asp:FileUpload ID="upPhoto" runat="server" />
+            <asp:Label ID="Label3" runat="server" Text='Aggiungi foto'></asp:Label>
+            <asp:FileUpload ID="upPhoto" runat="server"   />
             <asp:Button ID="btnUploadPhoto" runat="server" CommandArgument='<%# Eval("Id") %>'
                Text="Upload" OnClick="btnUploadPhoto_Click" />
          </div>

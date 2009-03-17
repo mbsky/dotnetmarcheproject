@@ -50,13 +50,13 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet {
         protected global::System.Web.UI.WebControls.SiteMapDataSource SiteMapDataSource1;
         
         /// <summary>
-        /// SiteMapPath1 control.
+        /// theavatar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SiteMapPath SiteMapPath1;
+        protected global::System.Web.UI.HtmlControls.HtmlImage theavatar;
         
         /// <summary>
         /// LoginName1 control.
@@ -66,6 +66,15 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LoginName LoginName1;
+        
+        /// <summary>
+        /// SiteMapPath1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SiteMapPath SiteMapPath1;
         
         /// <summary>
         /// Menu1 control.
