@@ -14,6 +14,15 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo {
     public partial class AlbumViewer {
         
         /// <summary>
+        /// ScriptManagerProxy1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManagerProxy ScriptManagerProxy1;
+        
+        /// <summary>
         /// AlbumViewer1 control.
         /// </summary>
         /// <remarks>

@@ -3,5 +3,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+   <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
+      <Scripts>
+         <asp:ScriptReference Path="~/JQuery/PhotoAlbumViewer.js" />
+      </Scripts>
+      <Services>
+         <asp:ServiceReference Path="~/Services/PhotoManager.asmx" />
+      </Services>
+   </asp:ScriptManagerProxy>
+   
+   
    <uc1:AlbumViewer ID="AlbumViewer1" runat="server" />
 </asp:Content>
