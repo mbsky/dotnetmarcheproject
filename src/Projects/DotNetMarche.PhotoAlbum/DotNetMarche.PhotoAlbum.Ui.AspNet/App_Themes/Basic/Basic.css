@@ -36,6 +36,12 @@ div[id^=photo] textarea
    text-align: center;
 }
 
+div[id^=photo] input
+{
+   width: 32px;
+   height: 32px;
+}
+
 .thumbimage
 {
    text-align: center;

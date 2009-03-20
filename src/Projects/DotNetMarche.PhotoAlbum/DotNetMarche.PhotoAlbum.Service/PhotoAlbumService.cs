@@ -41,7 +41,7 @@ namespace DotNetMarche.PhotoAlbum.Service
          Photo photo = PhotoPostProcessor.ProcessPhoto(fileName, originalFileName);
          photo.PhotoAlbum = album;
          album.Photo.Load();
-         photo.PhotoIndex = album.Photo.Count() + 1;
+         photo.PhotoIndex = album.Photo.Count();
          context.AddToPhoto(photo);
          return context.SaveChanges() > 0;
       }

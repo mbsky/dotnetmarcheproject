@@ -1,6 +1,7 @@
 ﻿/// <reference path="jquery.js">
 $(document).ready(function() {
-   $('div[id^=photo] img').log('images')
+
+   $('div[id^=photo] img').log('Images Thumbnail')
       .draggable({
          helper: 'clone',
          opacity: 0.5
@@ -63,7 +64,6 @@ $(function() {
                                   } else {
                                      alert('Error during save.');
                                   }
-
                                },
                              function(error, context, method) {
                                 alert('Exception during the save.');
@@ -75,7 +75,7 @@ $(function() {
          editbox[0].endedit = function() {
             $(editbox).fadeOut(500, function() {
                span.fadeIn(500);
-               editbox.remove()
+               editbox.remove();
             });
          };
       });

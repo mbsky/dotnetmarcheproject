@@ -11,7 +11,7 @@
          <asp:ScriptReference Path="~/JQuery/PhotoAlbumManager.js" />
       </Scripts>
       <Services>
-      <asp:ServiceReference Path="~/Services/PhotoManager.asmx" />
+         <asp:ServiceReference Path="~/Services/PhotoManager.asmx" />
       </Services>
    </asp:ScriptManagerProxy>
    <%--Control to manage photo Album--%>
