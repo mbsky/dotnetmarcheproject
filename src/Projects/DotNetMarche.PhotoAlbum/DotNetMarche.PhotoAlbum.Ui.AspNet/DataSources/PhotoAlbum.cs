@@ -14,6 +14,18 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources
       public IList<Model.PhotoAlbum> GetAll(Guid userId)
       {
          return Services.PhotoManagerService.GetAll(userId);
+      }     
+      
+      [DataObjectMethod(DataObjectMethodType.Select)]
+      public IList<Model.PhotoAlbum> GetAll(Guid userId, String SortClause, Int32 maximumRows, Int32 startRowIndex)
+      {
+         return Services.PhotoManagerService.GetAll(userId, SortClause, maximumRows, startRowIndex);
+      }     
+      
+      [DataObjectMethod(DataObjectMethodType.Select)]
+      public Int32 GetAlbumCount(Guid userId)
+      {
+         return Services.PhotoManagerService.GetAlbumCount(userId);
       }
 
       [DataObjectMethod(DataObjectMethodType.Insert)]

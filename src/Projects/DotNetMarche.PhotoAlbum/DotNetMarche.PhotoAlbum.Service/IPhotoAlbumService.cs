@@ -20,6 +20,10 @@ namespace DotNetMarche.PhotoAlbum.Service
 
       IList<Model.PhotoAlbum> GetAll(Guid userId);
 
+      IList<Model.PhotoAlbum> GetAll(Guid userId, String SortClause, Int32 maximumRows, Int32 startRowIndex);
+
+      Int32 GetAlbumCount(Guid guid);
+
       Model.PhotoAlbum GetPhotoAlbumWithPhoto(Guid albumId);
 
       IList<Model.Photo> GetAllPhotoForAlbum(Guid albumId);
@@ -31,5 +35,6 @@ namespace DotNetMarche.PhotoAlbum.Service
       Boolean SwapPhotoPosition(Guid photoId1, Guid photoId2);
 
       Boolean ChangePhotoDescription(Guid photoId, String newDescription);
+     
    }
 }

@@ -9,7 +9,7 @@
 </asp:ObjectDataSource>
 <div id="albumviewer">
    <div id="thephoto">
-      <asp:Image ID="imgMain" runat="server" />
+         <asp:Image ID="imgMain" runat="server" />
    </div>
    <div id="thumbstrip">
       <asp:Repeater ID="Repeater1" runat="server" DataSourceID="odsPhotoAlbum">
@@ -20,5 +20,12 @@
             </div>
          </ItemTemplate>
       </asp:Repeater>
+   </div>
+   <div id="viewercontrols">
+      <asp:Button ID="btnPrev" runat="server" Text="<<"  />
+      <asp:Button ID="btnStart" runat="server" Text="Play" />
+      <asp:Button ID="btnStop" runat="server" Text="Stop" />
+      <asp:Button ID="btnNext" runat="server" Text=">>" />
+
    </div>
 </div>

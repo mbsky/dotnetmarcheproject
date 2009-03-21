@@ -35,6 +35,11 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
       public static IList<Model.PhotoAlbum> GetAll(Guid userId)
       {
          return instance.GetAll(userId);
+      }     
+      
+      public static IList<Model.PhotoAlbum> GetAll(Guid userId, String SortClause, Int32 maximumRows, Int32 startRowIndex)
+      {
+         return instance.GetAll(userId, SortClause, maximumRows, startRowIndex);
       }
 
       public static IList<Model.Photo> GetAllPhotoForAlbum(Guid albumId)
@@ -67,6 +72,12 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
          return instance.SwapPhotoPosition(photoId1, photoId2);
       }
 
+      public static int GetAlbumCount(Guid guid)
+      {
+         return instance.GetAlbumCount(guid);
+      }
       #endregion
+
+
    }
 }

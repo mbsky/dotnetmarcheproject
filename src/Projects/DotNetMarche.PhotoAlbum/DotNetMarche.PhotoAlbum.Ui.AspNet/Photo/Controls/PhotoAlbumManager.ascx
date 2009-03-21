@@ -5,7 +5,9 @@
    Assembly="DotNetMarche.PhotoAlbum.Ui.AspNet" TagPrefix="cc1" %>
 <asp:ObjectDataSource ID="odsPhotoAlbum" runat="server" DataObjectTypeName="DotNetMarche.PhotoAlbum.Model.PhotoAlbum"
    InsertMethod="Insert" OldValuesParameterFormatString="original_{0}" SelectMethod="GetAll"
-   TypeName="DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.PhotoAlbum" UpdateMethod="Update">
+   TypeName="DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.PhotoAlbum" 
+   UpdateMethod="Update" EnablePaging="True" SelectCountMethod="GetAlbumCount" 
+   SortParameterName="SortClause">
    <SelectParameters>
       <cc1:CurrentUserIdParameter DbType="Guid" Name="userId" />
    </SelectParameters>
@@ -19,7 +21,8 @@
 </asp:ObjectDataSource>
 <div id="listOfPhotoAlbum">
    <asp:GridView ID="grdPhotoAlbum" runat="server" AutoGenerateColumns="False" DataSourceID="odsPhotoAlbum"
-      DataKeyNames="Id" Style="margin-top: 0px">
+      DataKeyNames="Id" Style="margin-top: 0px" AllowPaging="True" 
+      AllowSorting="True" PageSize="5">
       <Columns>
          <asp:TemplateField>
          <ItemTemplate>

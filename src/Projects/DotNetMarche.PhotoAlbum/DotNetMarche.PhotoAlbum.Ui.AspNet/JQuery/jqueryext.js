@@ -3,11 +3,11 @@
 (function($) {
 
    $.fn.log = function(msg) {
-//      alert(console);
-//      alert(console.log);
-//      if (typeof (console) == "undefined" || typeof (console.log) == "undefined")
-//         var console = { log: function() { } };
-
+      //      alert(console);
+      //      alert(console.log);
+      //      if (typeof (console) == "undefined" || typeof (console.log) == "undefined")
+      //         var console = { log: function() { } };
+      if (typeof (console) == "undefined") var console = { log: function() { } };
       if (console) {
          console.log("%s: %o", msg, this);
       }

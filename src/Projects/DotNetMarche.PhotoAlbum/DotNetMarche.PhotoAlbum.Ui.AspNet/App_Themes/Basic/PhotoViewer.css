@@ -25,11 +25,20 @@
 #thephoto
 {
    position: absolute;
-   right: 0px;
+   left: 40px;
    border: 3px ridge #555555;
+   vertical-align: middle;
+   background-position: center;
+   background-repeat:no-repeat;
 }
 
-
+#viewercontrols 
+{
+   display: none;
+   position:relative;
+   left: 30px;
+   top: -30px;
+}
 #selectorphoto
 {
    position:relative;
