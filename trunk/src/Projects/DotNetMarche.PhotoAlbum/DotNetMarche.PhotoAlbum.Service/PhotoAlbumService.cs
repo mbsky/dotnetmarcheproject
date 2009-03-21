@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Objects;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -56,6 +57,26 @@ namespace DotNetMarche.PhotoAlbum.Service
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
          return context.PhotoAlbum
             .Where(pa => pa.Users.UserId == userId).ToList();
+      }
+
+      public IList<Model.PhotoAlbum> GetAll(Guid userId, String SortClause, Int32 maximumRows, Int32 startRowIndex)
+      {
+         Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
+         if (String.IsNullOrEmpty(SortClause))
+            SortClause = "Name";
+         var query = context.PhotoAlbum
+            .OrderBy("it." + SortClause)
+            .Where("it.Users.UserId = @p1 ", new ObjectParameter("p1", userId))
+            .Skip("it." + SortClause, startRowIndex.ToString())
+            .Take(maximumRows);
+         
+         return query.ToList();
+      }
+
+      public Int32 GetAlbumCount(Guid userId)
+      {
+         Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
+         return context.PhotoAlbum.Where(p => p.Users.UserId == userId).Count();
       }
 
       public IList<Model.Photo> GetAllPhotoForAlbum(Guid albumId)

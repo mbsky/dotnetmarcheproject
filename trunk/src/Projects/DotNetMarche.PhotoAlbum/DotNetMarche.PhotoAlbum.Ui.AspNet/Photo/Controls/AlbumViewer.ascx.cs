@@ -11,10 +11,6 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
 {
    public partial class AlbumViewer : System.Web.UI.UserControl
    {
-      protected void Page_Load(object sender, EventArgs e)
-      {
-         
-      }
 
       protected void ChangePhoto(object sender, EventArgs e)
       {
