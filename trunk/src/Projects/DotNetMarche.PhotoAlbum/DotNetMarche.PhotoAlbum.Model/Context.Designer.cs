@@ -15,7 +15,7 @@
 [assembly: global::System.Data.Objects.DataClasses.EdmRelationshipAttribute("PhotoAlbumModel", "FK_PhotoAlbum_Users", "Users", global::System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DotNetMarche.PhotoAlbum.Model.Users), "PhotoAlbum", global::System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DotNetMarche.PhotoAlbum.Model.PhotoAlbum))]
 
 // Original file name:
-// Generation date: 3/6/2009 10:33:56 PM
+// Generation date: 3/24/2009 8:18:13 AM
 namespace DotNetMarche.PhotoAlbum.Model
 {
     
@@ -991,6 +991,29 @@ namespace DotNetMarche.PhotoAlbum.Model
         private string _UserAvatar;
         partial void OnUserAvatarChanging(string value);
         partial void OnUserAvatarChanged();
+        /// <summary>
+        /// There are no comments for Property UserName in the schema.
+        /// </summary>
+        [global::System.Data.Objects.DataClasses.EdmScalarPropertyAttribute()]
+        [global::System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName
+        {
+            get
+            {
+                return this._UserName;
+            }
+            set
+            {
+                this.OnUserNameChanging(value);
+                this.ReportPropertyChanging("UserName");
+                this._UserName = global::System.Data.Objects.DataClasses.StructuralObject.SetValidValue(value, true);
+                this.ReportPropertyChanged("UserName");
+                this.OnUserNameChanged();
+            }
+        }
+        private string _UserName;
+        partial void OnUserNameChanging(string value);
+        partial void OnUserNameChanged();
         /// <summary>
         /// There are no comments for PhotoComment in the schema.
         /// </summary>

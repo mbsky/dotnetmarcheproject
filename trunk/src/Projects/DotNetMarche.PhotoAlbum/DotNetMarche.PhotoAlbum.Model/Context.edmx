@@ -78,6 +78,7 @@
           </Key>
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserAvatar" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Photo_PhotoAlbum">
           <End Role="PhotoAlbum" Type="PhotoAlbumModel.Store.PhotoAlbum" Multiplicity="1" />
@@ -203,7 +204,8 @@
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="PhotoComment" Relationship="PhotoAlbumModel.FK_PhotoComment_Users" FromRole="Users" ToRole="PhotoComment" />
           <Property Name="UserAvatar" Type="String" Nullable="false" />
-          <NavigationProperty Name="PhotoAlbum" Relationship="PhotoAlbumModel.FK_PhotoAlbum_Users" FromRole="Users" ToRole="PhotoAlbum" /></EntityType>
+          <NavigationProperty Name="PhotoAlbum" Relationship="PhotoAlbumModel.FK_PhotoAlbum_Users" FromRole="Users" ToRole="PhotoAlbum" />
+          <Property Name="UserName" Type="String" Nullable="true" /></EntityType>
         <Association Name="FK_Photo_PhotoAlbum">
           <End Role="PhotoAlbum" Type="PhotoAlbumModel.PhotoAlbum" Multiplicity="1" />
           <End Role="Photo" Type="PhotoAlbumModel.Photo" Multiplicity="*" />
@@ -271,6 +273,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="IsTypeOf(PhotoAlbumModel.Users)">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserAvatar" ColumnName="UserAvatar" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>

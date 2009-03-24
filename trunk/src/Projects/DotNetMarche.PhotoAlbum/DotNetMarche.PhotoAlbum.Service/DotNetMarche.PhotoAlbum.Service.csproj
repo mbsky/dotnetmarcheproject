@@ -52,6 +52,7 @@
     <Compile Include="ContextManagement\ContextManager.cs" />
     <Compile Include="ContextManagement\ContextPerRequestContextManager.cs" />
     <Compile Include="ContextManagement\IContextManager.cs" />
+    <Compile Include="Dto\PhotoAlbumInfo.cs" />
     <Compile Include="Dto\PhisicalImageInfo.cs" />
     <Compile Include="IPhotoAlbumService.cs" />
     <Compile Include="PhotoAlbumService.cs" />

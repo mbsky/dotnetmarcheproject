@@ -8,6 +8,7 @@ using System.Text;
 using DotNetMarche.PhotoAlbum.Model;
 using DotNetMarche.PhotoAlbum.Model.PhotoRoutines;
 using DotNetMarche.PhotoAlbum.Service.ContextManagement;
+using DotNetMarche.PhotoAlbum.Service.Dto;
 using DotNetMarche.Utils.EntityFramework;
 
 namespace DotNetMarche.PhotoAlbum.Service
@@ -59,18 +60,50 @@ namespace DotNetMarche.PhotoAlbum.Service
             .Where(pa => pa.Users.UserId == userId).ToList();
       }
 
-      public IList<Model.PhotoAlbum> GetAll(Guid userId, String SortClause, Int32 maximumRows, Int32 startRowIndex)
+      public IList<Model.PhotoAlbum> GetAll(Guid userId, String sortClause, Int32 maximumRows, Int32 startRowIndex)
       {
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
-         if (String.IsNullOrEmpty(SortClause))
-            SortClause = "Name";
+         if (String.IsNullOrEmpty(sortClause))
+            sortClause = "Name";
          var query = context.PhotoAlbum
-            .OrderBy("it." + SortClause)
+            .OrderBy("it." + sortClause)
             .Where("it.Users.UserId = @p1 ", new ObjectParameter("p1", userId))
-            .Skip("it." + SortClause, startRowIndex.ToString())
+            .Skip("it." + sortClause, startRowIndex.ToString())
             .Take(maximumRows);
          
          return query.ToList();
+      }
+
+      public IList<PhotoAlbumInfo> SearchAlbum(String name, String description, String user, String sortClause, Int32 maximumRows, Int32 startRowIndex)
+      {
+         Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
+         if (String.IsNullOrEmpty(sortClause))
+            sortClause = "Name";
+         var query = context.PhotoAlbum.Include("Users")
+            .Where("it.Name like @p1", new ObjectParameter("p1", "%" + name + "%"))
+            .Where("it.Description like @p2", new ObjectParameter("p2", "%" + description + "%"))
+            .Where("it.Users.UserName like @p3", new ObjectParameter("p3", "%" + user + "%"))
+            .Skip("it." + sortClause, startRowIndex.ToString())
+            .Take(maximumRows);
+
+         return query.Select(pa => new PhotoAlbumInfo()
+           {
+              Description = pa.Description, 
+              Id = pa.Id, 
+              Name = pa.Name, 
+              UserId = pa.Users.UserId, 
+              UserName = pa.Users.UserName
+           }).ToList();
+      }
+
+      public Int32 SearchAlbumGetCount(String name, String description, String user)
+      {
+         Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
+         var query = context.PhotoAlbum.Include("Users")
+            .Where("it.Name like @p1", new ObjectParameter("p1", "%" + name + "%"))
+            .Where("it.Description like @p2", new ObjectParameter("p2", "%" + description + "%"))
+            .Where("it.Users.UserName like @p3", new ObjectParameter("p3", "%" + user + "%"));
+         return query.Count();
       }
 
       public Int32 GetAlbumCount(Guid userId)

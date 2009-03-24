@@ -5,9 +5,8 @@
    Assembly="DotNetMarche.PhotoAlbum.Ui.AspNet" TagPrefix="cc1" %>
 <asp:ObjectDataSource ID="odsPhotoAlbum" runat="server" DataObjectTypeName="DotNetMarche.PhotoAlbum.Model.PhotoAlbum"
    InsertMethod="Insert" OldValuesParameterFormatString="original_{0}" SelectMethod="GetAll"
-   TypeName="DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.PhotoAlbum" 
-   UpdateMethod="Update" EnablePaging="True" SelectCountMethod="GetAlbumCount" 
-   SortParameterName="SortClause">
+   TypeName="DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.PhotoAlbum" UpdateMethod="Update"
+   EnablePaging="True" SelectCountMethod="GetAlbumCount" SortParameterName="sortClause">
    <SelectParameters>
       <cc1:CurrentUserIdParameter DbType="Guid" Name="userId" />
    </SelectParameters>
@@ -19,15 +18,16 @@
          DefaultValue="" />
    </SelectParameters>
 </asp:ObjectDataSource>
-<div id="listOfPhotoAlbum">
+<div id="listOfPhotoAlbum" class="editdiv">
    <asp:GridView ID="grdPhotoAlbum" runat="server" AutoGenerateColumns="False" DataSourceID="odsPhotoAlbum"
-      DataKeyNames="Id" Style="margin-top: 0px" AllowPaging="True" 
-      AllowSorting="True" PageSize="5">
+      DataKeyNames="Id" Style="margin-top: 0px" AllowPaging="True" AllowSorting="True"
+      PageSize="5" CssClass="baseTable">
       <Columns>
          <asp:TemplateField>
-         <ItemTemplate>
-            <asp:Button ID="Button1" runat="server" Text="Select" CommandArgument='<%# Eval("Id") %>' OnClick="SelectButton_OnClick" />
-         </ItemTemplate>
+            <ItemTemplate>
+               <asp:Button ID="Button1" runat="server" Text="Select" CommandArgument='<%# Eval("Id") %>'
+                  OnClick="SelectButton_OnClick" />
+            </ItemTemplate>
          </asp:TemplateField>
          <asp:CommandField ShowEditButton="True" ButtonType="Button" />
          <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -64,10 +64,9 @@
                </ItemTemplate>
             </asp:Repeater>
          </div>
-
          <div id="fileUpload">
             <asp:Label ID="Label3" runat="server" Text='Aggiungi foto'></asp:Label>
-            <asp:FileUpload ID="upPhoto" runat="server"   />
+            <asp:FileUpload ID="upPhoto" runat="server" />
             <asp:Button ID="btnUploadPhoto" runat="server" CommandArgument='<%# Eval("Id") %>'
                Text="Upload" OnClick="btnUploadPhoto_Click" />
          </div>

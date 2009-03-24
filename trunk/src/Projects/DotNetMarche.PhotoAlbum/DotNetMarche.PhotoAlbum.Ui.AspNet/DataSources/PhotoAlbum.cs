@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using DotNetMarche.PhotoAlbum.Service.Dto;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources
 {
@@ -20,8 +21,20 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources
       public IList<Model.PhotoAlbum> GetAll(Guid userId, String SortClause, Int32 maximumRows, Int32 startRowIndex)
       {
          return Services.PhotoManagerService.GetAll(userId, SortClause, maximumRows, startRowIndex);
+      }
+
+      [DataObjectMethod(DataObjectMethodType.Select)]
+      public  IList<PhotoAlbumInfo> SearchAlbum(String name, String description, String user, String sortClause, Int32 maximumRows, Int32 startRowIndex)
+      {
+         return Services.PhotoManagerService.SearchAlbum(name, description, user, sortClause, maximumRows, startRowIndex);
       }     
-      
+        
+      [DataObjectMethod(DataObjectMethodType.Select)]
+      public Int32 SearchAlbumGetCount(String name, String description, String user)
+      {
+         return Services.PhotoManagerService.SearchAlbumGetCount(name, description, user);
+      }
+
       [DataObjectMethod(DataObjectMethodType.Select)]
       public Int32 GetAlbumCount(Guid userId)
       {

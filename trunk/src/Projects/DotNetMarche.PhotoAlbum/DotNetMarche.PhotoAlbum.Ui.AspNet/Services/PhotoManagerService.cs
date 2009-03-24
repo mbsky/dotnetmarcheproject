@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DotNetMarche.PhotoAlbum.Service;
+using DotNetMarche.PhotoAlbum.Service.Dto;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
 {
@@ -76,6 +77,17 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
       {
          return instance.GetAlbumCount(guid);
       }
+
+      public static   IList<PhotoAlbumInfo> SearchAlbum(String name, String description, String user, String sortClause, Int32 maximumRows, Int32 startRowIndex)
+      {
+         return instance.SearchAlbum(name, description, user, sortClause, maximumRows, startRowIndex);
+      }
+
+      public static Int32 SearchAlbumGetCount(String name, String description, String user)
+      {
+         return instance.SearchAlbumGetCount(name, description, user);
+      }
+
       #endregion
 
 
