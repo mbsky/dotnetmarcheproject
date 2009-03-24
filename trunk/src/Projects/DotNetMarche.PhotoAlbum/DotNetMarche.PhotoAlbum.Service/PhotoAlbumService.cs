@@ -79,6 +79,8 @@ namespace DotNetMarche.PhotoAlbum.Service
          Model.PhotoAlbumEntities context = ContextManager.GetCurrent();
          if (String.IsNullOrEmpty(sortClause))
             sortClause = "Name";
+         else if (sortClause == "UserName")
+            sortClause = "Users.UserName"; //Adapt.
          var query = context.PhotoAlbum.Include("Users")
             .Where("it.Name like @p1", new ObjectParameter("p1", "%" + name + "%"))
             .Where("it.Description like @p2", new ObjectParameter("p2", "%" + description + "%"))
