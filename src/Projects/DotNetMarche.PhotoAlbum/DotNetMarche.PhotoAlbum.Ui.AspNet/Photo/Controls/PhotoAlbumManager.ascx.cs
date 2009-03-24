@@ -66,5 +66,6 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
       {
          frmEdit.DataBind();
       }
+
    }
 }

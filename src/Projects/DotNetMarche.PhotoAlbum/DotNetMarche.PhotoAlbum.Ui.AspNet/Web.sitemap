@@ -7,7 +7,7 @@
       </siteMapNode >
       <siteMapNode title="Photo Manager">
          <siteMapNode url="~/Photo/PhotoAlbumManager.aspx" title="Album manager"  description="" />
-         <siteMapNode url="~/Photo/AlbumViewer.aspx" title="Album Viewer"  description="" />
+         <siteMapNode url="~/Photo/AlbumSearch.aspx" title="Album Search"  description="" />
       </siteMapNode>
    </siteMapNode>
 
