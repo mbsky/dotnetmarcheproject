@@ -1,7 +1,7 @@
 ﻿#thumbstrip
 {
    position: absolute;
-   top: 40px;
+   top: 60px;
    left: -140px;
    height: 800px;
    overflow: scroll;
