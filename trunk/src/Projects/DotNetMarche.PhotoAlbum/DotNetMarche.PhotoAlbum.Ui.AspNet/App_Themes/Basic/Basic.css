@@ -92,3 +92,18 @@ button
    font-family: Verdana;
 }
 
+.waitindicatormasx 
+{
+   position: absolute;
+   background-color: White;
+   z-index: 2;
+}
+
+.waitindicator 
+{
+   position: absolute;
+   background-image: url(Images/wait_animated.gif);
+   background-repeat: no-repeat;
+   background-position:center;
+   z-index: 3;
+}

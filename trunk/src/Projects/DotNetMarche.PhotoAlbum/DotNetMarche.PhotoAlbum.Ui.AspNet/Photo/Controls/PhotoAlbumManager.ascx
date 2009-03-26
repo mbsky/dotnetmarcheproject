@@ -42,6 +42,11 @@
       </EmptyDataTemplate>
    </asp:GridView>
 </div>
+<div class="waitindicator">
+</div>
+<div class="waitindicatormasx">
+</div>
+
 <div id="insertNewPhotoAlbum">
    <asp:Label ID="Label1" runat="server" Text="Name"></asp:Label>
    <asp:TextBox ID="txtNameForNewElement" runat="server"></asp:TextBox>
