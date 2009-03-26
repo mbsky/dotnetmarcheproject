@@ -10,7 +10,7 @@ $(document).ready(function() {
          accept: 'div[id^=photo] img',
          hoverClass: 'drophoverimg',
          drop: function(event, ui) {
-//            console.log('%o %o', event, ui);
+            //            console.log('%o %o', event, ui);
             var first = ui.draggable.parent()[0];
             var second = $(this).parent()[0];
             DotNetMarche.PhotoAlbum.Ui.AspNet.Services.PhotoManager
@@ -54,10 +54,12 @@ $(function() {
                      case 13: //Return, save the changes.
                         //Invoke webservice thanks to microsoft ajax
                         event.stopPropagation();
+                        $(this).parent().setwait();
                         DotNetMarche.PhotoAlbum.Ui.AspNet.Services.PhotoManager
                            .ChangePhotoDescription(photoid, this.value,
                                function(result, context, method) {
                                   //call succeeded
+                                  $(context).parent().clearwait();
                                   if (result) {
                                      span.text(context.value);
                                      context.endedit();
@@ -67,6 +69,7 @@ $(function() {
                                },
                              function(error, context, method) {
                                 alert('Exception during the save.');
+                                $(context).parent().clearwait();
                              }, this);
                         return false; //abort the result of the event.
                   }

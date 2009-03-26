@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Services;
 
@@ -67,6 +68,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
       [WebMethod]
       public  Boolean ChangePhotoDescription(Guid photoId, String newDescription)
       {
+         Thread.Sleep(4000);
          return PhotoManagerService.ChangePhotoDescription(photoId, newDescription);
       }
 
