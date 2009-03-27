@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -12,6 +13,8 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Parts
    {
       protected override void OnInit(EventArgs e)
       {
+         // Thread.Sleep(2000);
+
          Int32 pageIndex = Request.QueryString["page"] != null ? Int32.Parse(Request.QueryString["page"]) -1  : 0;
          String sortClause = Request.QueryString["sort"] ?? "Name";
          txtUser.Text = Request.QueryString["user"];

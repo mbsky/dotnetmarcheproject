@@ -10,7 +10,7 @@ $(document).ready(function() {
          accept: 'div[id^=photo] img',
          hoverClass: 'drophoverimg',
          drop: function(event, ui) {
-            //            console.log('%o %o', event, ui);
+            
             var first = ui.draggable.parent()[0];
             var second = $(this).parent()[0];
             DotNetMarche.PhotoAlbum.Ui.AspNet.Services.PhotoManager

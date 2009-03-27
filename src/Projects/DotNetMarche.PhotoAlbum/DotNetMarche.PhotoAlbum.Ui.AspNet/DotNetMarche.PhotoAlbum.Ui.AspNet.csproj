@@ -225,6 +225,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Browsers\CSSFriendlyAdapters.browser" />
+    <Content Include="App_Themes\Basic\images\ajax-loader.gif" />
+    <Content Include="App_Themes\Basic\images\ajax-loader2.gif" />
+    <Content Include="App_Themes\Basic\images\ajax-loader3.gif" />
+    <Content Include="App_Themes\Basic\images\Header.jpg" />
+    <Content Include="App_Themes\Basic\images\wait30.gif" />
+    <Content Include="App_Themes\Basic\images\wait30trans.gif" />
+    <Content Include="App_Themes\Basic\images\wait_animated.gif" />
     <Content Include="App_Themes\Basic\Master.css" />
     <Content Include="Avatara\fd622e8d-370d-42a3-9073-71cc41861623.jpg" />
     <Content Include="JQuery\AlbumSearchPr.js" />
