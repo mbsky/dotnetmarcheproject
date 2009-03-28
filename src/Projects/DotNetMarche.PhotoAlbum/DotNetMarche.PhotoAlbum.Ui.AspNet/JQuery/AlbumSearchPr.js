@@ -15,10 +15,7 @@ $(function() {
             " #thecontent",
          WireEvents);
     }
-
-
     div.Load();
-
 });
 
 function WireEvents(responseText, textStatus, xmlHttpRequest) {
