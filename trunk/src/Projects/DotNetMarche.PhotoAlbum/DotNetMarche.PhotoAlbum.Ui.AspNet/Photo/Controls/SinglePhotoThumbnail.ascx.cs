@@ -48,13 +48,15 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
 
       private void SyncInterface(Model.Photo photo)
       {
-
-         imgThumb.ImageUrl = PhotoLoader.GenerateLinkForPhoto(photo.ThumbNailFileName);
-         imgThumb.AlternateText = photo.OriginalFileName + " " + photo.Description;
          lblDescription.Text = photo.Description ?? "No description";
       }
 
-      /// <summary>
+       protected String GenerateFileName(Object thumbFileName)
+       {
+           return PhotoLoader.GenerateLinkForPhoto((String) thumbFileName);
+       }
+
+       /// <summary>
       /// depending on txtEdit visibility we are in edit or not
       /// </summary>
       /// <param name="sender"></param>

@@ -225,6 +225,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Browsers\CSSFriendlyAdapters.browser" />
+    <Content Include="App_Themes\Alk1\Basic.css" />
+    <Content Include="App_Themes\Alk1\images\ajax-loader.gif" />
+    <Content Include="App_Themes\Alk1\images\ajax-loader2.gif" />
+    <Content Include="App_Themes\Alk1\images\ajax-loader3.gif" />
+    <Content Include="App_Themes\Alk1\images\Header.jpg" />
+    <Content Include="App_Themes\Alk1\images\wait30.gif" />
+    <Content Include="App_Themes\Alk1\images\wait30trans.gif" />
+    <Content Include="App_Themes\Alk1\images\wait_animated.gif" />
+    <Content Include="App_Themes\Alk1\Master.css" />
+    <Content Include="App_Themes\Alk1\PhotoViewer.css" />
     <Content Include="App_Themes\Basic\images\ajax-loader.gif" />
     <Content Include="App_Themes\Basic\images\ajax-loader2.gif" />
     <Content Include="App_Themes\Basic\images\ajax-loader3.gif" />
