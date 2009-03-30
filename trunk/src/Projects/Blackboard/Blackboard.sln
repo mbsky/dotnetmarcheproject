@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blackboard", "Blackboard\Blackboard.csproj", "{6B008CAE-0165-4ED6-A1D4-1372B3A39535}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jQuery.Extensions", "jQuery.Extensions\jQuery.Extensions.csproj", "{C856A2DB-127C-4BC4-A322-090DB91BBAA9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B008CAE-0165-4ED6-A1D4-1372B3A39535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B008CAE-0165-4ED6-A1D4-1372B3A39535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B008CAE-0165-4ED6-A1D4-1372B3A39535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B008CAE-0165-4ED6-A1D4-1372B3A39535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C856A2DB-127C-4BC4-A322-090DB91BBAA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C856A2DB-127C-4BC4-A322-090DB91BBAA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C856A2DB-127C-4BC4-A322-090DB91BBAA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C856A2DB-127C-4BC4-A322-090DB91BBAA9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
