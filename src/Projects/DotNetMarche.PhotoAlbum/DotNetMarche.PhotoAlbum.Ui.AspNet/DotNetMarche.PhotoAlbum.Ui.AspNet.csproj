@@ -225,28 +225,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Browsers\CSSFriendlyAdapters.browser" />
-    <Content Include="App_Themes\Alk1\Basic.css" />
-    <Content Include="App_Themes\Alk1\images\ajax-loader.gif" />
-    <Content Include="App_Themes\Alk1\images\ajax-loader2.gif" />
-    <Content Include="App_Themes\Alk1\images\ajax-loader3.gif" />
-    <Content Include="App_Themes\Alk1\images\Header.jpg" />
-    <Content Include="App_Themes\Alk1\images\wait30.gif" />
-    <Content Include="App_Themes\Alk1\images\wait30trans.gif" />
-    <Content Include="App_Themes\Alk1\images\wait_animated.gif" />
-    <Content Include="App_Themes\Alk1\Master.css" />
-    <Content Include="App_Themes\Alk1\PhotoViewer.css" />
-    <Content Include="App_Themes\Basic\images\ajax-loader.gif" />
-    <Content Include="App_Themes\Basic\images\ajax-loader2.gif" />
-    <Content Include="App_Themes\Basic\images\ajax-loader3.gif" />
-    <Content Include="App_Themes\Basic\images\Header.jpg" />
-    <Content Include="App_Themes\Basic\images\wait30.gif" />
-    <Content Include="App_Themes\Basic\images\wait30trans.gif" />
-    <Content Include="App_Themes\Basic\images\wait_animated.gif" />
     <Content Include="App_Themes\Basic\Master.css" />
     <Content Include="Avatara\fd622e8d-370d-42a3-9073-71cc41861623.jpg" />
     <Content Include="JQuery\AlbumSearchPr.js" />
-    <Content Include="JQuery\jquery-1.2.6.debug.js" />
-    <Content Include="JQuery\jquery-1.2.6.js" />
+    <Content Include="JQuery\jquery-1.3.2.debug.js" />
+    <Content Include="JQuery\jquery-1.3.2.js" />
     <Content Include="JQuery\jquery.js" />
     <Content Include="JQuery\jqueryext.js" />
     <Content Include="JQuery\PhotoAlbumManager.js" />
