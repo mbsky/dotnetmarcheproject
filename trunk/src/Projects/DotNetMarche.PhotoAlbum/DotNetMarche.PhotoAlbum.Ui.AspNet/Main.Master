@@ -10,7 +10,7 @@
    <form id="form1" runat="server">
    <asp:ScriptManager ID="ScriptManager1" runat="server">
       <Scripts>
-         <asp:ScriptReference Path="~/JQuery/jquery-1.2.6.js" />
+         <asp:ScriptReference Path="~/JQuery/jquery-1.3.2.js" />
          <asp:ScriptReference Path="~/JQuery/jqueryext.js" />
          <asp:ScriptReference Path="~/JQuery/ui.core.js" />
          <asp:ScriptReference Path="~/JQuery/ui.draggable.js" />
