@@ -1,7 +1,5 @@
 ﻿/// <reference path="../jquery.js">
-
 (function($) {
-
    $.fn.transictionto1 = function(options) {
       var settings = $.extend({
          type: 'fadein',
@@ -13,7 +11,7 @@
          if ($(this).parent('div').size() == 0) {
             $(this).wrap('<div></div>')
          }
-         
+
          var position = $(this).position();
          var transiction;
          switch (settings.type) {
@@ -23,13 +21,13 @@
                };
                break;
             case 'puff':
-               
+
                transiction = {
                   opacity: 'hide',
-                  width: $(this).width() * 1.5,
-                  height: $(this).height() * 1.5,
-                  top: position.top - ($(this).height() * 1.5 / 2),
-                  left: position.left - ($(this).width() * 1.5 / 2)
+                  width: $(this).width() * 2,
+                  height: $(this).height() * 2,
+                  top: position.top - ($(this).height() / 2),
+                  left: position.left - ($(this).width() / 2)
                };
                break;
             case 'wipeleft':
@@ -37,11 +35,13 @@
                   opacity: 'hide',
                   left: 1000
                };
+               break;
             case 'wipedown':
                transiction = {
                   opacity: 'hide',
                   top: 1000
                };
+               break;
          }
 
          //now swap with background trick, first of all keep track of some original values
@@ -65,6 +65,8 @@
                    $(this).height(height);
                    $(this).width(width);
                    $(this).css('position', actualpos);
+                   $(this).css('left', position.left);
+                   $(this).css('top', position.top);
                 });
       });
 
