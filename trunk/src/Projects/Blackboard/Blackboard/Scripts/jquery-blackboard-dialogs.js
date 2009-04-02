@@ -151,7 +151,7 @@
 
         $('#btnAddImage').asyncdialog(
             {
-                title: 'Brose images',
+                title: 'Browse images',
                 url: services['openimagedialog'],
                 showbuttons: false,
                 width: 800,
