@@ -16,7 +16,15 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet
       protected void Application_Start(object sender, EventArgs e)
       {
         RegisterRoutes();
+        physicalPath = Server.MapPath("/");
       }
+      
+      public static String PhysicalPath
+      {
+         get { return physicalPath; }
+      }
+
+      private static String physicalPath;
 
       public static void RegisterRoutes()
       {
