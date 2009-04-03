@@ -19,13 +19,14 @@
    margin: 4px;
 }
 
-.thumbnail span
+.thumbnail span,
+.thumbnail textarea
 {
 	display: block;
 	font: bold 1em/normal Verdana, Arial, Helvetica, sans-serif;
 	color: #333;
 	text-align: center;
-	background-color: #e6f3ff;
+	background-color: #FFF3AA;
 	border: 1px dashed #666;
 	padding: 5px;
 	margin: 10px 0 0 0;
@@ -48,12 +49,10 @@
 
 div[id^=photo] textarea
 {
-   display: block;
-   font-family: Verdana;
-   font-size:11px;
-   width: 150px;
-   text-align: center;
+   width: 142px;
+   background-color: #FFFFFF;
 }
+
 
 div[id^=photo] input
 {
