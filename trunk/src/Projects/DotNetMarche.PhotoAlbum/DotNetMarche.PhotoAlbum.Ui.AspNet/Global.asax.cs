@@ -42,6 +42,14 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet
                new { controller = "Home", action = "Index", id = "" }
                // Parameter defaults
              );
+            RouteTable.Routes.MapRoute(
+                "PagedController",
+                // Route name
+                "{controller}/{action}/page_{pageid}/{id}",
+                // URL with parameters
+                new { controller = "Home", action = "Index", pageid = 0, id = "" }
+                // Parameter defaults
+              );
          }
         
       }

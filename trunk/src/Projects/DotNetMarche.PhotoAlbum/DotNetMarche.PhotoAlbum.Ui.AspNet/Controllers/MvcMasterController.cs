@@ -20,9 +20,9 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers
          get { return _menuData; }
       }
 
-      public MvcMasterController()
+      protected void SetDataForMenu()
       {
-         XDocument doc = XDocument.Load(Path.Combine(Global.PhysicalPath, "WebMvc.sitemap"));
+          XDocument doc = XDocument.Load(Path.Combine(Global.PhysicalPath, "WebMvcSitemap.Xml"));
          XNamespace ns =  XNamespace.Get("http://schemas.microsoft.com/AspNet/SiteMap-File-1.0");
          _menuData = doc.Root.Element(ns +"siteMapNode");
          ViewData["Menu"] = _menuData;

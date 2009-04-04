@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MvcMasterController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="CreateUser.aspx.cs">
       <DependentUpon>CreateUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -272,7 +273,8 @@
     <Content Include="Views\Shared\Mvc.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WebMvc.sitemap" />
+    <Content Include="Views\Photo\ShowPhotoAlbum.aspx" />
+    <Content Include="WebMvcSitemap.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
