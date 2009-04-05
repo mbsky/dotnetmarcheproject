@@ -499,7 +499,7 @@
                     $(this).removeClass('imageentry-hover');
                 }).live('click', function() {
                     $('#btnAddImage').asyncdialog('close');
-                    var src = $(this).children('img').attr('src');
+                    var src = $(this).children('img').attr('fullsize');
 
                     addImage(src);
                 });

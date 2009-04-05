@@ -6,7 +6,7 @@
 <textarea id="tplImageEnty" class="template">
     {#foreach $T as record}
         <div class="imageentry ui-corner-all">
-            <img src="{$T.record.src}" />
+            <img src="<%= Url.Action("Thumbnail")%>?name={$T.record.src}" fullsize="{$T.record.src}"/>
             <span>{$T.record.name}</span>
         </div>
     {#/for}

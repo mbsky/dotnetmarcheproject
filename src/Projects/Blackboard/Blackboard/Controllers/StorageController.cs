@@ -41,7 +41,7 @@ namespace Blackboard.Controllers
                               Directory.GetFiles(Server.MapPath("~/Content/Libs/img/"), "*.png")
                           select new
                           {
-                              src = s.Remove(0, basePath.Length - 1).Replace("\\", "/"),
+                              src = s.Remove(0, basePath.Length - 1).Replace("\\", "/") ,
                               name = Path.GetFileNameWithoutExtension(s)
                           };
 
@@ -78,6 +78,12 @@ namespace Blackboard.Controllers
             }
 
             return Json(result);
+        }
+
+        public ActionResult Thumbnail(string name)
+        {
+            //            return new ThumbnailResult("~/Content/libs/backgrounds/blackboard.jpg");
+            return new ThumbnailResult(name);
         }
     }
 }
