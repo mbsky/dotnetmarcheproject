@@ -615,8 +615,8 @@ input.error
 {
 	padding: 4px;
 	float: left;
-	width: 100px;
-	height: 100px;
+	width: 80px;
+	height: 80px;
 	border: medium solid #333333;
 	margin:4px;
 	cursor:pointer;
@@ -624,8 +624,8 @@ input.error
 
 .imageentry > img
 {
-	width: 80px;
-	height: 80px;
+	width: 64px;
+	height: 64px;
 	display: block;
 	margin-left:auto;
 	margin-right:auto;
@@ -636,6 +636,7 @@ input.error
 	width:100%;
 	display:block;
 	text-align:center;
+	font-size:xx-small;
 }
 
 .imageentry-hover
