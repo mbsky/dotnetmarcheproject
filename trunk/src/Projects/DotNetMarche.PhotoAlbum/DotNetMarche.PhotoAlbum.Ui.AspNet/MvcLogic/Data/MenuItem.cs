@@ -43,7 +43,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.Data
 
       public override String Render()
       {
-         return String.Format(@"<A href=""{0}"">{1}</A>", Url, Text);
+         return String.Format(@"<a href=""{0}"">{1}</a>", Url, Text);
       }
    }
 }
