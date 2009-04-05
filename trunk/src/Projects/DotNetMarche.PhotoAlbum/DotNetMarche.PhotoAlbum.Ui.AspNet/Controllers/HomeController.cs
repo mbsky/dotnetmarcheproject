@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers.ViewData;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers
 {
@@ -6,7 +7,6 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers
     {
         public ActionResult Index()
         {
-            SetDataForMenu();
             ViewData["Message"] = "This is ASP.NET MVC!";
             return View();
         }

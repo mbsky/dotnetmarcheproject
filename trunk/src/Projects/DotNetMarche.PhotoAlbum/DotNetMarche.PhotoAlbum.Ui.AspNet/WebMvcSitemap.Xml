@@ -1,16 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
-   <siteMapNode url="~/Home.aspx" title="HomePage"  description="xxx">
-      <siteMapNode title="Management">
-         <siteMapNode url="~/Login.aspx" title="Login Page"  description="" />
-         <siteMapNode url="~/CreateUser.aspx" title="Registration Page"  description="" />
-      </siteMapNode >
-      <siteMapNode title="Photo Manager">
-         <siteMapNode url="~/Photo/PhotoAlbumManager.aspx" title="Album manager"  description="" />
-         <siteMapNode url="~/Photo/AlbumSearch.aspx" title="Album Search"  description="" />
-         <siteMapNode url="~/Photo/AlbumSearchPr.aspx" title="Album Search Pr"  description="" />
-      </siteMapNode>
-   </siteMapNode>
+<menu>
+   <submenu text="administration">
+      <url url="~/Login.aspx" text="Login Page" />
+      <url url="~/CreateUser.aspx" text="Registration Page" />
+   </submenu>
+   <submenu text="administration">
+      <action controller="Photo" action="ManageAlbum" text="Album Manager" />
+   </submenu>
+</menu>
 
 
-</siteMap>

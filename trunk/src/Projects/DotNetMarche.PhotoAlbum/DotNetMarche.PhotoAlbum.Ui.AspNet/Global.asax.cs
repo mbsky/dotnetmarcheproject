@@ -24,7 +24,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet
          get { return physicalPath; }
       }
 
-      private static String physicalPath;
+      private static String physicalPath = String.Empty;
 
       public static void RegisterRoutes()
       {

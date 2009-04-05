@@ -79,7 +79,10 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MvcMasterController.cs" />
-    <Compile Include="Controllers\PhotoController.cs" />
+    <Compile Include="Controllers\PhotoController.cs">
+    </Compile>
+    <Compile Include="Controllers\ViewData\AlbumManagerViewData.cs" />
+    <Compile Include="Controllers\ViewData\MasterViewData.cs" />
     <Compile Include="CreateUser.aspx.cs">
       <DependentUpon>CreateUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -95,6 +98,7 @@
     <Compile Include="Handler\AvatarHandler.cs" />
     <Compile Include="Handler\MyPhotoRouter.cs" />
     <Compile Include="Handler\PhotoLoader.cs" />
+    <Compile Include="Helpers\Cache.cs" />
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -102,6 +106,7 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Interfaces\ICache.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -116,6 +121,8 @@
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
     </Compile>
+    <Compile Include="Models\Data\MenuItem.cs" />
+    <Compile Include="Models\MasterModel.cs" />
     <Compile Include="Photo\AlbumSearch.aspx.cs">
       <DependentUpon>AlbumSearch.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -273,7 +280,17 @@
     <Content Include="Views\Shared\Mvc.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Photo\ShowPhotoAlbum.aspx" />
+    <Content Include="App_Themes\Mvc\Basic.css" />
+    <Content Include="App_Themes\Mvc\images\ajax-loader.gif" />
+    <Content Include="App_Themes\Mvc\images\ajax-loader2.gif" />
+    <Content Include="App_Themes\Mvc\images\ajax-loader3.gif" />
+    <Content Include="App_Themes\Mvc\images\Header.jpg" />
+    <Content Include="App_Themes\Mvc\images\wait30.gif" />
+    <Content Include="App_Themes\Mvc\images\wait30trans.gif" />
+    <Content Include="App_Themes\Mvc\images\wait_animated.gif" />
+    <Content Include="App_Themes\Mvc\Master.css" />
+    <Content Include="App_Themes\Mvc\PhotoViewer.css" />
+    <Content Include="Views\Photo\ManageAlbum.aspx" />
     <Content Include="WebMvcSitemap.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
