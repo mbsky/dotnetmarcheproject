@@ -6,7 +6,9 @@
       foreach (DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.Data.MenuItem item in ViewData.Model.MainMenu.MenuItems)
       { 
    %>
-   <li><%= item.Render()%></>
+   <li>
+      <%= item.Render()%></li>
+   <li>
       <ul>
          <%
             foreach (DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.Data.MenuItem inneritem in item.MenuItems)
@@ -19,6 +21,7 @@
             }
          %>
       </ul>
+   </li>
    <%
       }
    %>

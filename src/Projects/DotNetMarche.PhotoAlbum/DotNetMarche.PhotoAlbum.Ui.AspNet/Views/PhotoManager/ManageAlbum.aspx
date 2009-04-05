@@ -4,7 +4,7 @@
 <%@ Import Namespace="DotNetMarche.PhotoAlbum.Ui.AspNet.Models" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="headcontent" runat="server">
 
-   <script src="/JQuery/PhotoAlbumManagerMvc.js" language="javascript"></script>
+   <script src="/JQuery/PhotoAlbumManagerMvc.js" type="text/javascript"></script>
 
 </asp:Content>
 <asp:Content ID="maincontentid" ContentPlaceHolderID="maincontent" runat="server">
