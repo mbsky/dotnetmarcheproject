@@ -65,3 +65,15 @@
       return this;
    };
 })(jQuery);
+
+
+(function($) {
+
+   $.fn.loadext = function(url, data, callback) {
+      this.setwait();
+      this.load(url, data, function(responseText, textStatus, XMLHttpRequest) {
+         if (callback) callback(responseText, textStatus, XMLHttpRequest);
+      });
+      return this;
+   };
+})(jQuery);

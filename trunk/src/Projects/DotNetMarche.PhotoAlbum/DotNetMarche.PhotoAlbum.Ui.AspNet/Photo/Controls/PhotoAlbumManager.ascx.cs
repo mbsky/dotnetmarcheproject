@@ -3,6 +3,8 @@ using System.IO;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 using System.Linq;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.Helpers;
+
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
 {
    public partial class PhotoAlbumManager : System.Web.UI.UserControl
@@ -34,7 +36,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.Controls
                                         Description = txtdescriptionForNewElement.Text,
                                         Name = txtNameForNewElement.Text,
                                         Users = Services.SecurityService.GetUserFromUserId(
-                                          (Guid)Membership.GetUser().ProviderUserKey)
+                                          UserHelper.GetIdOfCurrentUser())
                                      };
          if (Services.PhotoManagerService.CreateOrUpdatePhotoAlbum(album))
          {

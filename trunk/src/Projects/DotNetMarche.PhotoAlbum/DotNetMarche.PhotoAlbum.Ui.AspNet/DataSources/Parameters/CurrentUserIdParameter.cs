@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 using System.Web.Security;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.Helpers;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.Parameters
 {
@@ -11,7 +12,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.DataSources.Parameters
    {
       protected override object Evaluate(HttpContext context, System.Web.UI.Control control)
       {
-         return Membership.GetUser().ProviderUserKey;
+         return UserHelper.GetIdOfCurrentUser();
       }
    }
 }

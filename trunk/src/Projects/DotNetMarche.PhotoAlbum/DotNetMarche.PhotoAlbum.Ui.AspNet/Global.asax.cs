@@ -15,10 +15,10 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet
 
       protected void Application_Start(object sender, EventArgs e)
       {
-        RegisterRoutes();
-        physicalPath = Server.MapPath("/");
+         RegisterRoutes();
+         physicalPath = Server.MapPath("/");
       }
-      
+
       public static String PhysicalPath
       {
          get { return physicalPath; }
@@ -44,14 +44,15 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet
              );
             RouteTable.Routes.MapRoute(
                 "PagedController",
-                // Route name
-                "{controller}/{action}/page_{pageid}/{id}",
-                // URL with parameters
+               // Route name
+                "{controller}/{action}/{pageid}/{id}",
+               // URL with parameters
                 new { controller = "Home", action = "Index", pageid = 0, id = "" }
-                // Parameter defaults
+               // Parameter defaults
               );
+
          }
-        
+
       }
 
       protected void Session_Start(object sender, EventArgs e)
