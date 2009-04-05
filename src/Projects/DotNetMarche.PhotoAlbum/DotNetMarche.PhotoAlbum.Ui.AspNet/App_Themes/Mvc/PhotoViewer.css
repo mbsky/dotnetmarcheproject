@@ -1,0 +1,130 @@
+﻿#thumbstrip
+{
+   position: absolute;
+   top: 60px;
+   left: -140px;
+   height: 800px;
+   overflow: scroll;
+   border: 2px ridge #00457b;
+   margin-top: 10px;
+   margin-bottom: 10px;
+   text-align: center;
+   width: 170px;
+}
+
+#albumviewer
+{
+   position: relative;
+   float: left;
+   width: 880px;
+   text-align: center;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+#thephoto
+{
+   position: absolute;
+   left: 40px;
+   border: 3px ridge #555555;
+   vertical-align: middle;
+   background-position: center;
+   background-repeat:no-repeat;
+}
+
+#viewercontrols 
+{
+   display: none;
+   position:relative;
+   left: 30px;
+   top: -30px;
+}
+#selectorphoto
+{
+   position:relative;
+   border: 1px solid #555555;
+   padding: 4px;
+   margin: 4px;
+
+   overflow: hidden;
+}
+
+#selectorphoto img
+{
+   vertical-align: bottom;
+}
+
+#thumbstrip input
+{
+   padding: 5px 5px 5px 5px;
+}
+
+
+
+#maincontent img
+{
+   padding: 9px 9px 9px 9px;
+}
+
+.baseTable 
+{
+   width: 880px;
+   text-align: center;
+   margin-bottom: 10px;
+}
+
+.editdiv
+{
+   font-family: Verdana;
+   font-size: 10px;
+}
+
+.baseTable th
+{
+   background-color: #DDA85A;
+}
+
+.baseTable td
+{
+   margin-left: 40px;
+}
+
+.formbase 
+{
+	font-size: 0.8em;
+}
+
+.formbase label {
+	float: left;
+	clear: left;
+	width: 100px;
+	margin-right: 10px;
+	text-align: right;
+}
+
+.formbase textarea {
+	height: 3em;
+}
+
+.formbase .submitter 
+{
+	margin-left: 100px;
+}
+
+.formbase p 
+{
+	
+}
+#photolist
+{
+   margin: 0px;
+   width: 874px;
+   height: 600px;
+}
+
+.editbox 
+{
+   float: left; 
+}
+
+

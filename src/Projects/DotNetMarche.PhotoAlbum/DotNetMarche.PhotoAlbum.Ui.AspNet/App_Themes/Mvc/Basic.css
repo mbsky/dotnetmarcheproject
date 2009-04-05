@@ -1,0 +1,117 @@
+﻿#photolist
+{
+   float: left;
+   width: 99%;
+   overflow: auto;
+   border: 2px ridge #00457b;
+   font-family: Verdana;
+   font-size:10px;
+}
+
+.thumbnail
+{
+   float: left;
+   width: 154px;
+   overflow: auto;
+   text-align: center;
+   border: 1px solid #3B5998;
+   padding: 4px;
+   margin: 4px;
+}
+
+.thumbnail span,
+.thumbnail textarea
+{
+	display: block;
+	font: bold 1em/normal Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	text-align: center;
+	background-color: #FFF3AA;
+	border: 1px dashed #666;
+	padding: 5px;
+	margin: 10px 0 0 0;
+	height: 4em;
+	clear:both;
+}
+
+.thumbnail img 
+{
+	border: 1px solid #666;
+	padding: 5px;	
+}
+
+.drophoverimg
+{
+   border: 1px solid #FF0000 ! important;
+  
+   display: inline;
+}
+
+div[id^=photo] textarea
+{
+   width: 142px;
+   background-color: #FFFFFF;
+}
+
+
+div[id^=photo] input
+{
+   width: 32px;
+   height: 32px;
+}
+
+
+
+.intitle 
+{
+   font-family: Verdana;
+   font-size: 18px;
+   font-weight: bold;
+   border-bottom: 10px;
+   padding-bottom: 10px;
+   margin-bottom: 10px;
+}
+
+input
+{
+   font-family: Verdana;
+   font-size: 10px;   
+   margin: 3px;
+}
+
+
+textarea 
+{
+   font-size: 11px;   
+   font-family: Verdana;
+}
+
+span 
+{
+   font-size: 11px;   
+   font-family: Verdana;
+   margin: 3px;
+}
+
+button 
+{
+   font-size: 11px;   
+   margin: 10px;
+   font-family: Verdana;
+}
+
+.waitindicatormasx 
+{
+   position: absolute;
+   background-color: White;
+   z-index: 2;
+}
+
+.waitindicator 
+{
+   position: absolute;
+   background-image: url(Images/ajax-loader3.gif);
+   background-repeat: no-repeat;
+   background-position:center;
+   z-index: 3;
+}

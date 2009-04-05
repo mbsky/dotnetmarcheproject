@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
+<%@ Import Namespace="DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers.ViewData"%>
 <%@ Import Namespace="System.Xml.Linq" %> 
 
  <ul>
