@@ -5,8 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using System.IO;
-using DotNetMarche.PhotoAlbum.Ui.AspNet.Models;
-using DotNetMarche.PhotoAlbum.Ui.AspNet.Models.Data;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.Data;
+
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers
 {

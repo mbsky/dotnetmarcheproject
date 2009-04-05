@@ -73,9 +73,9 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Services
          return instance.SwapPhotoPosition(photoId1, photoId2);
       }
 
-      public static int GetAlbumCount(Guid guid)
+      public static int GetAlbumCount(Guid userId)
       {
-         return instance.GetAlbumCount(guid);
+         return instance.GetAlbumCount(userId);
       }
 
       public static   IList<PhotoAlbumInfo> SearchAlbum(String name, String description, String user, String sortClause, Int32 maximumRows, Int32 startRowIndex)

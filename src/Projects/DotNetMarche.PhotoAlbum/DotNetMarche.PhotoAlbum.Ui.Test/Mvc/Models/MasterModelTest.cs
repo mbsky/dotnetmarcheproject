@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DotNetMarche.PhotoAlbum.Ui.AspNet.Models;
-using DotNetMarche.PhotoAlbum.Ui.AspNet.Models.Data;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.Data;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.PhotoAlbum.Ui.Test.Mvc.Models
 {
    [TestFixture]
-   public class MasterModelTest
+   public class MasterModelModelTest
    {
 
       [Test]

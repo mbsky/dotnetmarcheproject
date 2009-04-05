@@ -27,7 +27,12 @@ namespace DotNetMarche.PhotoAlbum.Service
 
       Int32 SearchAlbumGetCount(String name, String description, String user);
 
-      Int32 GetAlbumCount(Guid guid);
+      /// <summary>
+      /// Get the count of albums for a current user
+      /// </summary>
+      /// <param name="userId"></param>
+      /// <returns></returns>
+      Int32 GetAlbumCount(Guid userId);
 
       Model.PhotoAlbum GetPhotoAlbumWithPhoto(Guid albumId);
 
