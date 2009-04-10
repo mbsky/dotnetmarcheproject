@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<menu>
-   <url url="/Login.aspx" text="Login Page" />
-   <url url="/CreateUser.aspx" text="Registration Page" />
-</menu>
-
-

@@ -1,0 +1,56 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="DotNetMarche.PhotoAlbum.Ui.AspNet.Main" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+   <asp:ContentPlaceHolder ID="head" runat="server">
+   </asp:ContentPlaceHolder>
+</head>
+<body>
+   <form id="form1" runat="server">
+   <asp:ScriptManager ID="ScriptManager1" runat="server">
+      <Scripts>
+         <asp:ScriptReference Path="~/JQuery/jquery-1.2.6.js" />
+         <asp:ScriptReference Path="~/JQuery/jqueryext.js" />
+         <asp:ScriptReference Path="~/JQuery/ui.core.js" />
+         <asp:ScriptReference Path="~/JQuery/ui.draggable.js" />
+         <asp:ScriptReference Path="~/JQuery/ui.droppable.js" />
+      </Scripts>
+   </asp:ScriptManager>
+   <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="MainSiteMapProvider"
+      ShowStartingNode="false" />
+   <div id="thecontent">
+      <div id="header">
+      <img runat="server" id="theavatar" src="~/Avatar.axd" alt="avatar image" />
+         <span id="welcome">Welcome: <asp:LoginName ID="LoginName1" runat="server" /></span>
+         
+      </div>
+      
+      <div id="siteLocator">
+         <asp:SiteMapPath ID="SiteMapPath1" runat="server" Font-Names="Verdana" Font-Size="0.8em"
+            PathSeparator=" : ">
+            <PathSeparatorStyle Font-Bold="True" ForeColor="#990000" />
+            <CurrentNodeStyle ForeColor="#333333" />
+            <NodeStyle Font-Bold="True" ForeColor="#990000" />
+            <RootNodeStyle Font-Bold="True" ForeColor="#FF8000" />
+         </asp:SiteMapPath>
+      </div>
+      
+      <div id="menu">
+         <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" 
+            StaticDisplayLevels="2">
+            <DataBindings>
+               <asp:MenuItemBinding DataMember="SiteMapNode" NavigateUrlField="Url" TextField="Title"
+                  ToolTipField="Description" />
+            </DataBindings>
+
+         </asp:Menu>
+      </div>
+      <div id="childContent">
+         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+         </asp:ContentPlaceHolder>
+      </div>
+   </div>
+   </form>
+</body>
+</html>
