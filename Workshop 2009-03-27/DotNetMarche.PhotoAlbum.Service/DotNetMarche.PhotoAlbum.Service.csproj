@@ -61,13 +61,13 @@
     <Compile Include="SecurityService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
-      <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
-      <Name>DotNetMarche.Utils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DotNetMarche.PhotoAlbum.Model\DotNetMarche.PhotoAlbum.Model.csproj">
       <Project>{FEF740EF-2932-43BB-8E86-8B3ED1C33E06}</Project>
       <Name>DotNetMarche.PhotoAlbum.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
+      <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
+      <Name>DotNetMarche.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
