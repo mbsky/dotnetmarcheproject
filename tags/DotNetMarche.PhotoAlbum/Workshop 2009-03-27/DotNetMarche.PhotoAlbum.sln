@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.PhotoAlbum.Ui.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.PhotoAlbum.Test", "DotNetMarche.PhotoAlbum.Test\DotNetMarche.PhotoAlbum.Test.csproj", "{9708D629-C86A-4B80-AF0E-C069E0CDAFCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Utils", "..\..\Common\DotNetMarche.Utils\DotNetMarche.Utils.csproj", "{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.Utils", "DotNetMarche.Utils\DotNetMarche.Utils.csproj", "{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
