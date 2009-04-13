@@ -5,8 +5,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
    <title>Photo Management</title>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-   <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
+<asp:Content  ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+   <asp:ScriptManagerProxy  ID="ScriptManagerProxy1" runat="server">
       <Scripts>
          <asp:ScriptReference Path="~/JQuery/PhotoAlbumManager.js" />
       </Scripts>

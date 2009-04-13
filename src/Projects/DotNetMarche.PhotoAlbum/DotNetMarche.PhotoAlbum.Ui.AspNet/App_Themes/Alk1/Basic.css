@@ -115,3 +115,8 @@ button
    background-position:center;
    z-index: 3;
 }
+
+.template
+{
+	display:none;	
+}

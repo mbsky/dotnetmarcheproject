@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 $(function() {
    EnableEditInPlaceOperations();
-   $('#photolist').ajaxComplete(function(request, settings) {
+   $('#photolist').log('MVC').ajaxComplete(function(request, settings) {
       EnableDragAndDropOperations();
       EnableEditInPlaceOperations();
    });

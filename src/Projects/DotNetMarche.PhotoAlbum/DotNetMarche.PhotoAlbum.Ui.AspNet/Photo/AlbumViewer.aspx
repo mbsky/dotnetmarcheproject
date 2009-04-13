@@ -6,7 +6,7 @@
 
    <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
       <Scripts>
-         <asp:ScriptReference Path="~/JQuery/PhotoAlbumViewer.js" />
+        <asp:ScriptReference Path="~/JQuery/PhotoAlbumViewer.js" />
       </Scripts>
       <Services>
          <asp:ServiceReference Path="~/Services/PhotoManager.asmx" />
