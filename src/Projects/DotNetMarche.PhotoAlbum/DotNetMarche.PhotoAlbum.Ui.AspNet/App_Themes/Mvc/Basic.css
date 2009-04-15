@@ -1,12 +1,4 @@
-﻿#photolist
-{
-   float: left;
-   width: 99%;
-   overflow: auto;
-   border: 2px ridge #00457b;
-   font-family: Verdana;
-   font-size:10px;
-}
+﻿
 
 .thumbnail
 {

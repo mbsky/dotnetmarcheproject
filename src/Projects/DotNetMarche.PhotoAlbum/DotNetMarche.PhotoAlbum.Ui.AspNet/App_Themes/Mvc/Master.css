@@ -47,6 +47,8 @@ img[id$=avatar]
    margin-right:10px;
    font-family: Verdana;
    font-size:12px;
+   display:inline;
+   width: 180px;
 }
 
 #menu a:visited
@@ -61,15 +63,13 @@ img[id$=avatar]
 
 #siteLocator 
 {
+   display:none;
    float: right;
 }
 
 #childContent 
 {
-   width: 880px;
-   float:left;
-   position:relative;
-   margin-top: 30px;
+   margin-left: 200px;
 }
 
 

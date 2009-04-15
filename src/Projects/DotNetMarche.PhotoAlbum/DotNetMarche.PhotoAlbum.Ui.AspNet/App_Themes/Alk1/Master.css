@@ -15,6 +15,15 @@ img[id$=avatar]
    height: 88px;
 }
 
+#avatar
+{
+   position: relative;
+   left: 6px; 
+   top: 6px;
+   width: 88px;
+   height: 88px;
+}
+
 #header
 {
    width: 1024px;
@@ -44,10 +53,12 @@ img[id$=avatar]
 {
    float: left;
    left: 10px;
+   width: 100px;
    height: 1000px;
    margin-right:10px;
    font-family: Verdana;
    font-size:12px;
+   
 }
 
 #menu a:visited
@@ -69,6 +80,7 @@ img[id$=avatar]
 {
    width: 880px;
    float:left;
+   margin-left: 500px;
    position:relative;
    margin-top: 30px;
 }

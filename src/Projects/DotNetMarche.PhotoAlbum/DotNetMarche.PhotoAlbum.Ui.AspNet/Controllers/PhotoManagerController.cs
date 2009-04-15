@@ -19,10 +19,10 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers
       /// <param name="id"></param>
       /// <param name="pageid"></param>
       /// <returns></returns>
-      public ActionResult ManageAlbum(Guid? id, Int32? pageid, Int32? pagesize)
-      {
-         AlbumManager model = new AlbumManager();
-         model.MainMenu = RootMenu;
+public ActionResult ManageAlbum(Guid? id, Int32? pageid, Int32? pagesize)
+{
+   AlbumManager model = new AlbumManager();
+   model.MainMenu = RootMenu;
          Guid curUserId = UserHelper.GetIdOfCurrentUser();
          if (pageid == null)
          {

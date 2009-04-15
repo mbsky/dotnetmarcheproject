@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.MasterModel">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAABAAAAAACAAAAAQAACA=</HashCode>
+      <FileName>MvcLogic\MasterModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.Data.MenuItem">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAABAACAAAAAA=</HashCode>
+      <FileName>MvcLogic\Data\MenuItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.Data.MenuLink">
+    <Position X="1" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBAAAAAAAAA=</HashCode>
+      <FileName>MvcLogic\Data\MenuItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
