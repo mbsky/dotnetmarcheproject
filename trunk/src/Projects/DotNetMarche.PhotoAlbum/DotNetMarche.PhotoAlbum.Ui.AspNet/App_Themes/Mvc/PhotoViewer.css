@@ -68,10 +68,9 @@
 
 .baseTable 
 {
-   width: 880px;
+   width: 100%;
    text-align: center;
-   margin-bottom: 10px;
-   
+   margin-bottom: 10px; 
 }
 
 .editdiv
@@ -118,9 +117,11 @@
 }
 #photolist
 {
-   margin: 0px;
-   width: 874px;
-   height: 600px;
+   min-height: 300px;
+   overflow: auto;
+   border: 2px ridge #00457b;
+   font-family: Verdana;
+   font-size:10px;
 }
 
 .editbox 

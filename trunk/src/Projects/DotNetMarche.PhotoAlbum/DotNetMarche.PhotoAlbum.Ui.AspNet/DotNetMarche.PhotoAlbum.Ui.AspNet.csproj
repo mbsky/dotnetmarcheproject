@@ -77,6 +77,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MasterTController.cs" />
     <Compile Include="Controllers\PhotoManagerTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MvcMasterController.cs" />
@@ -84,6 +85,7 @@
     </Compile>
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\AlbumManager.cs" />
+    <Compile Include="Models\HeaderT.cs" />
     <Compile Include="Models\Master.cs" />
     <Compile Include="CreateUser.aspx.cs">
       <DependentUpon>CreateUser.aspx</DependentUpon>
@@ -123,6 +125,8 @@
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
     </Compile>
+    <Compile Include="MvcHelper\IUrlHelper.cs" />
+    <Compile Include="MvcHelper\MvcRouteHelper.cs" />
     <Compile Include="MvcLogic\Data\MenuItem.cs" />
     <Compile Include="MvcLogic\HtmlExtensions.cs" />
     <Compile Include="MvcLogic\MasterModel.cs" />
@@ -377,6 +381,14 @@
     <Content Include="Views\PhotoManager\AlbumPhoto.ascx" />
     <Content Include="Views\PhotoManager\AlbumEdit.aspx" />
     <Content Include="Views\Web.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Diagrams\MvcBaseStructures.cd" />
+    <Content Include="scripts\jquery.js" />
+    <Content Include="scripts\template\MasterT.js" />
+    <Content Include="Views\MasterT\MenuTemplate.aspx" />
+    <Content Include="Views\MasterT\HeaderTemplate.aspx" />
+    <Content Include="Views\Shared\MvcT.Master" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

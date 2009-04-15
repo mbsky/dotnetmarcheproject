@@ -3,14 +3,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Xml.Linq;
 using DotNetMarche.PhotoAlbum.Ui.AspNet.Helpers;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.MvcHelper;
 using DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.Data;
+using System.Web.Mvc.Html;
 
 namespace DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic
 {
    public class MasterModel
    {
+
+      public IUrlHelper Url { get; set; }
+
+      public MasterModel(IUrlHelper url)
+      {
+         Url = url;
+      }
+
       private XElement _menuData;
 
       /// <summary>
@@ -54,8 +65,11 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic
          else if (element.Name == "action")
             return new MenuLink(
                element.Attribute("text").Value, 
-               "/" + element.Attribute("controller").Value 
-               + "/" + element.Attribute("action").Value);
+               Url.RouteUrl("Default", new 
+               {
+                  controller = element.Attribute("controller").Value,
+                  action =  element.Attribute("action").Value, 
+               }));
          throw new NotSupportedException("The element " + element.Name + " is not supported on the menu.");
          
       }

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Mvc;
+using System.Web.Routing;
 using DotNetMarche.PhotoAlbum.Ui.AspNet.Models;
+using DotNetMarche.PhotoAlbum.Ui.AspNet.MvcHelper;
 using DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic;
 using DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic.Data;
 using NUnit.Framework;
@@ -14,11 +18,35 @@ namespace DotNetMarche.PhotoAlbum.Ui.Test.Mvc.Models
    [TestFixture]
    public class MasterModelModelTest
    {
+      private class MyTestUrlHelper : IUrlHelper
+      {
+
+         #region IUrlHelper Members
+
+         public string RouteUrl(RouteValueDictionary values)
+         {
+            return RouteUrl((IDictionary<String, Object>)values);
+         }
+
+         public string RouteUrl(object values)
+         {
+            IDictionary<String, Object> dic = (IDictionary<String, Object>) values;
+            return "/" + dic["controller"] + "/" + dic["action"];
+         }
+
+         public string RouteUrl(string routeName, object values)
+         {
+            return RouteUrl(values);
+         }
+
+         #endregion
+      }
+
 
       [Test]
       public void GrabBasicMenu()
       {
-         MasterModel sut = new MasterModel();
+         MasterModel sut = new MasterModel(new MyTestUrlHelper());
          List<MenuItem> menu = sut.CreateMenu("SampleFiles\\BaseMenu1.Xml").MenuItems;
          Assert.That(menu, Has.Count(2));
          Assert.That(menu[0], Has.Property("Url", "/Login.aspx"));
@@ -28,7 +56,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.Test.Mvc.Models
       [Test]
       public void GrabMenuWithSubMenu()
       {
-         MasterModel sut = new MasterModel();
+         MasterModel sut = new MasterModel(new MyTestUrlHelper());
          List<MenuItem> menu = sut.CreateMenu("SampleFiles\\MenuH1.Xml").MenuItems;
          Assert.That(menu, Has.Count(1));
          Assert.That(menu[0], Has.Property("Text", "administration"));
@@ -38,7 +66,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.Test.Mvc.Models
       [Test]
       public void GrabMenuWithSubMenuTypes()
       {
-         MasterModel sut = new MasterModel();
+         MasterModel sut = new MasterModel(new MyTestUrlHelper());
          List<MenuItem> menu = sut.CreateMenu("SampleFiles\\MenuH1.Xml").MenuItems;
          Assert.That(menu, Has.Count(1));
          Assert.That(menu[0], Is.TypeOf(typeof(MenuItem)));
@@ -49,7 +77,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.Test.Mvc.Models
       [Test]
       public void GrabMenuWithSubMenuUrlAndText()
       {
-         MasterModel sut = new MasterModel();
+         MasterModel sut = new MasterModel(new MyTestUrlHelper());
          List<MenuItem> menu = sut.CreateMenu("SampleFiles\\MenuH1.Xml").MenuItems;
          Assert.That(menu[0].MenuItems[0].Text, Is.EqualTo("Login Page"));
          Assert.That(menu[0].MenuItems[1].Text, Is.EqualTo("Registration Page"));
@@ -60,7 +88,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.Test.Mvc.Models
       [Test]
       public void GrabMenuWithAction()
       {
-         MasterModel sut = new MasterModel();
+         MasterModel sut = new MasterModel(new MyTestUrlHelper());
          List<MenuItem> menu = sut.CreateMenu("SampleFiles\\MenuType1.Xml").MenuItems;
          Assert.That(menu, Has.Count(2));
          Assert.That(menu[1].MenuItems, Has.Count(1));
@@ -69,7 +97,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.Test.Mvc.Models
       [Test]
       public void GrabMenuWithActionUrl()
       {
-         MasterModel sut = new MasterModel();
+         MasterModel sut = new MasterModel(new MyTestUrlHelper());
          List<MenuItem> menu = sut.CreateMenu("SampleFiles\\MenuType1.Xml").MenuItems;
          Assert.That(menu, Has.Count(2));
          Assert.That(menu[1].MenuItems[0], Has.Property("Url", "/Photo/ManageAlbum"));

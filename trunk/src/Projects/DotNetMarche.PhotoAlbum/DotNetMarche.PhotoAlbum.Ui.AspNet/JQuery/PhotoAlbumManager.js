@@ -1,4 +1,5 @@
 ﻿/// <reference path="jquery.js">
+
 $(document).ready(function() {
 
    $('div[id^=photo] img').log('Images Thumbnail')
