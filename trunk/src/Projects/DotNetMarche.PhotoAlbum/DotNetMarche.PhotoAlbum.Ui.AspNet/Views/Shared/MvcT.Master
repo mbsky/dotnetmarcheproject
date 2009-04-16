@@ -27,15 +27,10 @@
 
    <div id="thecontent">
       <div id="header">
-         <%--<img runat="server" id="theavatar" src="~/Avatar.axd" alt="avatar image" />
-         <span id="welcome">Welcome:
-            <asp:LoginName ID="LoginName1" runat="server" />
-         </span>--%>
       </div>
       <div id="siteLocator">
       </div>
       <div id="menu">
-         <%--  <% Html.RenderPartial("Menu"); %>--%>
       </div>
       <div id="childContent">
          <asp:ContentPlaceHolder ID="maincontent" runat="server" />
