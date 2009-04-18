@@ -35,12 +35,7 @@ namespace DotNetMarche.Infrastructure.Base
 		/// <returns></returns>
 		public static T Resolve<T>(params object[] values)
 		{
-			System.Collections.Hashtable arguments = new System.Collections.Hashtable();
-			for (Int32 I = 0; I < values.Length; I += 2)
-			{
-				arguments.Add(values[I], values[I + 1]);
-			}
-			return baseContainer.Resolve<T>(arguments);
+         return baseContainer.Resolve<T>(values);
 		}
 
 		/// <summary>
@@ -54,12 +49,7 @@ namespace DotNetMarche.Infrastructure.Base
 		/// <returns></returns>
 		public static T ResolveWithName<T>(String name, params object[] values)
 		{
-			System.Collections.Hashtable arguments = new System.Collections.Hashtable();
-			for (Int32 I = 0; I < values.Length; I += 2)
-			{
-				arguments.Add(values[I], values[I + 1]);
-			}
-			return baseContainer.Resolve<T>(name, arguments);
+         return baseContainer.Resolve<T>(name, values);
 		}
 	}
 }

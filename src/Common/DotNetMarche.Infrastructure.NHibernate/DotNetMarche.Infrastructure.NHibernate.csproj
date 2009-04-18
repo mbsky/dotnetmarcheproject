@@ -51,7 +51,7 @@
     </Reference>
     <Reference Include="NHibernate.Linq, Version=2.0.0.0, Culture=neutral, PublicKeyToken=ec5f0d88a9b80ecb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Projects\NHibernate.Linq.Alt\NHibernate.Linq\bin\Debug\NHibernate.Linq.dll</HintPath>
+      <HintPath>..\..\..\ExternalLibs\NHibernate\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
