@@ -12,11 +12,9 @@
   </NAntValidationSettings>
   <RecentFiles>
     <RecentFiles>
-      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="1" fromTop="0" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.Designer.cs" caret="0" fromTop="0" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="906" fromTop="33" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunner.cs" caret="1393" fromTop="23" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="3147" fromTop="19" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="611" fromTop="17" />
     </RecentFiles>
     <RecentEdits>
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="2524" fromTop="10" />
@@ -24,31 +22,14 @@
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="1670" fromTop="19" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="1790" fromTop="23" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="5396" fromTop="19" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1318" fromTop="29" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1301" fromTop="19" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.Designer.cs" caret="0" fromTop="0" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="261" fromTop="7" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="362" fromTop="11" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="887" fromTop="29" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="864" fromTop="32" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunner.cs" caret="761" fromTop="24" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunner.cs" caret="843" fromTop="21" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1572" fromTop="23" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1445" fromTop="14" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1419" fromTop="13" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1852" fromTop="29" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2001" fromTop="19" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2196" fromTop="19" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2625" fromTop="24" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="724" fromTop="27" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2271" fromTop="26" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="790" fromTop="25" />
       <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunner.cs" caret="1369" fromTop="22" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2569" fromTop="7" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2880" fromTop="20" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="3060" fromTop="24" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1835" fromTop="22" />
-      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="3076" fromTop="15" />
     </RecentEdits>
   </RecentFiles>
   <UnitTestRunner>

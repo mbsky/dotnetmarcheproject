@@ -3,6 +3,7 @@ using System.Globalization;
 
 namespace ABAnalyzer.Services
 {
+    [Serializable]
     public class BenchResults
     {
         private const short DataOffset = 22;

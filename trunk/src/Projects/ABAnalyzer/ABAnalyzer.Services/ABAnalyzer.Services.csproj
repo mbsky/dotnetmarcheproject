@@ -49,6 +49,9 @@
     <Compile Include="Services\BenchResults.cs" />
     <Compile Include="Services\BenchRunner.cs" />
     <Compile Include="Services\BenchRunnerOptions.cs" />
+    <Compile Include="Services\Storage\BenchArchive.cs" />
+    <Compile Include="Services\Storage\DiskStorage.cs" />
+    <Compile Include="Services\Storage\IBenchStorage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
