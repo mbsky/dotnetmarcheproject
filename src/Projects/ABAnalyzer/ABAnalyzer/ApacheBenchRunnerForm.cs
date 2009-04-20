@@ -9,14 +9,20 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using ABAnalyzer.Services;
+using ABAnalyzer.Services.Storage;
 
 namespace ABAnalyzer
 {
     public partial class ApacheBenchRunnerForm : Form
     {
+        private readonly IBenchStorage Storage;
+        private BenchArchive Archive { get; set; }
         public ApacheBenchRunnerForm()
         {
             InitializeComponent();
+
+            this.Storage = new DiskStorage(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Storage"));
+            this.Archive = new BenchArchive();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -56,9 +62,7 @@ namespace ABAnalyzer
         {
             try
             {
-                chart1.Series.Clear();
-                chart2.Series.Clear();
-                
+                this.Archive.Results.Clear();
 
                 var runner = new BenchRunner(txtApacheBenchFileName.Text);
 
@@ -73,13 +77,26 @@ namespace ABAnalyzer
                     if(option != null)
                     {
                         var result = runner.Run(option);
-                        AddResultToChart(result.DocumentPath, result);
+                        this.Archive.Results.Add(result);
                     }
                 }
+
+                UpdateVisualization();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void UpdateVisualization()
+        {
+            chart1.Series.Clear();
+            chart2.Series.Clear();
+            
+            foreach (var result in this.Archive.Results)
+            {
+                AddResultToChart(result.DocumentPath, result);
             }
         }
 
@@ -106,9 +123,15 @@ namespace ABAnalyzer
             }
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void btnTestSave_Click(object sender, EventArgs e)
         {
+            Storage.Save("latest", Archive);
+        }
 
+        private void btnTestLoad_Click(object sender, EventArgs e)
+        {
+            this.Archive = Storage.Load("latest");
+            UpdateVisualization();
         }
     }
 }
