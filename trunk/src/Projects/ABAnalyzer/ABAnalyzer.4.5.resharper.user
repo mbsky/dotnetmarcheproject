@@ -1,0 +1,271 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="livetemplates.csharp.usevar">True</setting>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="1" fromTop="0" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.Designer.cs" caret="0" fromTop="0" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="906" fromTop="33" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunner.cs" caret="1393" fromTop="23" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="3147" fromTop="19" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="2524" fromTop="10" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="2786" fromTop="15" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="1670" fromTop="19" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="1790" fromTop="23" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchResults.cs" caret="5396" fromTop="19" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1318" fromTop="29" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1301" fromTop="19" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.Designer.cs" caret="0" fromTop="0" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="261" fromTop="7" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="362" fromTop="11" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="887" fromTop="29" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="864" fromTop="32" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunner.cs" caret="761" fromTop="24" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunner.cs" caret="843" fromTop="21" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1572" fromTop="23" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1445" fromTop="14" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1419" fromTop="13" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1852" fromTop="29" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2001" fromTop="19" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2196" fromTop="19" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2625" fromTop="24" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunnerOptions.cs" caret="724" fromTop="27" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2271" fromTop="26" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="790" fromTop="25" />
+      <File id="4B8EC016-74A4-4D28-92FC-8E49B4222B84/d:Services/f:BenchRunner.cs" caret="1369" fromTop="22" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2569" fromTop="7" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="2880" fromTop="20" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="3060" fromTop="24" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="1835" fromTop="22" />
+      <File id="C3FD306E-80B2-421C-87DA-3877D4067178/f:Form1.cs" caret="3076" fromTop="15" />
+    </RecentEdits>
+  </RecentFiles>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerMSTest>
+    <UseTestRunConfigFromMetadataFile>False</UseTestRunConfigFromMetadataFile>
+  </UnitTestRunnerMSTest>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="private" priority="11" />
+      <Item value="void" priority="4" />
+      <Item value="SearchAB" priority="0" />
+      <Item value="string" priority="25" />
+      <Item value="Environment" priority="0" />
+      <Item value="if" priority="10" />
+      <Item value="File" priority="1" />
+      <Item value="defPath" priority="1" />
+      <Item value="textBox1" priority="2" />
+      <Item value="public" priority="22" />
+      <Item value="BenchRunner" priority="1" />
+      <Item value="class" priority="2" />
+      <Item value="BenchRunnerOptions" priority="6" />
+      <Item value="bool" priority="0" />
+      <Item value="String" priority="2" />
+      <Item value="ABPath" priority="2" />
+      <Item value="throw" priority="0" />
+      <Item value="new" priority="13" />
+      <Item value="ArgumentException" priority="0" />
+      <Item value="System" priority="2" />
+      <Item value="p" priority="2" />
+      <Item value="return" priority="8" />
+      <Item value="output" priority="0" />
+      <Item value="ExecuteAndWaitEnd" priority="1" />
+      <Item value="runner" priority="0" />
+      <Item value="options" priority="7" />
+      <Item value="this" priority="9" />
+      <Item value="benchPath" priority="0" />
+      <Item value="arguments" priority="0" />
+      <Item value="long" priority="1" />
+      <Item value="BenchOutputParser" priority="0" />
+      <Item value="Parser" priority="0" />
+      <Item value="BenchResults" priority="3" />
+      <Item value="static" priority="0" />
+      <Item value="rawdata" priority="0" />
+      <Item value="nguid" priority="0" />
+      <Item value="foreach" priority="2" />
+      <Item value="Parse" priority="0" />
+      <Item value="ServerSofware" priority="0" />
+      <Item value="line" priority="5" />
+      <Item value="ref" priority="0" />
+      <Item value="else" priority="1" />
+      <Item value="int" priority="6" />
+      <Item value="DocumentLength" priority="0" />
+      <Item value="DocumentPath" priority="0" />
+      <Item value="const" priority="0" />
+      <Item value="TimeTaken" priority="1" />
+      <Item value="TimeSpan" priority="1" />
+      <Item value="secondsstr" priority="0" />
+      <Item value="short" priority="1" />
+      <Item value="sec" priority="0" />
+      <Item value="tk" priority="0" />
+      <Item value="removeToken" priority="0" />
+      <Item value="temp" priority="1" />
+      <Item value="s" priority="0" />
+      <Item value="IntPtr" priority="0" />
+      <Item value="GetStringData" priority="0" />
+      <Item value="removeTokens" priority="1" />
+      <Item value="GetIntData" priority="1" />
+      <Item value="double" priority="1" />
+      <Item value="TotalTransferred" priority="0" />
+      <Item value="HTMLTransferred" priority="0" />
+      <Item value="RequestsPerSecond" priority="0" />
+      <Item value="GetDoubleData" priority="1" />
+      <Item value="TimePerRequest" priority="0" />
+      <Item value="TransferRate" priority="0" />
+      <Item value="Globalization" priority="1" />
+      <Item value="CultureInfo" priority="0" />
+      <Item value="null" priority="1" />
+      <Item value="DialogResult.OK" priority="0" />
+      <Item value="ofdAB" priority="0" />
+      <Item value="try" priority="0" />
+      <Item value="Message" priority="0" />
+      <Item value="ex" priority="0" />
+      <Item value="StringBuilder" priority="0" />
+      <Item value="sb" priority="2" />
+      <Item value="textBox2" priority="0" />
+      <Item value="chart1" priority="1" />
+      <Item value="txtAddress1" priority="2" />
+      <Item value="options1" priority="1" />
+      <Item value="options3" priority="0" />
+      <Item value="chkBootstrap" priority="0" />
+      <Item value="concurrency" priority="0" />
+      <Item value="options2" priority="0" />
+      <Item value="requests" priority="0" />
+      <Item value="address" priority="0" />
+      <Item value="var" priority="1" />
+      <Item value="CreateOptions" priority="0" />
+      <Item value="IList" priority="0" />
+      <Item value="List&lt;BenchRunnerOptions&gt;" priority="0" />
+      <Item value="option" priority="0" />
+      <Item value="serie" priority="1" />
+      <Item value="result" priority="1" />
+      <Item value="AddResultToChart" priority="0" />
+      <Item value="ProcessWindowStyle.Hidden" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Environment">
+      <Item value="SpecialFolder" priority="0" />
+      <Item value="GetFolderPath" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Environment+SpecialFolder">
+      <Item value="ProgramFiles" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.IO.File">
+      <Item value="Exists" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.TextBox">
+      <Item value="Text" priority="6" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.String">
+      <Item value="IsNullOrEmpty" priority="2" />
+      <Item value="Format" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Diagnostics.Process">
+      <Item value="StandardError" priority="1" />
+      <Item value="StartInfo" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Diagnostics.ProcessStartInfo">
+      <Item value="Arguments" priority="1" />
+      <Item value="WindowStyle" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ABAnalyzer.Services.BenchRunner">
+      <Item value="Run" priority="0" />
+      <Item value="ABPath" priority="0" />
+      <Item value="Parser" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ABAnalyzer.Services.BenchResults">
+      <Item value="RawData" priority="1" />
+      <Item value="TimeTaken" priority="0" />
+      <Item value="RequestsPerSecond" priority="0" />
+      <Item value="PageServed" priority="0" />
+      <Item value="DocumentPath" priority="0" />
+      <Item value="HTMLTransferred" priority="0" />
+      <Item value="DocumentLength" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.String">
+      <Item value="Split" priority="1" />
+      <Item value="Replace" priority="4" />
+      <Item value="StartsWith" priority="1" />
+      <Item value="Substring" priority="0" />
+      <Item value="Trim" priority="0" />
+      <Item value="Remove" priority="1" />
+      <Item value="Contains" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Int32">
+      <Item value="Parse" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.TimeSpan">
+      <Item value="Zero" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Globalization.CultureInfo">
+      <Item value="CurrentCulture" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Globalization.CultureInfo">
+      <Item value="NumberFormat" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Globalization.NumberFormatInfo">
+      <Item value="NumberDecimalSeparator" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.OpenFileDialog">
+      <Item value="ShowDialog" priority="0" />
+      <Item value="FileName" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Windows.Forms.MessageBox">
+      <Item value="Show" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Exception">
+      <Item value="Message" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ABAnalyzer.Services.BenchRunnerOptions">
+      <Item value="Concurrency" priority="4" />
+      <Item value="Requests" priority="2" />
+      <Item value="Url" priority="1" />
+      <Item value="ToArguments" priority="1" />
+      <Item value="Bootstrap" priority="1" />
+      <Item value="CreateBootstrapOptions" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Text.StringBuilder">
+      <Item value="ToString" priority="0" />
+      <Item value="AppendFormat" priority="0" />
+      <Item value="Append" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataVisualization.Charting.Chart">
+      <Item value="Series" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataVisualization.Charting.SeriesCollection">
+      <Item value="Clear" priority="0" />
+      <Item value="Add" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.CheckBox">
+      <Item value="CheckAlign" priority="0" />
+      <Item value="Checked" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.NumericUpDown">
+      <Item value="Validate" priority="0" />
+      <Item value="ValueChanged" priority="1" />
+      <Item value="Value" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.IList`1">
+      <Item value="Add" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataVisualization.Charting.Series">
+      <Item value="Name" priority="0" />
+      <Item value="Points" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataVisualization.Charting.DataPointCollection">
+      <Item value="AddY" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+</Configuration>
