@@ -15,6 +15,18 @@ namespace ABAnalyzer
 {
     public partial class ApacheBenchRunnerForm : Form
     {
+        private class ComboItem
+        {
+            public string Name { get; private set; }
+            public BenchResults Result { get; private set; }
+
+            public ComboItem(BenchResults result)
+            {
+                this.Result = result;
+                this.Name = result.Options.Name;
+            }
+        }
+        
         private readonly IBenchStorage Storage;
         private BenchArchive Archive { get; set; }
         public ApacheBenchRunnerForm()
@@ -146,15 +158,29 @@ namespace ABAnalyzer
         {
             cbxHistory.BeginUpdate();
             cbxHistory.DisplayMember = "Name";
-            cbxHistory.ValueMember = "Data";
+            cbxHistory.ValueMember = "Result";
             cbxHistory.Items.Clear();
-            cbxHistory.Items.AddRange((from a in Archive.Results select new {a.Options.Name, Data = a}).ToArray());
+            cbxHistory.Items.AddRange((from a in Archive.Results select new ComboItem (a)).ToArray());
             cbxHistory.EndUpdate();
         }
 
         private void cbxHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            ComboItem current = (ComboItem)cbxHistory.SelectedItem;
+            if(current != null)
+            {
+                txtAddress.Text = current.Result.Options.Url;
+                chkBootstrap.Checked = current.Result.Options.Bootstrap;
+                requests.Value = current.Result.Options.Requests;
+                concurrency.Value = current.Result.Options.Concurrency;
+            }
+            else
+            {
+                txtAddress.Text = string.Empty;
+                chkBootstrap.Checked = false;
+                requests.Value = 1;
+                concurrency.Value = 1;
+            }
         }
     }
 }
