@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title6 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApacheBenchRunnerForm));
             this.btnBrowseForAB = new System.Windows.Forms.Button();
             this.ofdAB = new System.Windows.Forms.OpenFileDialog();
             this.txtApacheBenchFileName = new System.Windows.Forms.TextBox();
@@ -54,19 +55,23 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnAddToHistory = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.txtRawData = new System.Windows.Forms.TextBox();
+            this.lblVersion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.concurrency)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.requests)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBrowseForAB
             // 
-            this.btnBrowseForAB.Location = new System.Drawing.Point(443, 271);
+            this.btnBrowseForAB.Location = new System.Drawing.Point(443, 220);
             this.btnBrowseForAB.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnBrowseForAB.Name = "btnBrowseForAB";
-            this.btnBrowseForAB.Size = new System.Drawing.Size(51, 25);
-            this.btnBrowseForAB.TabIndex = 8;
+            this.btnBrowseForAB.Size = new System.Drawing.Size(51, 23);
+            this.btnBrowseForAB.TabIndex = 11;
             this.btnBrowseForAB.Text = "...";
             this.btnBrowseForAB.UseVisualStyleBackColor = true;
             this.btnBrowseForAB.Click += new System.EventHandler(this.btnBrowseForAB_Click);
@@ -78,38 +83,40 @@
             // 
             // txtApacheBenchFileName
             // 
-            this.txtApacheBenchFileName.Location = new System.Drawing.Point(16, 273);
+            this.txtApacheBenchFileName.Location = new System.Drawing.Point(12, 221);
             this.txtApacheBenchFileName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtApacheBenchFileName.Name = "txtApacheBenchFileName";
             this.txtApacheBenchFileName.Size = new System.Drawing.Size(419, 22);
-            this.txtApacheBenchFileName.TabIndex = 7;
+            this.txtApacheBenchFileName.TabIndex = 10;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(419, 414);
+            this.button2.Location = new System.Drawing.Point(419, 165);
             this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 25);
-            this.button2.TabIndex = 6;
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 9;
             this.button2.Text = "Start";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(502, 12);
             this.chart1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(636, 256);
-            this.chart1.TabIndex = 3;
+            this.chart1.Size = new System.Drawing.Size(536, 256);
+            this.chart1.TabIndex = 12;
             this.chart1.Text = "Page Served";
-            title1.Name = "Request per second";
-            title1.Text = "Request per second";
-            this.chart1.Titles.Add(title1);
+            title5.Name = "Request per second";
+            title5.Text = "Request per second";
+            this.chart1.Titles.Add(title5);
             // 
             // txtAddress
             // 
@@ -117,7 +124,7 @@
             this.txtAddress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(482, 22);
-            this.txtAddress.TabIndex = 0;
+            this.txtAddress.TabIndex = 2;
             // 
             // label1
             // 
@@ -131,7 +138,7 @@
             // 
             // concurrency
             // 
-            this.concurrency.Location = new System.Drawing.Point(11, 125);
+            this.concurrency.Location = new System.Drawing.Point(12, 125);
             this.concurrency.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.concurrency.Name = "concurrency";
             this.concurrency.Size = new System.Drawing.Size(81, 22);
@@ -208,7 +215,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 254);
+            this.label6.Location = new System.Drawing.Point(9, 203);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(177, 14);
             this.label6.TabIndex = 15;
@@ -216,37 +223,39 @@
             // 
             // chart2
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
+            this.chart2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea6.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart2.Legends.Add(legend6);
             this.chart2.Location = new System.Drawing.Point(502, 274);
             this.chart2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(636, 256);
-            this.chart2.TabIndex = 16;
+            this.chart2.Size = new System.Drawing.Size(536, 256);
+            this.chart2.TabIndex = 13;
             this.chart2.Text = "Page Served";
-            title2.Name = "lbl";
-            title2.Text = "Document length (Kb)";
-            this.chart2.Titles.Add(title2);
+            title6.Name = "lbl";
+            title6.Text = "Document length (Kb)";
+            this.chart2.Titles.Add(title6);
             // 
             // btnTestSave
             // 
-            this.btnTestSave.Location = new System.Drawing.Point(12, 387);
+            this.btnTestSave.Location = new System.Drawing.Point(12, 165);
             this.btnTestSave.Name = "btnTestSave";
             this.btnTestSave.Size = new System.Drawing.Size(140, 23);
-            this.btnTestSave.TabIndex = 17;
-            this.btnTestSave.Text = "Test Save";
+            this.btnTestSave.TabIndex = 6;
+            this.btnTestSave.Text = "Save";
             this.btnTestSave.UseVisualStyleBackColor = true;
             this.btnTestSave.Click += new System.EventHandler(this.btnTestSave_Click);
             // 
             // btnTestLoad
             // 
-            this.btnTestLoad.Location = new System.Drawing.Point(12, 416);
+            this.btnTestLoad.Location = new System.Drawing.Point(160, 165);
             this.btnTestLoad.Name = "btnTestLoad";
             this.btnTestLoad.Size = new System.Drawing.Size(140, 23);
-            this.btnTestLoad.TabIndex = 18;
-            this.btnTestLoad.Text = "Test Load";
+            this.btnTestLoad.TabIndex = 7;
+            this.btnTestLoad.Text = "Load";
             this.btnTestLoad.UseVisualStyleBackColor = true;
             this.btnTestLoad.Click += new System.EventHandler(this.btnTestLoad_Click);
             // 
@@ -255,8 +264,8 @@
             this.cbxHistory.FormattingEnabled = true;
             this.cbxHistory.Location = new System.Drawing.Point(12, 28);
             this.cbxHistory.Name = "cbxHistory";
-            this.cbxHistory.Size = new System.Drawing.Size(482, 22);
-            this.cbxHistory.TabIndex = 20;
+            this.cbxHistory.Size = new System.Drawing.Size(401, 22);
+            this.cbxHistory.TabIndex = 0;
             this.cbxHistory.SelectedIndexChanged += new System.EventHandler(this.cbxHistory_SelectedIndexChanged);
             // 
             // label5
@@ -271,29 +280,63 @@
             // 
             // btnAddToHistory
             // 
-            this.btnAddToHistory.Location = new System.Drawing.Point(338, 126);
+            this.btnAddToHistory.Location = new System.Drawing.Point(338, 165);
             this.btnAddToHistory.Name = "btnAddToHistory";
             this.btnAddToHistory.Size = new System.Drawing.Size(75, 23);
-            this.btnAddToHistory.TabIndex = 23;
+            this.btnAddToHistory.TabIndex = 8;
             this.btnAddToHistory.Text = "Add";
             this.btnAddToHistory.UseVisualStyleBackColor = true;
             this.btnAddToHistory.Click += new System.EventHandler(this.btnAddToHistory_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(419, 126);
+            this.btnDelete.Location = new System.Drawing.Point(419, 28);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 24;
+            this.btnDelete.TabIndex = 1;
             this.btnDelete.Text = "Remove";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(10, 480);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(151, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 25;
+            this.pictureBox1.TabStop = false;
+            // 
+            // txtRawData
+            // 
+            this.txtRawData.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRawData.Location = new System.Drawing.Point(12, 249);
+            this.txtRawData.Multiline = true;
+            this.txtRawData.Name = "txtRawData";
+            this.txtRawData.ReadOnly = true;
+            this.txtRawData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtRawData.Size = new System.Drawing.Size(482, 225);
+            this.txtRawData.TabIndex = 26;
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.Location = new System.Drawing.Point(338, 516);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(156, 13);
+            this.lblVersion.TabIndex = 27;
+            this.lblVersion.Text = "Version 0.0.0";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // ApacheBenchRunnerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1144, 537);
+            this.ClientSize = new System.Drawing.Size(1044, 537);
+            this.Controls.Add(this.lblVersion);
+            this.Controls.Add(this.txtRawData);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAddToHistory);
             this.Controls.Add(this.label5);
@@ -322,6 +365,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.concurrency)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.requests)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -349,6 +393,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnAddToHistory;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox txtRawData;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 
