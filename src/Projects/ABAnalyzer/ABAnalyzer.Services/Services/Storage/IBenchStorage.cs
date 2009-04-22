@@ -9,6 +9,6 @@ namespace ABAnalyzer.Services.Storage
     {
         void Save(string name, BenchArchive archive);
         BenchArchive Load(string name);
-        IEnumerable<string> List();
+        //IEnumerable<string> List();
     }
 }

@@ -27,9 +27,10 @@ namespace ABAnalyzer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            txtAddress1.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
-            txtAddress2.Text = "http://localhost/mvctemplate/home.mvc/fullrender";
-            txtAddress3.Text = "http://localhost/mvctemplate/";
+            this.Archive = new BenchArchive();
+            
+            txtAddress.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
+            txtShortDescription.Text = "demo";
             SearchAB();
         }
 
@@ -46,12 +47,9 @@ namespace ABAnalyzer
             }
         }
 
-        private BenchRunnerOptions CreateOptions(string address)
+        private BenchRunnerOptions CreateOptions()
         {
-            if(String.IsNullOrEmpty(address))
-                return null;
-
-            var options = new BenchRunnerOptions(address);
+            var options = new BenchRunnerOptions(txtShortDescription.Text, txtAddress.Text);
                 options.Bootstrap = chkBootstrap.Checked;
                 options.Concurrency = (short)concurrency.Value;
                 options.Requests = (int)requests.Value;
@@ -62,24 +60,11 @@ namespace ABAnalyzer
         {
             try
             {
-                this.Archive.Results.Clear();
-
+                BenchRunnerOptions option = CreateOptions();
+                
                 var runner = new BenchRunner(txtApacheBenchFileName.Text);
-
-                IList<BenchRunnerOptions> options = new List<BenchRunnerOptions>();
-
-                options.Add(CreateOptions(txtAddress1.Text));
-                options.Add(CreateOptions(txtAddress2.Text));
-                options.Add(CreateOptions(txtAddress3.Text));
-
-                foreach (var option in options)
-                {
-                    if(option != null)
-                    {
-                        var result = runner.Run(option);
-                        this.Archive.Results.Add(result);
-                    }
-                }
+                var result = runner.Run(option);
+                Archive.Add(result);
 
                 UpdateVisualization();
             }
@@ -96,12 +81,14 @@ namespace ABAnalyzer
             
             foreach (var result in this.Archive.Results)
             {
-                AddResultToChart(result.DocumentPath, result);
+                AddResultToChart(result);
             }
         }
 
-        private void AddResultToChart(string name, BenchResults result)
+        private void AddResultToChart(BenchResults result)
         {
+            string name = result.Options.Name;
+
             {
                 var serie = new Series(name);
                 serie.Points.AddY(result.RequestsPerSecond);
@@ -132,6 +119,16 @@ namespace ABAnalyzer
         {
             this.Archive = Storage.Load("latest");
             UpdateVisualization();
+        }
+
+        private void btnAddToHistory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
