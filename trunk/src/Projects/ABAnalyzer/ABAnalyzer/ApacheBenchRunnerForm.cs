@@ -30,7 +30,7 @@ namespace ABAnalyzer
             this.Archive = new BenchArchive();
             
             txtAddress.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
-            txtShortDescription.Text = "demo";
+            cbxHistory.Text = "demo";
             SearchAB();
         }
 
@@ -49,7 +49,7 @@ namespace ABAnalyzer
 
         private BenchRunnerOptions CreateOptions()
         {
-            var options = new BenchRunnerOptions(txtShortDescription.Text, txtAddress.Text);
+            var options = new BenchRunnerOptions(cbxHistory.Text, txtAddress.Text);
                 options.Bootstrap = chkBootstrap.Checked;
                 options.Concurrency = (short)concurrency.Value;
                 options.Requests = (int)requests.Value;
@@ -78,11 +78,16 @@ namespace ABAnalyzer
         {
             chart1.Series.Clear();
             chart2.Series.Clear();
+            chart1.ResetAutoValues();
+            chart2.ResetAutoValues();
             
             foreach (var result in this.Archive.Results)
             {
                 AddResultToChart(result);
             }
+
+
+            UpdateCombo();
         }
 
         private void AddResultToChart(BenchResults result)
@@ -117,16 +122,37 @@ namespace ABAnalyzer
 
         private void btnTestLoad_Click(object sender, EventArgs e)
         {
-            this.Archive = Storage.Load("latest");
+            Archive = Storage.Load("latest");
             UpdateVisualization();
         }
 
         private void btnAddToHistory_Click(object sender, EventArgs e)
         {
+            BenchRunnerOptions option = CreateOptions();
+            BenchResults result = new BenchResults(option, null);
+            Archive.Add(result);
 
+            UpdateVisualization();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var selected = cbxHistory.Text;
+            Archive.Remove(selected);
+            UpdateVisualization();
+        }
+
+        private void UpdateCombo()
+        {
+            cbxHistory.BeginUpdate();
+            cbxHistory.DisplayMember = "Name";
+            cbxHistory.ValueMember = "Data";
+            cbxHistory.Items.Clear();
+            cbxHistory.Items.AddRange((from a in Archive.Results select new {a.Options.Name, Data = a}).ToArray());
+            cbxHistory.EndUpdate();
+        }
+
+        private void cbxHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

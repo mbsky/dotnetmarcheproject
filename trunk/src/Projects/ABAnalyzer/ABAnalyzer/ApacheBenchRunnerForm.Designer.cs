@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title6 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.btnBrowseForAB = new System.Windows.Forms.Button();
             this.ofdAB = new System.Windows.Forms.OpenFileDialog();
             this.txtApacheBenchFileName = new System.Windows.Forms.TextBox();
@@ -50,9 +50,7 @@
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnTestSave = new System.Windows.Forms.Button();
             this.btnTestLoad = new System.Windows.Forms.Button();
-            this.txtShortDescription = new System.Windows.Forms.TextBox();
             this.cbxHistory = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnAddToHistory = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -99,23 +97,23 @@
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(502, 12);
             this.chart1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(636, 256);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "Page Served";
-            title5.Name = "Request per second";
-            title5.Text = "Request per second";
-            this.chart1.Titles.Add(title5);
+            title1.Name = "Request per second";
+            title1.Text = "Request per second";
+            this.chart1.Titles.Add(title1);
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(12, 113);
+            this.txtAddress.Location = new System.Drawing.Point(12, 76);
             this.txtAddress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(482, 22);
@@ -124,7 +122,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 96);
+            this.label1.Location = new System.Drawing.Point(12, 59);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 14);
@@ -133,7 +131,7 @@
             // 
             // concurrency
             // 
-            this.concurrency.Location = new System.Drawing.Point(16, 170);
+            this.concurrency.Location = new System.Drawing.Point(11, 125);
             this.concurrency.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.concurrency.Name = "concurrency";
             this.concurrency.Size = new System.Drawing.Size(81, 22);
@@ -148,7 +146,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 153);
+            this.label2.Location = new System.Drawing.Point(7, 108);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 14);
@@ -162,7 +160,7 @@
             0,
             0,
             0});
-            this.requests.Location = new System.Drawing.Point(105, 170);
+            this.requests.Location = new System.Drawing.Point(100, 125);
             this.requests.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.requests.Maximum = new decimal(new int[] {
             10000,
@@ -187,7 +185,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(101, 153);
+            this.label3.Location = new System.Drawing.Point(96, 108);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 14);
@@ -199,7 +197,7 @@
             this.chkBootstrap.AutoSize = true;
             this.chkBootstrap.Checked = true;
             this.chkBootstrap.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBootstrap.Location = new System.Drawing.Point(217, 171);
+            this.chkBootstrap.Location = new System.Drawing.Point(212, 126);
             this.chkBootstrap.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chkBootstrap.Name = "chkBootstrap";
             this.chkBootstrap.Size = new System.Drawing.Size(88, 18);
@@ -218,19 +216,19 @@
             // 
             // chart2
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart2.Legends.Add(legend6);
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
             this.chart2.Location = new System.Drawing.Point(502, 274);
             this.chart2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart2.Name = "chart2";
             this.chart2.Size = new System.Drawing.Size(636, 256);
             this.chart2.TabIndex = 16;
             this.chart2.Text = "Page Served";
-            title6.Name = "lbl";
-            title6.Text = "Document length (Kb)";
-            this.chart2.Titles.Add(title6);
+            title2.Name = "lbl";
+            title2.Text = "Document length (Kb)";
+            this.chart2.Titles.Add(title2);
             // 
             // btnTestSave
             // 
@@ -252,14 +250,6 @@
             this.btnTestLoad.UseVisualStyleBackColor = true;
             this.btnTestLoad.Click += new System.EventHandler(this.btnTestLoad_Click);
             // 
-            // txtShortDescription
-            // 
-            this.txtShortDescription.Location = new System.Drawing.Point(12, 71);
-            this.txtShortDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtShortDescription.Name = "txtShortDescription";
-            this.txtShortDescription.Size = new System.Drawing.Size(482, 22);
-            this.txtShortDescription.TabIndex = 19;
-            // 
             // cbxHistory
             // 
             this.cbxHistory.FormattingEnabled = true;
@@ -267,16 +257,7 @@
             this.cbxHistory.Name = "cbxHistory";
             this.cbxHistory.Size = new System.Drawing.Size(482, 22);
             this.cbxHistory.TabIndex = 20;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 55);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(114, 14);
-            this.label4.TabIndex = 21;
-            this.label4.Text = "Short description";
+            this.cbxHistory.SelectedIndexChanged += new System.EventHandler(this.cbxHistory_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -290,7 +271,7 @@
             // 
             // btnAddToHistory
             // 
-            this.btnAddToHistory.Location = new System.Drawing.Point(338, 213);
+            this.btnAddToHistory.Location = new System.Drawing.Point(338, 126);
             this.btnAddToHistory.Name = "btnAddToHistory";
             this.btnAddToHistory.Size = new System.Drawing.Size(75, 23);
             this.btnAddToHistory.TabIndex = 23;
@@ -300,7 +281,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(419, 213);
+            this.btnDelete.Location = new System.Drawing.Point(419, 126);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 24;
@@ -316,9 +297,7 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAddToHistory);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.cbxHistory);
-            this.Controls.Add(this.txtShortDescription);
             this.Controls.Add(this.btnTestLoad);
             this.Controls.Add(this.btnTestSave);
             this.Controls.Add(this.chart2);
@@ -366,9 +345,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.Button btnTestSave;
         private System.Windows.Forms.Button btnTestLoad;
-        private System.Windows.Forms.TextBox txtShortDescription;
         private System.Windows.Forms.ComboBox cbxHistory;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnAddToHistory;
         private System.Windows.Forms.Button btnDelete;

@@ -42,5 +42,19 @@ namespace ABAnalyzer.Services.Storage
         }
 
         public IEnumerable<BenchResults> Results { get { return _results; } }
+
+        public void Remove(string selected)
+        {
+            // replace??
+            for (int c = 0; c < _results.Count; c++)
+            {
+                BenchResults result = _results[c];
+                if (string.Compare(result.Options.Name, selected, true) == 0)
+                {
+                    _results.RemoveAt(c);
+                    return ;
+                }
+            }
+        }
     }
 }
