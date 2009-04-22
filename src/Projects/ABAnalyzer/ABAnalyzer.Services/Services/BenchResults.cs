@@ -6,34 +6,132 @@ namespace ABAnalyzer.Services
     [Serializable]
     public class BenchResults
     {
-        private const short DataOffset = 22;
+        [NonSerialized] private const short DataOffset = 22;
+        [NonSerialized] private int _completeRequests;
+        [NonSerialized] private int _documentLength;
+        [NonSerialized] private string _documentPath;
+        [NonSerialized] private int _failedRequests;
+        [NonSerialized] private long _htmlTransferred;
+        [NonSerialized] private long _pageServed;
+        [NonSerialized] private double _requestsPerSecond;
+        [NonSerialized] private string _serverHostname;
+        [NonSerialized] private int _serverPort;
+        [NonSerialized] private string _serverSofware;
+        [NonSerialized] private double _timePerRequest;
+        [NonSerialized] private TimeSpan _timeTaken;
 
-        public string RawData { get; private set; }
-        public long TotalRequestTime { get; private set; }
-        public long PageServed { get; private set; }
-        public string ServerSofware { get; private set; }
-        public string ServerHostname { get; private set; }
-        public int ServerPort { get; private set; }
-        public TimeSpan TimeTaken { get; private set; }
-
-        public int CompleteRequests { get; private set; }
-        public int FailedRequests { get; private set; }
-        public int WriteErrors { get; private set; }
-
-        public long TotalTransferred { get; private set; }
-        public long HTMLTransferred { get; private set; }
-        public double RequestsPerSecond { get; private set; }
-        public double TimePerRequest { get; private set; }
-        public double TransferRate { get; private set; }
-
-        public string DocumentPath { get; private set; }
-        public int DocumentLength { get; private set; }
+        [NonSerialized] private long _totalRequestTime;
+        [NonSerialized] private long _totalTransferred;
+        [NonSerialized] private double _transferRate;
+        [NonSerialized] private int _writeErrors;
 
         public BenchResults(string rawdata)
         {
-            this.RawData = rawdata;
-            this.TimeTaken = TimeSpan.Zero;
+            RawData = rawdata;
+            TimeTaken = TimeSpan.Zero;
             Parse();
+        }
+
+        public string RawData { get; private set; }
+
+        public long TotalRequestTime
+        {
+            get { return _totalRequestTime; }
+            private set { _totalRequestTime = value; }
+        }
+
+
+        public long PageServed
+        {
+            get { return _pageServed; }
+            private set { _pageServed = value; }
+        }
+
+
+        public string ServerSofware
+        {
+            get { return _serverSofware; }
+            private set { _serverSofware = value; }
+        }
+
+        public string ServerHostname
+        {
+            get { return _serverHostname; }
+            private set { _serverHostname = value; }
+        }
+
+        public int ServerPort
+        {
+            get { return _serverPort; }
+            private set { _serverPort = value; }
+        }
+
+        public TimeSpan TimeTaken
+        {
+            get { return _timeTaken; }
+            private set { _timeTaken = value; }
+        }
+
+
+        public int CompleteRequests
+        {
+            get { return _completeRequests; }
+            private set { _completeRequests = value; }
+        }
+
+        public int FailedRequests
+        {
+            get { return _failedRequests; }
+            private set { _failedRequests = value; }
+        }
+
+        public int WriteErrors
+        {
+            get { return _writeErrors; }
+            private set { _writeErrors = value; }
+        }
+
+
+        public long TotalTransferred
+        {
+            get { return _totalTransferred; }
+            private set { _totalTransferred = value; }
+        }
+
+        public long HTMLTransferred
+        {
+            get { return _htmlTransferred; }
+            private set { _htmlTransferred = value; }
+        }
+
+        public double RequestsPerSecond
+        {
+            get { return _requestsPerSecond; }
+            private set { _requestsPerSecond = value; }
+        }
+
+        public double TimePerRequest
+        {
+            get { return _timePerRequest; }
+            private set { _timePerRequest = value; }
+        }
+
+        public double TransferRate
+        {
+            get { return _transferRate; }
+            private set { _transferRate = value; }
+        }
+
+        public string DocumentPath
+        {
+            get { return _documentPath; }
+            private set { _documentPath = value; }
+        }
+
+        public int DocumentLength
+        {
+            get { return _documentLength; }
+            private set { _documentLength = value; }
         }
 
         private string GetStringData(string line)
@@ -47,7 +145,7 @@ namespace ABAnalyzer.Services
 
             if (null != removeTokens)
             {
-                foreach (var s in removeTokens)
+                foreach (string s in removeTokens)
                 {
                     temp = temp.Replace(s, "");
                 }
@@ -83,15 +181,18 @@ namespace ABAnalyzer.Services
 
         private double GetDoubleData(string line, string[] removeTokens)
         {
-            return double.Parse(GetStringData(line, removeTokens).Replace(".", System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator));
+            return
+                double.Parse(GetStringData(line, removeTokens).Replace(".",
+                                                                       CultureInfo.CurrentCulture.NumberFormat.
+                                                                           NumberDecimalSeparator));
         }
 
         private void Parse()
         {
             // first split in a string array
-            string[] lines = this.RawData.Replace("\r\n", "\n").Split('\n');
+            string[] lines = RawData.Replace("\r\n", "\n").Split('\n');
 
-            foreach (var line in lines)
+            foreach (string line in lines)
             {
                 if (line.StartsWith("Server Software:"))
                 {
@@ -111,11 +212,11 @@ namespace ABAnalyzer.Services
                 }
                 else if (line.StartsWith("Document Length:"))
                 {
-                    DocumentLength = GetIntData(line, new[] { "bytes" });
+                    DocumentLength = GetIntData(line, new[] {"bytes"});
                 }
                 else if (line.StartsWith("Time taken for tests:"))
                 {
-                    string secondsstr = GetStringData(line, new[] { "seconds" });
+                    string secondsstr = GetStringData(line, new[] {"seconds"});
                     string[] tk = secondsstr.Split('.');
                     int sec = int.Parse(tk[0]);
                     int ms = int.Parse(tk[1]);
@@ -136,29 +237,33 @@ namespace ABAnalyzer.Services
                 }
                 else if (line.StartsWith("Total transferred:"))
                 {
-                    TotalTransferred = GetLongData(line, new[] { "bytes" });
+                    TotalTransferred = GetLongData(line, new[] {"bytes"});
                 }
                 else if (line.StartsWith("HTML transferred:"))
                 {
-                    HTMLTransferred = GetLongData(line, new[] { "bytes" });
+                    HTMLTransferred = GetLongData(line, new[] {"bytes"});
                 }
                 else if (line.StartsWith("Requests per second:"))
                 {
                     //506.33 [#/sec] (mean)
-                    RequestsPerSecond = GetDoubleData(line, new[] { "[#/sec] (mean)" });
+                    RequestsPerSecond = GetDoubleData(line, new[] {"[#/sec] (mean)"});
                 }
                 else if (line.StartsWith("Time per request:") && !line.Contains("across"))
                 {
                     //Time per request:       1.975 [ms] (mean)
-                    TimePerRequest = GetDoubleData(line, new[] { "[ms] (mean)" });
+                    TimePerRequest = GetDoubleData(line, new[] {"[ms] (mean)"});
                 }
                 else if (line.StartsWith("Transfer rate:"))
                 {
                     //4333.96 [Kbytes/sec] received
-                    TransferRate = GetDoubleData(line, new[] { "[Kbytes/sec] received" });
+                    TransferRate = GetDoubleData(line, new[] {"[Kbytes/sec] received"});
                 }
-
             }
+        }
+
+        public void Refresh()
+        {
+            Parse();
         }
     }
 }

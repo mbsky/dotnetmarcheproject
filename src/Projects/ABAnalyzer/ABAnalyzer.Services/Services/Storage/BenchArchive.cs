@@ -20,5 +20,13 @@ namespace ABAnalyzer.Services.Storage
             Results.Add(benchResults);
             return benchResults;
         }
+
+        public void Refresh()
+        {
+            foreach (var result in Results)
+            {
+                result.Refresh();
+            }
+        }
     }
 }
