@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -39,11 +40,18 @@ namespace ABAnalyzer
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            SetupVersion();
             this.Archive = new BenchArchive();
             
             txtAddress.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
             cbxHistory.Text = "demo";
             SearchAB();
+        }
+
+        private void SetupVersion()
+        {
+            lblVersion.Text = "Version " +
+            Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private void SearchAB()
@@ -173,10 +181,12 @@ namespace ABAnalyzer
                 chkBootstrap.Checked = current.Result.Options.Bootstrap;
                 requests.Value = current.Result.Options.Requests;
                 concurrency.Value = current.Result.Options.Concurrency;
+                txtRawData.Text = current.Result.RawData;
             }
             else
             {
                 txtAddress.Text = string.Empty;
+                txtRawData.Text = string.Empty;
                 chkBootstrap.Checked = false;
                 requests.Value = 1;
                 concurrency.Value = 1;
