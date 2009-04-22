@@ -1,16 +1,20 @@
+using System;
 using System.Text;
 
 namespace ABAnalyzer.Services
 {
+    [Serializable]
     public class BenchRunnerOptions
     {
         public string Url { get; set; }
         public bool Bootstrap { get; set; }
         public int Requests { get; set; }
         public short Concurrency { get; set; }
+        public string Name { get; set; }
         
-        public BenchRunnerOptions(string url)
+        public BenchRunnerOptions(string name, string url)
         {
+            this.Name = name;
             this.Url = url;
             this.Concurrency = 1;
             this.Requests = 1;
@@ -18,7 +22,7 @@ namespace ABAnalyzer.Services
 
         public BenchRunnerOptions  CreateBootstrapOptions()
         {
-            return new BenchRunnerOptions(this.Url);
+            return new BenchRunnerOptions("bootstrapper", this.Url);
         }
 
         public string ToArguments()

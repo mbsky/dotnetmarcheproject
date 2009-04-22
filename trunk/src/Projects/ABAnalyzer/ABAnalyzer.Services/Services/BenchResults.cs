@@ -25,14 +25,14 @@ namespace ABAnalyzer.Services
         [NonSerialized] private double _transferRate;
         [NonSerialized] private int _writeErrors;
 
-        public BenchResults(string rawdata)
-        {
-            RawData = rawdata;
-            TimeTaken = TimeSpan.Zero;
-            Parse();
-        }
-
         public string RawData { get; private set; }
+        public BenchRunnerOptions Options { get; set; }
+
+        public BenchResults(BenchRunnerOptions options, string rawdata)
+        {
+            Options = options;
+            Update(rawdata);
+        }
 
         public long TotalRequestTime
         {
@@ -261,9 +261,16 @@ namespace ABAnalyzer.Services
             }
         }
 
-        public void Refresh()
+        public void Update()
         {
             Parse();
+        }
+
+        public void Update(string result)
+        {
+            this.RawData = result;
+            TimeTaken = TimeSpan.Zero;
+            Update();
         }
     }
 }
