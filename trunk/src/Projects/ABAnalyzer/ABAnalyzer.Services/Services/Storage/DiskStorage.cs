@@ -33,7 +33,10 @@ namespace ABAnalyzer.Services.Storage
             var formatter = new BinaryFormatter();
             using (var stream = File.OpenRead(MakeFileName(name)))
             {
-                return (BenchArchive)formatter.Deserialize(stream);
+                var ba = (BenchArchive)formatter.Deserialize(stream);
+                if(ba != null)
+                    ba.Refresh();
+                return ba;
             }
         }
 
