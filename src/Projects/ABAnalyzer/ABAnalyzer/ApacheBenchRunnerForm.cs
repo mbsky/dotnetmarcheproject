@@ -27,14 +27,16 @@ namespace ABAnalyzer
                 this.Name = result.Options.Name;
             }
         }
-        
+
         private readonly IBenchStorage Storage;
         private BenchArchive Archive { get; set; }
+        private string _baseFolder;
         public ApacheBenchRunnerForm()
         {
             InitializeComponent();
 
-            this.Storage = new DiskStorage(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Storage"));
+            _baseFolder = AppDomain.CurrentDomain.BaseDirectory;
+            this.Storage = new DiskStorage(Path.Combine(_baseFolder, "Storage"));
             this.Archive = new BenchArchive();
         }
 
@@ -42,8 +44,8 @@ namespace ABAnalyzer
         {
             SetupVersion();
             this.Archive = new BenchArchive();
-            
-            txtAddress.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
+
+//            txtAddress.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
             cbxHistory.Text = "demo";
             SearchAB();
         }
@@ -56,32 +58,44 @@ namespace ABAnalyzer
 
         private void SearchAB()
         {
-            string defPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-                @"Apache Software Foundation\Apache2.2\bin\ab.exe"
-            );
+            var searchPaths = new []
+                {
+                    Path.Combine(_baseFolder, "ApacheBench\\ab.exe"),
+                    Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                        @"Apache Software Foundation\Apache2.2\bin\ab.exe"
+                        )
+                };
 
-            if(File.Exists(defPath))
+
+            foreach (var path in searchPaths)
             {
-                txtApacheBenchFileName.Text = defPath;
+                if(File.Exists(path))
+                {
+                    txtApacheBenchFileName.Text = path;
+                    return; 
+                }
             }
         }
 
         private BenchRunnerOptions CreateOptions()
         {
             var options = new BenchRunnerOptions(cbxHistory.Text, txtAddress.Text);
-                options.Bootstrap = chkBootstrap.Checked;
-                options.Concurrency = (short)concurrency.Value;
-                options.Requests = (int)requests.Value;
+            options.Bootstrap = chkBootstrap.Checked;
+            options.Concurrency = (short)concurrency.Value;
+            options.Requests = (int)requests.Value;
             return options;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(txtAddress.Text))
+                return;
+            
             try
             {
                 BenchRunnerOptions option = CreateOptions();
-                
+
                 var runner = new BenchRunner(txtApacheBenchFileName.Text);
                 var result = runner.Run(option);
                 Archive.Add(result);
@@ -100,7 +114,7 @@ namespace ABAnalyzer
             chart2.Series.Clear();
             chart1.ResetAutoValues();
             chart2.ResetAutoValues();
-            
+
             foreach (var result in this.Archive.Results)
             {
                 AddResultToChart(result);
@@ -119,7 +133,7 @@ namespace ABAnalyzer
                 serie.Points.AddY(result.RequestsPerSecond);
                 chart1.Series.Add(serie);
             }
-            
+
             {
                 var serie = new Series(name);
                 serie.Points.AddY(result.DocumentLength / 1024.0);
@@ -129,7 +143,7 @@ namespace ABAnalyzer
 
         private void btnBrowseForAB_Click(object sender, EventArgs e)
         {
-            if(ofdAB.ShowDialog() == DialogResult.OK)
+            if (ofdAB.ShowDialog() == DialogResult.OK)
             {
                 txtApacheBenchFileName.Text = ofdAB.FileName;
             }
@@ -142,12 +156,23 @@ namespace ABAnalyzer
 
         private void btnTestLoad_Click(object sender, EventArgs e)
         {
-            Archive = Storage.Load("latest");
-            UpdateVisualization();
+            var loaded = Storage.Load("latest");
+            if(loaded != null)
+            {
+                Archive = loaded;
+                UpdateVisualization();
+            }
+            else
+            {
+                MessageBox.Show("File not found!");
+            }
         }
 
         private void btnAddToHistory_Click(object sender, EventArgs e)
         {
+            if(String.IsNullOrEmpty(txtAddress.Text))
+                return;
+
             BenchRunnerOptions option = CreateOptions();
             BenchResults result = new BenchResults(option, null);
             Archive.Add(result);
@@ -168,14 +193,14 @@ namespace ABAnalyzer
             cbxHistory.DisplayMember = "Name";
             cbxHistory.ValueMember = "Result";
             cbxHistory.Items.Clear();
-            cbxHistory.Items.AddRange((from a in Archive.Results select new ComboItem (a)).ToArray());
+            cbxHistory.Items.AddRange((from a in Archive.Results select new ComboItem(a)).ToArray());
             cbxHistory.EndUpdate();
         }
 
         private void cbxHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboItem current = (ComboItem)cbxHistory.SelectedItem;
-            if(current != null)
+            if (current != null)
             {
                 txtAddress.Text = current.Result.Options.Url;
                 chkBootstrap.Checked = current.Result.Options.Bootstrap;
