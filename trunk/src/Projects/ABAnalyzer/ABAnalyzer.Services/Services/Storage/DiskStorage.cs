@@ -30,6 +30,10 @@ namespace ABAnalyzer.Services.Storage
 
         public BenchArchive Load(string name)
         {
+            var fname = MakeFileName(name);
+            if(!File.Exists(fname))
+                return null;
+            
             var formatter = new BinaryFormatter();
             using (var stream = File.OpenRead(MakeFileName(name)))
             {
