@@ -45,7 +45,7 @@ namespace ABAnalyzer
             SetupVersion();
             this.Archive = new BenchArchive();
 
-//            txtAddress.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
+            //            txtAddress.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
             cbxHistory.Text = "demo";
             SearchAB();
         }
@@ -58,7 +58,7 @@ namespace ABAnalyzer
 
         private void SearchAB()
         {
-            var searchPaths = new []
+            var searchPaths = new[]
                 {
                     Path.Combine(_baseFolder, "ApacheBench\\ab.exe"),
                     Path.Combine(
@@ -70,10 +70,10 @@ namespace ABAnalyzer
 
             foreach (var path in searchPaths)
             {
-                if(File.Exists(path))
+                if (File.Exists(path))
                 {
                     txtApacheBenchFileName.Text = path;
-                    return; 
+                    return;
                 }
             }
         }
@@ -84,6 +84,7 @@ namespace ABAnalyzer
             options.Bootstrap = chkBootstrap.Checked;
             options.Concurrency = (short)concurrency.Value;
             options.Requests = (int)requests.Value;
+            options.Headers.AddRange(txtHeaders.Lines);
             return options;
         }
 
@@ -91,7 +92,7 @@ namespace ABAnalyzer
         {
             if (String.IsNullOrEmpty(txtAddress.Text))
                 return;
-            
+
             try
             {
                 BenchRunnerOptions option = CreateOptions();
@@ -157,7 +158,7 @@ namespace ABAnalyzer
         private void btnTestLoad_Click(object sender, EventArgs e)
         {
             var loaded = Storage.Load("latest");
-            if(loaded != null)
+            if (loaded != null)
             {
                 Archive = loaded;
                 UpdateVisualization();
@@ -170,7 +171,7 @@ namespace ABAnalyzer
 
         private void btnAddToHistory_Click(object sender, EventArgs e)
         {
-            if(String.IsNullOrEmpty(txtAddress.Text))
+            if (String.IsNullOrEmpty(txtAddress.Text))
                 return;
 
             BenchRunnerOptions option = CreateOptions();
@@ -207,15 +208,24 @@ namespace ABAnalyzer
                 requests.Value = current.Result.Options.Requests;
                 concurrency.Value = current.Result.Options.Concurrency;
                 txtRawData.Text = current.Result.RawData;
+                txtHeaders.Text = string.Join("\r\n", current.Result.Options.Headers.ToArray());
             }
             else
             {
                 txtAddress.Text = string.Empty;
                 txtRawData.Text = string.Empty;
+                txtHeaders.Text = string.Empty;
                 chkBootstrap.Checked = false;
                 requests.Value = 1;
                 concurrency.Value = 1;
             }
+        }
+
+        private void hlCompression_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if(!String.IsNullOrEmpty(txtHeaders.Lines.LastOrDefault()))
+                txtHeaders.Text += "\r\n";
+            txtHeaders.Text += "Accept-Encoding:gzip,deflate";
         }
     }
 }
