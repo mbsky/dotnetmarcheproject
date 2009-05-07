@@ -33,7 +33,7 @@
 		<if test="${not property::exists('CCNetLabel')}">
 			<property name="CCNetLabel" value="0"/>
 		</if>
-		<property name="project.version.build" value="${CCNetLabel}" overwrite="false"  />
+		<property name="project.version.build" value="${CCNetLabel}" overwrite="false" dynamic="true" />
 
 		<property name="project.version.revision" value="0" overwrite="false" />
 
