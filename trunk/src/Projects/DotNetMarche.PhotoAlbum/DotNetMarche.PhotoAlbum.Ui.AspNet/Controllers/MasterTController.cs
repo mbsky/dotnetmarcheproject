@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers
 
       public JsonResult Menu()
       {
-         MasterModel mastermodel = new MasterModel(new MvcRouteHelper(Url));
+         MasterLogic mastermodel = new MasterLogic(new MvcRouteHelper(Url));
          return Json(mastermodel.CreateMenu(Path.Combine(Global.PhysicalPath,"WebMvcSitemap.Xml")));
       }
    }

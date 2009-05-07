@@ -22,13 +22,11 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.MvcHelper
          return Helper.RouteUrl(values);
       }
 
-
       public String RouteUrl(Object values)
       {
          return Helper.RouteUrl(values);
       }
 
-    
       public string RouteUrl(string routeName, object values)
       {
          return Helper.RouteUrl(routeName, values);

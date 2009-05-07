@@ -14,12 +14,12 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers
 {
    public class MvcMasterController : Controller
    {
-      private MasterModel masterModel;
-      protected MasterModel MasterModel
+      private MasterLogic masterLogic;
+      protected MasterLogic MasterLogic
       {
          get
          {
-            return masterModel ?? (masterModel = new MasterModel(new MvcRouteHelper(Url)));
+            return masterLogic ?? (masterLogic = new MasterLogic(new MvcRouteHelper(Url)));
          }
       }
       
@@ -28,7 +28,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.Controllers
       /// </summary>
       public MenuItem RootMenu
       {
-         get { return rootMenu ?? (rootMenu = MasterModel.CreateMenu(Path.Combine(Global.PhysicalPath,"WebMvcSitemap.Xml"))); }
+         get { return rootMenu ?? (rootMenu = MasterLogic.CreateMenu(Path.Combine(Global.PhysicalPath, "WebMvcSitemap.Xml"))); }
       }
       private MenuItem rootMenu;
 
