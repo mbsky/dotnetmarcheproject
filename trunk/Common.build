@@ -6,7 +6,7 @@
 
 	<property name="path.buildroot" value="${path.root}/Artifacts/Builds"/>
 	<property name="path.build" value="${path.buildroot}/${nant.settings.currentframework}"/>
-	
+
 	<!--Assembly related area, version number etc.-->
 	<target name="build.assembly.getrevision.svn">
 
@@ -26,10 +26,15 @@
 	</target>
 
 	<target name="build.common.init" >
-	
+
 		<property name="project.version.major" value="${version::get-major(version::parse(project.version))}" dynamic="true" />
 		<property name="project.version.minor" value="${version::get-minor(version::parse(project.version))}" dynamic="true" />
-		<property name="project.version.build" value="0" overwrite="false" />
+
+		<if test="${not property::exists('CCNetLabel')}">
+			<property name="CCNetLabel" value="0"/>
+		</if>
+		<property name="project.version.build" value="${CCNetLabel}" overwrite="false"  />
+
 		<property name="project.version.revision" value="0" overwrite="false" />
 
 		<property name="project.keyfile" value="${path.root}/dotnetmarche.snk" dynamic="true" overwrite="false"/>
