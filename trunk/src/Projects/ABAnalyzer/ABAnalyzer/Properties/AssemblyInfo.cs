@@ -20,8 +20,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompanyAttribute("DotNetMarche")]
 [assembly: AssemblyProductAttribute("ABAnalyzer")]
 [assembly: AssemblyCopyrightAttribute("DotNetMarche - All Rights Reserved")]
-[assembly: AssemblyVersionAttribute("1.1.0.138")]
-[assembly: AssemblyInformationalVersionAttribute("1.1.0.138")]
-[assembly: AssemblyFileVersionAttribute("1.1.0.138")]
+[assembly: AssemblyVersionAttribute("1.1.34.138")]
+[assembly: AssemblyInformationalVersionAttribute("1.1.34.138")]
+[assembly: AssemblyFileVersionAttribute("1.1.34.138")]
 [assembly: AssemblyDelaySignAttribute(false)]
 
