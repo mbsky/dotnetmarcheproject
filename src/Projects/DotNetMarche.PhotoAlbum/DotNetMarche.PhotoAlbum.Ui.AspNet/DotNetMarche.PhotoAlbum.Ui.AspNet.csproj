@@ -135,7 +135,7 @@
     <Compile Include="MvcHelper\MvcRouteHelper.cs" />
     <Compile Include="MvcLogic\Data\MenuItem.cs" />
     <Compile Include="MvcLogic\HtmlExtensions.cs" />
-    <Compile Include="MvcLogic\MasterModel.cs" />
+    <Compile Include="MvcLogic\MasterLogic.cs" />
     <Compile Include="Photo\AlbumSearch.aspx.cs">
       <DependentUpon>AlbumSearch.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -379,6 +379,7 @@
     <None Include="Diagrams\MvcBaseStructures.cd" />
     <Content Include="scripts\jquery.js" />
     <Content Include="scripts\template\MasterT.js" />
+    <Content Include="Readme.txt" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\MasterT\HeaderTemplate.aspx" />
     <Content Include="Views\MasterT\MenuTemplate.aspx" />

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding='iso-8859-1' ?>
 <project
-	name="DotNetMarcheProject"
+	name="ABANalyzer"
     default="build"
 	xmlns="http://nant.sf.net/nightly/2009-01-30-0.86/nant.xsd">
 
-	<property name="path.root" value="." />
+	<property name="path.root" value="../../.." />
 	<include buildfile="${path.root}/Common.build" />
 
 	<fileset id="buildfiles.all">
-		<include name="src/default.build" />
+		<include name="ABAnalyzer.Services/default.build" />
+		<include name="ABAnalyzer/default.build" />
 	</fileset>
 
 	<target name="build">
