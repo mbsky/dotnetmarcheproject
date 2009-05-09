@@ -25,12 +25,15 @@
 	</target>
 
 	<target name="build.common.init" >
-		<property name="path.artifacts-relative" value="${path.root}/Artifacts" />
-		<echo message="path.artifacts-relative=${path.artifacts-relative}"/>
-		<echo message="Artifactspathis=${utils::to-absolute-path(path.artifacts-relative)}"/>
+
 
 		<echo message="path.root=${path.root}"/>
+
+		<if test="${property::exists('CCNetArtifactDirectory')}">
+			<property name="path.artifacts" value="${CCNetArtifactDirectory}"/>
+		</if>
 		<property name="path.artifacts" value="${path.root}/Artifacts" overwrite="false"/>
+		
 		<property name="path.buildroot" value="${path.artifacts}/Builds"/>
 		<property name="path.build" value="${path.buildroot}/${nant.settings.currentframework}"/>
 		<property name="project.version.major" value="${version::get-major(version::parse(project.version))}" dynamic="true" />
@@ -220,32 +223,7 @@
 	</target>
 	
 	<!--Utility function-->
-	<script language="C#" prefix="utils" >
-		<references>
-			<include name="System.Dll"/>
-		</references>
-		<imports>
-			<import namespace="System"/>
-			<import namespace="System.IO"/>
-		</imports>
-
-		<code>
-			<![CDATA[
-       [Function("to-absolute-path")]
-       public String ToAbsolutePath( string relpath) {
-          FileInfo info = new FileInfo(relpath);
-		  return info.FullName;
-       }
-	   
-	          [Function("current-path")]
-       public String CurrentPath() {
-         
-		  return Environment.CurrentDirectory;
-       }
-      
-       ]]>
-		</code>
-	</script>
+	
 	
 	<!--Debug functions-->
 	<script language="C#" prefix="fileset" >
