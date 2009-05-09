@@ -88,7 +88,7 @@ namespace ABAnalyzer
             return options;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnStart_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(txtAddress.Text))
                 return;
@@ -226,6 +226,30 @@ namespace ABAnalyzer
             if(!String.IsNullOrEmpty(txtHeaders.Lines.LastOrDefault()))
                 txtHeaders.Text += "\r\n";
             txtHeaders.Text += "Accept-Encoding:gzip,deflate";
+        }
+
+        private void btnRedoAllTests_Click(object sender, EventArgs e)
+        {
+            runningProgressBar.Value = 0;
+            runningProgressBar.Maximum = this.Archive.Results.Count();
+
+            try
+            {
+                System.Windows.Forms.Cursor.Current = Cursors.WaitCursor;
+
+                var runner = new BenchRunner(txtApacheBenchFileName.Text);
+                foreach (var test in this.Archive.Results)
+                {
+                    runningProgressBar.Value++;
+                    runner.Update(test);
+                }
+                System.Windows.Forms.Cursor.Current = Cursors.Default;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.Cursor.Current = Cursors.Default;
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

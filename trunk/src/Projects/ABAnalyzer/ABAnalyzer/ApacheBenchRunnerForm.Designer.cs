@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApacheBenchRunnerForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.btnBrowseForAB = new System.Windows.Forms.Button();
             this.ofdAB = new System.Windows.Forms.OpenFileDialog();
             this.txtApacheBenchFileName = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -57,22 +57,27 @@
             this.lblVersion = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGraphReqSec = new System.Windows.Forms.TabPage();
-            this.tabRawResults = new System.Windows.Forms.TabPage();
             this.tabGraphDocLen = new System.Windows.Forms.TabPage();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabRawResults = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.txtHeaders = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.hlCompression = new System.Windows.Forms.LinkLabel();
+            this.btnRedoAllTests = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.runningProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.concurrency)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.requests)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGraphReqSec.SuspendLayout();
-            this.tabRawResults.SuspendLayout();
             this.tabGraphDocLen.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            this.tabRawResults.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnBrowseForAB
@@ -99,29 +104,29 @@
             this.txtApacheBenchFileName.Size = new System.Drawing.Size(419, 22);
             this.txtApacheBenchFileName.TabIndex = 10;
             // 
-            // button2
+            // btnStart
             // 
-            this.button2.Location = new System.Drawing.Point(417, 430);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Start";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnStart.Location = new System.Drawing.Point(417, 430);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 9;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Alignment = System.Drawing.StringAlignment.Center;
-            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend1.Name = "Legend1";
-            legend1.Title = "Req / sec";
-            legend1.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            legend1.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.GradientLine;
-            this.chart1.Legends.Add(legend1);
+            legend5.Alignment = System.Drawing.StringAlignment.Center;
+            legend5.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend5.Name = "Legend1";
+            legend5.Title = "Req / sec";
+            legend5.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            legend5.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.GradientLine;
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(3, 3);
             this.chart1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart1.Name = "chart1";
@@ -131,25 +136,25 @@
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(9, 76);
+            this.txtAddress.Location = new System.Drawing.Point(6, 38);
             this.txtAddress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(482, 22);
+            this.txtAddress.Size = new System.Drawing.Size(473, 22);
             this.txtAddress.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 59);
+            this.label1.Location = new System.Drawing.Point(6, 21);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 14);
+            this.label1.Size = new System.Drawing.Size(31, 14);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Test address";
+            this.label1.Text = "URL";
             // 
             // concurrency
             // 
-            this.concurrency.Location = new System.Drawing.Point(9, 125);
+            this.concurrency.Location = new System.Drawing.Point(6, 87);
             this.concurrency.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.concurrency.Name = "concurrency";
             this.concurrency.Size = new System.Drawing.Size(81, 22);
@@ -164,7 +169,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 108);
+            this.label2.Location = new System.Drawing.Point(6, 70);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 14);
@@ -178,7 +183,7 @@
             0,
             0,
             0});
-            this.requests.Location = new System.Drawing.Point(100, 125);
+            this.requests.Location = new System.Drawing.Point(97, 87);
             this.requests.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.requests.Maximum = new decimal(new int[] {
             10000,
@@ -203,7 +208,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(96, 108);
+            this.label3.Location = new System.Drawing.Point(93, 70);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 14);
@@ -215,7 +220,7 @@
             this.chkBootstrap.AutoSize = true;
             this.chkBootstrap.Checked = true;
             this.chkBootstrap.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBootstrap.Location = new System.Drawing.Point(212, 126);
+            this.chkBootstrap.Location = new System.Drawing.Point(215, 87);
             this.chkBootstrap.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chkBootstrap.Name = "chkBootstrap";
             this.chkBootstrap.Size = new System.Drawing.Size(88, 18);
@@ -267,9 +272,9 @@
             this.label5.Location = new System.Drawing.Point(9, 11);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(90, 14);
+            this.label5.Size = new System.Drawing.Size(68, 14);
             this.label5.TabIndex = 22;
-            this.label5.Text = "Loaded tests";
+            this.label5.Text = "Test label";
             // 
             // btnAddToHistory
             // 
@@ -312,7 +317,7 @@
             this.txtRawData.Name = "txtRawData";
             this.txtRawData.ReadOnly = true;
             this.txtRawData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtRawData.Size = new System.Drawing.Size(525, 486);
+            this.txtRawData.Size = new System.Drawing.Size(433, 498);
             this.txtRawData.TabIndex = 26;
             // 
             // lblVersion
@@ -350,17 +355,6 @@
             this.tabGraphReqSec.Text = "Request / sec";
             this.tabGraphReqSec.UseVisualStyleBackColor = true;
             // 
-            // tabRawResults
-            // 
-            this.tabRawResults.Controls.Add(this.txtRawData);
-            this.tabRawResults.Location = new System.Drawing.Point(4, 23);
-            this.tabRawResults.Name = "tabRawResults";
-            this.tabRawResults.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRawResults.Size = new System.Drawing.Size(531, 492);
-            this.tabRawResults.TabIndex = 1;
-            this.tabRawResults.Text = "Raw result";
-            this.tabRawResults.UseVisualStyleBackColor = true;
-            // 
             // tabGraphDocLen
             // 
             this.tabGraphDocLen.Controls.Add(this.chart2);
@@ -374,16 +368,16 @@
             // 
             // chart2
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
+            chartArea6.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea6);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Alignment = System.Drawing.StringAlignment.Center;
-            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend2.Name = "Legend1";
-            legend2.Title = "Document length (Kb)";
-            legend2.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            legend2.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.GradientLine;
-            this.chart2.Legends.Add(legend2);
+            legend6.Alignment = System.Drawing.StringAlignment.Center;
+            legend6.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend6.Name = "Legend1";
+            legend6.Title = "Document length (Kb)";
+            legend6.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            legend6.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.GradientLine;
+            this.chart2.Legends.Add(legend6);
             this.chart2.Location = new System.Drawing.Point(3, 3);
             this.chart2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart2.Name = "chart2";
@@ -391,8 +385,21 @@
             this.chart2.TabIndex = 14;
             this.chart2.Text = "Page Served";
             // 
+            // tabRawResults
+            // 
+            this.tabRawResults.Controls.Add(this.txtRawData);
+            this.tabRawResults.Location = new System.Drawing.Point(4, 23);
+            this.tabRawResults.Name = "tabRawResults";
+            this.tabRawResults.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRawResults.Size = new System.Drawing.Size(439, 504);
+            this.tabRawResults.TabIndex = 1;
+            this.tabRawResults.Text = "Raw result";
+            this.tabRawResults.UseVisualStyleBackColor = true;
+            // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.runningProgressBar});
             this.statusStrip1.Location = new System.Drawing.Point(0, 544);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(952, 22);
@@ -401,16 +408,18 @@
             // 
             // txtHeaders
             // 
-            this.txtHeaders.Location = new System.Drawing.Point(9, 215);
+            this.txtHeaders.AcceptsReturn = true;
+            this.txtHeaders.Location = new System.Drawing.Point(5, 146);
             this.txtHeaders.Multiline = true;
             this.txtHeaders.Name = "txtHeaders";
-            this.txtHeaders.Size = new System.Drawing.Size(482, 135);
+            this.txtHeaders.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtHeaders.Size = new System.Drawing.Size(475, 84);
             this.txtHeaders.TabIndex = 30;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 196);
+            this.label4.Location = new System.Drawing.Point(6, 127);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(129, 14);
             this.label4.TabIndex = 31;
@@ -419,7 +428,7 @@
             // hlCompression
             // 
             this.hlCompression.AutoSize = true;
-            this.hlCompression.Location = new System.Drawing.Point(230, 196);
+            this.hlCompression.Location = new System.Drawing.Point(232, 126);
             this.hlCompression.Name = "hlCompression";
             this.hlCompression.Size = new System.Drawing.Size(81, 14);
             this.hlCompression.TabIndex = 32;
@@ -427,14 +436,48 @@
             this.hlCompression.Text = "gzip,deflate";
             this.hlCompression.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.hlCompression_LinkClicked);
             // 
+            // btnRedoAllTests
+            // 
+            this.btnRedoAllTests.Location = new System.Drawing.Point(336, 459);
+            this.btnRedoAllTests.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnRedoAllTests.Name = "btnRedoAllTests";
+            this.btnRedoAllTests.Size = new System.Drawing.Size(156, 23);
+            this.btnRedoAllTests.TabIndex = 33;
+            this.btnRedoAllTests.Text = "Run all tests";
+            this.btnRedoAllTests.UseVisualStyleBackColor = true;
+            this.btnRedoAllTests.Click += new System.EventHandler(this.btnRedoAllTests_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.txtAddress);
+            this.groupBox1.Controls.Add(this.hlCompression);
+            this.groupBox1.Controls.Add(this.concurrency);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.txtHeaders);
+            this.groupBox1.Controls.Add(this.requests);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.chkBootstrap);
+            this.groupBox1.Location = new System.Drawing.Point(8, 57);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(487, 239);
+            this.groupBox1.TabIndex = 34;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Details";
+            // 
+            // runningProgressBar
+            // 
+            this.runningProgressBar.Name = "runningProgressBar";
+            this.runningProgressBar.Size = new System.Drawing.Size(400, 16);
+            // 
             // ApacheBenchRunnerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 566);
-            this.Controls.Add(this.hlCompression);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtHeaders);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.btnRedoAllTests);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblVersion);
@@ -446,20 +489,13 @@
             this.Controls.Add(this.btnTestLoad);
             this.Controls.Add(this.btnTestSave);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.chkBootstrap);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.requests);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.concurrency);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtAddress);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.txtApacheBenchFileName);
             this.Controls.Add(this.btnBrowseForAB);
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MinimumSize = new System.Drawing.Size(0, 600);
+            this.MinimumSize = new System.Drawing.Size(8, 600);
             this.Name = "ApacheBenchRunnerForm";
             this.Text = "Apache Bench Analyzer";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -469,10 +505,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabGraphReqSec.ResumeLayout(false);
-            this.tabRawResults.ResumeLayout(false);
-            this.tabRawResults.PerformLayout();
             this.tabGraphDocLen.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            this.tabRawResults.ResumeLayout(false);
+            this.tabRawResults.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -483,7 +523,7 @@
         private System.Windows.Forms.Button btnBrowseForAB;
         private System.Windows.Forms.OpenFileDialog ofdAB;
         private System.Windows.Forms.TextBox txtApacheBenchFileName;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label label1;
@@ -511,6 +551,9 @@
         private System.Windows.Forms.TextBox txtHeaders;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel hlCompression;
+        private System.Windows.Forms.Button btnRedoAllTests;
+        private System.Windows.Forms.ToolStripProgressBar runningProgressBar;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
