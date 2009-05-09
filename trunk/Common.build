@@ -4,8 +4,7 @@
     default="compile-winform"
 	xmlns="http://nant.sf.net/nightly/2009-01-30-0.86/nant.xsd">
 
-	<property name="path.buildroot" value="${path.root}/Artifacts/Builds"/>
-	<property name="path.build" value="${path.buildroot}/${nant.settings.currentframework}"/>
+
 
 	<!--Assembly related area, version number etc.-->
 	<target name="build.assembly.getrevision.svn">
@@ -26,7 +25,14 @@
 	</target>
 
 	<target name="build.common.init" >
+		<property name="path.artifacts-relative" value="${path.root}/Artifacts" />
+		<echo message="path.artifacts-relative=${path.artifacts-relative}"/>
+		<echo message="Artifactspathis=${utils::to-absolute-path(path.artifacts-relative)}"/>
 
+		<echo message="path.root=${path.root}"/>
+		<property name="path.artifacts" value="${path.root}/Artifacts" overwrite="false"/>
+		<property name="path.buildroot" value="${path.artifacts}/Builds"/>
+		<property name="path.build" value="${path.buildroot}/${nant.settings.currentframework}"/>
 		<property name="project.version.major" value="${version::get-major(version::parse(project.version))}" dynamic="true" />
 		<property name="project.version.minor" value="${version::get-minor(version::parse(project.version))}" dynamic="true" />
 		
@@ -46,8 +52,16 @@
 		<property name="path.assembly" value="${framework::get-assembly-directory(framework::get-target-framework())}" />
 		<property name="path.framework" value="${framework::get-framework-directory(framework::get-target-framework())}" />
 		<property name="path.externallibs" value="${path.root}/ExternalLibs"/>
+		
 	</target>
 
+	<target name="postbuild.common.init" >
+
+		<property name="path.logdir" value="${path.artifacts}/BuildLogs" />
+		<mkdir dir="${path.logdir}"/>
+		
+	</target>
+	
 	<target name="build.assembly.setproperties" depends="build.common.init">
 		<property overwrite="false" name="assembly.is-cls-compliant" value="true" />
 		<property overwrite="false" name="assembly.is-com-visible" value="false" />
@@ -121,7 +135,7 @@
 	<target name="build.setup" depends="build.common.init, build.assembly.generateassemblyinfo">
 
 		<mkdir dir="${path.build}"/>
-
+	
 		<fileset id="project.sourcefile" >
 			<include name="${path.src}/**/*.cs" />
 			<exclude name="${path.src}/obj/**/*.cs" />
@@ -135,15 +149,17 @@
 		</resourcefileset>
 
 		<property name="build.csc.keyfile" value='/keyfile:"${project.keyfile}"' />
+
 	</target>
 
 	<target name="compile-winform" depends="build.setup" >
+		<property name="assembly.outputfile" value="${path.build}/${project.name}.exe" />
 		<csc
 			 target="winexe"
 			 debug="Enable"
 			 optimize="false"
 			 warnaserror="false"
-			 output="${path.build}/${project.name}.exe"
+			 output="${assembly.outputfile}"
 			 doc="${path.build}/${project.name}.xml"
 			 rebuild="true">
 
@@ -155,14 +171,15 @@
 	</target>
 
 	<target name="compile-dll" depends="build.setup" >
-		<echo message="Buildkeyfile: ${build.csc.keyfile}" />
+		<property name="assembly.outputfile" value="${path.build}/${project.name}.dll" />
+		<echo message="assembly.outputfile=${assembly.outputfile}" />
 		<!--<echo message="${fileset::to-string('project.sourcefile')}"/>-->
 		<csc warninglevel="3"
 			 target="library"
 			 debug="Enable"
 			 optimize="false"
 			 warnaserror="false"
-			 output="${path.build}/${project.name}.dll"
+			 output="${assembly.outputfile}"
 			 doc="${path.build}/${project.name}.xml"
 			 rebuild="true">
 
@@ -173,6 +190,63 @@
 		</csc>
 	</target>
 
+	<target name="build.copyreferences">
+		<copy todir="${path.build}" overwrite="false" flatten="true">
+			<fileset refid="project.references" />
+		</copy>
+	</target>
+
+	<!--Post build process-->
+	<target name="postbuild.fxcop" depends="postbuild.common.init">
+		<property name="postbuild.fxcopname" value="${path.logdir}/fxcop-${assembly.product}.xml" />
+		<property name="path.tools.fxcop" value="C:\Program Files\Microsoft FxCop 1.36" />
+		<property name="postbuild.tools.fxcopcommandline" value='/f:"${assembly.outputfile}" /o:"${postbuild.fxcopname}"'/>
+
+		<!--commandline="${postbuild.tools.fxcopcommandline}"-->
+		<exec program="${path.tools.fxcop}\fxcopcmd.exe" failonerror="true" verbose="true">
+			<arg value='/f:"${path::get-full-path(assembly.outputfile)}"' />
+			<arg value='/o:"${path::get-full-path(postbuild.fxcopname)}"' />
+			<arg value='/d:"${path::get-full-path(path.build)}"' />
+			<!--<arg>
+				
+				<path>
+					<pathelement file="${assembly.outputfile}" />
+				</path>
+			</arg>-->
+		</exec>
+
+
+
+	</target>
+	
+	<!--Utility function-->
+	<script language="C#" prefix="utils" >
+		<references>
+			<include name="System.Dll"/>
+		</references>
+		<imports>
+			<import namespace="System"/>
+			<import namespace="System.IO"/>
+		</imports>
+
+		<code>
+			<![CDATA[
+       [Function("to-absolute-path")]
+       public String ToAbsolutePath( string relpath) {
+          FileInfo info = new FileInfo(relpath);
+		  return info.FullName;
+       }
+	   
+	          [Function("current-path")]
+       public String CurrentPath() {
+         
+		  return Environment.CurrentDirectory;
+       }
+      
+       ]]>
+		</code>
+	</script>
+	
 	<!--Debug functions-->
 	<script language="C#" prefix="fileset" >
 
@@ -198,7 +272,7 @@
            return found;
        }
        [Function("to-string")]
-       public string Contains( string fsetID ) {
+       public string To_String( string fsetID ) {
            StringBuilder results = new StringBuilder();
            FileSet fset = (FileSet)Project.DataTypeReferences[fsetID];
            if ( fset != null ) {
