@@ -200,26 +200,31 @@
 	</target>
 
 	<!--Post build process-->
+	
+	<!--fxcop-->
 	<target name="postbuild.fxcop" depends="postbuild.common.init">
-		<property name="postbuild.fxcopname" value="${path.logdir}/fxcop-${assembly.product}.xml" />
+		<property name="postbuild.fxcop.output" value="${path.logdir}/fxcop-${assembly.product}.xml" />
 		<property name="path.tools.fxcop" value="C:\Program Files\Microsoft FxCop 1.36" />
-		<property name="postbuild.tools.fxcopcommandline" value='/f:"${assembly.outputfile}" /o:"${postbuild.fxcopname}"'/>
 
 		<!--commandline="${postbuild.tools.fxcopcommandline}"-->
 		<exec program="${path.tools.fxcop}\fxcopcmd.exe" failonerror="true" verbose="true">
 			<arg value='/f:"${path::get-full-path(assembly.outputfile)}"' />
-			<arg value='/o:"${path::get-full-path(postbuild.fxcopname)}"' />
+			<arg value='/o:"${path::get-full-path(postbuild.fxcop.output)}"' />
 			<arg value='/d:"${path::get-full-path(path.build)}"' />
-			<!--<arg>
-				
-				<path>
-					<pathelement file="${assembly.outputfile}" />
-				</path>
-			</arg>-->
 		</exec>
+	</target>
 
-
-
+	<!--simian-->
+	<target name="postbuild.simian" depends="postbuild.common.init">
+		<property name="path.tools.simian" value="C:\Program Files\simian" />
+		<property name="build.tools.simian" value="${path.tools.simian}/simian-2.2.24.exe" />
+		<property name="postbuild.simian.output" value="${path.logdir}/simian-${assembly.product}.xml" />
+		
+		<!--commandline="${postbuild.tools.fxcopcommandline}"-->
+		<exec program="${build.tools.simian}" failonerror="true" verbose="true">
+			<arg value='-includes="${path::get-full-path(path.src)}/**/*.cs"' />
+			<arg value='-formatter=xml:"${path::get-full-path(postbuild.simian.output)}"' />
+		</exec>
 	</target>
 	
 	<!--Utility function-->
