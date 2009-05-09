@@ -20,5 +20,5 @@
 
 		<target name="build" depends="project.options.init,  build.assembly.getrevision.svn, compile-dll" />
 
-		<target name="build.fullintegration" depends="build, postbuild.fxcop" />
+		<target name="build.fullintegration" depends="build, postbuild.fxcop, postbuild.simian" />
 </project>
