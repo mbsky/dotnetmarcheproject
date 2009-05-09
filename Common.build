@@ -219,7 +219,8 @@
 		<property name="path.tools.simian" value="C:\Program Files\simian" />
 		<property name="build.tools.simian" value="${path.tools.simian}/simian-2.2.24.exe" />
 		<property name="postbuild.simian.output" value="${path.logdir}/simian-${assembly.product}.xml" />
-		
+
+		<echo message="Running Simian on files found at:${path::get-full-path(path.src)}/**/*.cs"/>
 		<!--commandline="${postbuild.tools.fxcopcommandline}"-->
 		<exec program="${build.tools.simian}" failonerror="true" verbose="true">
 			<arg value='-includes="${path::get-full-path(path.src)}/**/*.cs"' />
