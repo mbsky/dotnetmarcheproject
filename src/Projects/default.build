@@ -17,4 +17,10 @@
 		</nant>
 	</target>
 
+	<target name="build.fullintegration">
+		<nant target="build.fullintegration">
+			<buildfiles refid="buildfiles.all" />
+		</nant>
+	</target>
+	
 </project>

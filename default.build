@@ -6,7 +6,7 @@
 
 	<property name="path.root" value="." />
 	<include buildfile="${path.root}/Common.build" />
-
+	
 	<fileset id="buildfiles.all">
 		<include name="src/default.build" />
 	</fileset>
@@ -17,4 +17,10 @@
 		</nant>
 	</target>
 
+	<target name="build.fullintegration">
+		<nant target="build.fullintegration">
+			<buildfiles refid="buildfiles.all" />
+		</nant>
+	</target>
+	
 </project>

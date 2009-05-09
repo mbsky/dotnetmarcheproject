@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding='iso-8859-1' ?>
 <project
-	name="ABAnalyzer"
+	name="ABAnalyzer.Services"
     default="build"
 	xmlns="http://nant.sf.net/nightly/2009-01-30-0.86/nant.xsd">
 
 		<property name="path.root" value="../../../.." />
 		<include buildfile="${path.root}/Common.build" />
 
-		<target name="project.options.init" >
+		<target name="project.options.init" depends="build.common.init" >
 			<property name="path.src" value="."/>
 			<property name="project.name" value="ABANalyzer.Services"/>
 
@@ -20,4 +20,5 @@
 
 		<target name="build" depends="project.options.init,  build.assembly.getrevision.svn, compile-dll" />
 
+		<target name="build.fullintegration" depends="build, postbuild.fxcop" />
 </project>
