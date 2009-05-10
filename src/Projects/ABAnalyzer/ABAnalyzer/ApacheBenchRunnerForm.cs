@@ -31,6 +31,9 @@ namespace ABAnalyzer
         private readonly IBenchStorage Storage;
         private BenchArchive Archive { get; set; }
         private string _baseFolder;
+        private BackgroundWorker _singleTestWorker;
+        private BackgroundWorker _allTestsWorker;
+
         public ApacheBenchRunnerForm()
         {
             InitializeComponent();
@@ -42,12 +45,40 @@ namespace ABAnalyzer
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            _singleTestWorker = new BackgroundWorker();
+            _singleTestWorker.DoWork += SingleTestWorkerDoWork;
+            _singleTestWorker.RunWorkerCompleted += SingleTestWorkerRunWorkerCompleted;
+
+            _allTestsWorker = new BackgroundWorker();
+            _allTestsWorker.DoWork += AllTestsWorkerDoWork;
+            _allTestsWorker.ProgressChanged += AllTestsWorkerProgressChanged;
+            _allTestsWorker.WorkerReportsProgress = true;
+            _allTestsWorker.WorkerSupportsCancellation = true;
+            _allTestsWorker.RunWorkerCompleted += AllTestsWorkerRunWorkerCompleted;
+
             SetupVersion();
             this.Archive = new BenchArchive();
 
             //            txtAddress.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
             cbxHistory.Text = "demo";
             SearchAB();
+        }
+
+
+        void SingleTestWorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BenchResults result = (BenchResults) e.Result;
+            if (null != result)
+            {
+                Archive.Add(result);
+                UpdateVisualization();
+            }
+        }
+
+        private void SingleTestWorkerDoWork(object sender, DoWorkEventArgs e)
+        {
+            WorkerParams workerParams = (WorkerParams)e.Argument;
+            e.Result = workerParams.Runner.Run(workerParams.Options);
         }
 
         private void SetupVersion()
@@ -93,20 +124,10 @@ namespace ABAnalyzer
             if (String.IsNullOrEmpty(txtAddress.Text))
                 return;
 
-            try
-            {
-                BenchRunnerOptions option = CreateOptions();
-
-                var runner = new BenchRunner(txtApacheBenchFileName.Text);
-                var result = runner.Run(option);
-                Archive.Add(result);
-
-                UpdateVisualization();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            BenchRunnerOptions option = CreateOptions();
+            var runner = new BenchRunner(txtApacheBenchFileName.Text);
+            WorkerParams p = new WorkerParams(runner, option);
+            _singleTestWorker.RunWorkerAsync(p);
         }
 
         private void UpdateVisualization()
@@ -223,33 +244,61 @@ namespace ABAnalyzer
 
         private void hlCompression_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if(!String.IsNullOrEmpty(txtHeaders.Lines.LastOrDefault()))
+            if (!String.IsNullOrEmpty(txtHeaders.Lines.LastOrDefault()))
                 txtHeaders.Text += "\r\n";
             txtHeaders.Text += "Accept-Encoding:gzip,deflate";
         }
 
         private void btnRedoAllTests_Click(object sender, EventArgs e)
         {
-            runningProgressBar.Value = 0;
-            runningProgressBar.Maximum = this.Archive.Results.Count();
-
-            try
+            if (_allTestsWorker.IsBusy)
             {
-                System.Windows.Forms.Cursor.Current = Cursors.WaitCursor;
+                _allTestsWorker.CancelAsync();
+                btnRedoAllTests.Text = "Run all tests";
+                return;
+            }
 
+            if (Archive.Results.Count() > 0)
+            {
+                runningProgressBar.Value = 0;
+                runningProgressBar.Maximum = 100;
+
+                btnRedoAllTests.Text = "Stop";
                 var runner = new BenchRunner(txtApacheBenchFileName.Text);
-                foreach (var test in this.Archive.Results)
-                {
-                    runningProgressBar.Value++;
-                    runner.Update(test);
-                }
-                System.Windows.Forms.Cursor.Current = Cursors.Default;
+                _allTestsWorker.RunWorkerAsync(runner);
             }
-            catch (Exception ex)
+        }
+        
+        void AllTestsWorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            UpdateVisualization();
+        }
+
+        void AllTestsWorkerDoWork(object sender, DoWorkEventArgs e)
+        {
+            double step = 100.0 / this.Archive.Results.Count();
+            BenchRunner runner = (BenchRunner)e.Argument;
+            BackgroundWorker worker = (BackgroundWorker) sender;
+
+            int nCount = 0;
+            foreach (var test in this.Archive.Results)
             {
-                System.Windows.Forms.Cursor.Current = Cursors.Default;
-                MessageBox.Show(ex.Message);
+                if(worker.CancellationPending)
+                {
+                    break;
+                }
+                
+                nCount++;
+                runner.Update(test);
+                worker.ReportProgress((int)(nCount * step));
             }
+            
+            worker.ReportProgress(0);
+        }
+        
+        void AllTestsWorkerProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            runningProgressBar.Value = e.ProgressPercentage;
         }
     }
 }
