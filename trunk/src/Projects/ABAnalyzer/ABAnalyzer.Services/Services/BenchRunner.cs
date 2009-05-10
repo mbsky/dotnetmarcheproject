@@ -9,10 +9,10 @@ namespace ABAnalyzer.Services
 {
     public class BenchRunner
     {
-        public string ABPath { get; private set; }
-        public BenchRunner(string benchPath)
+        public string PathToAnalyzer { get; private set; }
+        public BenchRunner(string pathToAnalyzer)
         {
-            this.ABPath = benchPath;
+            this.PathToAnalyzer = pathToAnalyzer;
         }
 
         public BenchResults Run(BenchRunnerOptions options)
@@ -38,7 +38,7 @@ namespace ABAnalyzer.Services
 
         private string ExecuteAndWaitEnd(string arguments)
         {
-            if (String.IsNullOrEmpty(ABPath) || !File.Exists(ABPath))
+            if (String.IsNullOrEmpty(PathToAnalyzer) || !File.Exists(PathToAnalyzer))
                 throw new ArgumentException("Set ab.exe path before running tests");
             
             // Start the child process.
@@ -46,7 +46,7 @@ namespace ABAnalyzer.Services
             // Redirect the output stream of the child process.
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.FileName = ABPath;
+            p.StartInfo.FileName = PathToAnalyzer;
             p.StartInfo.Arguments = arguments;
             p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
             
