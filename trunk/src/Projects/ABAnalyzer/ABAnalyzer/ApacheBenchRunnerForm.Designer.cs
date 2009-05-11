@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApacheBenchRunnerForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.btnBrowseForAB = new System.Windows.Forms.Button();
             this.ofdAB = new System.Windows.Forms.OpenFileDialog();
             this.txtApacheBenchFileName = new System.Windows.Forms.TextBox();
@@ -52,7 +53,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnAddToHistory = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picDotNetMarcheLogo = new System.Windows.Forms.PictureBox();
             this.txtRawData = new System.Windows.Forms.TextBox();
             this.lblVersion = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -61,16 +62,17 @@
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabRawResults = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.runningProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.txtHeaders = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.hlCompression = new System.Windows.Forms.LinkLabel();
             this.btnRedoAllTests = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.runningProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.ttDotNetMarche = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.concurrency)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.requests)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picDotNetMarcheLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGraphReqSec.SuspendLayout();
             this.tabGraphDocLen.SuspendLayout();
@@ -117,16 +119,16 @@
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend5.Alignment = System.Drawing.StringAlignment.Center;
-            legend5.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend5.Name = "Legend1";
-            legend5.Title = "Req / sec";
-            legend5.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            legend5.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.GradientLine;
-            this.chart1.Legends.Add(legend5);
+            legend1.Alignment = System.Drawing.StringAlignment.Center;
+            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend1.Name = "Legend1";
+            legend1.Title = "Req / sec";
+            legend1.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            legend1.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.GradientLine;
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(3, 3);
             this.chart1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart1.Name = "chart1";
@@ -296,17 +298,19 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // pictureBox1
+            // picDotNetMarcheLogo
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(10, 483);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(151, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 25;
-            this.pictureBox1.TabStop = false;
+            this.picDotNetMarcheLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.picDotNetMarcheLogo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picDotNetMarcheLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picDotNetMarcheLogo.Image = ((System.Drawing.Image)(resources.GetObject("picDotNetMarcheLogo.Image")));
+            this.picDotNetMarcheLogo.Location = new System.Drawing.Point(10, 483);
+            this.picDotNetMarcheLogo.Name = "picDotNetMarcheLogo";
+            this.picDotNetMarcheLogo.Size = new System.Drawing.Size(151, 50);
+            this.picDotNetMarcheLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picDotNetMarcheLogo.TabIndex = 25;
+            this.picDotNetMarcheLogo.TabStop = false;
+            this.picDotNetMarcheLogo.Click += new System.EventHandler(this.picDotNetMarcheLogo_Click);
             // 
             // txtRawData
             // 
@@ -368,16 +372,16 @@
             // 
             // chart2
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea6);
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend6.Alignment = System.Drawing.StringAlignment.Center;
-            legend6.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend6.Name = "Legend1";
-            legend6.Title = "Document length (Kb)";
-            legend6.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            legend6.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.GradientLine;
-            this.chart2.Legends.Add(legend6);
+            legend2.Alignment = System.Drawing.StringAlignment.Center;
+            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend2.Name = "Legend1";
+            legend2.Title = "Document length (Kb)";
+            legend2.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            legend2.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.GradientLine;
+            this.chart2.Legends.Add(legend2);
             this.chart2.Location = new System.Drawing.Point(3, 3);
             this.chart2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart2.Name = "chart2";
@@ -405,6 +409,11 @@
             this.statusStrip1.Size = new System.Drawing.Size(952, 22);
             this.statusStrip1.TabIndex = 29;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // runningProgressBar
+            // 
+            this.runningProgressBar.Name = "runningProgressBar";
+            this.runningProgressBar.Size = new System.Drawing.Size(400, 16);
             // 
             // txtHeaders
             // 
@@ -466,11 +475,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Details";
             // 
-            // runningProgressBar
-            // 
-            this.runningProgressBar.Name = "runningProgressBar";
-            this.runningProgressBar.Size = new System.Drawing.Size(400, 16);
-            // 
             // ApacheBenchRunnerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
@@ -481,7 +485,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblVersion);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.picDotNetMarcheLogo);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAddToHistory);
             this.Controls.Add(this.label5);
@@ -502,7 +506,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.concurrency)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.requests)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picDotNetMarcheLogo)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabGraphReqSec.ResumeLayout(false);
             this.tabGraphDocLen.ResumeLayout(false);
@@ -539,7 +543,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnAddToHistory;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picDotNetMarcheLogo;
         private System.Windows.Forms.TextBox txtRawData;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.TabControl tabControl1;
@@ -554,6 +558,7 @@
         private System.Windows.Forms.Button btnRedoAllTests;
         private System.Windows.Forms.ToolStripProgressBar runningProgressBar;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ToolTip ttDotNetMarche;
     }
 }
 

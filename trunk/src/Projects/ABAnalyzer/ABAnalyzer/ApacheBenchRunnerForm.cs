@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -62,6 +63,8 @@ namespace ABAnalyzer
             //            txtAddress.Text = "http://localhost/mvctemplate/home.mvc/clientsiderender";
             cbxHistory.Text = "demo";
             SearchAB();
+
+            ttDotNetMarche.SetToolTip(picDotNetMarcheLogo, "www.dotnetmarche.org");
         }
 
 
@@ -314,6 +317,11 @@ namespace ABAnalyzer
         void AllTestsWorkerProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             runningProgressBar.Value = e.ProgressPercentage;
+        }
+
+        private void picDotNetMarcheLogo_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://www.dotnetmarche.org");
         }
     }
 }
