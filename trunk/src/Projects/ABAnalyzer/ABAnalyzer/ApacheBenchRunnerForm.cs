@@ -211,11 +211,26 @@ namespace ABAnalyzer
 
         private void UpdateCombo()
         {
+            var list = (from a in Archive.Results select new ComboItem(a)).ToList();
+            
+            string current = cbxHistory.Text;
+            
             cbxHistory.BeginUpdate();
             cbxHistory.DisplayMember = "Name";
             cbxHistory.ValueMember = "Result";
             cbxHistory.Items.Clear();
-            cbxHistory.Items.AddRange((from a in Archive.Results select new ComboItem(a)).ToArray());
+            cbxHistory.Items.AddRange(list.ToArray());
+
+            if (list.Count( x => String.Compare(x.Name, current, true) == 0) > 0)
+            {
+                cbxHistory.Text = current;
+            }
+            else
+            {
+                if (cbxHistory.Items.Count > 0)
+                    cbxHistory.Text = ((ComboItem) (cbxHistory.Items[0])).Name;
+            }
+
             cbxHistory.EndUpdate();
         }
 
