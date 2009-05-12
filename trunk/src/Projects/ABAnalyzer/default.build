@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding='iso-8859-1' ?>
 <project
-	name="ABANalyzer"
+	name="ABANalyzer" 
     default="build"
 	xmlns="http://nant.sf.net/nightly/2009-01-30-0.86/nant.xsd">
 
