@@ -47,11 +47,14 @@
 		<property name="project.version.revision" value="0" overwrite="false" />
 
 		<property name="project.keyfile" value="${path.root}/dotnetmarche.snk" dynamic="true" overwrite="false"/>
+		
 
 		<property name="project.option.signassembly" value="true" dynamic="true" overwrite="false" />
 
 		<property name="project.path.propertiesdir" value="${path.src}/Properties" dynamic="true" overwrite="false" />
 
+		<property name="project.iconfile" value="" overwrite="false"/>
+		
 		<property name="path.assembly" value="${framework::get-assembly-directory(framework::get-target-framework())}" />
 		<property name="path.framework" value="${framework::get-framework-directory(framework::get-target-framework())}" />
 		<property name="path.externallibs" value="${path.root}/ExternalLibs"/>
@@ -164,12 +167,13 @@
 			 warnaserror="false"
 			 output="${assembly.outputfile}"
 			 doc="${path.build}/${project.name}.xml"
-			 rebuild="true">
+			 rebuild="true" >
 
 			<references refid="project.references" />
 			<resources refid="project.resourcefile" />
 			<sources refid="project.sourcefile" />
 			<arg line="${build.csc.keyfile}" if="${project.option.signassembly}" />
+			<arg line="/win32icon:${project.iconfile}" if="${project.iconfile!=''}" />
 		</csc>
 	</target>
 
