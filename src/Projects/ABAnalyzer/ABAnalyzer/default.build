@@ -10,6 +10,8 @@
 	<target name="project.options.init" depends="build.common.init">
 		<property name="path.src" value="."/>
 		<property name="project.name" value="ABANalyzer"/>
+		<property name="project.iconfile" value="aba.ico" />
+		
 		<property name="project.keyfile" value="${path.root}/DotNetMarche.snk" dynamic="true" />
 
 		<property name="project.version" value="1.2.0.0" />
