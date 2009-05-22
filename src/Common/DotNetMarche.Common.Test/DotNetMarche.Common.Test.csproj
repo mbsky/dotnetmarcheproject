@@ -36,6 +36,7 @@
     <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ExternalLibs\Castle\Castle.Core.dll</HintPath>
+      <Aliases>OrigCastle</Aliases>
     </Reference>
     <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -81,6 +82,18 @@
     <Compile Include="AuxClasses\CustomerINotifyPC.cs" />
     <Compile Include="AuxClasses\SimpleUnknown.cs" />
     <Compile Include="AuxClasses\TestContext.cs" />
+    <Compile Include="Concrete\Castle\AOP\HelperClasses\DisposableAction.cs" />
+    <Compile Include="Concrete\Castle\AOP\HelperClasses\MockFacility.cs" />
+    <Compile Include="Concrete\Castle\AOP\HelperClasses\SubDependencyResolver.cs" />
+    <Compile Include="Concrete\Castle\AOP\HelperClasses\TestContainer.cs" />
+    <Compile Include="Concrete\Castle\AOP\HelperClasses\TestHelpers.cs" />
+    <Compile Include="Concrete\Castle\AOP\TestSuite1\ConfigurableLogInterceptor.cs" />
+    <Compile Include="Concrete\Castle\AOP\TestSuite1\ExtClasses\IAnotherSomething.cs" />
+    <Compile Include="Concrete\Castle\AOP\TestSuite1\ExtClasses\ISomething.cs" />
+    <Compile Include="Concrete\Castle\AOP\TestSuite1\ExtClasses\OtherClass.cs" />
+    <Compile Include="Concrete\Castle\AOP\TestSuite1\ExtClasses\SomeClass.cs" />
+    <Compile Include="Concrete\Castle\AOP\TestSuite1\ExtClasses\ThrowExceptionISomething.cs" />
+    <Compile Include="Concrete\Castle\AOP\TestSuite1\TestBasic.cs" />
     <Compile Include="Concrete\Castle\CastleWindsorIoCEngineTest.cs" />
     <Compile Include="Concrete\Castle\Classes\DisposableComponent.cs" />
     <Compile Include="Concrete\Castle\Classes\DisposableSingleton.cs" />
@@ -204,6 +217,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Concrete\Castle\AOP\HelperClasses\ConfigSample1.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Concrete\Castle\AOP\TestSuite1\Configs\ConfigSample1.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Concrete\Castle\AOP\TestSuite1\Configs\ConfigSample2.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Concrete\Castle\AOP\TestSuite1\Configs\ConfigSample3.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Concrete\Castle\AOP\TestSuite1\Configs\WrongConfig.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Concrete\Castle\Config\Config1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
