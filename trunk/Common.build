@@ -229,7 +229,7 @@
 
     <echo message="Running Simian on files found at:${path::get-full-path(path.src)}/**/*.cs"/>
     <!--commandline="${postbuild.tools.fxcopcommandline}"-->
-    <exec program="${build.tools.simian}" failonerror="true" verbose="true">
+    <exec program="${build.tools.simian}" failonerror="false" verbose="true">
       <arg value='-includes="${path::get-full-path(path.src)}/**/*.cs"' />
       <arg value='-formatter=xml:"${path::get-full-path(postbuild.simian.output)}"' />
     </exec>
