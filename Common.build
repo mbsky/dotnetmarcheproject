@@ -6,161 +6,163 @@
 
 
 
-	<!--Assembly related area, version number etc.-->
-	<target name="build.assembly.getrevision.svn">
+  <!--Assembly related area, version number etc.-->
+  <target name="build.assembly.getrevision.svn">
 
-		<!-- try to update the revision -->
-		<exec
+    <!-- try to update the revision -->
+    <exec
 			  program="svn"
 			  commandline='info "${path.src}" --xml'
 			  output="_revision.xml"
-			  failonerror="false"/>
-		<xmlpeek
+			  failonerror="false"
+        verbose="false"/>
+    <xmlpeek
 			  file="_revision.xml"
 			  xpath="/info/entry/@revision"
 			  property="project.version.revision"
 			  failonerror="false"/>
-		<delete file="_revision.xml" failonerror="false" />
-		<echo message="INFO: Using Subversion revision number: ${project.version.revision}"/>
-	</target>
+    <delete file="_revision.xml" failonerror="false" />
+    <echo message="INFO: Using Subversion revision number: ${project.version.revision}"/>
+  </target>
 
-	<target name="build.common.init" >
+  <target name="build.common.init" >
+    <echo message="path.root=${path.root}"/>
+
+    <if test="${property::exists('CCNetArtifactDirectory')}">
+      <property name="path.artifacts" value="${CCNetArtifactDirectory}"/>
+    </if>
+    <property name="path.artifacts" value="${path.root}/Artifacts" overwrite="false"/>
+
+    <property name="path.buildroot" value="${path.artifacts}/Builds"/>
+    <property name="path.build" value="${path.buildroot}/${nant.settings.currentframework}"/>
+    <property name="project.version.major" value="${version::get-major(version::parse(project.version))}" dynamic="true" />
+    <property name="project.version.minor" value="${version::get-minor(version::parse(project.version))}" dynamic="true" />
+
+    <if test="${not property::exists('CCNetLabel')}">
+      <property name="CCNetLabel" value="0"/>
+    </if>
+    <property name="project.version.build" value="${CCNetLabel}" overwrite="false" dynamic="true" />
+
+    <property name="project.version.revision" value="0" overwrite="false" />
+
+    <property name="project.keyfile" value="${path.root}/dotnetmarche.snk" dynamic="true" overwrite="false"/>
 
 
-		<echo message="path.root=${path.root}"/>
+    <property name="project.option.signassembly" value="true" dynamic="true" overwrite="false" />
 
-		<if test="${property::exists('CCNetArtifactDirectory')}">
-			<property name="path.artifacts" value="${CCNetArtifactDirectory}"/>
-		</if>
-		<property name="path.artifacts" value="${path.root}/Artifacts" overwrite="false"/>
-		
-		<property name="path.buildroot" value="${path.artifacts}/Builds"/>
-		<property name="path.build" value="${path.buildroot}/${nant.settings.currentframework}"/>
-		<property name="project.version.major" value="${version::get-major(version::parse(project.version))}" dynamic="true" />
-		<property name="project.version.minor" value="${version::get-minor(version::parse(project.version))}" dynamic="true" />
-		
-		<if test="${not property::exists('CCNetLabel')}">
-			<property name="CCNetLabel" value="0"/>
-		</if>
-		<property name="project.version.build" value="${CCNetLabel}" overwrite="false" dynamic="true" />
+    <property name="project.path.propertiesdir" value="${path.src}/Properties" dynamic="true" overwrite="false" />
 
-		<property name="project.version.revision" value="0" overwrite="false" />
+    <property name="project.iconfile" value="" overwrite="false"/>
 
-		<property name="project.keyfile" value="${path.root}/dotnetmarche.snk" dynamic="true" overwrite="false"/>
-		
+    <property name="path.assembly" value="${framework::get-assembly-directory(framework::get-target-framework())}" />
+    <property name="path.framework" value="${framework::get-framework-directory(framework::get-target-framework())}" />
 
-		<property name="project.option.signassembly" value="true" dynamic="true" overwrite="false" />
+    <property name="path.externallibs" value="${path.root}/ExternalLibs"/>
+    <property name="path.framework.libs"
+              value="C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5"/>
+  </target>
 
-		<property name="project.path.propertiesdir" value="${path.src}/Properties" dynamic="true" overwrite="false" />
 
-		<property name="project.iconfile" value="" overwrite="false"/>
-		
-		<property name="path.assembly" value="${framework::get-assembly-directory(framework::get-target-framework())}" />
-		<property name="path.framework" value="${framework::get-framework-directory(framework::get-target-framework())}" />
-		<property name="path.externallibs" value="${path.root}/ExternalLibs"/>
-		
-	</target>
+  <target name="postbuild.common.init" >
 
-	<target name="postbuild.common.init" >
+    <property name="path.logdir" value="${path.artifacts}/BuildLogs" />
+    <mkdir dir="${path.logdir}"/>
 
-		<property name="path.logdir" value="${path.artifacts}/BuildLogs" />
-		<mkdir dir="${path.logdir}"/>
-		
-	</target>
-	
-	<target name="build.assembly.setproperties" depends="build.common.init">
-		<property overwrite="false" name="assembly.is-cls-compliant" value="true" />
-		<property overwrite="false" name="assembly.is-com-visible" value="false" />
-		<property overwrite="false" name="assembly.guid" value="" />
-		<property overwrite="false" name="assembly.allow-partially-trusted-callers" value="false" />
-		<property overwrite="false" name="assembly.description" value="" />
-		<property overwrite="false" name="assembly.product" value="${project::get-name()}" />
-		<property overwrite="false" name="assembly.company" value="DotNetMarche" dynamic="true" />
-		<property overwrite="false" name="assembly.title" value="${project::get-name()} for ${framework::get-description(framework::get-target-framework())}" />
-		<property overwrite="false" name="assembly.version"
+  </target>
+
+  <target name="build.assembly.setproperties" depends="build.common.init">
+    <property overwrite="false" name="assembly.is-cls-compliant" value="true" />
+    <property overwrite="false" name="assembly.is-com-visible" value="false" />
+    <property overwrite="false" name="assembly.guid" value="" />
+    <property overwrite="false" name="assembly.allow-partially-trusted-callers" value="false" />
+    <property overwrite="false" name="assembly.description" value="" />
+    <property overwrite="false" name="assembly.product" value="${project::get-name()}" />
+    <property overwrite="false" name="assembly.company" value="DotNetMarche" dynamic="true" />
+    <property overwrite="false" name="assembly.title" value="${project::get-name()} for ${framework::get-description(framework::get-target-framework())}" />
+    <property overwrite="false" name="assembly.version"
 				  value="${project.version.major}.${project.version.minor}.${project.version.build}.${project.version.revision}" />
-		<property overwrite="false" name="assembly.version.informational"
+    <property overwrite="false" name="assembly.version.informational"
 				  value="${project.version.major}.${project.version.minor}.${project.version.build}.${project.version.revision}" />
-		<property overwrite="false" name="assembly.copyright" value="DotNetMarche - All Rights Reserved" />
-	</target>
+    <property overwrite="false" name="assembly.copyright" value="DotNetMarche - All Rights Reserved" />
+  </target>
 
-	<target name="build.assembly.generateassemblyinfo"
+  <target name="build.assembly.generateassemblyinfo"
 		 depends="build.common.init build.assembly.setproperties"
 		 description="Generate AssemblyInfo.cs using assembly.* properties.">
 
-		<property name="assemblyinfo.cs" value="${path::combine(project.path.propertiesdir,'AssemblyInfo.cs')}" />
-		<attrib file="${assemblyinfo.cs}" readonly="false"  failonerror="false"/>
-		<asminfo output="${assemblyinfo.cs}" language="CSharp" failonerror="false">
-			<imports>
-				<import namespace="System" />
-				<import namespace="System.Reflection" />
-				<import namespace="System.Runtime.CompilerServices" />
-				<import namespace="System.Runtime.InteropServices" />
-				<import namespace="System.Security" if="${assembly.allow-partially-trusted-callers}" />
-			</imports>
-			<attributes>
-				<attribute type="CLSCompliantAttribute" value="${assembly.is-cls-compliant}" />
-				<attribute type="ComVisibleAttribute" value="${assembly.is-com-visible}" />
-				<attribute type="GuidAttribute" value="${assembly.guid}" if="${assembly.guid != ''}" />
-				<attribute type="AssemblyTitleAttribute" value="${assembly.title}" />
-				<attribute type="AssemblyDescriptionAttribute" value="${assembly.description}" />
-				<attribute type="AssemblyCompanyAttribute" value="${assembly.company}" />
-				<attribute type="AssemblyProductAttribute" value="${assembly.product}" />
-				<attribute type="AssemblyCopyrightAttribute" value="${assembly.copyright}" />
-				<attribute type="AssemblyVersionAttribute" value="${assembly.version}" />
-				<attribute type="AssemblyInformationalVersionAttribute" value="${assembly.version.informational}" />
-				<attribute type="AssemblyFileVersionAttribute" value="${assembly.version.informational}" />
-				<attribute type="AssemblyDelaySignAttribute" value="false" />
+    <property name="assemblyinfo.cs" value="${path::combine(project.path.propertiesdir,'AssemblyInfo.cs')}" />
+    <attrib file="${assemblyinfo.cs}" readonly="false"  failonerror="false"/>
+    <asminfo output="${assemblyinfo.cs}" language="CSharp" failonerror="false">
+      <imports>
+        <import namespace="System" />
+        <import namespace="System.Reflection" />
+        <import namespace="System.Runtime.CompilerServices" />
+        <import namespace="System.Runtime.InteropServices" />
+        <import namespace="System.Security" if="${assembly.allow-partially-trusted-callers}" />
+      </imports>
+      <attributes>
+        <attribute type="CLSCompliantAttribute" value="${assembly.is-cls-compliant}" />
+        <attribute type="ComVisibleAttribute" value="${assembly.is-com-visible}" />
+        <attribute type="GuidAttribute" value="${assembly.guid}" if="${assembly.guid != ''}" />
+        <attribute type="AssemblyTitleAttribute" value="${assembly.title}" />
+        <attribute type="AssemblyDescriptionAttribute" value="${assembly.description}" />
+        <attribute type="AssemblyCompanyAttribute" value="${assembly.company}" />
+        <attribute type="AssemblyProductAttribute" value="${assembly.product}" />
+        <attribute type="AssemblyCopyrightAttribute" value="${assembly.copyright}" />
+        <attribute type="AssemblyVersionAttribute" value="${assembly.version}" />
+        <attribute type="AssemblyInformationalVersionAttribute" value="${assembly.version.informational}" />
+        <attribute type="AssemblyFileVersionAttribute" value="${assembly.version.informational}" />
+        <attribute type="AssemblyDelaySignAttribute" value="false" />
 
-				<attribute asis="true" type="AllowPartiallyTrustedCallersAttribute" if="${assembly.allow-partially-trusted-callers}" />
-			</attributes>
-		</asminfo>
-	</target>
+        <attribute asis="true" type="AllowPartiallyTrustedCallersAttribute" if="${assembly.allow-partially-trusted-callers}" />
+      </attributes>
+    </asminfo>
+  </target>
 
-	<!--Build options-->
-	<target name="build.options.setframework2.0">
-		<property name="nant.settings.currentframework" value="net-2.0" />
-		<property name="current.build.defines" value="NET,DOTNET2" />
-		<property name="link.sdkdoc.version" value="SDK_v2_0" />
-		<property name="merge.targetplatform" value="v2" />
+  <!--Build options-->
+  <target name="build.options.setframework2.0">
+    <property name="nant.settings.currentframework" value="net-2.0" />
+    <property name="current.build.defines" value="NET,DOTNET2" />
+    <property name="link.sdkdoc.version" value="SDK_v2_0" />
+    <property name="merge.targetplatform" value="v2" />
 
-		<!-- If DevEnvDir exists, we grab it, otherwise we try if the default location (if it exists) -->
-		<if test="${environment::variable-exists('DevEnvDir')}">
-			<property name="dev.env.dir" value="${environment::get-variable('DevEnvDir')}" />
-		</if>
-		<if test="${not environment::variable-exists('DevEnvDir')}">
-			<property name="default.dev.env.dir" value="%ProgramFiles%\Microsoft Visual Studio 8\Common7\IDE" />
-			<if test="${directory::exists(default.dev.env.dir)}">
-				<property name="dev.env.dir" value="${default.dev.env.dir}" />
-			</if>
-		</if>
-		<property name="build.msbuild"	value="false" overwrite="false" />
-		<property name="project.vsproj" value="${project::get-name()}-vs2005.csproj" />
-	</target>
+    <!-- If DevEnvDir exists, we grab it, otherwise we try if the default location (if it exists) -->
+    <if test="${environment::variable-exists('DevEnvDir')}">
+      <property name="dev.env.dir" value="${environment::get-variable('DevEnvDir')}" />
+    </if>
+    <if test="${not environment::variable-exists('DevEnvDir')}">
+      <property name="default.dev.env.dir" value="%ProgramFiles%\Microsoft Visual Studio 8\Common7\IDE" />
+      <if test="${directory::exists(default.dev.env.dir)}">
+        <property name="dev.env.dir" value="${default.dev.env.dir}" />
+      </if>
+    </if>
+    <property name="build.msbuild"	value="false" overwrite="false" />
+    <property name="project.vsproj" value="${project::get-name()}-vs2005.csproj" />
+  </target>
 
-	<target name="build.setup" depends="build.common.init, build.assembly.generateassemblyinfo">
+  <target name="build.setup" depends="build.common.init, build.assembly.generateassemblyinfo">
 
-		<mkdir dir="${path.build}"/>
-	
-		<fileset id="project.sourcefile" >
-			<include name="${path.src}/**/*.cs" />
-			<exclude name="${path.src}/obj/**/*.cs" />
-			<exclude name="${path.src}/bin/**/*.cs" />
-		</fileset>
+    <mkdir dir="${path.build}"/>
 
-		<resourcefileset id="project.resourcefile"  dynamicprefix="true" >
-			<include name="${path.src}/**/*.resx" />
-			<exclude name="${path.src}/obj/**/*.resx" />
-			<exclude name="${path.src}/bin/**/*.resx" />
-		</resourcefileset>
+    <fileset id="project.sourcefile" >
+      <include name="${path.src}/**/*.cs" />
+      <exclude name="${path.src}/obj/**/*.cs" />
+      <exclude name="${path.src}/bin/**/*.cs" />
+    </fileset>
 
-		<property name="build.csc.keyfile" value='/keyfile:"${project.keyfile}"' />
+    <resourcefileset id="project.resourcefile"  dynamicprefix="true" >
+      <include name="${path.src}/**/*.resx" />
+      <exclude name="${path.src}/obj/**/*.resx" />
+      <exclude name="${path.src}/bin/**/*.resx" />
+    </resourcefileset>
 
-	</target>
+    <property name="build.csc.keyfile" value='/keyfile:"${project.keyfile}"' />
 
-	<target name="compile-winform" depends="build.setup" >
-		<property name="assembly.outputfile" value="${path.build}/${project.name}.exe" />
-		<csc
+  </target>
+
+  <target name="compile-winform" depends="build.setup" >
+    <property name="assembly.outputfile" value="${path.build}/${project.name}.exe" />
+    <csc
 			 target="winexe"
 			 debug="Enable"
 			 optimize="false"
@@ -169,85 +171,121 @@
 			 doc="${path.build}/${project.name}.xml"
 			 rebuild="true" >
 
-			<references refid="project.references" />
-			<resources refid="project.resourcefile" />
-			<sources refid="project.sourcefile" />
-			<arg line="${build.csc.keyfile}" if="${project.option.signassembly}" />
-			<arg line="/win32icon:${project.iconfile}" if="${project.iconfile!=''}" />
-		</csc>
-	</target>
+      <references refid="project.references" />
+      <resources refid="project.resourcefile" />
+      <sources refid="project.sourcefile" />
+      <arg line="${build.csc.keyfile}" if="${project.option.signassembly}" />
+      <arg line="/win32icon:${project.iconfile}" if="${project.iconfile!=''}" />
+    </csc>
+  </target>
 
-	<target name="compile-dll" depends="build.setup" >
-		<property name="assembly.outputfile" value="${path.build}/${project.name}.dll" />
-		<echo message="assembly.outputfile=${assembly.outputfile}" />
-		<!--<echo message="${fileset::to-string('project.sourcefile')}"/>-->
-		<csc warninglevel="3"
+  <target name="compile-dll" depends="build.setup" >
+    <property name="assembly.outputfile" value="${path.build}/${project.name}.dll" />
+    <echo message="assembly.outputfile=${assembly.outputfile}" />
+    <!--<echo message="${fileset::to-string('project.sourcefile')}"/>-->
+    <csc warninglevel="3"
 			 target="library"
-			 debug="Enable"
+			 debug="Full"
 			 optimize="false"
 			 warnaserror="false"
 			 output="${assembly.outputfile}"
 			 doc="${path.build}/${project.name}.xml"
-			 rebuild="true">
+			 rebuild="true"
+       verbose="false">
 
-			<references refid="project.references" />
-			<resources refid="project.resourcefile" />
-			<sources refid="project.sourcefile" />
-			<arg line="${build.csc.keyfile}" if="${project.option.signassembly}" />
-		</csc>
-	</target>
+      <references refid="project.references" />
+      <resources refid="project.resourcefile" />
+      <sources refid="project.sourcefile" />
+      <arg line="${build.csc.keyfile}" if="${project.option.signassembly}" />
+    </csc>
+  </target>
 
-	<target name="build.copyreferences">
-		<copy todir="${path.build}" overwrite="false" flatten="true">
-			<fileset refid="project.references" />
-		</copy>
-	</target>
+  <target name="build.copyreferences">
+    <copy todir="${path.build}" overwrite="false" flatten="true">
+      <fileset refid="project.references" />
+    </copy>
+  </target>
 
-	<!--Post build process-->
-	
-	<!--fxcop-->
-	<target name="postbuild.fxcop" depends="postbuild.common.init">
-		<property name="postbuild.fxcop.output" value="${path.logdir}/fxcop-${assembly.product}.xml" />
-		<property name="path.tools.fxcop" value="C:\Program Files\Microsoft FxCop 1.36" />
+  <!--Post build process-->
 
-		<!--commandline="${postbuild.tools.fxcopcommandline}"-->
-		<exec program="${path.tools.fxcop}\fxcopcmd.exe" failonerror="true" verbose="true">
-			<arg value='/f:"${path::get-full-path(assembly.outputfile)}"' />
-			<arg value='/o:"${path::get-full-path(postbuild.fxcop.output)}"' />
-			<arg value='/d:"${path::get-full-path(path.build)}"' />
-		</exec>
-	</target>
+  <!--fxcop-->
+  <target name="postbuild.fxcop" depends="postbuild.common.init">
+    <property name="postbuild.fxcop.output" value="${path.logdir}/fxcop-${assembly.product}.xml" />
+    <property name="path.tools.fxcop" value="C:\Program Files\Microsoft FxCop 1.36" />
 
-	<!--simian-->
-	<target name="postbuild.simian" depends="postbuild.common.init">
-		<property name="path.tools.simian" value="C:\Program Files\simian" />
-		<property name="build.tools.simian" value="${path.tools.simian}/simian-2.2.24.exe" />
-		<property name="postbuild.simian.output" value="${path.logdir}/simian-${assembly.product}.xml" />
+    <!--commandline="${postbuild.tools.fxcopcommandline}"-->
+    <exec program="${path.tools.fxcop}\fxcopcmd.exe" failonerror="true" verbose="true">
+      <arg value='/f:"${path::get-full-path(assembly.outputfile)}"' />
+      <arg value='/o:"${path::get-full-path(postbuild.fxcop.output)}"' />
+      <arg value='/d:"${path::get-full-path(path.build)}"' />
+    </exec>
+  </target>
 
-		<echo message="Running Simian on files found at:${path::get-full-path(path.src)}/**/*.cs"/>
-		<!--commandline="${postbuild.tools.fxcopcommandline}"-->
-		<exec program="${build.tools.simian}" failonerror="true" verbose="true">
-			<arg value='-includes="${path::get-full-path(path.src)}/**/*.cs"' />
-			<arg value='-formatter=xml:"${path::get-full-path(postbuild.simian.output)}"' />
-		</exec>
-	</target>
-	
-	<!--Utility function-->
-	
-	
-	<!--Debug functions-->
-	<script language="C#" prefix="fileset" >
+  <!--simian-->
+  <target name="postbuild.simian" depends="postbuild.common.init">
+    <property name="path.tools.simian" value="C:\Program Files\simian" />
+    <property name="build.tools.simian" value="${path.tools.simian}/simian-2.2.24.exe" />
+    <property name="postbuild.simian.output" value="${path.logdir}/simian-${assembly.product}.xml" />
 
-		<references>
-			<include name="System.Dll"/>
-		</references>
-		<imports>
-			<import namespace="NAnt.Core.Types"/>
-			<import namespace="System.Collections.Specialized"/>
-		</imports>
+    <echo message="Running Simian on files found at:${path::get-full-path(path.src)}/**/*.cs"/>
+    <!--commandline="${postbuild.tools.fxcopcommandline}"-->
+    <exec program="${build.tools.simian}" failonerror="true" verbose="true">
+      <arg value='-includes="${path::get-full-path(path.src)}/**/*.cs"' />
+      <arg value='-formatter=xml:"${path::get-full-path(postbuild.simian.output)}"' />
+    </exec>
+  </target>
 
-		<code>
-			<![CDATA[
+  <!--Utility function-->
+  <script language="C#" prefix="utils">
+    <code>
+      <![CDATA[
+      [Function("dump-all-variables")]
+      public String DumpAllVariables(Project project)
+      {
+          StringBuilder results = new StringBuilder();
+          foreach(DictionaryEntry de in project.Properties)
+          {
+               if(((String) de.Key).StartsWith("nant."))
+              {
+                  continue;
+              }  
+             results.AppendFormat("{0}: {1}\n", de.Key, de.Value);
+             
+          } 
+          return results.ToString();
+      }
+  ]]>
+    </code>
+  </script>
+
+  <target name="display-current-runtime">
+    <echo message="" />
+    <echo message="----------------------------------------------------------" />
+    <echo message=" ${framework::get-description(framework::get-target-framework())}" />
+    <echo message="----------------------------------------------------------" />
+    <echo message="" />
+    <echo message="framework : ${framework::get-target-framework()}" />
+    <echo message="description : ${framework::get-description(framework::get-target-framework())}" />
+    <echo message="sdk directory : ${framework::get-sdk-directory(framework::get-target-framework())}" />
+    <echo message="framework directory : ${framework::get-framework-directory(framework::get-target-framework())}" />
+    <echo message="assembly directory : ${framework::get-assembly-directory(framework::get-target-framework())}" />
+    <echo message="runtime engine : ${framework::get-runtime-engine(framework::get-target-framework())}" />
+    <echo message="" />
+  </target>
+
+  <!--Debug functions-->
+  <script language="C#" prefix="fileset" >
+
+    <references>
+      <include name="System.Dll"/>
+    </references>
+    <imports>
+      <import namespace="NAnt.Core.Types"/>
+      <import namespace="System.Collections.Specialized"/>
+    </imports>
+
+    <code>
+      <![CDATA[
        [Function("contains")]
        public bool Contains( string fsetID, string filepath ) {
            bool found = false;
@@ -271,6 +309,6 @@
            return results.ToString();
        }
        ]]>
-		</code>
-	</script>
+    </code>
+  </script>
 </project>
