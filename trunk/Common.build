@@ -214,7 +214,7 @@
     <property name="path.tools.fxcop" value="C:\Program Files\Microsoft FxCop 1.36" />
 
     <!--commandline="${postbuild.tools.fxcopcommandline}"-->
-    <exec program="${path.tools.fxcop}\fxcopcmd.exe" failonerror="true" verbose="true">
+    <exec program="${path.tools.fxcop}\fxcopcmd.exe" failonerror="false" verbose="true">
       <arg value='/f:"${path::get-full-path(assembly.outputfile)}"' />
       <arg value='/o:"${path::get-full-path(postbuild.fxcop.output)}"' />
       <arg value='/d:"${path::get-full-path(path.build)}"' />
