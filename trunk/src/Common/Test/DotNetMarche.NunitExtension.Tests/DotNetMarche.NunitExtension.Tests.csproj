@@ -12,7 +12,8 @@
     <AssemblyName>DotNetMarche.NunitExtension.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AssemblyOriginatorKeyFile>..\..\..\DotNetMarche.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\..\DotNetMarche.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,9 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ExternalLibs\Testing\Nunit\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\..\ExternalLibs\Testing\Nunit\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -54,8 +55,13 @@
     <Compile Include="RandomizerFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetMarche.NunitExtension\DotNetMarche.NunitExtension.csproj">
-      <Project>{446EA380-C50C-444A-8276-F69E29F3CABB}</Project>
+    <None Include="..\..\..\..\DotNetMarche.snk">
+      <Link>DotNetMarche.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Specific\DotNetMarche.NunitExtension\DotNetMarche.NunitExtension.csproj">
+      <Project>{AD3ECA09-AE91-4629-BCED-9065F0F93C84}</Project>
       <Name>DotNetMarche.NunitExtension</Name>
     </ProjectReference>
   </ItemGroup>

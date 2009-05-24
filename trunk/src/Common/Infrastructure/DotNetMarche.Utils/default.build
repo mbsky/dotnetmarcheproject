@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding='iso-8859-1' ?>
 <project
 	name="DotNetMarche.Utils"
-	default="build"
-	xmlns="http://nant.sf.net/release/0.85/nant.xsd"
-> 
-	<property name="path.root" value="../../.." />
-	<include buildfile="${path.root}/Common.build" />
- 
-	<target name="init" depends="common.init">
-		<property name="assembly.version" value="1.0.2.0" />
-		<property name="assembly.description" value="DotNetMarche.Utils - Various utilities for every other project of the suite" />
- 
-		<assemblyfileset id="project.references" basedir="${build.dir}">
+  default="build"
+	xmlns="http://nant.sf.net/nightly/2009-01-30-0.86/nant.xsd">
 
-		</assemblyfileset>
-	</target>
+		<property name="path.root" value="../../../.." />
+		<include buildfile="${path.root}/Common.build" />
 
-	<target name="generate-assemblyinfo" depends="init common.generate-assemblyinfo" />
+		<target name="project.options.init" depends="build.common.init" >
+			<property name="path.src" value="."/>
+			<property name="project.name" value="DotNetMarche.Utils"/>
 
-	<target name="build" description="Build ${project::get-name()}" depends="generate-assemblyinfo common.compile-dll" />
+			<property name="project.version" value="1.3.0.0" />
+			<property name="project.keyfile" value="${path.root}/DotNetMarche.snk" dynamic="true" />
+      
+      <fileset id="project.references" >
+          <include name="${path.framework.libs}/System.Data.Entity.dll"/>
+      </fileset>
 
+		</target>
+
+		<target name="build" depends="project.options.init,  build.assembly.getrevision.svn, compile-dll" />
+
+  <target name="build.fullintegration" depends="build, postbuild.fxcop, postbuild.simian">
+    
+  </target>
 </project>

@@ -8,7 +8,7 @@ using DotNetMarche.Infrastructure.Base;
 using DotNetMarche.Infrastructure.Logging;
 using DotNetMarche.TestHelpers.BaseTests;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 using Rhino.Mocks;
 using RhinoIs = Rhino.Mocks.Constraints.Is;
 

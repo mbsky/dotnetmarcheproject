@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding='iso-8859-1' ?>
+<project
+	name="DotNetMarcheCommon"
+  default="build"
+	xmlns="http://nant.sf.net/nightly/2009-01-30-0.86/nant.xsd">
+
+  <property name="path.root" value="../../.." />
+  <include buildfile="${path.root}/Common.build" />
+
+  <fileset id="buildfiles.all">
+    <include name="DotNetMarche.Utils/default.build" />
+    <include name="DotNetMarche.Infrastructure/default.build" />
+    <include name="DotNetMarche.Infrastructure.Concrete/default.build" />
+    <include name="DotNetMarche.TestHelpers/default.build" />
+    <include name="Specific/default.build" />
+  </fileset>
+
+  <target name="build">
+    <nant target="build">
+      <buildfiles refid="buildfiles.all" />
+    </nant>
+  </target>
+
+  <target name="build.fullintegration">
+    <nant target="build.fullintegration">
+      <buildfiles refid="buildfiles.all" />
+    </nant>
+  </target>
+
+</project>

@@ -4,7 +4,7 @@ using System.Text;
 using DotNetMarche.Common.Test.TestHelpers.Fluent.EntityForTest;
 using Nablasoft.Test.UnitTest;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.Common.Test.TestHelpers.Fluent
 {

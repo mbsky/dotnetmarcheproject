@@ -8,7 +8,7 @@ using DotNetMarche.Common.Test.Concrete.Castle.AOP.TestSuite1.ExtClasses;
 using DotNetMarche.Infrastructure.Castle.AOP;
 using Nablasoft.Castle.Windsor.AOP.Tests.HelperClasses;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 using Rhino.Mocks;
 
 using CastleIInvocation = OrigCastle::Castle.Core.Interceptor.IInvocation;

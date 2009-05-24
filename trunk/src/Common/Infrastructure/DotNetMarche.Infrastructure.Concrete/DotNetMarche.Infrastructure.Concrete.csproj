@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\DotNetMarche.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\..\DotNetMarche.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,15 +35,15 @@
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ExternalLibs\Logging\log4net.dll</HintPath>
+      <HintPath>..\..\..\..\ExternalLibs\NHibernate\log4net.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=2.0.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ExternalLibs\NHibernate\NHibernate.dll</HintPath>
+      <HintPath>..\..\..\..\ExternalLibs\NHibernate\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.Linq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NHibernate.Linq, Version=2.0.0.0, Culture=neutral, PublicKeyToken=ec5f0d88a9b80ecb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Projects\NHibernate.Linq.Alt\NHibernate.Linq\bin\Debug\NHibernate.Linq.dll</HintPath>
+      <HintPath>..\..\..\..\ExternalLibs\NHibernate\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -74,6 +74,11 @@
       <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
       <Name>DotNetMarche.Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\DotNetMarche.snk">
+      <Link>DotNetMarche.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

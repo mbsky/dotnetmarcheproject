@@ -6,7 +6,7 @@ using DotNetMarche.Common.Test.Infrastructure.Entities;
 using DotNetMarche.Common.Test.Infrastructure.Entities.ForEntityIdFinder;
 using DotNetMarche.Infrastructure.Helpers;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.Common.Test.Infrastructure
 {

@@ -10,7 +10,7 @@ using DotNetMarche.Infrastructure.Data;
 using DotNetMarche.TestHelpers.BaseTests;
 using DotNetMarche.TestHelpers.Data;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.Common.Test.Infrastructure.Data
 {

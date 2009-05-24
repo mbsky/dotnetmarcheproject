@@ -14,7 +14,7 @@ using DotNetMarche.TestHelpers.Data;
 using DotNetMarche.TestHelpers.Reflection;
 using NHibernate;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 using Rhino.Mocks;
 
 namespace DotNetMarche.Common.Test.Infrastructure.HelperClasses

@@ -7,7 +7,7 @@ using DotNetMarche.Common.Test.AuxClasses;
 using DotNetMarche.Infrastructure.Concrete;
 using DotNetMarche.Utils;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.Common.Test.Utils
 {

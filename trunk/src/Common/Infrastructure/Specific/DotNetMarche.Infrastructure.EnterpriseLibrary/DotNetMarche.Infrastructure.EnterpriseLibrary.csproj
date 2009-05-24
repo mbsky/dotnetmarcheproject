@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\DotNetMarche.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\..\..\DotNetMarche.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,10 +51,15 @@
     <Compile Include="UnityIoCEngine.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">
+    <ProjectReference Include="..\..\DotNetMarche.Infrastructure\DotNetMarche.Infrastructure.csproj">
       <Project>{75E2529D-95B2-4440-AE35-CEF39D8412F5}</Project>
       <Name>DotNetMarche.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\DotNetMarche.snk">
+      <Link>DotNetMarche.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

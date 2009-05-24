@@ -6,7 +6,6 @@ using Castle.Windsor;
 using Castle.Windsor.Configuration.Interpreters;
 using DotNetMarche.Common.Test.Concrete.Castle.Classes;
 using DotNetMarche.Infrastructure.Castle;
-using DotNetMarche.TestHelpers.SyntaxHelpers;
 using NUnit.Framework;
 
 namespace DotNetMarche.Common.Test.Concrete.Castle

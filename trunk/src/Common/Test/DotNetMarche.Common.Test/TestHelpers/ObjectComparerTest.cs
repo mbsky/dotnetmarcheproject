@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DotNetMarche.Common.Test.Infrastructure.Entities;
+﻿using DotNetMarche.Common.Test.Infrastructure.Entities;
 using DotNetMarche.TestHelpers.Comparison;
 using DotNetMarche.TestHelpers.Constraints;
-using DotNetMarche.TestHelpers.SyntaxHelpers;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace DotNetMarche.Common.Test.TestHelpers
 {
@@ -35,7 +31,7 @@ namespace DotNetMarche.Common.Test.TestHelpers
 		{
 			AnEntity entity1 = AnEntity.Create(10, "test", 100);
 			AnEntity entity2 = AnEntity.Create(10, "test", 110);
-			Assert.That(entity1, Is.Not.ObjectEqual(entity2));
+            Assert.That(entity1, DotNetMarche.TestHelpers.SyntaxHelpers.Is.Not.ObjectEqual(entity2));
 		}
 
 		/// <summary>
@@ -50,7 +46,7 @@ namespace DotNetMarche.Common.Test.TestHelpers
 			c.Matches(entity1);
 			MessageWriter mw = new TextMessageWriter();
 			c.WriteDescriptionTo(mw);
-			Assert.That(entity1, Is.ObjectEqual(entity2));
+            Assert.That(entity1, DotNetMarche.TestHelpers.SyntaxHelpers.Is.ObjectEqual(entity2));
 		}  
 	}
 }

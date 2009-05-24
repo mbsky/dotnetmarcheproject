@@ -6,7 +6,6 @@ using DotNetMarche.Common.Test.TestHelpers.Fluent.EntityForTest;
 using Nablasoft.Test.UnitTest;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using NUnit.Framework.SyntaxHelpers;
 using System.Linq;
 
 namespace DotNetMarche.Common.Test.TestHelpers.Fluent.Extension

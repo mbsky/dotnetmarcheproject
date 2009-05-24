@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Nablasoft.Test.UnitTest;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace DotNetMarche.Common.Test.TestHelpers.Fluent
 {
@@ -11,7 +12,7 @@ namespace DotNetMarche.Common.Test.TestHelpers.Fluent
 
 		[Test]
 		public void TestStandardOr() {
-			Assert.That(4, MyIs.EqualTo(5).Or.EqualTo(4));
+            Assert.That(4, MyIs.EqualTo(5).Or.EqualTo(4));
 		}
 
 		[Test]

@@ -5,7 +5,7 @@ using System.Text;
 using DotNetMarche.Common.Test.Concrete.Classes;
 using DotNetMarche.Infrastructure.Castle;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.Common.Test.Concrete.Castle
 {
