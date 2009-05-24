@@ -7,7 +7,7 @@ using DotNetMarche.Common.Test.Utils.Expressions.AuxClasses;
 using DotNetMarche.TestHelpers.BaseTests;
 using DotNetMarche.Ui.Binding;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 using Rhino.Mocks;
 using RhinoIs = Rhino.Mocks.Constraints.Is;
 namespace DotNetMarche.Common.Test.Ui
@@ -46,7 +46,7 @@ namespace DotNetMarche.Common.Test.Ui
 		{
 			BindingListExt<Customer> sut = CreateBindingListOnBasicCustomersList();
 			sut.Filter = "Name == 'Alkampfer'";
-			Assert.That(sut, Has.Count(1));
+            Assert.That(sut, Has.Count.EqualTo(1));
 		}
 
 		[Test]
@@ -55,7 +55,7 @@ namespace DotNetMarche.Common.Test.Ui
 			BindingListExt<Customer> sut = CreateBindingListOnBasicCustomersList();
 			sut.Filter = "Name == 'Alkampfer'";
 			sut.Filter = String.Empty;
-			Assert.That(sut, Has.Count(4));
+			Assert.That(sut, Has.Count.EqualTo(4));
 		}
 
 		[Test]
@@ -65,7 +65,7 @@ namespace DotNetMarche.Common.Test.Ui
 			sut.Filter = "Name == 'Alkampfer'";
 			sut.Add(new Customer() {Name = "Mark Fields", Age = 28});
 			sut.Filter = String.Empty;
-			Assert.That(sut, Has.Count(5));
+            Assert.That(sut, Has.Count.EqualTo(5));
 		}
 
 		[Test]
@@ -74,7 +74,7 @@ namespace DotNetMarche.Common.Test.Ui
 			BindingListExt<Customer> sut = CreateBindingListOnBasicCustomersList();
 			sut.Filter = "Name == 'Alkampfer'";
 			sut.Add(new Customer() { Name = "Mark Fields", Age = 28 });
-			Assert.That(sut, Has.Count(1));
+            Assert.That(sut, Has.Count.EqualTo(1));
 		}
 
 		[Test]

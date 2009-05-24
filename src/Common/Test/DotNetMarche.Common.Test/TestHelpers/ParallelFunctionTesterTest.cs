@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
-using DotNetMarche.TestHelpers.SyntaxHelpers;
 using DotNetMarche.TestHelpers.Threading;
 using NUnit.Framework;
 

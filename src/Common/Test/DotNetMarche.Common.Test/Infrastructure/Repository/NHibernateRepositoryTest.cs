@@ -9,7 +9,7 @@ using DotNetMarche.Infrastructure.NHibernate;
 using DotNetMarche.TestHelpers.Data;
 using DotNetMarche.TestHelpers.Reflection;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.Common.Test.Infrastructure.Repository
 {

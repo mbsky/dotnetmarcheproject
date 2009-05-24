@@ -11,7 +11,7 @@ namespace DotNetMarche.Infrastructure.Base.Interfaces
 	/// registry is an abstraction of a single common place where everyone can store
 	/// and retrieve global configurations.
 	/// </summary>
-	interface IConfigurationRegistry
+	public interface IConfigurationRegistry
 	{
 		/// <summary>
 		/// Single connection string program use a single configuration

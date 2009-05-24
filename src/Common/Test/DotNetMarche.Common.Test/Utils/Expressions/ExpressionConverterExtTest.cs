@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using DotNetMarche.Common.Test.Utils.Expressions.AuxClasses;
-using DotNetMarche.TestHelpers.SyntaxHelpers;
 using DotNetMarche.Utils.Expressions;
 using DotNetMarche.Utils.Expressions.Concrete;
 using DotNetMarche.Utils.Linq;

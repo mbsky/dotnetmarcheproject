@@ -9,6 +9,7 @@
 
 	<fileset id="buildfiles.all">
 		<include name="projects/default.build" />
+    <include name="Common/default.build" />
 	</fileset>
 
 	<target name="build">

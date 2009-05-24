@@ -7,7 +7,7 @@ using DotNetMarche.Infrastructure;
 using DotNetMarche.Infrastructure.UI;
 using DotNetMarche.TestHelpers.BaseTests;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 using Rhino.Mocks;
 
 namespace DotNetMarche.Common.Test.Infrastructure

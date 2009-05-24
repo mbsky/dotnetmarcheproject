@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DotNetMarche.Infrastructure.Concrete;
-using DotNetMarche.TestHelpers.SyntaxHelpers;
 using DotNetMarche.TestHelpers.Threading;
 using NUnit.Framework;
 

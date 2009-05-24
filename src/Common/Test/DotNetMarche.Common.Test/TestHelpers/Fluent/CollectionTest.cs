@@ -6,7 +6,7 @@ using DotNetMarche.Common.Test.TestHelpers.Fluent.EntityForTest;
 using Nablasoft.Test.UnitTest;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using NUnit.Framework.SyntaxHelpers;
+
 using System.Linq;
 
 namespace DotNetMarche.Common.Test.TestHelpers.Fluent
@@ -20,7 +20,7 @@ namespace DotNetMarche.Common.Test.TestHelpers.Fluent
 			al.Add(new AnEntity("A", "B"));
 			al.Add(new AnEntity("C", "B"));
 			al.Add(new AnEntity("A", "B"));
-			Assert.That(al, Has.All.Property("PropertyB", "B"));
+			Assert.That(al, Has.All.Property("PropertyB").EqualTo("B"));
 			Assert.That(al, MyHas.All.Property("PropertyB", "B"));
 		}
 
@@ -92,9 +92,9 @@ namespace DotNetMarche.Common.Test.TestHelpers.Fluent
 			al.Add(new AnEntity("A", "B"));
 			al.Add(new AnEntity("C", "B"));
 			al.Add(new AnEntity("A", "B"));
-			Assert.That(al, Has.All.Property("PropertyB", "B"));
-			
-			Assert.That(al, Has.Some.Property("PropertyA", "C"));
+			Assert.That(al, Has.All.Property("PropertyB").EqualTo("B"));
+
+            Assert.That(al, Has.Some.Property("PropertyA").EqualTo("C"));
 		}
 
 		[Test]
@@ -104,8 +104,8 @@ namespace DotNetMarche.Common.Test.TestHelpers.Fluent
 			al.Add(new AnEntity("C", "B"));
 			al.Add(new AnEntity("A", "B"));
 
-			Assert.That(al, Has.All.Property("PropertyB", "B"));
-			Assert.That(al, Has.Some.Property("PropertyA", "C"));
+            Assert.That(al, Has.All.Property("PropertyB").EqualTo("B"));
+            Assert.That(al, Has.Some.Property("PropertyA").EqualTo("C"));
 			//MyHas.nunitOne.
 			//Assert.That(al, new NunitOneItemConstraint(new PropertyConstraint("PropertyA", Is.EqualTo("C"))));
 			Assert.That(al, MyHas.One.Property("PropertyA", "C"));

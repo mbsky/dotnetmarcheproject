@@ -8,7 +8,7 @@ using DotNetMarche.Infrastructure.Concrete;
 using DotNetMarche.Infrastructure.Data;
 using DotNetMarche.Infrastructure.Helpers;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.Common.Test.Infrastructure.Repository
 {
@@ -51,7 +51,7 @@ namespace DotNetMarche.Common.Test.Infrastructure.Repository
 				AnEntity GianMaria = AnEntity.Create(10, "Gian Maria", 200);
 				AnEntitySut.Save(GianMaria);
 			}
-			Assert.That(AnEntitySut.TheContext, Has.Count(0));
+			Assert.That(AnEntitySut.TheContext, Has.Count.EqualTo(0));
 		}
 	}
 }
