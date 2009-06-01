@@ -16,7 +16,7 @@ namespace DotNetMarche.PhotoAlbum.Model
          this.SavingChanges += PhotoAlbumEntities_SavingChanges;
       }
 
-      void PhotoAlbumEntities_SavingChanges(object sender, EventArgs e)
+      private void PhotoAlbumEntities_SavingChanges(object sender, EventArgs e)
       {
          foreach (ObjectStateEntry entry in
              ((ObjectContext)sender).ObjectStateManager.GetObjectStateEntries(EntityState.Added))

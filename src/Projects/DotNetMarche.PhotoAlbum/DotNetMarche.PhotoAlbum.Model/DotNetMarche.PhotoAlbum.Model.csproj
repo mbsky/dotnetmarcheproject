@@ -138,8 +138,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
-      <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
+    <ProjectReference Include="..\..\..\Common\Infrastructure\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
+      <Project>{C44BF3FB-FD17-489B-85D0-FBDF463970EA}</Project>
       <Name>DotNetMarche.Utils</Name>
     </ProjectReference>
   </ItemGroup>
