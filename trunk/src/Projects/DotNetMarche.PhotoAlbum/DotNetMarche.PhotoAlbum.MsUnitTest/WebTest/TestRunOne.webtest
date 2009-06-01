@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebTest Name="TestRunOne" Id="68299a96-2843-4148-a2b5-5a001e1f1488" Owner="" Priority="0" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="0" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="" StopOnError="False">
+  <Items>
+    <Request Method="GET" Version="1.1" Url="http://localhost:13164/Login.aspx" ThinkTime="5" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="Extract Hidden Fields" Description="Extract all hidden fields from the response and place them into the test context.">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam2.ReturnUrl" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="?ReturnUrl=" />
+            <RuleParameter Name="EndsWith" Value="&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam3.Login1$LoginButton" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="Login1_LoginButton" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+      <QueryStringParameters>
+        <QueryStringParameter Name="ReturnUrl" Value="%2fPhoto%2fAlbumViewer.aspx" RecordedValue="%2fPhoto%2fAlbumViewer.aspx" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="POST" Version="1.1" Url="http://localhost:13164/Login.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="http://localhost:13164/Photo/AlbumViewer.aspx">
+      <QueryStringParameters>
+        <QueryStringParameter Name="ReturnUrl" Value="%2fPhoto%2fAlbumViewer.aspx" RecordedValue="%2fPhoto%2fAlbumViewer.aspx" CorrelationBinding="{{QueryStringParam2.ReturnUrl}}" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <FormPostHttpBody>
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="/wEPDwUKMTI1OTYwMjkzM2QYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgIFEUxvZ2luMSRSZW1lbWJlck1lBRdMb2dpbjEkTG9naW5JbWFnZUJ1dHRvbkgUSOiKFQUDH7wxuQjKFSIL8v9U" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTVALIDATION" Value="{{$HIDDEN1.__EVENTVALIDATION}}" RecordedValue="/wEWBQKDgZynDQKUvNa1DwL666vYDAKC0q+kBgKnz4ybCE4zNngvEho47GXBUvlNZbNTk7/r" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="Login1$UserName" Value="alkampfer" RecordedValue="alkampfer" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="Login1$Password" Value="12345" RecordedValue="12345" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="Login1$LoginButton" Value="Log In" RecordedValue="Log In" CorrelationBinding="{{FormPostParam3.Login1$LoginButton}}" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="GET" Version="1.1" Url="http://localhost:13164/Photo/" ThinkTime="5" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" />
+    <Request Method="GET" Version="1.1" Url="http://localhost:13164/Photo/PhotoAlbumManager.aspx" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="Extract Hidden Fields" Description="Extract all hidden fields from the response and place them into the test context.">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam2.ctl00$ContentPlaceHolder1$PhotoAlbumManager1$grdPhotoAlbum$ctl04$Button1" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="ctl00_ContentPlaceHolder1_PhotoAlbumManager1_grdPhotoAlbum_ctl04_Button1" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+    </Request>
+    <Request Method="POST" Version="1.1" Url="http://localhost:13164/Photo/PhotoAlbumManager.aspx" ThinkTime="7" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="">
+      <FormPostHttpBody>
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="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" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATEENCRYPTED" Value="{{$HIDDEN1.__VIEWSTATEENCRYPTED}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTVALIDATION" Value="{{$HIDDEN1.__EVENTVALIDATION}}" RecordedValue="b3TZg8Y4dU52zEHEZ7m39CSmWWT8b9am77akBxv9ZrKZlsXPNGJ+qcJtQJHwaArLXrnUwD6VV+ieRiwLo7LJ7vky6xWGjRg0CiYX0HQX2lDIOxUocHiiaJGbBXf0EU0EZ5idt6G6v8ELEXKENsconQ==" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$ContentPlaceHolder1$PhotoAlbumManager1$grdPhotoAlbum$ctl04$Button1" Value="Select" RecordedValue="Select" CorrelationBinding="{{FormPostParam2.ctl00$ContentPlaceHolder1$PhotoAlbumManager1$grdPhotoAlbum$ctl04$Button1}}" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$ContentPlaceHolder1$PhotoAlbumManager1$txtNameForNewElement" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ctl00$ContentPlaceHolder1$PhotoAlbumManager1$txtdescriptionForNewElement" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="POST" Version="1.1" Url="http://localhost:13164/Services/PhotoManager.asmx/ChangePhotoDescription" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="">
+      <StringHttpBody ContentType="application/json; charset=utf-8" InsertByteOrderMark="False">ewAiAHAAaABvAHQAbwBJAGQAIgA6ACIAZQBkAGUAMABhAGMAZAA1AC0AMQAzADMANQAtADEAMQBkAGUALQBiADIAZAA3AC0AMAAwADUAMAA1ADYAYwAwADAAMAAwADgAIgAsACIAbgBlAHcARABlAHMAYwByAGkAcAB0AGkAbwBuACIAOgAiAEcAbABpACAAbwBjAGMAaABpAGUAdAB0AGkAIABzAGkAIABjAGgAaQB1AGQAbwBuAG8ALgAuACEAIQAhACIAfQA=</StringHttpBody>
+    </Request>
+  </Items>
+  <ValidationRules>
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidateResponseUrl, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response URL" Description="Validates that the response URL after redirects are followed is the same as the recorded response URL.  QueryString parameters are ignored." Level="Low" />
+  </ValidationRules>
+</WebTest>

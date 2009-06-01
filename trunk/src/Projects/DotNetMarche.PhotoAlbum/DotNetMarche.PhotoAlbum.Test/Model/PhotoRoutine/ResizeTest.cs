@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using DotNetMarche.PhotoAlbum.Model.PhotoRoutines;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.PhotoAlbum.Test.Model.PhotoRoutine
 {

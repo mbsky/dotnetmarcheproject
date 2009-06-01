@@ -5,14 +5,25 @@ using System.Linq;
 using System.Text;
 using DotNetMarche.PhotoAlbum.Model.PhotoRoutines;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 
 namespace DotNetMarche.PhotoAlbum.Test.Model.PhotoRoutine
 {
    [TestFixture]
    public class FileNameGeneratorTest
    {
-      [Test]
+       [SetUp]
+       public void SetUp()
+       {
+
+           if (Directory.Exists("Photos"))
+           {
+                Directory.Delete("Photos", true);
+           }
+           Directory.CreateDirectory("Photos");
+       }
+
+       [Test]
       public void TestFileNameIsCryptographic()
       {
          String generated = PhotoFileManager.GenerateName();
@@ -22,6 +33,7 @@ namespace DotNetMarche.PhotoAlbum.Test.Model.PhotoRoutine
       [Test]
       public void TestFileNameUnique()
       {
+
          Directory.GetFiles(".\\", "*.jpg").ToList().ForEach(File.Delete);
          String[] names = new[] {"TEST", "TEST", "ANOTHER"};
          Int32 current = 0;
