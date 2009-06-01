@@ -64,10 +64,10 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet.MvcLogic
          else if (element.Name == "action")
             return new MenuLink(
                element.Attribute("text").Value, 
-               Url.RouteUrl("Default", new 
-               {
-                  controller = element.Attribute("controller").Value,
-                  action =  element.Attribute("action").Value, 
+               Url.RouteUrl("Default", new Dictionary<String, Object>()
+               { 
+                  {"controller", element.Attribute("controller").Value},
+                  {"action",  element.Attribute("action").Value}, 
                }));
          throw new NotSupportedException("The element " + element.Name + " is not supported on the menu.");
          

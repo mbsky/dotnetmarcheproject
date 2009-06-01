@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" Theme="Basic"
    CodeBehind="PhotoAlbumManager.aspx.cs" Inherits="DotNetMarche.PhotoAlbum.Ui.AspNet.Photo.PhotoAlbumManager" %>
 
 <%@ Register Src="Controls/PhotoAlbumManager.ascx" TagName="PhotoAlbumManager" TagPrefix="uc1" %>

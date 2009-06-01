@@ -238,6 +238,10 @@
     <Content Include="Photo\PhotoAlbumManager.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Infrastructure\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
+      <Project>{C44BF3FB-FD17-489B-85D0-FBDF463970EA}</Project>
+      <Name>DotNetMarche.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNetMarche.PhotoAlbum.Model\DotNetMarche.PhotoAlbum.Model.csproj">
       <Project>{FEF740EF-2932-43BB-8E86-8B3ED1C33E06}</Project>
       <Name>DotNetMarche.PhotoAlbum.Model</Name>
@@ -412,11 +416,10 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
+          <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>13164</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/PhotoManager</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
