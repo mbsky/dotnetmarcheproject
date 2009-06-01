@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,7 @@ namespace DotNetMarche.PhotoAlbum.Ui.AspNet
       protected void Page_Load(object sender, EventArgs e)
       {
 
+          //Response.Write(AppDomain.CurrentDomain.GetData("DataDirectory"));
       }
 
       protected void Login1_LoggedIn(object sender, EventArgs e)
