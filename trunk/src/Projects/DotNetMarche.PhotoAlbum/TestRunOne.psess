@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<VSPerformanceSession Version="1.00">
+  <Options>
+    <Solution>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.sln</Solution>
+    <CollectionMethod>Instrumentation</CollectionMethod>
+    <AllocationMethod>None</AllocationMethod>
+    <LaunchRuntimeControl>true</LaunchRuntimeControl>
+    <AddReport>true</AddReport>
+    <UniqueReport>Timestamp</UniqueReport>
+    <SamplingMethod>Cycles</SamplingMethod>
+    <CycleCount>10000000</CycleCount>
+    <PageFaultCount>10</PageFaultCount>
+    <SysCallCount>10</SysCallCount>
+    <SamplingCounter Name="" ReloadValue="00000000000f4240" DisplayName="" />
+    <RelocateBinaries>false</RelocateBinaries>
+    <HardwareCounters EnableHWCounters="false" />
+    <EtwSettings />
+    <PdhSettings>
+      <PdhCountersEnabled>false</PdhCountersEnabled>
+      <PdhCountersRate>500</PdhCountersRate>
+      <PdhCounters>
+        <PdhCounter>\Memory\Pages/sec</PdhCounter>
+        <PdhCounter>\PhysicalDisk(_Total)\Avg. Disk Queue Length</PdhCounter>
+        <PdhCounter>\Processor(_Total)\% Processor Time</PdhCounter>
+      </PdhCounters>
+    </PdhSettings>
+  </Options>
+  <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+  <PreinstrumentEvent>
+    <InstrEventExclude>false</InstrEventExclude>
+  </PreinstrumentEvent>
+  <PostinstrumentEvent>
+    <InstrEventExclude>false</InstrEventExclude>
+  </PostinstrumentEvent>
+  <Binaries>
+    <TestBinary>
+      <Path>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.MsUnitTest\obj\Debug\DotNetMarche.PhotoAlbum.MsUnitTest.dll</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>false</Instrument>
+      <Sample>true</Sample>
+      <LaunchProject>true</LaunchProject>
+      <LaunchMethod>Test</LaunchMethod>
+      <StartupDirectory>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.MsUnitTest\bin\Debug\</StartupDirectory>
+      <Arguments />
+      <NetAppHost>IIS</NetAppHost>
+      <NetBrowser>InternetExplorer</NetBrowser>
+      <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+      <ProjRef>{7680A99A-DF77-41C8-9115-635606EC1934}|DotNetMarche.PhotoAlbum.MsUnitTest\DotNetMarche.PhotoAlbum.MsUnitTest.csproj</ProjRef>
+      <ProjPath>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.MsUnitTest\DotNetMarche.PhotoAlbum.MsUnitTest.csproj</ProjPath>
+      <ProjName>TestRunOne</ProjName>
+      <TestId>{68299a96-2843-4148-a2b5-5a001e1f1488}</TestId>
+      <TestName>TestRunOne</TestName>
+    </TestBinary>
+    <ProjBinary>
+      <Path>C:\Develop\dotnetmarcheproject\trunk\src\Common\Infrastructure\DotNetMarche.Utils\obj\Debug\DotNetMarche.Utils.dll</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <Sample>true</Sample>
+      <LaunchProject>true</LaunchProject>
+      <LaunchMethod>Executable</LaunchMethod>
+      <StartupDirectory>C:\Develop\dotnetmarcheproject\trunk\src\Common\Infrastructure\DotNetMarche.Utils\bin\Debug\</StartupDirectory>
+      <Arguments />
+      <NetAppHost>IIS</NetAppHost>
+      <NetBrowser>InternetExplorer</NetBrowser>
+      <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+      <ProjRef>{C44BF3FB-FD17-489B-85D0-FBDF463970EA}|..\..\Common\Infrastructure\DotNetMarche.Utils\DotNetMarche.Utils.csproj</ProjRef>
+      <ProjPath>C:\Develop\dotnetmarcheproject\trunk\src\Common\Infrastructure\DotNetMarche.Utils\DotNetMarche.Utils.csproj</ProjPath>
+      <ProjName>DotNetMarche.Utils</ProjName>
+    </ProjBinary>
+    <ProjBinary>
+      <Path>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.Model\obj\Debug\DotNetMarche.PhotoAlbum.Model.dll</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <Sample>true</Sample>
+      <LaunchProject>true</LaunchProject>
+      <LaunchMethod>Executable</LaunchMethod>
+      <StartupDirectory>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.Model\bin\Debug\</StartupDirectory>
+      <Arguments />
+      <NetAppHost>IIS</NetAppHost>
+      <NetBrowser>InternetExplorer</NetBrowser>
+      <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+      <ProjRef>{FEF740EF-2932-43BB-8E86-8B3ED1C33E06}|DotNetMarche.PhotoAlbum.Model\DotNetMarche.PhotoAlbum.Model.csproj</ProjRef>
+      <ProjPath>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.Model\DotNetMarche.PhotoAlbum.Model.csproj</ProjPath>
+      <ProjName>DotNetMarche.PhotoAlbum.Model</ProjName>
+    </ProjBinary>
+    <ProjBinary>
+      <Path>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.Service\obj\Debug\DotNetMarche.PhotoAlbum.Service.dll</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <Sample>true</Sample>
+      <LaunchProject>true</LaunchProject>
+      <LaunchMethod>Executable</LaunchMethod>
+      <StartupDirectory>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.Service\bin\Debug\</StartupDirectory>
+      <Arguments />
+      <NetAppHost>IIS</NetAppHost>
+      <NetBrowser>InternetExplorer</NetBrowser>
+      <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+      <ProjRef>{A40A6433-7D62-47C0-952F-2D4F13A301D7}|DotNetMarche.PhotoAlbum.Service\DotNetMarche.PhotoAlbum.Service.csproj</ProjRef>
+      <ProjPath>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.Service\DotNetMarche.PhotoAlbum.Service.csproj</ProjPath>
+      <ProjName>DotNetMarche.PhotoAlbum.Service</ProjName>
+    </ProjBinary>
+    <ProjBinary>
+      <Path>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.Ui.AspNet\\bin\DotNetMarche.PhotoAlbum.Ui.AspNet.dll</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <Sample>true</Sample>
+      <LaunchProject>true</LaunchProject>
+      <LaunchMethod>Browser</LaunchMethod>
+      <LaunchUrl>http://localhost:0/</LaunchUrl>
+      <SiteUrl>http://localhost:0/</SiteUrl>
+      <LocalPath>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.Ui.AspNet\</LocalPath>
+      <VRoot>/</VRoot>
+      <NetAppHost>VWD</NetAppHost>
+      <NetBrowser>InternetExplorer</NetBrowser>
+      <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+      <ProjRef>{342D0E21-D11C-483A-A77C-4C925E172F1C}|DotNetMarche.PhotoAlbum.Ui.AspNet\DotNetMarche.PhotoAlbum.Ui.AspNet.csproj</ProjRef>
+      <ProjPath>C:\Develop\dotnetmarcheproject\trunk\src\Projects\DotNetMarche.PhotoAlbum\DotNetMarche.PhotoAlbum.Ui.AspNet\DotNetMarche.PhotoAlbum.Ui.AspNet.csproj</ProjPath>
+      <ProjName>DotNetMarche.PhotoAlbum.Ui.AspNet</ProjName>
+    </ProjBinary>
+  </Binaries>
+  <Launches>
+    <TestBinary>
+      <Path>:TB:{68299a96-2843-4148-a2b5-5a001e1f1488}:TestRunOne:{7680A99A-DF77-41C8-9115-635606EC1934}|DotNetMarche.PhotoAlbum.MsUnitTest\DotNetMarche.PhotoAlbum.MsUnitTest.csproj</Path>
+    </TestBinary>
+  </Launches>
+  <RuntimeMarks>
+    <MarkName>Mark One</MarkName>
+    <MarkName>Mark Two</MarkName>
+    <MarkName>Mark Three</MarkName>
+    <MarkName>Mark Four</MarkName>
+    <MarkName>Mark Five</MarkName>
+    <MarkName>Mark Six</MarkName>
+    <MarkName>Mark Seven</MarkName>
+    <MarkName>Mark Eight</MarkName>
+    <MarkName>Mark Nine</MarkName>
+    <MarkName>Mark Ten</MarkName>
+  </RuntimeMarks>
+</VSPerformanceSession>
