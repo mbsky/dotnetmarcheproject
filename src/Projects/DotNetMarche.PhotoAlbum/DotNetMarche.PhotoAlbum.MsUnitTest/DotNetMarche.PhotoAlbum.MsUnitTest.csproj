@@ -75,6 +75,7 @@
     <Compile Include="MasterLogicTest.cs" />
     <Compile Include="MVCUtils\MyTestUrlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestRunOneCoded.cs" />
     <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
