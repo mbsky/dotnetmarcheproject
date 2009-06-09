@@ -93,13 +93,13 @@ namespace DotNetMarche.PhotoAlbum.Ui.Test.Mvc.Models
             Assert.That(menu[1].MenuItems, Has.Count.EqualTo(1));
         }
 
-        [Test]
-        public void GrabMenuWithActionUrl()
-        {
-            MasterLogic sut = new MasterLogic(new MyTestUrlHelper());
-            List<MenuItem> menu = sut.CreateMenu("SampleFiles\\MenuType1.Xml").MenuItems;
-            Assert.That(menu, Has.Count.EqualTo(2));
-            Assert.That(menu[1].MenuItems[0], Has.Property("Url").EqualTo("/Photo/ManageAlbum"));
-        }
+  [Test]
+  public void GrabMenuWithActionUrl()
+  { 
+      MasterLogic sut = new MasterLogic(new MyTestUrlHelper());
+      List<MenuItem> menu = sut.CreateMenu("SampleFiles\\MenuType1.Xml").MenuItems;
+      Assert.That(menu, Has.Count.EqualTo(2));
+      Assert.That(menu[1].MenuItems[0], Has.Property("Url").EqualTo("/Photo/ManageAlbum"));
+  }
     }
 }
