@@ -10,21 +10,25 @@ namespace DotNetMarche.Validator.Core
 	/// this class encapsulate the logic to handle a collection of validation units. All validation
 	/// units must belong to the same object.
 	/// </summary>
-	public class ValidationUnitCollection {
+	public class ValidationUnitCollection
+	{
 
 		#region Collection Wrapping Methods
 
 		private List<ValidationUnit> mList = new List<ValidationUnit>();
 
-		public void Add(ValidationUnit validationUnit) {
+		public void Add(ValidationUnit validationUnit)
+		{
 			mList.Add(validationUnit);
 		}
 
-		public Int32 Count {
+		public Int32 Count
+		{
 			get { return mList.Count; }
 		}
 
-		public ValidationUnit this[Int32 index] {
+		public ValidationUnit this[Int32 index]
+		{
 			get { return mList[index]; }
 			//set { mList[index] = value; }
 		}
@@ -34,12 +38,13 @@ namespace DotNetMarche.Validator.Core
 		public ValidationResult ValidateObject(
 			ValidationResult validationResult,
 			object objToValidate,
-			ValidationFlags	validationFlags) {
+			ValidationFlags validationFlags)
+		{
 
 			ValidateObject(validationResult, objToValidate, validationFlags,
-			               System.Threading.Thread.CurrentThread.CurrentCulture);
+						   System.Threading.Thread.CurrentThread.CurrentCulture);
 			return validationResult;
-			}
+		}
 
 		/// <summary>
 		/// Validate an object modifying an existing Validation Result.
@@ -52,16 +57,19 @@ namespace DotNetMarche.Validator.Core
 		public void ValidateObject(
 			ValidationResult actualResult,
 			object objToValidate,
-			ValidationFlags	validationFlags,
-			CultureInfo cultureInfo) {
+			ValidationFlags validationFlags,
+			CultureInfo cultureInfo)
+		{
 
-			foreach (ValidationUnit vu in mList) {
-				if (ValdationFlagsUtils.RecursiveValidation(validationFlags) || !vu.IsRecursive) {
+			foreach (ValidationUnit vu in mList)
+			{
+				if (ValdationFlagsUtils.RecursiveValidation(validationFlags) || !vu.IsRecursive)
+				{
 					Boolean validationResult = vu.Validate(actualResult, objToValidate, validationFlags, cultureInfo);
 					if (!validationResult && ValdationFlagsUtils.StopOnFirstError(validationFlags)) break;
 				}
 			}
-			}
+		}
 
 	}
 }

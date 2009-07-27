@@ -13,17 +13,13 @@ namespace DotNetMarche.Validator.Validators.Concrete
 	public class RequiredValidator : BaseValidator {
 
 		private object mNullValue;
-		public RequiredValidator(
-			IValueExtractor valueExtractor,
-			object nullValue)
+		public RequiredValidator(IValueExtractor valueExtractor, object nullValue)
 			: base(valueExtractor) {
 
 			mNullValue = nullValue;
-			}
+		}
 
-		public RequiredValidator(
-			IValueExtractor valueExtractor) : this(valueExtractor, null) {}
-
+		public RequiredValidator(IValueExtractor valueExtractor) : this(valueExtractor, null) {}
 
 		public override SingleValidationResult Validate(object objectToValidate) {
 			object valueToCheck = mValueExtractor.ExtractValue(objectToValidate);

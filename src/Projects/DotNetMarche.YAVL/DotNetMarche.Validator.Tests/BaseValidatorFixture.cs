@@ -1,5 +1,8 @@
 using System;
+using DotNetMarche.Validator.Validators;
 using DotNetMarche.Validator.Validators.Attributes;
+using DotNetMarche.Validator.Validators.Concrete;
+using DotNetMarche.Validator.ValueExtractors;
 using NUnit.Framework;
 
 namespace DotNetMarche.Validator.Tests
@@ -22,6 +25,14 @@ namespace DotNetMarche.Validator.Tests
 		internal class Simple1Field
 		{
 			[Required(cSimpleErrorMessage)] public String field;
+		}
+
+		/// <summary>
+		/// Simple class with only a field 
+		/// </summary>
+		internal class Simple1FieldWithoutAttribute
+		{
+			public String field;
 		}
 
 		internal class Simple1Property
@@ -78,6 +89,37 @@ namespace DotNetMarche.Validator.Tests
 			var v = new Core.Validator();
 			ValidationResult res = v.ValidateObject(s1f);
 			Assert.IsTrue(res, "Object does not validate well");
+		}		
+		
+		[Test]
+		public void TestGoodObjectFluent()
+		{
+			var s1f = new Simple1FieldWithoutAttribute();
+			s1f.field = null;
+			Core.Validator v = new Core.Validator();
+			v.AddRule<Simple1FieldWithoutAttribute>(
+				new RequiredValidator(new NamedValueExtractor("field")),
+				"ErrorMessage");
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.IsFalse(res, "Object does not validate well");
+			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
+			Assert.That(res.ErrorMessages[0], Is.EqualTo("ErrorMessage"));
+		}
+
+		[Test]
+		public void TestGoodObjectFluent2()
+		{
+			var s1f = new Simple1FieldWithoutAttribute();
+			s1f.field = null;
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.For<Simple1FieldWithoutAttribute>()
+	          	.OnMember("field")
+	          	.Required.Message("ErrorMessage"));
+
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.IsFalse(res, "Object does not validate well");
+			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
+			Assert.That(res.ErrorMessages[0], Is.EqualTo("ErrorMessage"));
 		}
 
 		[Test]

@@ -11,6 +11,7 @@ namespace DotNetMarche.Validator.Core
 	/// This class does all the formatting required to have a nicely error messages
 	/// that supports localization.
 	/// </summary>
+	[Obsolete]
 	public class ErrorMessageFormatter {
 
 		#region Constants
