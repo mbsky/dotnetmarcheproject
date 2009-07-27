@@ -112,6 +112,16 @@ namespace DotNetMarche.Validator.Tests
 		}
 
 		[Test]
+		public void NamedValueExtractorWithInvalidField()
+		{
+			NamedValueExtractor nve;
+			nve = new NamedValueExtractor("xxx");
+			var test = new ClassTest1();
+			test.field = 30;
+			Assert.Throws(typeof (ArgumentException), () => nve.ExtractValue(test));
+		}
+
+		[Test]
 		public void ExtractFieldByProperty()
 		{
 			NamedValueExtractor nve;

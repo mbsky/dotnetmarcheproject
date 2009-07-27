@@ -11,24 +11,45 @@ namespace DotNetMarche.Validator.Validators
 {
 	public partial class Rule
 	{
-		private Type _Type { get; set; }
-		private IValueExtractor _Extractor { get; set; }
-		private IValidator _Validator { get; set; }
-		private ErrorMessage _Message { get; set; }
+		private Type Type { get; set; }
+		private IValueExtractor Extractor
+		{
+			get
+			{
+				return _Extractor;
+			}
+			set
+			{
+				_Extractor = value;
+				if (_CreateValidator != null)
+					Validator = _CreateValidator(value);
+			}
+		}
+		private IValueExtractor _Extractor;
 
+		private IValidator Validator { get; set; }
+		private ErrorMessage ErrorMessage { get; set; }
+		private Func<IValueExtractor, IValidator> _CreateValidator;
 		public static Rule For<T>()
 		{
-			return For(typeof (T));
+			return For(typeof(T));
+		}		
+		
+		public static Rule For<T>(Func<T, Object> extractor) 
+		{
+			Rule rule = For(typeof(T));
+			rule._Extractor = new LambdaExtractor<T>(extractor);
+			return rule;
 		}
 
 		public static Rule For(Type type)
 		{
-			return new Rule() {_Type = type};
+			return new Rule() { Type = type };
 		}
 
 		public Rule OnMember(String propertyName)
 		{
-			_Extractor = new NamedValueExtractor(propertyName);
+			Extractor = new NamedValueExtractor(propertyName);
 			return this;
 		}
 
@@ -36,21 +57,33 @@ namespace DotNetMarche.Validator.Validators
 		{
 			get
 			{
-				_Validator = new RequiredValidator(_Extractor);
+				if (Extractor == null)
+					_CreateValidator = e => new RequiredValidator(e);
+				else
+					Validator = new RequiredValidator(Extractor);
 				return this;
 			}
 		}
 
 		public Rule Message(String message)
 		{
-			_Message = message;
+			ErrorMessage = message;
 			return this;
 		}
 
 		internal Rule Configure(Core.Validator validator)
 		{
-			ValidationUnitCollection coll = validator.GetRules(_Type);
-			coll.Add(new ValidationUnit(_Message, _Validator));
+			ValidationUnitCollection coll = validator.GetRules(Type);
+			coll.Add(new ValidationUnit(ErrorMessage, Validator));
+			return this;
+		}
+
+		public Rule IsInRange(Double min, Double max)
+		{
+			if (Extractor == null)
+				_CreateValidator = e => new RangeValueValidator(e, min, max);
+			else
+				Validator = new RangeValueValidator(Extractor, min, max);
 			return this;
 		}
 	}
