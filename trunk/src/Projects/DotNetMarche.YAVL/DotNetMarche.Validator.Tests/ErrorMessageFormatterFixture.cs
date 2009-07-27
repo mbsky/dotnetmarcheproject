@@ -14,7 +14,7 @@ namespace DotNetMarche.Validator.Tests
 		public void TestBasicResourceManager()
 		{
 			Thread.CurrentThread.CurrentCulture = new CultureInfo("En-us");
-			var ra = new RequiredAttribute("Test", "ValidatorTest.ResourcesFiles.TestRes,ValidatorTest", null);
+			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
 			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
 			                                                          SingleValidationResult.GenericError);
 			Assert.AreEqual("This is a test message", msg);
@@ -23,7 +23,7 @@ namespace DotNetMarche.Validator.Tests
 		[Test]
 		public void TestBasicResourceManagerExplicitLocalization()
 		{
-			var ra = new RequiredAttribute("Test", "ValidatorTest.ResourcesFiles.TestRes,ValidatorTest", null);
+			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
 			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
 			                                                          SingleValidationResult.GenericError,
 			                                                          new CultureInfo("IT-it"));
@@ -34,7 +34,7 @@ namespace DotNetMarche.Validator.Tests
 		public void TestBasicResourceManagerLocalization()
 		{
 			Thread.CurrentThread.CurrentCulture = new CultureInfo("IT-it");
-			var ra = new RequiredAttribute("Test", "ValidatorTest.ResourcesFiles.TestRes,ValidatorTest", null);
+			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
 			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
 			                                                          SingleValidationResult.GenericError);
 			Assert.AreEqual("Questa è una stringa di test", msg, "Error message get no localized");
@@ -44,7 +44,7 @@ namespace DotNetMarche.Validator.Tests
 		public void TestBasicResourceManagerLocalizationCultureResourceNotFound()
 		{
 			Thread.CurrentThread.CurrentCulture = new CultureInfo("Ru-ru");
-			var ra = new RequiredAttribute("Test", "ValidatorTest.ResourcesFiles.TestRes,ValidatorTest", null);
+			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
 			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
 			                                                          SingleValidationResult.GenericError);
 			Assert.AreEqual("This is a test message", msg, "Error message get no localized");

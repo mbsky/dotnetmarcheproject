@@ -77,6 +77,7 @@
     <Compile Include="Core\ValidationUnit.cs" />
     <Compile Include="Core\ValidationUnitCollection.cs" />
     <Compile Include="Core\Validator.cs" />
+    <Compile Include="Core\ValidatorFluentInterface.cs" />
     <Compile Include="SingleValidationResult.cs" />
     <Compile Include="Interfaces\IValidator.cs" />
     <Compile Include="Interfaces\IValueExtractor.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Validators\Concrete\NullableValidator.cs" />
     <Compile Include="Validators\Concrete\RangeValueValidator.cs" />
     <Compile Include="Validators\Concrete\RequiredValidator.cs" />
+    <Compile Include="Validators\Rule.cs" />
     <Compile Include="ValueExtractors\Composite\BinaryOperatorValueExtractor.cs" />
     <Compile Include="ValueExtractors\FieldInfoValueExtractor.cs" />
     <Compile Include="ValueExtractors\NamedValueExtractor.cs" />
@@ -99,9 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="validator.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
