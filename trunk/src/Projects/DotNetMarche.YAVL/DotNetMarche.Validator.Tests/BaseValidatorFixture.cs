@@ -33,6 +33,7 @@ namespace DotNetMarche.Validator.Tests
 		internal class Simple1FieldWithoutAttribute
 		{
 			public String field;
+			public Int32 intField;
 		}
 
 		internal class Simple1Property
@@ -120,6 +121,78 @@ namespace DotNetMarche.Validator.Tests
 			Assert.IsFalse(res, "Object does not validate well");
 			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
 			Assert.That(res.ErrorMessages[0], Is.EqualTo("ErrorMessage"));
+		}
+
+		[Test]
+		public void TestGoodObjectFluentExtractorBeforeRequired()
+		{
+			var s1f = new Simple1FieldWithoutAttribute();
+			s1f.field = null;
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.For<Simple1FieldWithoutAttribute>()
+				.Required.OnMember("field")
+				.Message("ErrorMessage"));
+
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.IsFalse(res, "Object does not validate well");
+			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
+			Assert.That(res.ErrorMessages[0], Is.EqualTo("ErrorMessage"));
+		}	
+
+		[Test]
+		public void TestGoodObjectFluentRange()
+		{
+			var s1f = new Simple1FieldWithoutAttribute();
+			s1f.intField = 101;
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.For<Simple1FieldWithoutAttribute>()
+				.OnMember("intField")
+	          	.IsInRange(0, 100)
+				.Message("ErrorMessage"));
+
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.IsFalse(res, "Object does not validate well");
+			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
+			Assert.That(res.ErrorMessages[0], Is.EqualTo("ErrorMessage"));
+		}
+
+		/// <summary>
+		/// Insert in fluent interface the validator before the extractor.
+		/// </summary>
+		[Test]
+		public void TestGoodObjectFluentInsertRangeBeforeExtractor()
+		{
+			var s1f = new Simple1FieldWithoutAttribute();
+			s1f.intField = 101;
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.For<Simple1FieldWithoutAttribute>()
+				.IsInRange(0, 100)
+				.OnMember("intField")
+				.Message("ErrorMessage"));
+
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.IsFalse(res, "Object does not validate well");
+			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
+			Assert.That(res.ErrorMessages[0], Is.EqualTo("ErrorMessage"));
+		}		
+		
+		/// <summary>
+		/// Insert in fluent interface the validator before the extractor.
+		/// </summary>
+		[Test]
+		public void TestGoodObjectFluentLambdaExtractor()
+		{
+			var s1f = new Simple1FieldWithoutAttribute();
+			s1f.intField = 50;
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.For<Simple1FieldWithoutAttribute>(o => o.intField)
+				.IsInRange(0, 100)
+				.Message("ErrorMessage"));
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.IsTrue(res, "Object does not validate well");
+			s1f.intField = -1;
+			res = v.ValidateObject(s1f);
+			Assert.IsFalse(res, "Object does not validate well");
 		}
 
 		[Test]

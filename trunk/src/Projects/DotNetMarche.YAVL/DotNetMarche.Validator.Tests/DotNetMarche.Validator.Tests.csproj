@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseValidatorFixture.cs" />
+    <Compile Include="RangeValueFixture.cs" />
     <Compile Include="GraphValidationFixture.cs" />
     <Compile Include="ProgrammaticValidation\ProgrammaticValidationBaseFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="TypeScannerFixture.cs" />
     <Compile Include="Utils\MockUtils.cs" />
     <Compile Include="ValidationResultFixture.cs" />
+    <Compile Include="VariousEntitiesTest.cs" />
     <Compile Include="ValueExtractorCustomizationFixture.cs" />
     <Compile Include="ValueExtractorTestFixture.cs" />
   </ItemGroup>
@@ -104,6 +106,9 @@
     <None Include="validator.snk" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ResourcesFiles\TestRes.De.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="ResourcesFiles\TestRes.It.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -62,10 +62,6 @@ namespace DotNetMarche.Validator
 			return res.Success;
 		}
 
-		public Boolean ToBoolean() {
-			return this.Success;
-		}
-
 		#endregion 
 
 

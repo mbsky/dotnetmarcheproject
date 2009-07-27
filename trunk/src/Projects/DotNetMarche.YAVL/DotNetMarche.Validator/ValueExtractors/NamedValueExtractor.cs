@@ -39,6 +39,8 @@ namespace DotNetMarche.Validator.ValueExtractors
 		private IValueExtractor CreateInnerExtractor(Type type) {
 			IValueExtractor value = ScanForProperty(type);
 			if (value == null) value = ScanForField(type);
+			if (value == null) 
+				throw new ArgumentException(String.Format("The type {0} does not contain no property or field named {1}", type, mPartName));
 			return value;
 		}
 

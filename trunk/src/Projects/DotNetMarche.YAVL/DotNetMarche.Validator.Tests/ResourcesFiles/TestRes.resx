@@ -120,4 +120,7 @@
   <data name="Test" xml:space="preserve">
     <value>This is a test message</value>
   </data>
+  <data name="TestToken" xml:space="preserve">
+    <value>Expected ${ExpectedValue} Actual ${ActualValue}</value>
+  </data>
 </root>

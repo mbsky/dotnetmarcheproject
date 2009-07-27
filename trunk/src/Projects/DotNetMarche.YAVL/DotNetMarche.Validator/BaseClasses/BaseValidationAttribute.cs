@@ -68,7 +68,7 @@ namespace DotNetMarche.Validator.BaseClasses
 		/// </summary>
 		/// <returns></returns>
 		public IValueExtractor CreateValueExtractor() {
-			return (IValueExtractor) Activator.CreateInstance(mValueExtractorType);
+			return (IValueExtractor) Activator.CreateInstance(ValueExtractorType);
 		}
 
 		/// <summary>
