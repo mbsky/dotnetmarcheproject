@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DotNetMarche.Validator</RootNamespace>
     <AssemblyName>DotNetMarche.Validator</AssemblyName>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>validator.snk</AssemblyOriginatorKeyFile>
     <SccProjectName>
     </SccProjectName>
@@ -65,10 +65,21 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseClasses\BaseValidationAttribute.cs" />
     <Compile Include="BaseClasses\BaseValidator.cs" />
+    <Compile Include="Configuration\Xml\Extractors\BaseExtractor.cs" />
+    <Compile Include="Configuration\Xml\Extractors\MemberExtractorNode.cs" />
+    <Compile Include="Configuration\Xml\ExtratorNode.cs" />
+    <Compile Include="Configuration\Xml\RuleNode.cs" />
+    <Compile Include="Configuration\Xml\Rules\RangeRuleNode.cs" />
+    <Compile Include="Configuration\Xml\Rules\RequiredRuleNode.cs" />
+    <Compile Include="Configuration\Xml\XmlConfigurator.cs" />
+    <Compile Include="Configuration\Xml\XmlHelper.cs" />
     <Compile Include="Core\ErrorMessage.cs" />
     <Compile Include="Core\ErrorMessageFormatter.cs" />
     <Compile Include="Core\InnerValidators\ObjectValidator.cs" />

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<validator name="validatorA">
+		<type name="DotNetMarche.Validator.Tests.Simple1FieldWithoutAttribute, DotNetMarche.Validator.Tests">
+			<member name="field">
+				<required />
+			</member>
+		</type>
+	</validator>
+</configuration>
