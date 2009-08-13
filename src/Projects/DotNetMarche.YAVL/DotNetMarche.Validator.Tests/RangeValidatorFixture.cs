@@ -66,5 +66,36 @@ namespace ValidatorTest
 			Assert.IsFalse(rv.Validate(newObject), "Range incorrect validation");
 			repository.VerifyAll();
 		}
+
+		[Test]
+		public void TestRangeLenght()
+		{
+			var newObject = new object();
+			IValueExtractor ive = MockRepository.GenerateStub<IValueExtractor>();
+			ive.Expect(o => o.ExtractValue(null)).IgnoreArguments().Return("Valid");
+			var rv = new RangeLengthValidator(ive, 100);
+			Assert.IsTrue(rv.Validate(newObject), "Range incorrect validation");
+		}
+
+		[Test]
+		public void TestRangeLenghtWring()
+		{
+			var newObject = new object();
+			IValueExtractor ive = MockRepository.GenerateStub<IValueExtractor>();
+			ive.Expect(o => o.ExtractValue(null)).IgnoreArguments().Return("This is too length exeeds 10 chars");
+			var rv = new RangeLengthValidator(ive, 10);
+			Assert.IsFalse(rv.Validate(newObject), "Range incorrect validation");
+		}
+
+
+		[Test]
+		public void TestRangeNullReturnedNull()
+		{
+			var newObject = new object();
+			IValueExtractor ive = MockRepository.GenerateStub<IValueExtractor>();
+			ive.Expect(o => o.ExtractValue(null)).IgnoreArguments().Return(null);
+			var rv = new RangeLengthValidator(ive, 10);
+			Assert.IsFalse(rv.Validate(newObject), "Range incorrect validation");
+		}
 	}
 }

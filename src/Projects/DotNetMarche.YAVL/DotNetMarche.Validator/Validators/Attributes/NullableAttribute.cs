@@ -9,7 +9,8 @@ namespace DotNetMarche.Validator.Validators.Attributes
 	/// <summary>
 	/// This attribute check if a field cannot be null. 
 	/// </summary>
-	class NullableAttribute : BaseValidationAttribute {
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class, Inherited = true)]
+	public class NullableAttribute : BaseValidationAttribute {
 
 		public NullableAttribute(String errorMessage) : base(errorMessage) {} 
 

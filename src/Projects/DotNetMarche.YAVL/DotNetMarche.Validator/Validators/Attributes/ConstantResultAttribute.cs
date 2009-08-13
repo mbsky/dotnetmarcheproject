@@ -10,6 +10,7 @@ namespace DotNetMarche.Validator.Validators.Attributes
 	/// <summary>
 	/// This attribute is used to generate a test attribute that always fail or pass
 	/// </summary>
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class, Inherited = true)]
 	public class ConstantResultAttribute : BaseValidationAttribute {
 
 		private Boolean mResult;

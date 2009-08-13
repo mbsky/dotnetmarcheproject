@@ -22,15 +22,12 @@ namespace DotNetMarche.Validator.Validators
 			set
 			{
 				_Extractor = value;
-				if (_CreateValidator != null)
-					Validator = _CreateValidator(value);
 			}
 		}
 		private IValueExtractor _Extractor;
-
-		private IValidator Validator { get; set; }
 		private ErrorMessage ErrorMessage { get; set; }
 		private Func<IValueExtractor, IValidator> _CreateValidator;
+
 		public static Rule For<T>()
 		{
 			return For(typeof(T));
@@ -47,6 +44,8 @@ namespace DotNetMarche.Validator.Validators
 		{
 			return new Rule() { Type = type };
 		}
+
+
 
 		public Rule OnMember(String propertyName)
 		{
@@ -67,10 +66,7 @@ namespace DotNetMarche.Validator.Validators
 
 		public Rule SetRequired()
 		{
-			if (Extractor == null)
 				_CreateValidator = e => new RequiredValidator(e);
-			else
-				Validator = new RequiredValidator(Extractor);
 			return this;
 		}
 
@@ -89,17 +85,15 @@ namespace DotNetMarche.Validator.Validators
 		internal Rule Configure(Core.Validator validator)
 		{
 			ValidationUnitCollection coll = validator.GetRules(Type);
-			coll.Add(new ValidationUnit(ErrorMessage, Validator));
+			coll.Add(new ValidationUnit(ErrorMessage, _CreateValidator(Extractor)));
 			return this;
 		}
 
 		public Rule IsInRange(Double min, Double max)
 		{
-			if (Extractor == null)
-				_CreateValidator = e => new RangeValueValidator(e, min, max);
-			else
-				Validator = new RangeValueValidator(Extractor, min, max);
+			_CreateValidator = e => new RangeValueValidator(e, min, max);
 			return this;
 		}
+
 	}
 }
