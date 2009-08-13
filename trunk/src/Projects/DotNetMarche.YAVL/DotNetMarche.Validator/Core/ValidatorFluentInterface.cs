@@ -13,7 +13,12 @@ namespace DotNetMarche.Validator.Core
 
 		public Validator AddRule<T>(IValidator validator, ErrorMessage msg)
 		{
-			ValidationUnitCollection coll = GetRules<T>();
+			return AddRule(typeof (T), validator, msg);
+		}
+
+		public Validator AddRule(Type type, IValidator validator, ErrorMessage msg)
+		{
+			ValidationUnitCollection coll = GetRules(type);
 			coll.Add(new ValidationUnit(msg, validator));
 			return this;
 		}
@@ -23,7 +28,6 @@ namespace DotNetMarche.Validator.Core
 			rule.Configure(this);
 			return this;
 		}
-
 
 		#endregion
 	}

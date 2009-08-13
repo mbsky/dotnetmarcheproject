@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using DotNetMarche.Validator.Validators;
 
 namespace DotNetMarche.Validator.Configuration.Xml
 {
@@ -25,14 +27,20 @@ namespace DotNetMarche.Validator.Configuration.Xml
 			XElement validatorNode = Configuration.Elements("validator").First();
 			foreach (XElement typeNode in validatorNode.Elements("type"))
 			{
-				//A node can have one or more rules.
+				Type currentType = Type.GetType(typeNode.Attribute("name").Value);
+				if (currentType == null)
+					throw new ConfigurationException("Configuration node " + typeNode.ToString() + " validate type " +
+						typeNode.Attribute("name").Value + " that does not exists");
+				//A node can have one or more rules, rules are simply extractor with inner validators
 				foreach (XElement ruleNode in typeNode.Elements())
 				{
-					//now it is time to check type of node to configure the validator.
-
+					IExtratorNode node = XmlHelper.GetExtractorNode(ruleNode);
+					Rule rule = Rule.For(currentType);
+					node.Configure(rule);
+					validator.AddRule(rule);
 				}
 			}
-			return null;
+			return validator;
 		}
 	}
 }

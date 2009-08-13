@@ -82,6 +82,7 @@
     <Compile Include="BaseValidatorFixture.cs" />
     <Compile Include="ConfigurationTests\XmlConfiguratorTest.cs" />
     <Compile Include="ConfigurationTests\XmlRuleNodeTests.cs" />
+    <Compile Include="InheritanceTest.cs" />
     <Compile Include="RangeValueFixture.cs" />
     <Compile Include="GraphValidationFixture.cs" />
     <Compile Include="ProgrammaticValidation\ProgrammaticValidationBaseFixture.cs" />

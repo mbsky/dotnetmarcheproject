@@ -21,6 +21,8 @@ namespace DotNetMarche.Validator.Tests.ConfigurationTests
 		{
 			XmlConfigurator sut = new XmlConfigurator("ConfigurationTests/SampleXmlFiles/ConfigurationA.xml");
 			var validator = sut.CreateValidator();
+			var rules = validator.GetRules(typeof (BaseValidatorFixture.Simple1FieldWithoutAttribute));
+			Assert.That(rules, Has.Count.EqualTo(1));
 		}
 	}
 }

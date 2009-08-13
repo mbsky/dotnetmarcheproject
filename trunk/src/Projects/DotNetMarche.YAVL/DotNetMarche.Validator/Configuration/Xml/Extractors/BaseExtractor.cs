@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using DotNetMarche.Validator.Validators;
 
 namespace DotNetMarche.Validator.Configuration.Xml.Extractors
 {
-	public abstract class BaseExtractor : IXmlSerializable
+	public abstract class BaseExtractor : IXmlSerializable, IExtratorNode
 	{
 		protected BaseExtractor()
 		{
@@ -63,5 +64,19 @@ namespace DotNetMarche.Validator.Configuration.Xml.Extractors
 
 		#endregion
 
+
+		#region IExtratorNode Members
+
+		public Rule Configure(Rule rule)
+		{
+			foreach (IRuleNode node in RuleNodes)
+			{
+				node.Configure(rule);
+			}
+			return rule;
+		}
+
+		protected abstract Rule InnerConfigure(Rule rule );
+		#endregion
 	}
 }

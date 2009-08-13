@@ -21,6 +21,10 @@ namespace DotNetMarche.Validator.Validators.Concrete
 			MaxLength = maxLength;
 		}
 
+		public RangeLengthValidator(IValueExtractor valueExtractor, int maxLength) : this(valueExtractor, 0, maxLength)
+		{
+		}
+
 		public override SingleValidationResult Validate(object objectToValidate)
 		{
 			Object  valueToCheck = mValueExtractor.ExtractValue(objectToValidate);

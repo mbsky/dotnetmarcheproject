@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace DotNetMarche.Validator.Configuration.Xml.Rules
 {
 	[Serializable, XmlRoot("range", Namespace="")]
-	public class RangeRuleNode : IRuleNode
+	public class RangeRuleNode : BaseRuleNode
 	{
 		[XmlAttribute("min")]
 		public Double Min { get; set; }
@@ -17,9 +17,9 @@ namespace DotNetMarche.Validator.Configuration.Xml.Rules
 
 		#region RuleNode Members
 
-		public  Validators.Rule Configure(Validators.Rule rule)
+		protected override Validators.Rule InnerConfigure(Validators.Rule rule)
 		{
-			return rule.SetRequired();
+			return rule.IsInRange(Min, Max);
 		}
 
 		#endregion

@@ -76,6 +76,7 @@
     <Compile Include="Configuration\Xml\Extractors\MemberExtractorNode.cs" />
     <Compile Include="Configuration\Xml\ExtratorNode.cs" />
     <Compile Include="Configuration\Xml\RuleNode.cs" />
+    <Compile Include="Configuration\Xml\Rules\BaseRuleNode.cs" />
     <Compile Include="Configuration\Xml\Rules\RangeRuleNode.cs" />
     <Compile Include="Configuration\Xml\Rules\RequiredRuleNode.cs" />
     <Compile Include="Configuration\Xml\XmlConfigurator.cs" />

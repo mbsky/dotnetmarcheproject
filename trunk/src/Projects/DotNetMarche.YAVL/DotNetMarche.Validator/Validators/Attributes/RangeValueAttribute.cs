@@ -7,6 +7,7 @@ using DotNetMarche.Validator.Validators.Concrete;
 
 namespace DotNetMarche.Validator.Validators.Attributes
 {
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class, Inherited = true)]
 	public class RangeValueAttribute : BaseValidationAttribute {
 
 		#region Constructors

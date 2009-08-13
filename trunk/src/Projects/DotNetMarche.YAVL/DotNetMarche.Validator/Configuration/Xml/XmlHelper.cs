@@ -83,7 +83,7 @@ namespace DotNetMarche.Validator.Configuration.Xml
 		{
 			MappedTypes = new Dictionary<string, Type[]>();
 			 registeredTypes = Assembly.GetExecutingAssembly().GetTypes()
-			.Where(t => !t.IsInterface &&
+			.Where(t => !t.IsInterface && !t.IsAbstract && 
 				(typeof(IRuleNode).IsAssignableFrom(t) || typeof(IExtratorNode).IsAssignableFrom(t))).ToArray();
 			foreach (Type type in registeredTypes)
 			{
