@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace DotNetMarche.Validator.Tests
 {
 	[TestFixture]
-	public class VariousEntitiesTest
+	public class MessageLocalizationTest
 	{
 
 		[Test]
@@ -56,7 +56,7 @@ namespace DotNetMarche.Validator.Tests
 		[Test]
 		public void TestLocalizationItFullFluent()
 		{
-			ErrorMessage sut =new ErrorMessage(() => TestRes.Test);
+			ErrorMessage sut = new ErrorMessage(() => TestRes.Test);
 			Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("It-It");
 			Assert.That(sut.ToString(), Is.EqualTo("Questa è una stringa di test"));
 		}
@@ -64,18 +64,18 @@ namespace DotNetMarche.Validator.Tests
 		[Test]
 		public void TestLocalizationItFullFluentDe()
 		{
-			ErrorMessage sut =new ErrorMessage(() => TestRes.Test);
+			ErrorMessage sut = new ErrorMessage(() => TestRes.Test);
 			Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("De");
 			Assert.That(sut.ToString(), Is.EqualTo("German Value"));
 		}
 
-[Test]
-public void TestLocalizationItFullFluentExplicitCulture()
-{
-	ErrorMessage sut = new ErrorMessage(() => TestRes.Test);
-	Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("En-Us");
-	Assert.That(sut.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("It")), Is.EqualTo("Questa è una stringa di test"));
-}
+		[Test]
+		public void TestLocalizationItFullFluentExplicitCulture()
+		{
+			ErrorMessage sut = new ErrorMessage(() => TestRes.Test);
+			Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("En-Us");
+			Assert.That(sut.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("It")), Is.EqualTo("Questa è una stringa di test"));
+		}
 
 		[Test]
 		public void TestLocalizationItFullFluentExplicitCultureDe()
@@ -115,7 +115,7 @@ public void TestLocalizationItFullFluentExplicitCulture()
 		[Test]
 		public void TestObjectValueExtractor()
 		{
-ObjectValueExtractor sut = new ObjectValueExtractor();
+			ObjectValueExtractor sut = new ObjectValueExtractor();
 			Assert.That(sut.ExtractValue(sut), Is.EqualTo(sut));
 		}
 	}

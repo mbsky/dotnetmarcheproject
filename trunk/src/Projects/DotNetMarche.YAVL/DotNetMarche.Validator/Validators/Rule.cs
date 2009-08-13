@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using DotNetMarche.Validator.Core;
 using DotNetMarche.Validator.Interfaces;
@@ -53,21 +54,35 @@ namespace DotNetMarche.Validator.Validators
 			return this;
 		}
 
+		/// <summary>
+		/// Calling this property insert a required validator
+		/// </summary>
 		public Rule Required
 		{
 			get
 			{
-				if (Extractor == null)
-					_CreateValidator = e => new RequiredValidator(e);
-				else
-					Validator = new RequiredValidator(Extractor);
-				return this;
+				return SetRequired();
 			}
+		}
+
+		public Rule SetRequired()
+		{
+			if (Extractor == null)
+				_CreateValidator = e => new RequiredValidator(e);
+			else
+				Validator = new RequiredValidator(Extractor);
+			return this;
 		}
 
 		public Rule Message(String message)
 		{
-			ErrorMessage = message;
+			ErrorMessage = new ErrorMessage(message); 
+			return this;
+		}
+
+		public Rule Message(Expression<Func<String>> messageLambda)
+		{
+			ErrorMessage = new ErrorMessage(messageLambda);
 			return this;
 		}
 
