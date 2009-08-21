@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+						 assembly="DotNetMarche.Validator.Tests"
+						 namespace="DotNetMarche.Validator.Tests.Extras.NHibernate">
+
+	<class name="EntityBase" table="EntityBase" lazy="false">
+		<id name="Id" column="id" type="System.Int32" unsaved-value="0">
+			<generator class="native" />
+		</id>
+
+		<property name="MyName" column="code" type="System.String" length="50"/>
+		<property name="AnotherProperty" column="name" type="System.String"/>
+	</class>
+
+</hibernate-mapping>
