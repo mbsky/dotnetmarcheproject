@@ -5,6 +5,12 @@
 			<member name="field">
 				<required errorMessage="errorMessages"/>
 			</member>
+			<member name="intField">
+				<range errorMessage="errorMessages">
+					<min>10</min>
+					<max>110</max>
+				</range>
+			</member>
 		</type>
 	</validator>
 </configuration>

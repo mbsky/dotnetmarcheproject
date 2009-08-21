@@ -54,7 +54,21 @@ namespace DotNetMarche.Validator.Core
 		public ValidationResult ValidateObject(
 			object objToValidate)
 		{
-			return ValidateObject(objToValidate, 0);
+			return ValidateObject(objToValidate, ValidationFlags.Standard);
+		}
+
+		public void CheckObject(Object objToValidate)
+		{
+			CheckObject(objToValidate, ValidationFlags.Standard);
+		}
+
+		public void CheckObject(Object objToValidate, ValidationFlags validationFlags)
+		{
+			ValidationResult res = ValidateObject(objToValidate, validationFlags);
+			if (!res)
+			{
+				throw new ValidationException(res.ErrorMessages);
+			}
 		}
 
 		#endregion
@@ -131,7 +145,5 @@ namespace DotNetMarche.Validator.Core
 		}
 
 		#endregion
-
-
 	}
 }

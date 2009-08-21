@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DotNetMarche.Validator.Configuration.Xml;
+using DotNetMarche.Validator.Validators.Concrete;
 using NUnit.Framework;
 
 namespace DotNetMarche.Validator.Tests.ConfigurationTests
@@ -22,7 +23,17 @@ namespace DotNetMarche.Validator.Tests.ConfigurationTests
 			XmlConfigurator sut = new XmlConfigurator("ConfigurationTests/SampleXmlFiles/ConfigurationA.xml");
 			var validator = sut.CreateValidator();
 			var rules = validator.GetRules(typeof (BaseValidatorFixture.Simple1FieldWithoutAttribute));
-			Assert.That(rules, Has.Count.EqualTo(1));
+			Assert.That(rules, Has.Count.EqualTo(2));
+		}
+
+		[Test]
+		public void TestSimpleConfigurationFull()
+		{
+			XmlConfigurator sut = new XmlConfigurator("ConfigurationTests/SampleXmlFiles/ConfigurationA.xml");
+			var validator = sut.CreateValidator();
+			var rules = validator.GetRules(typeof(BaseValidatorFixture.Simple1FieldWithoutAttribute));
+			Assert.That(rules[0], Is.InstanceOf<RequiredValidator>());
+			Assert.That(rules[1], Is.InstanceOf<RangeValueValidator>());
 		}
 	}
 }

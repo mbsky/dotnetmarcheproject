@@ -13,7 +13,7 @@ namespace DotNetMarche.Validator.Tests.ConfigurationTests
 {
 	[TestFixture]
 	public class XmlRuleNodeTests
-	{
+	{ 
 		[Test]
 		public void DeserializationRequired()
 		{
