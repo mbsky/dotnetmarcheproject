@@ -123,4 +123,7 @@
   <data name="TestToken" xml:space="preserve">
     <value>Atteso ${ExpectedValue} Attuale ${ActualValue}</value>
   </data>
+  <data name="XmlTestTooLenght" xml:space="preserve">
+    <value>Il campo è troppo lungo</value>
+  </data>
 </root>

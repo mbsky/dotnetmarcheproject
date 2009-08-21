@@ -8,7 +8,7 @@ namespace DotNetMarche.Validator.Configuration.Xml
 {
 	public interface IExtratorNode
 	{
-		Rule Configure(Rule rule);
+		void Configure(Type messageResourceType, Type typeToValidate, Core.Validator validatorToConfigure);
 	
 	}
 }

@@ -142,7 +142,7 @@ namespace DotNetMarche.Validator.Tests.ConfigurationTests
 		{
 			#region RuleNode Members
 
-			public Validators.Rule Configure(Validators.Rule rule)
+			public Validators.Rule Configure(Type resourceType, Validators.Rule rule)
 			{
 				return rule.SetRequired();
 			}

@@ -76,6 +76,12 @@ namespace DotNetMarche.Validator.Validators
 			return this;
 		}
 
+		public Rule Message(String message, Type resourceManagerTypeName)
+		{
+			ErrorMessage = new ErrorMessage(message, resourceManagerTypeName);
+			return this;
+		}
+
 		public Rule Message(Expression<Func<String>> messageLambda)
 		{
 			ErrorMessage = new ErrorMessage(messageLambda);
@@ -95,5 +101,10 @@ namespace DotNetMarche.Validator.Validators
 			return this;
 		}
 
+		public Rule MaxLength(Int32 maxLenght)
+		{
+			_CreateValidator = e => new RangeLengthValidator(e, maxLenght);
+			return this;
+		}
 	}
 }

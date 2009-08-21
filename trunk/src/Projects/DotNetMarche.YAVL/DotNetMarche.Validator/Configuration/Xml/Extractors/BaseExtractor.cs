@@ -67,13 +67,15 @@ namespace DotNetMarche.Validator.Configuration.Xml.Extractors
 
 		#region IExtratorNode Members
 
-		public Rule Configure(Rule rule)
+		public void Configure(Type messageResourceType, Type typeToValidate, Core.Validator validatorToConfigure)
 		{
 			foreach (IRuleNode node in RuleNodes)
 			{
-				node.Configure(rule);
+				Rule rule = Rule.For(typeToValidate);
+				InnerConfigure(rule);
+				node.Configure(messageResourceType, rule);
+				validatorToConfigure.AddRule(rule);
 			}
-			return rule;
 		}
 
 		protected abstract Rule InnerConfigure(Rule rule );

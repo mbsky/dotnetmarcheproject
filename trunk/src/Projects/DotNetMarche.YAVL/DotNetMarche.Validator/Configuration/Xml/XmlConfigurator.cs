@@ -25,19 +25,30 @@ namespace DotNetMarche.Validator.Configuration.Xml
 		{
 			Core.Validator validator = new Core.Validator();
 			XElement validatorNode = Configuration.Elements("validator").First();
+			Type resourceType = null;
+			XElement resourceTypeNameNode = validatorNode.Elements("resource").FirstOrDefault();
+			if (resourceTypeNameNode != null)
+			{
+				String resourceTypeName = resourceTypeNameNode.Attribute("name").Value;
+
+				resourceType = Type.GetType(resourceTypeName);
+				if (resourceType == null)
+				{
+					throw new ConfigurationErrorsException(
+						String.Format("The type {0} specified for resource is not valid", resourceTypeName));
+				}
+			}
 			foreach (XElement typeNode in validatorNode.Elements("type"))
 			{
 				Type currentType = Type.GetType(typeNode.Attribute("name").Value);
 				if (currentType == null)
-					throw new ConfigurationException("Configuration node " + typeNode.ToString() + " validate type " +
+					throw new ConfigurationErrorsException("Configuration node " + typeNode.ToString() + " validate type " +
 						typeNode.Attribute("name").Value + " that does not exists");
 				//A node can have one or more rules, rules are simply extractor with inner validators
 				foreach (XElement ruleNode in typeNode.Elements())
 				{
 					IExtratorNode node = XmlHelper.GetExtractorNode(ruleNode);
-					Rule rule = Rule.For(currentType);
-					node.Configure(rule);
-					validator.AddRule(rule);
+					node.Configure(resourceType, currentType, validator);
 				}
 			}
 			return validator;

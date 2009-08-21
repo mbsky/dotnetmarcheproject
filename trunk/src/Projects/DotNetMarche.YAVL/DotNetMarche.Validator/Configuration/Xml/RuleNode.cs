@@ -8,6 +8,13 @@ namespace DotNetMarche.Validator.Configuration.Xml
 {
 	public interface IRuleNode
 	{
-		Rule Configure(Rule rule);
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="messageResourceType">This parameter can be null if no localization is chosen. If present it
+		/// represents the localization class to take messages from.</param>
+		/// <param name="rule"></param>
+		/// <returns></returns>
+		Rule Configure(Type messageResourceType, Rule rule);
 	}
 }
