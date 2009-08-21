@@ -60,6 +60,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.DynamicProxy2, Version=2.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\ExternalLibs\Castle\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\ExternalLibs\Logging\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\ExternalLibs\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\ExternalLibs\NHibernate\Required_For_LazyLoading\Castle\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\ExternalLibs\Testing\Nunit\nunit.framework.dll</HintPath>
@@ -82,6 +98,9 @@
     <Compile Include="BaseValidatorFixture.cs" />
     <Compile Include="ConfigurationTests\XmlConfiguratorTest.cs" />
     <Compile Include="ConfigurationTests\XmlRuleNodeTests.cs" />
+    <Compile Include="Extras\NHibernate\EntityBase.cs" />
+    <Compile Include="Extras\NHibernate\NhibernateExtrasTests.cs" />
+    <Compile Include="Extras\NHibernate\SessionHelper.cs" />
     <Compile Include="InheritanceTest.cs" />
     <Compile Include="RangeValueFixture.cs" />
     <Compile Include="GraphValidationFixture.cs" />
@@ -103,6 +122,10 @@
     <Compile Include="ValueExtractorTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DotNetMarche.Validator.Extras\DotNetMarche.Validator.Extras.csproj">
+      <Project>{96666E0B-F025-47B7-8C45-1FFF5EAB2F81}</Project>
+      <Name>DotNetMarche.Validator.Extras</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotNetMarche.Validator\DotNetMarche.Validator.csproj">
       <Project>{1C1F110F-0C85-469E-AD52-1AA7CD060902}</Project>
       <Name>DotNetMarche.Validator</Name>
@@ -158,6 +181,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ConfigurationTests\SampleXmlFiles\ConfigurationB.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Extras\NHibernate\EntityBase.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\DotNetMarche.snk">
+      <Link>DotNetMarche.snk</Link>
+    </None>
+    <None Include="App.config" />
+    <None Include="Extras\NHibernate\NhibernateConfig.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
