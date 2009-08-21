@@ -107,13 +107,5 @@ namespace DotNetMarche.Infrastructure.Castle
 			defaultContext.Dispose();
 		}
 		#endregion
-
-		/// <summary>
-		/// new in the trunk version.
-		/// </summary>
-		public override bool ContainerShouldTrackForDisposal
-		{
-			get { throw new NotImplementedException(); }
-		}
 	}
 }

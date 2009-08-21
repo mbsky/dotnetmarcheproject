@@ -42,15 +42,15 @@ namespace DotNetMarche.Infrastructure.Castle
 		/// <typeparam name="T"></typeparam>
 		/// <param name="values"></param>
 		/// <returns></returns>
-		public T Resolve<T>(params object[] values)
-		{
-			System.Collections.Hashtable arguments = new System.Collections.Hashtable();
-			for (Int32 I = 0; I < values.Length; I += 2)
-			{
-				arguments.Add(values[I], values[I + 1]);
-			}
-			return container.Resolve<T>(arguments);
-		}
+public T Resolve<T>(params object[] values)
+{
+	System.Collections.Hashtable arguments = new System.Collections.Hashtable();
+	for (Int32 I = 0; I < values.Length; I += 2)
+	{
+		arguments.Add(values[I], values[I + 1]);
+	}
+	return container.Resolve<T>(arguments);
+}
 
 		/// <summary>
 		/// This is the version used when I want to specify from external 

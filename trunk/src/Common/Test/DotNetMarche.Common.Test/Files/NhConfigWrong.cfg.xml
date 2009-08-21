@@ -7,6 +7,7 @@
 		<!--This is wrong, because the session manager substitute the connectionstring from the Configuration REgistry-->
 		<property name="connection.connection_string">Data Source=:memory:;Version=3;New=True;</property>
 		<property name="connection.release_mode">on_close</property>
+		<property name='proxyfactory.factory_class'>NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle</property>
 		<property name="show_sql">true</property>
 		<mapping assembly="DotNetMarche.Common.Test"/>
 	</session-factory>

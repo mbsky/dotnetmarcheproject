@@ -8,9 +8,19 @@ namespace DotNetMarche.MsTest.Syntax
 {
 	public partial class Is
 	{
-		public static IConstraint EqualsTo(Object obj)
+		public static ConstraintBuilder EqualsTo(Object obj)
 		{
-			return new EqualsConstraint(obj);
+			return ConstraintBuilder.ForEquals(obj);
+		}
+
+		public static ConstraintBuilder GreaterThan(Object obj)
+		{
+			return ConstraintBuilder.ForGreaterThan(obj);
+		}
+
+		public static ConstraintBuilder LesserThan(Object obj)
+		{
+			return ConstraintBuilder.ForLesserThan(obj);
 		}
 	}
 }
