@@ -15,5 +15,9 @@ namespace DotNetMarche.Validator.BaseClasses
 		}
 		protected IValueExtractor mValueExtractor;
 			
+		protected T Extract<T>(Object obj)
+		{
+			return (T) mValueExtractor.ExtractValue(obj);
+		}
 	}
 }

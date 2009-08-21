@@ -6,7 +6,8 @@ namespace DotNetMarche.Validator
 {
 	[Flags()]
 	public enum ValidationFlags {
-		StopOnFirstError		= 1,
+		Standard			= 0,
+		StopOnFirstError	= 1,
 		RecursiveValidation	= 2
 	}
 

@@ -90,7 +90,15 @@ namespace DotNetMarche.Validator.Tests
 			var v = new Core.Validator();
 			ValidationResult res = v.ValidateObject(s1f);
 			Assert.IsTrue(res, "Object does not validate well");
-		}		
+		}
+
+		[Test]
+		public void TestValidateWithException()
+		{
+			var s1f = new Simple1Field();
+			var v = new Core.Validator();
+			Assert.Throws<ValidationException>(() => v.CheckObject(s1f));
+		}
 		
 		[Test]
 		public void TestGoodObjectFluent()
