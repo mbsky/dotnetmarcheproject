@@ -77,5 +77,14 @@ namespace DotNetMarche.Validator.Tests.ResourcesFiles {
                 return ResourceManager.GetString("TestToken", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field is too long.
+        /// </summary>
+        internal static string XmlTestTooLenght {
+            get {
+                return ResourceManager.GetString("XmlTestTooLenght", resourceCulture);
+            }
+        }
     }
 }

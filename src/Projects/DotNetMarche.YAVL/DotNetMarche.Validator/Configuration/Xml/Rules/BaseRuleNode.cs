@@ -12,13 +12,16 @@ namespace DotNetMarche.Validator.Configuration.Xml.Rules
 		[XmlAttribute("errorMessage")]
 		public String ErrorMessage { get; set; }
 
-
-
 		#region IRuleNode Members
 
-		public Rule Configure(Rule rule)
+		public Rule Configure(Type messageResourceType, Rule rule)
 		{
+			if (messageResourceType == null)
 			return InnerConfigure(rule.Message(ErrorMessage));
+			else
+
+				return InnerConfigure(rule.Message(ErrorMessage, messageResourceType));
+			
 		}
 
 		protected abstract Rule InnerConfigure(Rule rule);

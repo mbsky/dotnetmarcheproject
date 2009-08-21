@@ -120,4 +120,7 @@
   <data name="Test" xml:space="preserve">
     <value>German Value</value>
   </data>
+  <data name="XmlTestTooLenght" xml:space="preserve">
+    <value>[DE]Field is too long</value>
+  </data>
 </root>

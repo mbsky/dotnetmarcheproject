@@ -1,16 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Verify Message Localization-->
 <configuration>
 	<validator name="validatorA">
+		<resource name="DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests" />
 		<type name="DotNetMarche.Validator.Tests.BaseValidatorFixture+Simple1FieldWithoutAttribute, DotNetMarche.Validator.Tests">
 			<member name="field">
-				<required errorMessage="errorMessages"/>
-				<maxlength maxlength="10" errorMessage="Too Lenght" />
-			</member>
-			<member name="intField">
-				<range errorMessage="errorMessages">
-					<min>10</min>
-					<max>110</max>
-				</range>
+				<maxlength maxlength="10" errorMessage="XmlTestTooLenght" />
 			</member>
 		</type>
 	</validator>
