@@ -182,18 +182,18 @@ namespace DotNetMarche.Infrastructure.Data
 
 		#region Static Initialization
 
-		/// <summary>
-		/// Some providers does not implements correctly the ParameterMarkerFormat
-		/// technique to find the syntax of the parameters
-		/// </summary>
-		private static Dictionary<String, String> wrongProviders;
+		///// <summary>
+		///// Some providers does not implements correctly the ParameterMarkerFormat
+		///// technique to find the syntax of the parameters
+		///// </summary>
+		//private static Dictionary<String, String> wrongProviders;
 
 		static DataAccess()
 		{
 			mParametersFormat = new Dictionary<String, String>();
-			wrongProviders = new Dictionary<String, String>();
-			wrongProviders.Add("System.Data.SqlClient.SqlCommand", "@{0}");
-			wrongProviders.Add("System.Data.SQLite.SQLiteCommand", ":{0}");
+			//wrongProviders = new Dictionary<String, String>();
+			mParametersFormat.Add("System.Data.SqlClient.SqlCommand", "@{0}");
+			mParametersFormat.Add("System.Data.SQLite.SQLiteCommand", ":{0}");
 		}
 
 		#endregion
@@ -205,6 +205,7 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <see cref="System.Data.Common.DbConnection.GetSchema(String)"/> method. 
 		/// To cache the format we use a dictionary with command type as a key and
 		/// string format as value.
+		/// Into this dictionary we store also format by connection name, 
 		/// </summary>
 		private readonly static Dictionary<String, String> mParametersFormat;
 
@@ -219,15 +220,11 @@ namespace DotNetMarche.Infrastructure.Data
 		/// <returns></returns>
 		private static String GetParameterFormat(DbCommand command, String connectionStringName)
 		{
-			if (!mParametersFormat.ContainsKey(connectionStringName))
+			String typeName = command.GetType().FullName;
+			if (!mParametersFormat.ContainsKey(typeName))
 			{
-				String typeName = command.GetType().FullName;
-				if (wrongProviders.ContainsKey(typeName))
-				{
-					mParametersFormat.Add(connectionStringName, wrongProviders[typeName]);
-				}
-				else
-				{
+				
+				
 					ConnectionStringSettings cn;
 					if (String.IsNullOrEmpty(connectionStringName))
 						cn = ConfigurationRegistry.MainConnectionString;
@@ -239,13 +236,13 @@ namespace DotNetMarche.Infrastructure.Data
 						conn.ConnectionString = cn.ConnectionString;
 						conn.Open();
 						mParametersFormat.Add(
-											typeName,
-											conn.GetSchema("DataSourceInformation")
-												.Rows[0]["ParameterMarkerFormat"].ToString());
+							typeName,
+							conn.GetSchema("DataSourceInformation")
+								.Rows[0]["ParameterMarkerFormat"].ToString());
 					}
-				}
+				
 			}
-			return mParametersFormat[connectionStringName];
+			return mParametersFormat[typeName];
 		}
 
 		/// <summary>
@@ -260,15 +257,11 @@ namespace DotNetMarche.Infrastructure.Data
 			String typeName = command.GetType().FullName;
 			if (!mParametersFormat.ContainsKey(typeName))
 			{
-				if (wrongProviders.ContainsKey(typeName))
-				{
-					mParametersFormat.Add(typeName, wrongProviders[typeName]);
-				} else
-				{
+				
 					mParametersFormat.Add(typeName,
 					command.Connection.GetSchema("DataSourceInformation")
 						.Rows[0]["ParameterMarkerFormat"].ToString());
-				}
+				
 			}
 			return mParametersFormat[typeName];
 		}

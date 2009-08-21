@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetMarche.Utils, Version=1.3.0.163, Culture=neutral, PublicKeyToken=ec5f0d88a9b80ecb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Artifacts\Builds\net-3.5\DotNetMarche.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Pex.Framework, Version=0.13.40528.2, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\WINDOWS\assembly\GAC_MSIL\Microsoft.Pex.Framework\0.13.40528.2__76a274db078248c8\Microsoft.Pex.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -43,7 +51,9 @@
   <ItemGroup>
     <Compile Include="AssertBaseTest.cs" />
     <Compile Include="ConstraintBaseTest.cs" />
+    <Compile Include="OperatorBaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\PexAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetMarche.MsTest\DotNetMarche.MsTest.csproj">
@@ -53,6 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\TestSuite1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Constraints\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

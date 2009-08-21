@@ -5,9 +5,10 @@ using System.Text;
 
 namespace DotNetMarche.MsTest.Constraints
 {
-	public class EqualsConstraint : ComparisonConstraintBase
+	public class GreaterThanOrEqualConstraint : ComparisonConstraintBase
 	{
-		public EqualsConstraint(object expected) : base(expected, num => num == 0)
+		public GreaterThanOrEqualConstraint(object expected)
+			: base(expected, num => num >= 0)
 		{
 			Expected = expected;
 		}

@@ -6,6 +6,7 @@
 		<property name="connection.driver_class">NHibernate.Driver.SQLite20Driver</property>
 		<property name="connection.connection_string">NhConfig2</property>
 		<property name="connection.release_mode">on_close</property>
+		<property name='proxyfactory.factory_class'>NHibernate.ByteCode.Castle.ProxyFactoryFactory, NHibernate.ByteCode.Castle</property>
 		<property name="show_sql">true</property>
 		<mapping assembly="DotNetMarche.Common.Test"/>
 	</session-factory>

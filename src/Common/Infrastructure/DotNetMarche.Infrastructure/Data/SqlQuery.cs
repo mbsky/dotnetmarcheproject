@@ -101,10 +101,10 @@ namespace DotNetMarche.Infrastructure.Data
 		public void ExecuteReader(Action<IDataReader> func)
 		{
 			DataAccess.Execute(this, () =>
-												{
-													using (IDataReader dr = Command.ExecuteReader())
-														func(dr);
-												});
+			{
+				using (IDataReader dr = Command.ExecuteReader())
+					func(dr);
+			});
 		}
 
 		/// <summary>
@@ -115,25 +115,25 @@ namespace DotNetMarche.Infrastructure.Data
 		public void ExecuteReader(Action<IDataRecord> func)
 		{
 			DataAccess.Execute(this, () =>
-												{
-													using (IDataReader dr = Command.ExecuteReader())
-													{
-														while (dr.Read())
-															func(dr);
-													}
-												});
+			{
+				using (IDataReader dr = Command.ExecuteReader())
+				{
+					while (dr.Read())
+						func(dr);
+				}
+			});
 		}
 
 		public void FillDataTable(DataTable dt)
 		{
 			DataAccess.Execute(this, () =>
-												{
-													using (DbDataAdapter da = Factory.CreateDataAdapter())
-													{
-														da.SelectCommand = Command;
-														da.Fill(dt);
-													}
-												});
+			{
+				using (DbDataAdapter da = Factory.CreateDataAdapter())
+				{
+					da.SelectCommand = Command;
+					da.Fill(dt);
+				}
+			});
 		}
 
 		#endregion

@@ -2,19 +2,18 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using DotNetMarche.MsTest.Constraints;
 using DotNetMarche.MsTest.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DotNetMarche.MsTest.Test
 {
 	/// <summary>
-	/// Summary description for AssertBaseTest
+	/// Summary description for OperatorBaseTest
 	/// </summary>
 	[TestClass]
-	public class AssertBaseTest
+	public class OperatorBaseTest
 	{
-		public AssertBaseTest()
+		public OperatorBaseTest()
 		{
 			//
 			// TODO: Add constructor logic here
@@ -62,66 +61,26 @@ namespace DotNetMarche.MsTest.Test
 		#endregion
 
 		[TestMethod]
-		public void BaseAssert()
+		public void TestBasic1()
 		{
-			Int32 obj = 42;
-			obj.Assert(new EqualsConstraint(42));
+			IConstraint c = Is.LesserThan(100).Or.GreaterThan(200);
+			Assert.IsTrue(c.Validate(99));
+			Assert.IsTrue(c.Validate(201));
+			Assert.IsFalse(c.Validate(150));
 		}
 
 		[TestMethod]
-		public void BaseAssertFluent()
+		public void TestBasic2()
 		{
-			Int32 obj = 42;
-			FluentAssert.That(obj, new EqualsConstraint(42));
+			IConstraint c = Is.LesserThan(100) | Is.GreaterThan(200) & Is.GreaterThan(300);
+			Assert.IsTrue(c.Validate(99));
 		}
 
 		[TestMethod]
-		public void BaseAssertFluentWithSyntaxHelper()
+		public void TestBasicParenthesis()
 		{
-			Int32 obj = 42;
-			FluentAssert.That(obj, Is.EqualsTo(42));
-		}
-
-		[TestMethod]
-		public void BaseAssertFluentWithSyntaxHelperGt()
-		{
-			Int32 obj = 42;
-			FluentAssert.That(obj, Is.GreaterThan(41));
-		}
-
-		[TestMethod]
-		public void BaseAssertFluentWithSyntaxHelperLt()
-		{
-			Int32 obj = 42;
-			FluentAssert.That(obj, Is.LesserThan(43));
-		}
-
-		[TestMethod]
-		public void BaseAssertFluentWithSyntaxHelperLtOrGt()
-		{
-			Int32 obj = 42;
-			FluentAssert.That(obj, Is.LesserThan(100).Or.GreaterThan(200));
-		}
-
-		[TestMethod]
-		public void BaseAssertFluentWithSyntaxHelperLtOrGtR()
-		{
-			Int32 obj = 400;
-			FluentAssert.That(obj, Is.LesserThan(100).Or.GreaterThan(200));
-		}
-
-		[TestMethod]
-		public void BaseAssertFluentWithSyntaxHelperLtOrGtNoWay()
-		{
-			Int32 obj = 150;
-			FluentAssert.That(obj, Is.LesserThan(200).And.GreaterThan(100));
-		}
-
-		[TestMethod]
-		public void BaseAssertFluentWithSyntaxHelperLtOrGtRo()
-		{
-			Int32 obj = 400;
-			Assert.IsTrue(obj < 100 || obj > 200);
+			IConstraint c = (Is.LesserThan(100) | Is.GreaterThan(200)) & Is.GreaterThan(300);
+			Assert.IsFalse(c.Validate(99));
 		}
 	}
 }

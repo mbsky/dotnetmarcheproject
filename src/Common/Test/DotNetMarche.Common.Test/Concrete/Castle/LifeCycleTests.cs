@@ -46,15 +46,20 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 			}
 		}
 
+		/// <summary>
+		/// This test is changed because of castle lifecycle management change
+		/// </summary>
 		[Test]
 		public void TestContained3()
 		{
 			DisposableComponent tran;
-			using (WindsorContainer ioc = new WindsorContainer(new XmlInterpreter(@"Concrete\Castle\Config\config1.xml")))
+			using (WindsorContainer ioc = new WindsorContainer(@"Concrete\Castle\Config\config1.xml"))
 			{
 				tran = ioc.Resolve<DisposableComponent>("TransientDisposableCon");
+				Assert.IsFalse(tran.ITest.IsDisposed);
 			}
-			Assert.IsFalse(tran.ITest.IsDisposed);
+			///This assert was previously IsFalse, because castle does not correctly dispose transient objects at the end of container lifecycle
+			Assert.IsTrue(tran.ITest.IsDisposed);
 		}
 
 		#endregion
@@ -245,10 +250,16 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 				ioc.Release(tran1);
 				ioc.Release(tran2);
 				ioc.Release(tran3);
-				//Inner dependencies does not gets still disposed by release :(
-				Assert.IsFalse(tran1.ITest.IsDisposed);
-				Assert.IsFalse(tran2.ITest.IsDisposed);
-				Assert.IsFalse(tran3.ITest.IsDisposed);
+				//Inner dependencies does not gets still disposed by release :( 
+				//Edit: castle 5888 corrects this, now they are correctly disposed. all of the assert changes
+				//[Old ASSERT]
+				//Assert.IsFalse(tran1.ITest.IsDisposed);
+				//Assert.IsFalse(tran2.ITest.IsDisposed);
+				//Assert.IsFalse(tran3.ITest.IsDisposed);
+				//[New ASSERT]
+				Assert.IsTrue(tran1.ITest.IsDisposed);
+				Assert.IsTrue(tran2.ITest.IsDisposed);
+				Assert.IsTrue(tran3.ITest.IsDisposed);
 				//Released object Yes
 				Assert.IsTrue(tran1.IsDisposed);
 				Assert.IsTrue(tran2.IsDisposed);
@@ -263,6 +274,7 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 		/// <summary>
 		/// this is the standard behavior of the transient object, the inner object gets not disposed when release
 		/// is called
+		/// Edit: Changed in version 5888 now castle correctly dispose everything
 		/// </summary>
 		[Test]
 		public void TestRelease()
@@ -275,8 +287,10 @@ namespace DotNetMarche.Common.Test.Concrete.Castle
 				Assert.IsFalse(tran.IsDisposed);
 				Assert.IsFalse(tran.ITest.IsDisposed);
 				ioc.Release(tran);
+
 				Assert.IsTrue(tran.IsDisposed);
-				Assert.IsFalse(tran.ITest.IsDisposed);
+				//Assert.IsFalse(tran.ITest.IsDisposed); //Old test, castle did not correctly dispsed chained objects
+				Assert.IsTrue(tran.ITest.IsDisposed); //New test, now castle does correct works
 			}
 		}
 

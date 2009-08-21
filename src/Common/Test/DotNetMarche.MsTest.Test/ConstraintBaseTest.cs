@@ -62,10 +62,80 @@ namespace DotNetMarche.MsTest.Test
 		#endregion
 
 		[TestMethod]
-		public void TestMethod1()
+		public void EqualsConstraint()
 		{
 			IConstraint sut = new EqualsConstraint(42);
 			Assert.IsTrue(sut.Validate(42));
+		}
+
+		[TestMethod]
+		public void GreaterThenConstraint()
+		{
+			IConstraint sut = new GreaterThanConstraint(10);
+			Assert.IsTrue(sut.Validate(11));
+		}
+
+		[TestMethod]
+		public void GreaterThenConstraintFalse()
+		{
+			IConstraint sut = new GreaterThanConstraint(10);
+			Assert.IsFalse(sut.Validate(10));
+		}
+
+		[TestMethod]
+		public void LessThenConstraint()
+		{
+			IConstraint sut = new LessThanConstraint(10);
+			Assert.IsTrue(sut.Validate(9));
+		}
+
+		[TestMethod]
+		public void LessThenConstraintFalse()
+		{
+			IConstraint sut = new LessThanConstraint(10);
+			Assert.IsFalse(sut.Validate(10));
+		}
+
+		[TestMethod]
+		public void LessThenOrEqualConstraint()
+		{
+			IConstraint sut = new LessThanOrEqualConstraint(10);
+			Assert.IsTrue(sut.Validate(9));
+		}
+
+		[TestMethod]
+		public void LessThenOrEqualConstraintFalse()
+		{
+			IConstraint sut = new LessThanOrEqualConstraint(10);
+			Assert.IsFalse(sut.Validate(11));
+		}
+
+		[TestMethod]
+		public void LessThenOrEqualConstraintLimit()
+		{
+			IConstraint sut = new LessThanOrEqualConstraint(10);
+			Assert.IsTrue(sut.Validate(10));
+		}
+
+		[TestMethod]
+		public void GreaterThenOrEqualConstraint()
+		{
+			IConstraint sut = new GreaterThanOrEqualConstraint(10);
+			Assert.IsTrue(sut.Validate(11));
+		}
+
+		[TestMethod]
+		public void GreaterThenOrEqualConstraintFalse()
+		{
+			IConstraint sut = new GreaterThanOrEqualConstraint(10);
+			Assert.IsFalse(sut.Validate(9));
+		}
+
+		[TestMethod]
+		public void GreaterThenOrEqualConstraintLimit()
+		{
+			IConstraint sut = new GreaterThanOrEqualConstraint(10);
+			Assert.IsTrue(sut.Validate(10));
 		}
 	}
 }

@@ -12,8 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.MsTest", "Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.MsTest.Test", "Test\DotNetMarche.MsTest.Test\DotNetMarche.MsTest.Test.csproj", "{74A29692-BE5F-4E4F-BC1D-E332A533E3B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMarche.TestHelpers", "Infrastructure\DotNetMarche.TestHelpers\DotNetMarche.TestHelpers.csproj", "{A0D3CD36-443B-4899-A455-7B4BFC955383}"
-EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = DotNetMarche.MsTest1.vsmdi
@@ -31,10 +29,6 @@ Global
 		{74A29692-BE5F-4E4F-BC1D-E332A533E3B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74A29692-BE5F-4E4F-BC1D-E332A533E3B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74A29692-BE5F-4E4F-BC1D-E332A533E3B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0D3CD36-443B-4899-A455-7B4BFC955383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0D3CD36-443B-4899-A455-7B4BFC955383}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0D3CD36-443B-4899-A455-7B4BFC955383}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0D3CD36-443B-4899-A455-7B4BFC955383}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
