@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,7 +13,7 @@ using RhinoIs = Rhino.Mocks.Constraints.Is;
 namespace DotNetMarche.Common.Test.Ui
 {
 	[TestFixture]
-	public class BindingListTest : BaseUtilityTest
+	public class BindingListTest : BaseTestFixture
 	{
 		#region Initialization
 
