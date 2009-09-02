@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,7 @@ using RhinoIs = Rhino.Mocks.Constraints.Is;
 namespace DotNetMarche.Common.Test.Infrastructure
 {
 	[TestFixture]
-	public class GlobalTransactionTest : BaseUtilityTest
+	public class GlobalTransactionTest : BaseTestFixture
 	{
 		#region Initialization and 4 phase test management
 

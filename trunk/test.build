@@ -1,0 +1,18 @@
+<project>
+    <property name="foo" value="bar"/>
+    <property name="fiz" value="buz"/>
+
+    <script language="C#" prefix="util" >
+        <code>
+            <![CDATA[
+            public static void ScriptMain(Project project) 
+            {
+                foreach (DictionaryEntry entry in project.Properties)
+                {
+                    Console.WriteLine("{0}={1}", entry.Key, entry.Value);
+                }
+            }
+            ]]>
+        </code>
+    </script>
+</project>

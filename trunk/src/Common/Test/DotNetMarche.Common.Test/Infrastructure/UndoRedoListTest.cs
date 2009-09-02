@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,7 @@ using Rhino.Mocks;
 namespace DotNetMarche.Common.Test.Infrastructure
 {
 	[TestFixture]
-	public class UndoRedoListTest : BaseUtilityTest 
+	public class UndoRedoListTest : BaseTestFixture 
 	{
 
 		private MockRepository mockRepo;

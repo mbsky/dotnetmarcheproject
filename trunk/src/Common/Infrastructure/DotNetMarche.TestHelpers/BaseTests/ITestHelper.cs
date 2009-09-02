@@ -11,9 +11,14 @@ namespace DotNetMarche.TestHelpers.BaseTests
 	/// </summary>
 	public interface ITestHelper
 	{
-		void FixtureSetUp();
-		void SetUp();
-		void TearDown();
-		void FixtureTearDown();
+		void FixtureSetUp(IBaseTestFixture fixture);
+		void SetUp(IBaseTestFixture fixture);
+		void TearDown(IBaseTestFixture fixture);
+		void FixtureTearDown(IBaseTestFixture fixture);
+	}
+
+	public interface ITestHelperAttribute
+	{
+		ITestHelper Create();
 	}
 }

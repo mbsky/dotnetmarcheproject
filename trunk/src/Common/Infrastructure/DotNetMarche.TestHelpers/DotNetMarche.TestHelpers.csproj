@@ -54,6 +54,7 @@
       <HintPath>..\..\..\..\ExternalLibs\Testing\Rhino\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -68,10 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseTests\BaseUtilityTest.cs" />
-    <Compile Include="BaseTests\BaseUtilityTestWithHelper.cs" />
+    <Compile Include="BaseTests\BaseTestFixture.cs" />
+    <Compile Include="BaseTests\BaseTestFixtureWithHelper.cs" />
+    <Compile Include="BaseTests\BaseTestHelper.cs" />
     <Compile Include="BaseTests\DbTest.cs" />
-    <Compile Include="BaseTests\Helpers\RhinoMockTestHelper.cs" />
+    <Compile Include="BaseTests\Helpers\CustomConfigurationTestHelper.cs" />
+    <Compile Include="BaseTests\IBaseTestFixture.cs" />
     <Compile Include="BaseTests\ITestHelper.cs" />
     <Compile Include="Comparison\ObjectComparer.cs" />
     <Compile Include="Constraints\ObjectEqualConstraint.cs" />

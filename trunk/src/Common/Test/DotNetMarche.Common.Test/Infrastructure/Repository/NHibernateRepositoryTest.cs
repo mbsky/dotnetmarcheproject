@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace DotNetMarche.Common.Test.Infrastructure.Repository
 {
 	[TestFixture]
-	public class NHibernateRepositoryTest : DotNetMarche.TestHelpers.BaseTests.BaseUtilityTest
+	public class NHibernateRepositoryTest : DotNetMarche.TestHelpers.BaseTests.BaseTestFixture
 	{
 		#region Test Management
 
