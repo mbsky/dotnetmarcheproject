@@ -60,6 +60,7 @@
     <Compile Include="Caching\GlobalCache.cs" />
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Caching\NullCache.cs" />
+    <Compile Include="Data\OutputParameter.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Data\UnitOfWorkToken.cs" />
     <Compile Include="Exceptions\DotNetMarcheInfrastructureException.cs" />

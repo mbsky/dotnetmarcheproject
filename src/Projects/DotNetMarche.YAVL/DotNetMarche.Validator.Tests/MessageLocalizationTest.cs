@@ -57,7 +57,7 @@ namespace DotNetMarche.Validator.Tests
 		public void TestLocalizationItFullFluent()
 		{
 			ErrorMessage sut = new ErrorMessage(() => TestRes.Test);
-			Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("It-It");
+			Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("It-It");
 			Assert.That(sut.ToString(), Is.EqualTo("Questa è una stringa di test"));
 		}
 
@@ -65,7 +65,7 @@ namespace DotNetMarche.Validator.Tests
 		public void TestLocalizationItFullFluentDe()
 		{
 			ErrorMessage sut = new ErrorMessage(() => TestRes.Test);
-			Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("De");
+			Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("De");
 			Assert.That(sut.ToString(), Is.EqualTo("German Value"));
 		}
 

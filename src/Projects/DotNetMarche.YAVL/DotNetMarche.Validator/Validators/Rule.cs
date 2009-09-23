@@ -12,6 +12,8 @@ namespace DotNetMarche.Validator.Validators
 {
 	public partial class Rule
 	{
+		#region Inner functions and properties
+
 		private Type Type { get; set; }
 		private IValueExtractor Extractor
 		{
@@ -27,6 +29,17 @@ namespace DotNetMarche.Validator.Validators
 		private IValueExtractor _Extractor;
 		private ErrorMessage ErrorMessage { get; set; }
 		private Func<IValueExtractor, IValidator> _CreateValidator;
+
+		internal Rule Configure(Core.Validator validator)
+		{
+			ValidationUnitCollection coll = validator.GetRules(Type);
+			coll.Add(new ValidationUnit(ErrorMessage, _CreateValidator(Extractor)));
+			return this;
+		}
+
+		#endregion
+
+		#region Validation Fluent Start interface
 
 		public static Rule For<T>()
 		{
@@ -45,7 +58,31 @@ namespace DotNetMarche.Validator.Validators
 			return new Rule() { Type = type };
 		}
 
+		#endregion
 
+		#region Message
+
+		public Rule Message(String message)
+		{
+			ErrorMessage = new ErrorMessage(message); 
+			return this;
+		}
+
+		public Rule Message(String message, Type resourceManagerTypeName)
+		{
+			ErrorMessage = new ErrorMessage(message, resourceManagerTypeName);
+			return this;
+		}
+
+		public Rule Message(Expression<Func<String>> messageLambda)
+		{
+			ErrorMessage = new ErrorMessage(messageLambda);
+			return this;
+		}
+
+		#endregion
+
+		#region Validation Rule Addition
 
 		public Rule OnMember(String propertyName)
 		{
@@ -66,32 +103,7 @@ namespace DotNetMarche.Validator.Validators
 
 		public Rule SetRequired()
 		{
-				_CreateValidator = e => new RequiredValidator(e);
-			return this;
-		}
-
-		public Rule Message(String message)
-		{
-			ErrorMessage = new ErrorMessage(message); 
-			return this;
-		}
-
-		public Rule Message(String message, Type resourceManagerTypeName)
-		{
-			ErrorMessage = new ErrorMessage(message, resourceManagerTypeName);
-			return this;
-		}
-
-		public Rule Message(Expression<Func<String>> messageLambda)
-		{
-			ErrorMessage = new ErrorMessage(messageLambda);
-			return this;
-		}
-
-		internal Rule Configure(Core.Validator validator)
-		{
-			ValidationUnitCollection coll = validator.GetRules(Type);
-			coll.Add(new ValidationUnit(ErrorMessage, _CreateValidator(Extractor)));
+			_CreateValidator = e => new RequiredValidator(e);
 			return this;
 		}
 
@@ -101,10 +113,24 @@ namespace DotNetMarche.Validator.Validators
 			return this;
 		}
 
-		public Rule MaxLength(Int32 maxLenght)
+		public Rule MaxLength(Int32 maxLength)
 		{
-			_CreateValidator = e => new RangeLengthValidator(e, maxLenght);
+			_CreateValidator = e => new RangeLengthValidator(e, maxLength);
 			return this;
 		}
+
+		public Rule LengthInRange(Int32 minLength, Int32 maxLength)
+		{
+			_CreateValidator = e => new RangeLengthValidator(e, minLength, maxLength);
+			return this;
+		}
+
+		public Rule Custom<T>(Func<T, Boolean> validationFunction)
+		{
+			_CreateValidator = e => new ActionValidation<T>(e, validationFunction);
+			return this;
+		}
+
+		#endregion
 	}
 }

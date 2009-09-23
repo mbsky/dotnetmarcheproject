@@ -140,7 +140,7 @@ namespace DotNetMarche.Validator.Core
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return ToString(Thread.CurrentThread.CurrentCulture);
+			return ToString(Thread.CurrentThread.CurrentUICulture);
 		}
 
 		public string ToString(CultureInfo cultureInfo)

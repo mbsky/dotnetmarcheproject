@@ -41,6 +41,8 @@ namespace DotNetMarche.Common.Test.Ui
 
 		#endregion
 
+		#region Filtering
+
 		[Test]
 		public void BasicTestForFilter()
 		{
@@ -114,6 +116,84 @@ namespace DotNetMarche.Common.Test.Ui
 			sut.Filter = "Name == 'Alkampfer'";
 			sut.Add(cust);
 		}
+
+		#endregion
+
+		#region Sorting
+
+		[Test]
+		public void BaseSort()
+		{
+			IBindingListView sut = CreateBindingListOnBasicCustomersList();
+			PropertyDescriptor pd = TypeDescriptor.GetProperties(typeof (Customer)).Find("Name", false);
+			sut.ApplySort(pd, ListSortDirection.Ascending);
+			String lastName = "";
+			foreach (Customer	c in sut)
+			{
+				Assert.That(c.Name.CompareTo(lastName) > 0);
+				lastName = c.Name;
+			}
+			sut.ApplySort(pd, ListSortDirection.Descending);
+			lastName = "ZZZZZZZZZZZZZZZ";
+			foreach (Customer c in sut)
+			{
+				Assert.That(lastName.CompareTo(c.Name) > 0);
+				lastName = c.Name;
+			}
+		}
+
+		[Test]
+		public void BaseSortWithInsertion()
+		{
+			IBindingListView sut = CreateBindingListOnBasicCustomersList();
+			PropertyDescriptor pd = TypeDescriptor.GetProperties(typeof(Customer)).Find("Name", false);
+			sut.ApplySort(pd, ListSortDirection.Ascending);
+			String lastName = "";
+			foreach (Customer c in sut)
+			{
+				Assert.That(c.Name.CompareTo(lastName) > 0);
+				lastName = c.Name;
+			}
+			sut.Add(new Customer() {Name = "Fernand", Age = 33});
+			 lastName = "";
+			foreach (Customer c in sut)
+			{
+				Assert.That(c.Name.CompareTo(lastName) > 0);
+				lastName = c.Name;
+			}
+		}		
+		
+		[Test]
+		public void BaseSortWithInsertionAndFilter()
+		{
+			IBindingListView sut = CreateBindingListOnBasicCustomersList();
+			PropertyDescriptor pd = TypeDescriptor.GetProperties(typeof(Customer)).Find("Name", false);
+			sut.ApplySort(pd, ListSortDirection.Ascending);
+			String lastName = "";
+			foreach (Customer c in sut)
+			{
+				Assert.That(c.Name.CompareTo(lastName) > 0);
+				lastName = c.Name;
+			}
+			sut.Filter = "Age > 30";
+			sut.Add(new Customer() { Name = "Fernand", Age = 18 });
+			Assert.That(sut, Has.Count.EqualTo(3));
+			lastName = "";
+			foreach (Customer c in sut)
+			{
+				Assert.That(c.Name.CompareTo(lastName) > 0);
+				lastName = c.Name;
+			}
+			sut.RemoveFilter();
+			lastName = "";
+			foreach (Customer c in sut)
+			{
+				Assert.That(c.Name.CompareTo(lastName) > 0);
+				lastName = c.Name;
+			}
+		}
+
+		#endregion
 
 		#region Factory
 

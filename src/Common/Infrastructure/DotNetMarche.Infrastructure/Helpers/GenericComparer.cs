@@ -34,6 +34,11 @@ namespace DotNetMarche.Infrastructure.Helpers
 
 		#region IComparer<T> Members
 
+		public Object GetValueFrom(T obj)
+		{
+			return methodInfo.Invoke(obj, null);
+		}
+
 		public int Compare(T x, T y)
 		{
 			IComparable obj1 = (IComparable)methodInfo.Invoke(x, null);

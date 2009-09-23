@@ -13,8 +13,9 @@ namespace DotNetMarche.Validator.Core
 
 		public Validator AddRule<T>(IValidator validator, ErrorMessage msg)
 		{
-			return AddRule(typeof (T), validator, msg);
+			return AddRule(typeof(T), validator, msg);
 		}
+
 
 		public Validator AddRule(Type type, IValidator validator, ErrorMessage msg)
 		{
@@ -23,9 +24,12 @@ namespace DotNetMarche.Validator.Core
 			return this;
 		}
 
-		public Validator AddRule(Rule rule)
+		public Validator AddRule(params Rule[] rules)
 		{
-			rule.Configure(this);
+			foreach (Rule rule in rules)
+			{
+				rule.Configure(this);
+			}
 			return this;
 		}
 

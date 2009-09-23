@@ -1,0 +1,223 @@
+<mockup version="1.0" skin="sketch" measuredW="1028" measuredH="605">
+  <controls>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Canvas" x="12" y="9" w="1006" h="142" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::TextArea" x="12" y="9" w="1006" h="142" measuredW="200" measuredH="140" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>This%20is%20the%20header</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::LinkBar" x="18" y="111" w="-1" h="-1" measuredW="437" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Index%2C%20Search%2C%20UserList%2C%20Groups%2C%20anystaticpagemadebyuser</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::LinkBar" x="838" y="118" w="-1" h="-1" measuredW="165" measuredH="25" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Profile%2C%20Logout%2C%20login</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Link" x="422" y="48" w="-1" h="-1" measuredW="185" measuredH="25" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>You%20have%203%20private%20messages</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::TextArea" x="12" y="151" w="656" h="39" measuredW="200" measuredH="140" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Forum%20Data</text>
+        <color>8404992</color>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::TextArea" x="668" y="150" w="350" h="39" measuredW="200" measuredH="140" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Stats</text>
+        <color>8404992</color>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::TextArea" x="12" y="190" w="1006" h="39" measuredW="200" measuredH="140" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Group%20name</text>
+        <color>16764006</color>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Canvas" x="12" y="229" w="656" h="109" measuredW="100" measuredH="70" zOrder="8" locked="false" isInGroup="-1"/>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Link" x="18" y="229" w="-1" h="-1" measuredW="76" measuredH="25" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Forum%20name</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::Image" x="18" y="249" w="91" h="84" measuredW="400" measuredH="331" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>http%3A//www.keyframer.com/images/forum.jpg</src>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::Label" x="109" y="244" w="521" h="51" measuredW="587" measuredH="25" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20description%20of%20the%20forum%2C%20it%20can%20be%203000%20chars%20long%2C%20but%20here%20is%20truncated%20to%20200%20chars.</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Label" x="109" y="287" w="125" h="23" measuredW="75" measuredH="25" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Moderators</text>
+        <color>8388608</color>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Link" x="195" y="287" w="-1" h="-1" measuredW="171" measuredH="25" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Alkampfer%2C%20Administrators</text>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::Image" x="372" y="273" w="35" h="35" measuredW="369" measuredH="369" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>http%3A//www.notesfromtheunderground.co.uk/images/rss.jpg</src>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Canvas" x="668" y="229" w="350" h="109" measuredW="100" measuredH="70" zOrder="15" locked="false" isInGroup="-1"/>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Label" x="677" y="236" w="151" h="24" measuredW="90" measuredH="25" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Threads%3A%20140</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::Label" x="677" y="256" w="151" h="24" measuredW="82" measuredH="25" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Posts%3A%203450</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Label" x="677" y="275" w="151" h="24" measuredW="133" measuredH="25" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Post%20per%20thread%3A%2024</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Label" x="677" y="295" w="151" h="24" measuredW="101" measuredH="25" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Latest%20message</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Link" x="784" y="294" w="-1" h="-1" measuredW="142" measuredH="25" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Threadname%20%5Busername%5D</text>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::Canvas" x="12" y="338" w="656" h="109" measuredW="100" measuredH="70" zOrder="21" locked="false" isInGroup="-1"/>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Link" x="18" y="338" w="-1" h="-1" measuredW="76" measuredH="25" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Forum%20name</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Image" x="18" y="358" w="91" h="84" measuredW="400" measuredH="331" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>http%3A//www.keyframer.com/images/forum.jpg</src>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="109" y="353" w="521" h="51" measuredW="587" measuredH="25" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20description%20of%20the%20forum%2C%20it%20can%20be%203000%20chars%20long%2C%20but%20here%20is%20truncated%20to%20200%20chars.</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::Label" x="109" y="396" w="125" h="23" measuredW="75" measuredH="25" zOrder="25" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Moderators</text>
+        <color>8388608</color>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::Link" x="195" y="396" w="-1" h="-1" measuredW="171" measuredH="25" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Alkampfer%2C%20Administrators</text>
+      </controlProperties>
+    </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Image" x="372" y="382" w="35" h="35" measuredW="369" measuredH="369" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>http%3A//www.notesfromtheunderground.co.uk/images/rss.jpg</src>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::Canvas" x="668" y="338" w="350" h="109" measuredW="100" measuredH="70" zOrder="28" locked="false" isInGroup="-1"/>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Label" x="677" y="345" w="151" h="24" measuredW="90" measuredH="25" zOrder="29" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Threads%3A%20140</text>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Label" x="677" y="365" w="151" h="24" measuredW="82" measuredH="25" zOrder="30" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Posts%3A%203450</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Label" x="677" y="384" w="151" h="24" measuredW="133" measuredH="25" zOrder="31" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Post%20per%20thread%3A%2024</text>
+      </controlProperties>
+    </control>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Label" x="677" y="404" w="151" h="24" measuredW="101" measuredH="25" zOrder="32" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Latest%20message</text>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Link" x="784" y="403" w="-1" h="-1" measuredW="142" measuredH="25" zOrder="33" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Threadname%20%5Busername%5D</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::TextArea" x="12" y="447" w="1006" h="39" measuredW="200" measuredH="140" zOrder="34" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Group%20name</text>
+        <color>16764006</color>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::Canvas" x="12" y="486" w="656" h="109" measuredW="100" measuredH="70" zOrder="35" locked="false" isInGroup="-1"/>
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Link" x="18" y="486" w="-1" h="-1" measuredW="76" measuredH="25" zOrder="36" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Forum%20name</text>
+      </controlProperties>
+    </control>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::Image" x="18" y="506" w="91" h="84" measuredW="400" measuredH="331" zOrder="37" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>http%3A//www.keyframer.com/images/forum.jpg</src>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::Label" x="109" y="501" w="521" h="51" measuredW="587" measuredH="25" zOrder="38" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20description%20of%20the%20forum%2C%20it%20can%20be%203000%20chars%20long%2C%20but%20here%20is%20truncated%20to%20200%20chars.</text>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Label" x="109" y="544" w="125" h="23" measuredW="75" measuredH="25" zOrder="39" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Moderators</text>
+        <color>8388608</color>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::Link" x="195" y="544" w="-1" h="-1" measuredW="171" measuredH="25" zOrder="40" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Alkampfer%2C%20Administrators</text>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Image" x="372" y="530" w="35" h="35" measuredW="369" measuredH="369" zOrder="41" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>http%3A//www.notesfromtheunderground.co.uk/images/rss.jpg</src>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::Canvas" x="668" y="486" w="350" h="109" measuredW="100" measuredH="70" zOrder="42" locked="false" isInGroup="-1"/>
+    <control controlID="53" controlTypeID="com.balsamiq.mockups::Label" x="677" y="493" w="151" h="24" measuredW="90" measuredH="25" zOrder="43" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Threads%3A%20140</text>
+      </controlProperties>
+    </control>
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::Label" x="677" y="513" w="151" h="24" measuredW="82" measuredH="25" zOrder="44" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Posts%3A%203450</text>
+      </controlProperties>
+    </control>
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::Label" x="677" y="532" w="151" h="24" measuredW="133" measuredH="25" zOrder="45" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Post%20per%20thread%3A%2024</text>
+      </controlProperties>
+    </control>
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::Label" x="677" y="552" w="151" h="24" measuredW="101" measuredH="25" zOrder="46" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Latest%20message</text>
+      </controlProperties>
+    </control>
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::Link" x="784" y="551" w="-1" h="-1" measuredW="142" measuredH="25" zOrder="47" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Threadname%20%5Busername%5D</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
