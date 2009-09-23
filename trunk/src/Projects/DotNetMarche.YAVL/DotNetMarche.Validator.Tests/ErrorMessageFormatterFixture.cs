@@ -33,7 +33,7 @@ namespace DotNetMarche.Validator.Tests
 		[Test]
 		public void TestBasicResourceManagerLocalization()
 		{
-			Thread.CurrentThread.CurrentCulture = new CultureInfo("IT-it");
+			Thread.CurrentThread.CurrentUICulture = new CultureInfo("IT-it");
 			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
 			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
 			                                                          SingleValidationResult.GenericError);
@@ -43,11 +43,19 @@ namespace DotNetMarche.Validator.Tests
 		[Test]
 		public void TestBasicResourceManagerLocalizationCultureResourceNotFound()
 		{
-			Thread.CurrentThread.CurrentCulture = new CultureInfo("Ru-ru");
+			Thread.CurrentThread.CurrentUICulture = new CultureInfo("Ru-ru");
 			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
 			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
 			                                                          SingleValidationResult.GenericError);
 			Assert.AreEqual("This is a test message", msg, "Error message get no localized");
+		}
+
+		[Test]
+		public void TestBasicResourceManagerWithNullExpectedAndActual()
+		{
+			Thread.CurrentThread.CurrentCulture = new CultureInfo("En-us");
+			ErrorMessage msg = new ErrorMessage("Expected ${ExpectedValue} Actual ${ActualValue}");
+			msg.ToString(new SingleValidationResult(false, null, null));
 		}
 	}
 }

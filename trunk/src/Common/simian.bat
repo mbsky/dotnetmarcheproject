@@ -1,0 +1,2 @@
+"C:\Program Files\simian/simian-2.2.24.exe" (-includes="C:\Develop\dotnetmarcheproject\trunk\src\Common\Infrastructure\DotNetMarche.Utils/**/*.cs" -formatter=xml:"C:\Develop\dotnetmarcheproject\trunk\Artifacts\BuildLogs\simian-DotNetMarche.Utils.xml")
+pause

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DotNetMarche.Validator.Configuration.Xml;
+using DotNetMarche.Validator.Tests.ResourcesFiles;
 using DotNetMarche.Validator.Validators.Concrete;
 using NUnit.Framework;
 
@@ -53,11 +54,12 @@ namespace DotNetMarche.Validator.Tests.ConfigurationTests
 		[Test]
 		public void TestLocalizationOfMessages()
 		{
+
 			XmlConfigurator sut = new XmlConfigurator("ConfigurationTests/SampleXmlFiles/ConfigurationB.xml");
 			BaseValidatorFixture.Simple1FieldWithoutAttribute obj = new BaseValidatorFixture.Simple1FieldWithoutAttribute();
 			obj.field = "This string exceeds 10 chars and is not valid.";
 			ValidationResult res = sut.CreateValidator().ValidateObject(obj);
-			Assert.That(res.ErrorMessages[0], Is.EqualTo("Field is too long"));
+			Assert.That(res.ErrorMessages[0], Is.EqualTo(TestRes.XmlTestTooLenght));
 
 		}
 	}

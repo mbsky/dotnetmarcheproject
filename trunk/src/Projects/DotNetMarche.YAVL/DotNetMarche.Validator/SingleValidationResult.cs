@@ -10,8 +10,8 @@ namespace DotNetMarche.Validator
 	public struct SingleValidationResult {
 		
 		public Boolean Success;
-		public object  ExpectedValue;
-		public object	ActualValue;
+		private object  _expectedValue;
+		private object	_actualValue;
 
 		public SingleValidationResult(
 			Boolean	success,
@@ -19,8 +19,8 @@ namespace DotNetMarche.Validator
 			object	actualValue) {
 		
 			Success			= success;
-			ExpectedValue	= expectedValue;
-			ActualValue		= actualValue; 
+			_expectedValue	= expectedValue ?? String.Empty;
+			_actualValue		= actualValue ?? String.Empty; 
 			}
 
 		public static implicit operator Boolean(SingleValidationResult res) {
@@ -29,5 +29,17 @@ namespace DotNetMarche.Validator
 
 		public static SingleValidationResult GenericSuccess = new SingleValidationResult(true, "", "");
 		public static SingleValidationResult GenericError = new SingleValidationResult(false, "", "");
+
+		public object ExpectedValue
+		{
+			get { return _expectedValue; }
+			set { _expectedValue = value; }
+		}
+
+		public object ActualValue
+		{
+			get { return _actualValue; }
+			set { _actualValue = value; }
+		}
 	}
 }

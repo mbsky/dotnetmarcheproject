@@ -14,14 +14,17 @@ namespace DotNetMarche.Validator
 			this.errorMessages.AddRange(errorMessages);
 		}
 
-		public ValidationException(IEnumerable<String> errorMessages) : this(errorMessages, null)
+		public ValidationException(IEnumerable<String> errorMessages)
+			: this(errorMessages, null)
 		{
 		}
 
-		public List<String> ErrorMessages { get
+		public List<String> ErrorMessages
 		{
-			return errorMessages;
-		}
+			get
+			{
+				return errorMessages;
+			}
 		}
 		private List<String> errorMessages = new List<String>();
 	}

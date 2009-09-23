@@ -38,7 +38,7 @@ namespace DotNetMarche.Validator.Core
 			SingleValidationResult 	validationResult) {
 
 			return FormatMessage(errorMessage, validationResult, 
-			                     System.Threading.Thread.CurrentThread.CurrentCulture);
+			                     System.Threading.Thread.CurrentThread.CurrentUICulture);
 			}
 
 		public String FormatMessage(

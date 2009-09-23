@@ -101,21 +101,22 @@ namespace DotNetMarche.Ui.Binding
 		{
 			if (String.IsNullOrEmpty(filterClause))
 			{
-				//rimuovo il filtro, tutto torna originale.
+				//Empty filter, return to original content.
 				Items.Clear();
 				original.ForEach(e => Items.Add(e));
 			}
 			else
 			{
-				//copio tutti gli elementi dell'originale
+				//create a filter, save everything in the original list.
 				original.Clear();
 				original.AddRange(Items);
-				//Ora nella lista principale metto solo gli elementi che soddisfano il filtro
+				//Now move in the real data all the element that satisfy the filter.
 				Items.Clear();
 				filterPredicate = DynamicLinq.ParseToFunction<T, Boolean>(filterClause);
 				foreach (T element in original.Where(filterPredicate))
 				   Items.Add(element);
 			}
+			InnerPerformSort();
 		}
 
 		/// <summary>
@@ -137,6 +138,7 @@ namespace DotNetMarche.Ui.Binding
 			}
 			//If it respect the filter then add to the filtered collction
 			base.InsertItem(index, item);
+			InnerPerformSort();
 		}
 
 		#endregion
@@ -168,13 +170,14 @@ namespace DotNetMarche.Ui.Binding
 
 		public void RemoveFilter()
 		{
-			throw new NotImplementedException();
+			Filter = String.Empty;
 		}
 
 		public ListSortDescriptionCollection SortDescriptions
 		{
 			get { throw new NotImplementedException(); }
 		}
+
 
 		public bool SupportsAdvancedSorting
 		{
@@ -184,6 +187,47 @@ namespace DotNetMarche.Ui.Binding
 		public bool SupportsFiltering
 		{
 			get { return true; }
+		}
+
+		#endregion
+
+		#region SortingBase
+
+		protected override bool SupportsSortingCore
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		private PropertyDescriptor _currentSortPropertyDescriptor = null;
+
+		private ListSortDirection _currentSortDirection;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="prop"></param>
+		/// <param name="direction"></param>
+		protected override void ApplySortCore(PropertyDescriptor prop, ListSortDirection direction)
+		{
+			_currentSortPropertyDescriptor = prop;
+			_currentSortDirection = direction;
+			InnerPerformSort();
+		}
+
+		private void InnerPerformSort()
+		{
+			if (_currentSortPropertyDescriptor == null) return;
+			List<T> temp = Items.ToList();
+			Items.Clear();
+			GenericIComparer<T> cmp = GenericComparerFactory.GetComparer<T>(_currentSortPropertyDescriptor.Name, _currentSortDirection == ListSortDirection.Descending);
+			temp.Sort(cmp);
+			foreach (T element in temp)
+			{
+				Items.Add(element);
+			}
 		}
 
 		#endregion

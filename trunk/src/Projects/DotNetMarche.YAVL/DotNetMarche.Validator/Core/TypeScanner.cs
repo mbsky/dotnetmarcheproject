@@ -9,10 +9,12 @@ using DotNetMarche.Validator.ValueExtractors;
 
 namespace DotNetMarche.Validator.Core
 {
-	public class TypeScanner {
+	public class TypeScanner
+	{
 
 		private Type mType;
-		public TypeScanner(Type ty) {
+		public TypeScanner(Type ty)
+		{
 			mType = ty;
 		}
 
@@ -20,8 +22,9 @@ namespace DotNetMarche.Validator.Core
 		/// This function scan type of object to find all validators related to object themselves.
 		/// </summary>
 		/// <param name="ty"></param>
-		public ValidationUnitCollection Scan() {
-			
+		public ValidationUnitCollection Scan()
+		{
+
 			ValidationUnitCollection vc = new ValidationUnitCollection();
 			PopulateValidationUnitcollection(vc);
 			return vc;
@@ -36,13 +39,14 @@ namespace DotNetMarche.Validator.Core
 		/// </summary>
 		/// <param name="currentTypeMapRules">This is the dictionary to populate.</param>
 		public void RecursiveScan(
-			Dictionary<Type, ValidationUnitCollection> currentTypeMapRules) {
+			Dictionary<Type, ValidationUnitCollection> currentTypeMapRules)
+		{
 
 			List<Type> loadedTypes = new List<Type>();
 			RecursivePopulate(mType, currentTypeMapRules, loadedTypes);
 			List<Type> analyzedTypes = new List<Type>();
 			RecursiveSetObjectValidator(mType, currentTypeMapRules, loadedTypes, analyzedTypes);
-			}
+		}
 
 		#region Type Scanner Routines
 
@@ -53,12 +57,13 @@ namespace DotNetMarche.Validator.Core
 		/// <returns>This function return the inner list of all type that are
 		/// used in field And/Or property</returns>
 		private void PopulateValidationUnitcollection(
-			ValidationUnitCollection	vc) {
-			
+			ValidationUnitCollection vc)
+		{
+
 			ScanForTypeAttributes(mType, vc);
 			ScanForField(mType, vc, null);
 			ScanForProperty(mType, vc, null);
-			}
+		}
 
 		/// <summary>
 		/// Given an array of object of validation attributes create all
@@ -69,19 +74,21 @@ namespace DotNetMarche.Validator.Core
 		/// the real value extractor can be overriden by the attribute.</param>
 		/// <param name="validationfields"></param>
 		private static void BuildValidationUnitFromAttributeList(
-			ValidationUnitCollection	vc, 
-			IValueExtractor				valueExtractor, 
-			object[]							validationfields) {
+			ValidationUnitCollection vc,
+			IValueExtractor valueExtractor,
+			object[] validationfields)
+		{
 
-			foreach (BaseValidationAttribute va in validationfields) {
+			foreach (BaseValidationAttribute va in validationfields)
+			{
 
 				if (va.IsValueExtractorOverriden)
 					valueExtractor = va.CreateValueExtractor();
 				vc.Add(new ValidationUnit(
-				       	va.CreateErrorMessage(), 
-				       	va.CreateValidator(valueExtractor)));
+							va.CreateErrorMessage(),
+							va.CreateValidator(valueExtractor)));
 			}
-			}
+		}
 
 		/// <summary>
 		/// Scan the type and check if there are some attributes defined on the whole type.
@@ -89,12 +96,13 @@ namespace DotNetMarche.Validator.Core
 		/// <param name="typeToCheck"></param>
 		/// <param name="vc"></param>
 		private void ScanForTypeAttributes(
-			Type								typeToCheck,
-			ValidationUnitCollection	vc) {
+			Type typeToCheck,
+			ValidationUnitCollection vc)
+		{
 
 			object[] validationfields = typeToCheck.GetCustomAttributes(typeof(BaseValidationAttribute), false);
 			BuildValidationUnitFromAttributeList(vc, new ObjectValueExtractor(), validationfields);
-			}
+		}
 
 		/// <summary>
 		/// Scan all fields of the type and populate both the collection of rules and other types encountered.
@@ -102,30 +110,34 @@ namespace DotNetMarche.Validator.Core
 		/// <param name="vc"></param>
 		/// <param name="fieldTypes"></param>
 		private void ScanForField(
-			Type								typeToCheck,
-			ValidationUnitCollection	vc,
-			List<Type>						fieldTypes) {
+			Type typeToCheck,
+			ValidationUnitCollection vc,
+			List<Type> fieldTypes)
+		{
 
 			FieldInfo[] afi = typeToCheck.GetFields(BindingFlags.Instance | BindingFlags.Public);
-			foreach(FieldInfo fi in afi) {
+			foreach (FieldInfo fi in afi)
+			{
 				object[] validationfields = fi.GetCustomAttributes(typeof(BaseValidationAttribute), false);
 				BuildValidationUnitFromAttributeList(vc, new FieldInfoValueExtractor(fi), validationfields);
 				PopulateDescendantList(fi.FieldType, fieldTypes);
 			}
-			}
+		}
 
 		private void ScanForProperty(
-			Type								typeToCheck,
-			ValidationUnitCollection	vc,
-			List<Type>						propertyTypes) {
+			Type typeToCheck,
+			ValidationUnitCollection vc,
+			List<Type> propertyTypes)
+		{
 
 			PropertyInfo[] api = typeToCheck.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-			foreach(PropertyInfo pi in api) {
+			foreach (PropertyInfo pi in api)
+			{
 				object[] validationfields = pi.GetCustomAttributes(typeof(BaseValidationAttribute), false);
 				BuildValidationUnitFromAttributeList(vc, new PropertyInfoValueExtractor(pi), validationfields);
 				PopulateDescendantList(pi.PropertyType, propertyTypes);
 			}
-			}
+		}
 
 		/// <summary>
 		/// Check if the type is not a primitive one, and if it is not contained in the list it will be added.
@@ -133,14 +145,16 @@ namespace DotNetMarche.Validator.Core
 		/// <param name="ty"></param>
 		/// <param name="fieldTypes"></param>
 		private void PopulateDescendantList(
-			Type			ty,
-			List<Type>	fieldTypes) {
+			Type ty,
+			List<Type> fieldTypes)
+		{
 			if (fieldTypes != null && !IsBasicType(ty) && !fieldTypes.Contains(ty))
 				fieldTypes.Add(ty);
-			}
+		}
 
-		private Boolean IsBasicType(Type ty) {
-			return ty.Assembly.FullName.StartsWith("mscorlib") ;
+		private Boolean IsBasicType(Type ty)
+		{
+			return ty.Assembly.FullName.StartsWith("mscorlib");
 		}
 		#endregion
 
@@ -153,12 +167,13 @@ namespace DotNetMarche.Validator.Core
 		/// <param name="loadList"></param>
 		/// <param name="typeToCheck"></param>
 		private void RecursivePopulate(
-			Type														typeToCheck,
-			Dictionary<Type, ValidationUnitCollection>	list,
-			IList<Type>												loadList) {
-			
+			Type typeToCheck,
+			Dictionary<Type, ValidationUnitCollection> list,
+			IList<Type> loadList)
+		{
+
 			//first check if the type was already loaded or is in ignorelist.
-			if (list.ContainsKey(typeToCheck)) return ;
+			if (list.ContainsKey(typeToCheck)) return;
 
 			//Type is not contained so it is necessary to check, first prepare parameter collections 
 			List<Type> relatedTypes = new List<Type>();
@@ -170,10 +185,11 @@ namespace DotNetMarche.Validator.Core
 			ScanForTypeAttributes(typeToCheck, vc);
 			ScanForField(typeToCheck, vc, relatedTypes);
 			ScanForProperty(typeToCheck, vc, relatedTypes);
-			relatedTypes.ForEach(delegate(Type ty) {
-			                                       	RecursivePopulate(ty, list, loadList);
+			relatedTypes.ForEach(delegate(Type ty)
+			{
+				RecursivePopulate(ty, list, loadList);
 			});
-			}
+		}
 
 		/// <summary>
 		/// Starting from current type this routine scan all field and property of the type to 
@@ -187,11 +203,12 @@ namespace DotNetMarche.Validator.Core
 		/// consider what happended if object A has three property of type B, we do not want to 
 		/// scan Three times objectB and setting an excessive number of validator.</param>
 		private void RecursiveSetObjectValidator(
-			Type														typeToCheck,
-			Dictionary<Type, ValidationUnitCollection>	ruleMap,
-			IList<Type>												listOfLoadedTypes,
-			IList<Type>												listOfScannedTypes) {
-			
+			Type typeToCheck,
+			Dictionary<Type, ValidationUnitCollection> ruleMap,
+			IList<Type> listOfLoadedTypes,
+			IList<Type> listOfScannedTypes)
+		{
+
 			//If this type was not loaded there is no need to check, probably its set or rules is already loaded
 			if (!listOfLoadedTypes.Contains(typeToCheck)) return;
 
@@ -199,30 +216,34 @@ namespace DotNetMarche.Validator.Core
 
 			System.Diagnostics.Debug.Assert(ruleMap.ContainsKey(typeToCheck), "We are scanning an object that where not scanned for rules");
 			//now we should check for each property and field, we need to find
-			foreach(FieldInfo fi in typeToCheck.GetFields(BindingFlags.Instance | BindingFlags.Public)) {
-				if (ruleMap.ContainsKey(fi.FieldType)) {
+			foreach (FieldInfo fi in typeToCheck.GetFields(BindingFlags.Instance | BindingFlags.Public))
+			{
+				if (ruleMap.ContainsKey(fi.FieldType))
+				{
 					IValueExtractor extractor = new FieldInfoValueExtractor(fi);
 					ruleMap[typeToCheck].Add(
 						ValidationUnit.CreateObjectValidationUnit(
 							extractor, fi.Name, ruleMap));
 				}
-				if (!listOfScannedTypes.Contains(fi.FieldType)) 
+				if (!listOfScannedTypes.Contains(fi.FieldType))
 					RecursiveSetObjectValidator(fi.FieldType, ruleMap, listOfLoadedTypes, listOfScannedTypes);
 			}
 
-			foreach(PropertyInfo pi in typeToCheck.GetProperties(BindingFlags.Instance | BindingFlags.Public)) {
-				if (ruleMap.ContainsKey(pi.PropertyType)) {
+			foreach (PropertyInfo pi in typeToCheck.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+			{
+				if (ruleMap.ContainsKey(pi.PropertyType))
+				{
 					IValueExtractor extractor = new PropertyInfoValueExtractor(pi);
 					ruleMap[typeToCheck].Add(
 						ValidationUnit.CreateObjectValidationUnit(
 							extractor, pi.Name, ruleMap));
 				}
-				if (!listOfScannedTypes.Contains(pi.PropertyType)) 
+				if (!listOfScannedTypes.Contains(pi.PropertyType))
 					RecursiveSetObjectValidator(pi.PropertyType, ruleMap, listOfLoadedTypes, listOfScannedTypes);
 			}
-			}
+		}
 
-	
+
 		#endregion
 
 	}

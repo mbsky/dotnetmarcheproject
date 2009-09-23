@@ -42,7 +42,7 @@ namespace DotNetMarche.Validator.Core
 		{
 
 			ValidateObject(validationResult, objToValidate, validationFlags,
-						   System.Threading.Thread.CurrentThread.CurrentCulture);
+						   System.Threading.Thread.CurrentThread.CurrentUICulture);
 			return validationResult;
 		}
 
