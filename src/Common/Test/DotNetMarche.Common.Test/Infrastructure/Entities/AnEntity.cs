@@ -44,4 +44,37 @@ namespace DotNetMarche.Common.Test.Infrastructure.Entities
 		public AnEntity fieldEntity;
 
 	}
+
+	internal class AnEntityWithCollection
+	{
+		public Int32 Id { get; set; }
+		public ICollection<String> Collection { get; set; }
+
+		public AnEntityWithCollection()
+		{
+			Collection = new System.Collections.Generic.LinkedList<String>();
+		}
+	}
+
+	internal class AnEntityWithComplexCollection
+	{
+		public Int32 Id { get; set; }
+		public ICollection<AnEntity> Collection { get; set; }
+
+		public AnEntityWithComplexCollection()
+		{
+			Collection = new System.Collections.Generic.LinkedList<AnEntity>();
+		}
+	}
+
+	internal class AnEntityWithDictionary
+	{
+		public Int32 Id { get; set; }
+		public IDictionary<String, Int32> Dictionary { get; set; }
+
+		public AnEntityWithDictionary()
+		{
+			Dictionary = new System.Collections.Generic.Dictionary<String, Int32>();
+		}
+	}
 }
