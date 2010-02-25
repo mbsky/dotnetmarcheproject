@@ -39,7 +39,8 @@ namespace DotNetMarche.Common.Test.TestHelpers
 		{
 			AnEntity entity1 = AnEntity.Create(10, "test1", 110);
 			AnEntity entity2 = AnEntity.Create(10, "test2", 110);
-			var res = ObjectComparer.FindDifferencies(entity1, entity2);
+			ObjectComparer comparer = new ObjectComparer();
+			var res = comparer.FindDifferencies(entity1, entity2);
 			Assert.That(res.Count, Is.EqualTo(1));
 		}
 
@@ -61,11 +62,23 @@ namespace DotNetMarche.Common.Test.TestHelpers
 		}
 
 		[Test]
+		public void VerifyIgnoreList()
+		{
+			AnEntity entity1 = AnEntity.Create(10, null, 100);
+			AnEntity entity2 = AnEntity.Create(10, null, 100);
+			entity2.Value = 0;
+			ObjectComparer comparer = new ObjectComparer();
+			comparer.AddIgnore("Value");
+			Assert.That(comparer.Compare(entity1, entity2));
+		}
+
+		[Test]
 		public void CompositeProperty()
 		{
 			AnotherEntity e1 = new AnotherEntity() {Name = "2" , Entity = new AnEntity() {Name = "Test1"}};
 			AnotherEntity e2 = new AnotherEntity() {Name = "2", Entity = new AnEntity() { Name = "Test2" } };
-			var res = ObjectComparer.FindDifferencies(e1, e2);
+			ObjectComparer comparer = new ObjectComparer();
+			var res = comparer.FindDifferencies(e1, e2);
 			Assert.That(res[0], Text.Contains("Entity.Name"));
 		}
 
@@ -83,6 +96,93 @@ namespace DotNetMarche.Common.Test.TestHelpers
 			MessageWriter mw = new TextMessageWriter();
 			c.WriteDescriptionTo(mw);
             Assert.That(entity1, DotNetMarche.TestHelpers.SyntaxHelpers.Is.ObjectEqual(entity2));
-		}  
+		}
+
+		[Test]
+		public void CollectionCompare()
+		{
+			AnEntityWithCollection e1 = new AnEntityWithCollection() {Id = 1, Collection = {"a", "b"}};
+			AnEntityWithCollection e2 = new AnEntityWithCollection() { Id = 1, Collection = { "a", "b" } };
+			Assert.That(ObjectComparer.AreEqual(e1, e2));
+		}
+
+		[Test]
+		public void CollectionCompareDifferentNumberOfElement()
+		{
+			AnEntityWithCollection e1 = new AnEntityWithCollection() { Id = 1, Collection = { "a", "b" } };
+			AnEntityWithCollection e2 = new AnEntityWithCollection() { Id = 1, Collection = { "a", "b", "c" } };
+			Assert.That(ObjectComparer.AreEqual(e1, e2), Is.False);
+		}
+
+		[Test]
+		public void CollectionCompareDifferentNumberOfElement2()
+		{
+			AnEntityWithCollection e1 = new AnEntityWithCollection() { Id = 1, Collection = { "a", "b", "c" } };
+			AnEntityWithCollection e2 = new AnEntityWithCollection() { Id = 1, Collection = { "a", "b"} };
+			Assert.That(ObjectComparer.AreEqual(e1, e2), Is.False);
+		}
+
+		[Test]
+		public void CollectionCompareFalseComparison()
+		{
+			AnEntityWithCollection e1 = new AnEntityWithCollection() { Id = 1, Collection = { "a", "b" } };
+			AnEntityWithCollection e2 = new AnEntityWithCollection() { Id = 1, Collection = { "a", "c" } };
+			Assert.That(ObjectComparer.AreEqual(e1, e2), Is.False);
+		}
+
+		[Test]
+		public void VerifyMessageOfCollectionCompareFalseComparison()
+		{
+			AnEntityWithCollection e1 = new AnEntityWithCollection() { Id = 1, Collection = { "a", "b" } };
+			AnEntityWithCollection e2 = new AnEntityWithCollection() { Id = 1, Collection = { "a", "c" } };
+			ObjectComparer comparer = new ObjectComparer();
+			var res = comparer.FindDifferencies(e1, e2);
+			Assert.That(res[0], Text.Contains("b!=c"));
+			Assert.That(res[0], Text.Contains("root.Collection"));
+		}
+
+		[Test]
+		public void DictionaryCompare()
+		{
+			AnEntityWithDictionary e1 = new AnEntityWithDictionary() { Id = 1, Dictionary = { {"a", 1}, {"b", 2} }};
+			AnEntityWithDictionary e2 = new AnEntityWithDictionary() { Id = 1, Dictionary = { { "a", 1 }, { "b", 2 } } };
+			Assert.That(ObjectComparer.AreEqual(e1, e2));
+		}
+
+		[Test]
+		public void DictionaryCompareFalseComparison()
+		{
+			AnEntityWithDictionary e1 = new AnEntityWithDictionary() { Id = 1, Dictionary = { { "a", 1 }, { "b", 2 } } };
+			AnEntityWithDictionary e2 = new AnEntityWithDictionary() { Id = 1, Dictionary = { { "a", 1 }, { "b", 3 } } };
+			Assert.That(ObjectComparer.AreEqual(e1, e2), Is.False);
+		}
+
+		[Test]
+		public void DictionaryCompareFalseComparisonDifferentElement()
+		{
+			AnEntityWithDictionary e1 = new AnEntityWithDictionary() { Id = 1, Dictionary = { { "a", 1 }, { "b", 2 } } };
+			AnEntityWithDictionary e2 = new AnEntityWithDictionary() { Id = 1, Dictionary = { { "a", 1 } } };
+			Assert.That(ObjectComparer.AreEqual(e1, e2), Is.False);
+		}
+
+		[Test]
+		public void DictionaryCompareFalseComparisonDifferentElement2()
+		{
+			AnEntityWithDictionary e1 = new AnEntityWithDictionary() { Id = 1, Dictionary = { { "a", 1 } } };
+			AnEntityWithDictionary e2 = new AnEntityWithDictionary() { Id = 1, Dictionary = { { "a", 1 }, { "b", 2 } } };
+			Assert.That(ObjectComparer.AreEqual(e1, e2), Is.False);
+		}
+
+		[Test]
+		public void CollectionComplexCompare()
+		{
+			AnEntityWithComplexCollection e1 = new AnEntityWithComplexCollection() 
+			{ Id = 1, Collection = {new AnEntity() {Name = "Test" }} };
+			AnEntityWithComplexCollection e2 = new AnEntityWithComplexCollection() 
+			{ Id = 1, Collection = {new AnEntity() {Name = "Test" }} };
+			ObjectComparer comparer = new ObjectComparer();
+			var res = comparer.FindDifferencies(e1, e2);
+			Assert.That(ObjectComparer.AreEqual(e1, e2));
+		}
 	}
 }

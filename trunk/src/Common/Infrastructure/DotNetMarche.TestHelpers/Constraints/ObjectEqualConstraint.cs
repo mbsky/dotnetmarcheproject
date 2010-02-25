@@ -19,7 +19,8 @@ namespace DotNetMarche.TestHelpers.Constraints
 		private List<String> differencies;
 		public override bool Matches(Object actualObjectToCompare)
 		{
-			differencies = ObjectComparer.FindDifferencies(actualObjectToCompare, CompareObj);
+			ObjectComparer comparer = new ObjectComparer();
+			differencies = comparer.FindDifferencies(actualObjectToCompare, CompareObj);
 			return differencies.Count == 0;
 		}
 
