@@ -59,7 +59,7 @@ namespace DotNetMarche.Utils.Expressions
 					       }
 					stack.Pop();
 				}
-				else if (opChecker.IsOpenBracket( token)) {
+				else if (opChecker.IsOpenBracket(token)) {
 					stack.Push(token);
 				}
 				else {
