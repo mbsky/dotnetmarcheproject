@@ -17,8 +17,8 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		private static PropertyInfo[] propertyNames;
 		private static String[] unaryoperators;
 
-		private static Dictionary<String, Func<Expression, Expression, Expression>> 
-			binaryOpFactory = new Dictionary<String, Func<Expression, Expression, Expression>> ();
+		private static Dictionary<String, Func<Expression, Expression, Expression>>
+			binaryOpFactory = new Dictionary<String, Func<Expression, Expression, Expression>>();
 
 		private static Dictionary<String, Func<Expression, Expression>>
 			unaryOpFactory = new Dictionary<String, Func<Expression, Expression>>();
@@ -76,6 +76,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			return (Expression<Func<T, P1, RetType>>)lambda;
 		}
 
+
 		/// <summary>
 		/// This is the core function, it generates the Lambda.
 		/// </summary>
@@ -88,34 +89,43 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			List<ParameterExpression> parametersList = new List<ParameterExpression>();
 
 			parametersList.Add(inputObj);
-			foreach (String token in postfixExpression)
+			Int32 i = 0;
+			while (i < postfixExpression.Count)
 			{
+				String token = postfixExpression[i];
 				//First of all check if is a name of a property of the object
 				if (propertyNames.Any(p => p.Name == token))
 				{
 					stack.Push(Expression.Property(inputObj, token));
 				}
-                else if (IsMemberAccessOperator(token))
-                {
-                    ExecuteMemberAccessOperator(token, stack);
-                }
-                else if (IsBinaryOperator(token))
-                {
-                    ExecuteBinaryOperator(token, stack);
-                }
-                else if (IsUnaryOperator(token))
-                {
-                    ExecuteUnaryOperator(token, stack);
-                }
-                else if (IsParameter(token))
-                {
-                    ExecuteParameter(token, stack, parameters, parametersList);
-                }
-                else
-                {
-                    stack.Push(Expression.Constant(token));
-                }
+				else if (IsMemberAccessOperator(token))
+				{
+					//Member access operator could advance the index. This because the syntax used to invoke a method
+					//is not so good with postfix :) that because Name.Contains('xxx') becomes Name Contains . xxx because
+					//parenthesis are used to precedence.
+					ExecuteMemberAccessOperator(token, stack, postfixExpression, ref i);
+				}
+				else if (IsBinaryOperator(token))
+				{
+					ExecuteBinaryOperator(token, stack);
+				}
+				else if (IsUnaryOperator(token))
+				{
+					ExecuteUnaryOperator(token, stack);
+				}
+				else if (IsParameter(token))
+				{
+					ExecuteParameter(token, stack, parameters, parametersList);
+				}
+				else
+				{
+					stack.Push(Expression.Constant(token));
+				}
+				i++;
 			}
+			
+				
+			
 			Expression final = stack.Pop();
 			if (stack.Count > 0) throw new ArgumentException("The postfix expression is malformed");
 			return Expression.Lambda(final, parametersList.ToArray());
@@ -125,7 +135,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 		{
 			if (!parameters.ContainsKey(token))
 			{
-				ParameterExpression parameter = Expression.Parameter(typeof (Object), token);
+				ParameterExpression parameter = Expression.Parameter(typeof(Object), token);
 				parameters.Add(token, parameter);
 				parametersList.Add(parameter);
 			}
@@ -137,23 +147,55 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 			stack.Push(unaryOpFactory[token](stack.Pop()));
 		}
 
-        private void ExecuteMemberAccessOperator(string token, Stack<Expression> stack)
-        {
-            if (!IsMemberAccessOperator(token))
-                throw new ArgumentException("The operator " + token + " is not supported");
+		/// <summary>
+		/// Executes the member access operator.
+		/// </summary>
+		/// <param name="token">The token.</param>
+		/// <param name="stack">The stack.</param>
+		/// <param name="tokens">List of current tokens, used to look in advance to the list</param>
+		/// <param name="index">The current index in the <paramref name="tokens"/>, passed by ref
+		/// because it could be changed.</param>
+		/// <returns>The number of token that are read in advance</returns>
+		private void ExecuteMemberAccessOperator(string token, Stack<Expression> stack, IList<string> tokens, ref Int32 index)
+		{
+			if (!IsMemberAccessOperator(token))
+				throw new ArgumentException("The operator " + token + " is not supported");
 
-            Expression op2 = stack.Pop();
-            Expression op1 = stack.Pop();
+			Expression op2 = stack.Pop();
+			Expression op1 = stack.Pop();
+			//we need to check if the dotted property is a property or operator
+			string constValue = ((ConstantExpression)op2).Value.ToString();
+			if (op1.Type.GetProperty(constValue) != null)
+			{
+				//is a property, create a property expression
+				if ((op1 is MemberExpression) && (op2 is ConstantExpression))
+				{
+					stack.Push(Expression.Property(op1, constValue));
+				}
+			}
+			else if (op1.Type.GetMethod(constValue) != null)
+			{
+				MethodInfo minfo = op1.Type.GetMethod(constValue);
+				//now I need to add a memberoperator, but I need parameters.
+				List<Expression> parameters = new List<Expression>();
+				ParameterInfo[] parameterInfos = minfo.GetParameters();	
+				for (int i = 0; i < parameterInfos.Length; i++)
+				{
+					String value = tokens[++index];
+					parameters.Add(Expression.Constant(value));
+				}
+				stack.Push(Expression.Call(op1, minfo, parameters));
+			}
+			else
+			{
+				throw new NotSupportedException(constValue + " is not a property of type " + op1.Type.FullName);
+			}
 
-            if ((op1 is MemberExpression) && (op2 is ConstantExpression))
-            {
-                stack.Push(Expression.Property(op1,((ConstantExpression)op2).Value.ToString()));
-            }
-        }
+		}
 
 		private void ExecuteBinaryOperator(string token, Stack<Expression> stack)
 		{
-			if (!binaryOpFactory.ContainsKey(token))					
+			if (!binaryOpFactory.ContainsKey(token))
 				throw new ArgumentException("The operator " + token + " is not supported");
 			Expression op2 = stack.Pop();
 			Expression op1 = stack.Pop();
@@ -163,19 +205,20 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 				{
 					ConstantExpression cex2 = op2 as ConstantExpression;
 					op2 = Expression.Constant(Convert.ChangeType(cex2.Value, op1.Type));
-				} else
+				}
+				else
 				{
-						ConstantExpression cex1 = op1 as ConstantExpression;
+					ConstantExpression cex1 = op1 as ConstantExpression;
 					op1 = Expression.Constant(Convert.ChangeType(cex1.Value, op2.Type));
 				}
 			}
 			stack.Push(binaryOpFactory[token](op1, op2));
 		}
 
-        private static Boolean IsMemberAccessOperator(string token)
-        {
-            return token==".";
-        }
+		private static Boolean IsMemberAccessOperator(string token)
+		{
+			return token == ".";
+		}
 
 		private static Boolean IsBinaryOperator(string token)
 		{
