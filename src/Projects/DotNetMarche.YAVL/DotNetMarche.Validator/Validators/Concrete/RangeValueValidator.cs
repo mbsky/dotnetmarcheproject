@@ -32,7 +32,8 @@ namespace DotNetMarche.Validator.Validators.Concrete
 				return new SingleValidationResult(
 					false, 
 					String.Format("{0}-{1}", mMinValue,mMaxValue),
-					valueToCheck);
+					valueToCheck, 
+					mValueExtractor.SourceName);
 		}
 
 		private Double ParseValue(object value) {

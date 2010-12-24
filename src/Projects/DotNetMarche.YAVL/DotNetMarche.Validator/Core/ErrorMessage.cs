@@ -174,7 +174,6 @@ namespace DotNetMarche.Validator.Core
 
 		private string GetRawMessage(CultureInfo cultureInfo)
 		{
-			string rawMessage;
 			if (ResourceTypeName == null)
 				return Message;
 

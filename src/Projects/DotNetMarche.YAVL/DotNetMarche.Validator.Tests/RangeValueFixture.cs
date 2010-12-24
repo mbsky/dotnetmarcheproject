@@ -1,3 +1,4 @@
+using System;
 using DotNetMarche.Validator.Interfaces;
 using DotNetMarche.Validator.Tests.Utils;
 using DotNetMarche.Validator.Validators.Concrete;
@@ -22,6 +23,7 @@ namespace DotNetMarche.Validator.Tests
 		{
 			IValueExtractor ive = MockRepository.GenerateStub<IValueExtractor>();
 			ive.Expect(o => o.ExtractValue(null)).Return(null);
+			ive.Expect(o => o.SourceName).Return("property");
 			var rv = new RangeLengthValidator(ive, 1, 10);
 			Assert.IsFalse(rv.Validate(null));
 		}
@@ -31,6 +33,7 @@ namespace DotNetMarche.Validator.Tests
 		{
 			IValueExtractor ive = MockRepository.GenerateStub<IValueExtractor>();
 			ive.Expect(o => o.ExtractValue(null)).Return("");
+			ive.Expect(o => o.SourceName).Return("property");
 			var rv = new RangeLengthValidator(ive, 1, 10);
 			SingleValidationResult res = rv.Validate(null);
 			Assert.IsFalse(res);
@@ -38,10 +41,22 @@ namespace DotNetMarche.Validator.Tests
 		}
 
 		[Test]
+		public void TestValueThatIsNotAString()
+		{
+			IValueExtractor ive = MockRepository.GenerateStub<IValueExtractor>();
+			ive.Expect(o => o.ExtractValue(null)).Return(new Object());
+			ive.Expect(o => o.SourceName).Return("property");
+			var rv = new RangeLengthValidator(ive, 1, 10);
+			Assert.Throws(typeof (ArgumentException), () => rv.Validate(null));
+			
+		}
+
+		[Test]
 		public void TestInvalidStringTooLength()
 		{
 			IValueExtractor ive = MockRepository.GenerateStub<IValueExtractor>();
 			ive.Expect(o => o.ExtractValue(null)).Return("This string exceeds 10 charachters");
+			ive.Expect(o => o.SourceName).Return("property");
 			var rv = new RangeLengthValidator(ive, 1, 10);
 			SingleValidationResult res = rv.Validate(null);
 			Assert.IsFalse(res);
@@ -53,6 +68,7 @@ namespace DotNetMarche.Validator.Tests
 		{
 			IValueExtractor ive = MockRepository.GenerateStub<IValueExtractor>();
 			ive.Expect(o => o.ExtractValue(null)).Return("String OK");
+			ive.Expect(o => o.SourceName).Return("property");
 			var rv = new RangeLengthValidator(ive, 1, 10);
 			SingleValidationResult res = rv.Validate(null);
 			Assert.IsTrue(res);

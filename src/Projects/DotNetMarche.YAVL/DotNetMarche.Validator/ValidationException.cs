@@ -8,24 +8,32 @@ namespace DotNetMarche.Validator
 {
 	public class ValidationException : Exception
 	{
-		public ValidationException(IEnumerable<String> errorMessages, Exception innerException)
-			: base(errorMessages.First(), innerException)
+		public ValidationException(IEnumerable<ValidationError> errorMessages, Exception innerException)
+			: base(errorMessages.First().Message, innerException)
 		{
-			this.errorMessages.AddRange(errorMessages);
+			this.Errors.AddRange(errorMessages);
 		}
 
-		public ValidationException(IEnumerable<String> errorMessages)
+		public ValidationException(IEnumerable<ValidationError> errorMessages)
 			: this(errorMessages, null)
 		{
 		}
+
+		public List<ValidationError> Errors
+		{
+			get
+			{
+				return errors;
+			}
+		}
+		private List<ValidationError> errors = new List<ValidationError>();
 
 		public List<String> ErrorMessages
 		{
 			get
 			{
-				return errorMessages;
+				return Errors.Select(em => em.Message).ToList();
 			}
 		}
-		private List<String> errorMessages = new List<String>();
 	}
 }

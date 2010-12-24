@@ -15,8 +15,9 @@ namespace DotNetMarche.Validator.Tests
 		{
 			Thread.CurrentThread.CurrentCulture = new CultureInfo("En-us");
 			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
-			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
-			                                                          SingleValidationResult.GenericError);
+			String msg = ErrorMessageFormatter.instance.FormatMessage(
+				ra.CreateErrorMessage(),
+			   new SingleValidationResult(false, "", "" ,"property"));
 			Assert.AreEqual("This is a test message", msg);
 		}
 
@@ -25,7 +26,7 @@ namespace DotNetMarche.Validator.Tests
 		{
 			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
 			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
-			                                                          SingleValidationResult.GenericError,
+																						  new SingleValidationResult(false, "", "", "property"),
 			                                                          new CultureInfo("IT-it"));
 			Assert.AreEqual("Questa è una stringa di test", msg, "Error message get no localized");
 		}
@@ -36,7 +37,7 @@ namespace DotNetMarche.Validator.Tests
 			Thread.CurrentThread.CurrentUICulture = new CultureInfo("IT-it");
 			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
 			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
-			                                                          SingleValidationResult.GenericError);
+																						  new SingleValidationResult(false, "", "", "property"));
 			Assert.AreEqual("Questa è una stringa di test", msg, "Error message get no localized");
 		}
 
@@ -46,7 +47,7 @@ namespace DotNetMarche.Validator.Tests
 			Thread.CurrentThread.CurrentUICulture = new CultureInfo("Ru-ru");
 			var ra = new RequiredAttribute("Test", "DotNetMarche.Validator.Tests.ResourcesFiles.TestRes, DotNetMarche.Validator.Tests", null);
 			String msg = ErrorMessageFormatter.instance.FormatMessage(ra.CreateErrorMessage(),
-			                                                          SingleValidationResult.GenericError);
+																						 new SingleValidationResult(false, "", "", "property"));
 			Assert.AreEqual("This is a test message", msg, "Error message get no localized");
 		}
 
@@ -55,7 +56,7 @@ namespace DotNetMarche.Validator.Tests
 		{
 			Thread.CurrentThread.CurrentCulture = new CultureInfo("En-us");
 			ErrorMessage msg = new ErrorMessage("Expected ${ExpectedValue} Actual ${ActualValue}");
-			msg.ToString(new SingleValidationResult(false, null, null));
+			msg.ToString(new SingleValidationResult(false, null, null, "property"));
 		}
 	}
 }

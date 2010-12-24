@@ -18,5 +18,6 @@ namespace DotNetMarche.Validator.Tests
 			var vr = new ValidationResult();
 			Assert.IsTrue(vr, "Validation Result does not convert well to Boolean");
 		}
+
 	}
 }

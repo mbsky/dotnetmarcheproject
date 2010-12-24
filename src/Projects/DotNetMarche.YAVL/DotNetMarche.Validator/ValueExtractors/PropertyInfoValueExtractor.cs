@@ -17,7 +17,12 @@ namespace DotNetMarche.Validator.ValueExtractors
 		public PropertyInfoValueExtractor(PropertyInfo pi) {
 			mPropertyInfo = pi;
 		}
-		
+
+		public String SourceName
+		{
+			get { return mPropertyInfo.Name; }
+		}
+
 		public object ExtractValue(object objToValidate) {
 			return mPropertyInfo.GetValue(objToValidate, null);
 		}

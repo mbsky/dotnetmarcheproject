@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DotNetMarche.Validator
@@ -22,24 +23,38 @@ namespace DotNetMarche.Validator
 
 		#endregion
 
-		/// <summary>
-		/// All error messages are included into a list.
-		/// </summary>
-		protected List<String> mErrorMessage = new List<String>();
-		
-		/// <summary>
-		/// Provide readonly access to the list of errors.
-		/// </summary>
-		public IList<String> ErrorMessages {
-			get {return mErrorMessage.AsReadOnly();}
+		#region Constants
+
+		public const string ValidationSourceObject = "[Object]";
+
+		#endregion
+
+		public List<ValidationError> Errors
+		{
+			get
+			{
+				return errors;
+			}
 		}
-		
+		private List<ValidationError> errors = new List<ValidationError>();
+
+		public IList<string> ErrorMessages
+		{
+			get
+			{
+				return Errors.Select(em => em.Message).ToList();
+			}
+		}
+
 		/// <summary>
-		/// Add an error.
+		/// Add an error to the list of validation error already found.
 		/// </summary>
-		/// <param name="errorMessage"></param>
-		internal void AddErrorMessage(String errorMessage) {
-			mErrorMessage.Add(errorMessage);
+		/// <param name="errorMessage">The message that describes the error.</param>
+		/// <param name="sourceName">The source that causes validation error.</param>
+		internal void AddErrorMessage(String errorMessage, String sourceName)
+		{
+			errors.Add(new ValidationError(errorMessage, sourceName));
+			Success = false;
 		}
 
 		/// <summary>
@@ -62,8 +77,7 @@ namespace DotNetMarche.Validator
 			return res.Success;
 		}
 
-		#endregion 
-
+		#endregion
 
 
 	}

@@ -84,7 +84,7 @@ namespace DotNetMarche.Validator.Core
 
 				if (va.IsValueExtractorOverriden)
 					valueExtractor = va.CreateValueExtractor();
-				vc.Add(new ValidationUnit(
+				vc.Add( ValidationUnit.CreateValidationUnit(
 							va.CreateErrorMessage(),
 							va.CreateValidator(valueExtractor)));
 			}

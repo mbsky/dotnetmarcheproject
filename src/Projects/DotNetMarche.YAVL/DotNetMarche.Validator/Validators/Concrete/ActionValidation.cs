@@ -27,7 +27,7 @@ namespace DotNetMarche.Validator.Validators.Concrete
 				return SingleValidationResult.GenericSuccess;
 			} else
 			{
-				return new SingleValidationResult(false, "Custom function", valueToCheck);
+				return new SingleValidationResult(false, "Custom function", valueToCheck, mValueExtractor.SourceName);
 			}
 		}
 	}

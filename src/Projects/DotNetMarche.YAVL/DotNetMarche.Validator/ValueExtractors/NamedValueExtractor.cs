@@ -20,6 +20,11 @@ namespace DotNetMarche.Validator.ValueExtractors
 			mPartName = partName;
 		}
 
+		public String SourceName
+		{
+			get { return mPartName; }
+		}
+
 		/// <summary>
 		/// Extract value, it extract the part of the object specified by mPartName 
 		/// and work on the type of the object passed in the first call.

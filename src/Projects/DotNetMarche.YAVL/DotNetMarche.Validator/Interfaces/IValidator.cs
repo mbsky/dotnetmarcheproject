@@ -20,4 +20,22 @@ namespace DotNetMarche.Validator.Interfaces
 		SingleValidationResult Validate(object objectToValidate);
 		 
 	}
+
+
+	/// <summary>
+	/// Interface that identify a validator capable of validating something and returning
+	/// more than a single validation result. 
+	/// </summary>
+	public interface IMultipleValidator
+	{
+		/// <summary>
+		/// Validates the specified object to validate.
+		/// </summary>
+		/// <param name="objectToValidate">The object to validate.</param>
+		/// <param name="validationFlags">Validation flags, since the object does multiple validation
+		/// it should know actual validation flags.</param>
+		/// <returns>The list of errors, if the return is an empty <see cref="IEnumerable{SingleValidationResult}"/>
+		/// </returns>
+		IEnumerable<SingleValidationResult> Validate(Object objectToValidate, ValidationFlags validationFlags);
+	}
 }

@@ -1,3 +1,4 @@
+#pragma warning disable 0649
 using System;
 using DotNetMarche.Validator.Validators.Attributes;
 using NUnit.Framework;
@@ -49,7 +50,8 @@ namespace DotNetMarche.Validator.Tests
 			var obj = new Container1();
 			obj.containedField = new Contained1();
 			var v = new Core.Validator();
-			ValidationResult res = v.ValidateObject(obj, ValidationFlags.StopOnFirstError | ValidationFlags.RecursiveValidation);
+			ValidationResult res = v.ValidateObject(obj, 
+				ValidationFlags.StopOnFirstError | ValidationFlags.RecursiveValidation);
 			Assert.IsFalse(res, "Object field does not validate.");
 		}
 

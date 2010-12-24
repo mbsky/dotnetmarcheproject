@@ -18,7 +18,7 @@ namespace DotNetMarche.Validator.Tests
 		public void ValidationResultConvertToBoolean()
 		{
 			Assert.IsTrue(SingleValidationResult.GenericSuccess);
-			Assert.IsFalse(SingleValidationResult.GenericError);
+			Assert.IsFalse(new SingleValidationResult(false, "", "", "property"));
 		}
 
 		[Test]
@@ -89,7 +89,7 @@ namespace DotNetMarche.Validator.Tests
 		public void TestMessageWithResult()
 		{
 			ErrorMessage sut = new ErrorMessage("Expected " + ErrorMessage.sTokenExpectedValue + " actual " + ErrorMessage.sTokenActualValue);
-			SingleValidationResult res = new SingleValidationResult(false, "Exp", "Act");
+			SingleValidationResult res = new SingleValidationResult(false, "Exp", "Act", "Source");
 			Assert.That(sut.ToString(res),
 				Is.EqualTo("Expected " + "Exp" + " actual " + "Act"));
 		}
@@ -98,7 +98,7 @@ namespace DotNetMarche.Validator.Tests
 		public void TestLocalizationWithResultLocalized()
 		{
 			ErrorMessage sut = new ErrorMessage(() => TestRes.TestToken);
-			SingleValidationResult res = new SingleValidationResult(false, "Exp", "Act");
+			SingleValidationResult res = new SingleValidationResult(false, "Exp", "Act", "Source");
 			Assert.That(sut.ToString(res),
 				Is.EqualTo("Expected " + "Exp" + " Actual " + "Act"));
 		}
@@ -107,7 +107,7 @@ namespace DotNetMarche.Validator.Tests
 		public void TestLocalizationWithResultLocalizedIt()
 		{
 			ErrorMessage sut = new ErrorMessage(() => TestRes.TestToken);
-			SingleValidationResult res = new SingleValidationResult(false, "Exp", "Act");
+			SingleValidationResult res = new SingleValidationResult(false, "Exp", "Act", "Source");
 			Assert.That(sut.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("It"), res),
 				Is.EqualTo("Atteso " + "Exp" + " Attuale " + "Act"));
 		}

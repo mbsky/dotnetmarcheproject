@@ -50,5 +50,32 @@ namespace DotNetMarche.Validator.ValueExtractors.Composite
 					throw new ArgumentException("Unknown operation");
 			}
 		}
+
+		#region IValueExtractor Members
+
+
+		public string SourceName
+		{
+			get { return mLeft.SourceName + GetSymbolicValue() + mRight.SourceName; }
+		}
+
+		private string GetSymbolicValue()
+		{
+			switch (mOperation)
+			{
+				case MathOperation.Addition:
+					return " + ";
+				case MathOperation.Division:
+					return " / ";
+				case MathOperation.Multiplication:
+					return " * ";
+				case MathOperation.Subtraction:
+					return " - ";
+				default:
+					throw new ArgumentException("Unknown operation");
+			}
+		}
+
+		#endregion
 	}
 }

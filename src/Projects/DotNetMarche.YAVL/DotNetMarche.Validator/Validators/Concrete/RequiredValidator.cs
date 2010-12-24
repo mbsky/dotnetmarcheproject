@@ -26,8 +26,8 @@ namespace DotNetMarche.Validator.Validators.Concrete
 			Boolean result = IsValueValid(valueToCheck);
 			if (result)
 				return SingleValidationResult.GenericSuccess;
-			else 
-				return SingleValidationResult.GenericError;
+			else
+				return new SingleValidationResult(false, "", "", mValueExtractor.SourceName);
 		}
 
 		/// <summary>

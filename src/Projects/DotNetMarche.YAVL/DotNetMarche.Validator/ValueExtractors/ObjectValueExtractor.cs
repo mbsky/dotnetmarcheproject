@@ -12,7 +12,9 @@ namespace DotNetMarche.Validator.ValueExtractors
 	/// </summary>
 	public class ObjectValueExtractor : IValueExtractor {
 
-		public ObjectValueExtractor() {
+		public String SourceName
+		{
+			get { return ValidationResult.ValidationSourceObject; }
 		}
 		
 		public object ExtractValue(object objToValidate) {

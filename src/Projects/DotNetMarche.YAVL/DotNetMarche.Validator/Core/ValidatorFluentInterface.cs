@@ -20,7 +20,7 @@ namespace DotNetMarche.Validator.Core
 		public Validator AddRule(Type type, IValidator validator, ErrorMessage msg)
 		{
 			ValidationUnitCollection coll = GetRules(type);
-			coll.Add(new ValidationUnit(msg, validator));
+			coll.Add( ValidationUnit.CreateValidationUnit(msg, validator));
 			return this;
 		}
 

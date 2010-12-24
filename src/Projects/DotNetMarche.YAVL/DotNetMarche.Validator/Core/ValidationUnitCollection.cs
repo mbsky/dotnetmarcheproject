@@ -49,11 +49,11 @@ namespace DotNetMarche.Validator.Core
 		/// <summary>
 		/// Validate an object modifying an existing Validation Result.
 		/// </summary>
-		/// <param name="actualResult"></param>
-		/// <param name="objToValidate"></param>
-		/// <param name="stopOnFirstError"></param>
-		/// <param name="cultureInfo"></param>
-		/// <param name="descendGraph"></param>
+		/// <param name="actualResult">The result object that contains validation result, it will
+		/// be populated by this function</param>
+		/// <param name="objToValidate">The object to be validated.</param>
+		/// <param name="validationFlags">Options for comparing objects.</param>
+		/// <param name="cultureInfo">The cultureinfo used to validate the object.</param>
 		public void ValidateObject(
 			ValidationResult actualResult,
 			object objToValidate,
@@ -63,7 +63,7 @@ namespace DotNetMarche.Validator.Core
 
 			foreach (ValidationUnit vu in mList)
 			{
-				if (ValdationFlagsUtils.RecursiveValidation(validationFlags) || !vu.IsRecursive)
+				if (ValdationFlagsUtils.RecursiveValidation(validationFlags) || vu.IsFirstLevelValidationUnit)
 				{
 					Boolean validationResult = vu.Validate(actualResult, objToValidate, validationFlags, cultureInfo);
 					if (!validationResult && ValdationFlagsUtils.StopOnFirstError(validationFlags)) break;

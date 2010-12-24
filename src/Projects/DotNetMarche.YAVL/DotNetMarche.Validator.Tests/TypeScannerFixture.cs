@@ -1,3 +1,4 @@
+#pragma warning disable 0649
 using System;
 using System.Collections.Generic;
 using DotNetMarche.Validator.Core;
@@ -119,7 +120,7 @@ namespace DotNetMarche.Validator.Tests
 			var ts = new TypeScanner(obj.GetType());
 			ValidationUnitCollection vc = ts.Scan();
 			Assert.AreEqual(1, vc.Count, "Wrong Number of Attributes scanned");
-			Assert.IsInstanceOfType(typeof (RequiredValidator), vc[0].Validator, "Wrong Attribute Type");
+			Assert.That(((SingleValidatorValidationUnit)vc[0]).Validator, Is.InstanceOf(typeof(RequiredValidator)), "Wrong Attribute Type");
 		}
 
 		[Test]
@@ -129,10 +130,10 @@ namespace DotNetMarche.Validator.Tests
 			var ts = new TypeScanner(obj.GetType());
 			ValidationUnitCollection vc = ts.Scan();
 			Assert.AreEqual(1, vc.Count, "Wrong Number of Attributes scanned");
-			Assert.IsInstanceOfType(typeof (RequiredValidator), vc[0].Validator, "Wrong Attribute Type");
+			Assert.That(((SingleValidatorValidationUnit)vc[0]).Validator, Is.InstanceOf(typeof(RequiredValidator)), "Wrong Attribute Type");
 			ValidationUnitCollection anotherscan = ts.Scan();
 			Assert.AreEqual(1, anotherscan.Count, "Wrong Number of Attributes scanned");
-			Assert.IsInstanceOfType(typeof (RequiredValidator), anotherscan[0].Validator, "Wrong Attribute Type");
+			Assert.That(((SingleValidatorValidationUnit)anotherscan[0]).Validator, Is.InstanceOf(typeof(RequiredValidator)), "Wrong Attribute Type");
 		}
 
 		[Test]
@@ -142,7 +143,7 @@ namespace DotNetMarche.Validator.Tests
 			var ts = new TypeScanner(obj.GetType());
 			ValidationUnitCollection vc = ts.Scan();
 			Assert.AreEqual(1, vc.Count, "Wrong Number of Attributes scanned");
-			Assert.IsInstanceOfType(typeof (RequiredValidator), vc[0].Validator, "Wrong Attribute Type");
+			Assert.That(((SingleValidatorValidationUnit)vc[0]).Validator, Is.InstanceOf(typeof(RequiredValidator)), "Wrong Attribute Type");
 		}
 
 		[Test]
@@ -152,8 +153,8 @@ namespace DotNetMarche.Validator.Tests
 			var ts = new TypeScanner(obj.GetType());
 			ValidationUnitCollection vc = ts.Scan();
 			Assert.AreEqual(2, vc.Count, "Wrong Number of Attributes scanned");
-			Assert.IsInstanceOfType(typeof (RequiredValidator), vc[0].Validator, "Wrong Attribute Type");
-			Assert.IsInstanceOfType(typeof (RequiredValidator), vc[1].Validator, "Wrong Attribute Type");
+			Assert.That(((SingleValidatorValidationUnit)vc[0]).Validator, Is.InstanceOf(typeof(RequiredValidator)), "Wrong Attribute Type");
+			Assert.That(((SingleValidatorValidationUnit)vc[1]).Validator, Is.InstanceOf(typeof(RequiredValidator)), "Wrong Attribute Type");
 		}
 
 		[Test(Description = "Test if the scanner scan the attributes of type")]
@@ -163,7 +164,7 @@ namespace DotNetMarche.Validator.Tests
 			var ts = new TypeScanner(obj.GetType());
 			ValidationUnitCollection vc = ts.Scan();
 			Assert.AreEqual(1, vc.Count, "Wrong Number of Attributes scanned");
-			Assert.IsInstanceOfType(typeof (ConstantResultValidator), vc[0].Validator, "Wrong Attribute Type");
+			Assert.That(((SingleValidatorValidationUnit)vc[0]).Validator, Is.InstanceOf(typeof(ConstantResultValidator)), "Wrong Attribute Type");
 		}
 	}
 }

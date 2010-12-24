@@ -49,6 +49,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -116,11 +119,11 @@
     <Compile Include="Interfaces\IValidator.cs" />
     <Compile Include="Interfaces\IValueExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationError.cs" />
     <Compile Include="ValidationException.cs" />
     <Compile Include="ValidationFlags.cs" />
     <Compile Include="ValidationResult.cs" />
     <Compile Include="Validators\Attributes\ConstantResultAttribute.cs" />
-    <Compile Include="Validators\Attributes\NullableAttribute.cs" />
     <Compile Include="Validators\Attributes\RangeLengthAttribute.cs" />
     <Compile Include="Validators\Attributes\RangeValueAttribute.cs" />
     <Compile Include="Validators\Attributes\RegexAttribute.cs" />
@@ -128,7 +131,6 @@
     <Compile Include="Validators\Concrete\ActionValidation.cs" />
     <Compile Include="Validators\Concrete\ConstantResultValidator.cs" />
     <Compile Include="Validators\Concrete\RangeLengthValidator.cs" />
-    <Compile Include="Validators\Concrete\NullableValidator.cs" />
     <Compile Include="Validators\Concrete\RangeValueValidator.cs" />
     <Compile Include="Validators\Concrete\RegexValidator.cs" />
     <Compile Include="Validators\Concrete\RequiredValidator.cs" />
