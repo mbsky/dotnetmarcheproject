@@ -33,14 +33,13 @@ namespace DotNetMarche.Validator.Core
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="objToValidate"></param>
-		/// <param name="stopOnFirstError"></param>
+		/// <param name="objToValidate">The object that is being validated.</param>
+		/// <param name="validationFlags">Options used to decide how validation is performed</param>
 		/// <returns></returns>
 		public ValidationResult ValidateObject(
 			object objToValidate,
 			ValidationFlags validationFlags)
 		{
-
 			ValidationUnitCollection rules = GetRules(objToValidate);
 			ValidationResult result = new ValidationResult();
 			return rules.ValidateObject(result, objToValidate, validationFlags);
@@ -67,7 +66,7 @@ namespace DotNetMarche.Validator.Core
 			ValidationResult res = ValidateObject(objToValidate, validationFlags);
 			if (!res)
 			{
-				throw new ValidationException(res.ErrorMessages);
+				throw new ValidationException(res.Errors);
 			}
 		}
 

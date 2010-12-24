@@ -7,16 +7,18 @@ using DotNetMarche.Validator.Interfaces;
 
 namespace DotNetMarche.Validator.Core.InnerValidators
 {
-	class ObjectValidator : IValidator {
+	public class ObjectValidator : IMultipleValidator
+	{
 
-		internal ObjectValidator( 
+		internal ObjectValidator(
 			IValueExtractor valueExtractor,
-			Dictionary<Type, ValidationUnitCollection> ruleMap) {
-		
+			Dictionary<Type, ValidationUnitCollection> ruleMap)
+		{
+
 			mValueExtractor = valueExtractor;
 			mRuleMap = ruleMap;
 
-			}
+		}
 
 		protected IValueExtractor mValueExtractor;
 		protected Dictionary<Type, ValidationUnitCollection> mRuleMap;
@@ -25,25 +27,32 @@ namespace DotNetMarche.Validator.Core.InnerValidators
 		/// Validate an object
 		/// </summary>
 		/// <param name="objectToValidate"></param>
+		/// <param name="validationFlags"></param>
 		/// <returns></returns>
-		public SingleValidationResult Validate(object objectToValidate) {
+		public IEnumerable<SingleValidationResult> Validate(object objectToValidate, ValidationFlags validationFlags)
+		{
 			//First of all retrieve the object, if it is null validate.
 			object obj = mValueExtractor.ExtractValue(objectToValidate);
-			if (obj == null) return SingleValidationResult.GenericSuccess; 
-			return InnerValidate(obj);
-		}
+			if (obj != null)
+			{
+				//Check if this object support a validation, if we do not have a rule the object should
+				//be considered valid.
+				ValidationUnitCollection vc = mRuleMap[obj.GetType()];
+				if (vc.Count > 0)
+				{
+					ValidationResult res = new ValidationResult();
 
-		public SingleValidationResult InnerValidate(object obj) {
-			//Check if this object support a validation, if we do not have a rule the object should
-			//be considered valid.
-			ValidationUnitCollection vc = mRuleMap[obj.GetType()];
-			if (vc.Count == 0) return SingleValidationResult.GenericSuccess; 
-			ValidationResult res = new ValidationResult();
-			vc.ValidateObject(res, obj, ValidationFlags.StopOnFirstError | ValidationFlags.RecursiveValidation);
-			if (res) 
-				return SingleValidationResult.GenericSuccess;
-			
-			return new SingleValidationResult(false, res.ErrorMessages[0], "");
+					vc.ValidateObject(res, obj, validationFlags);
+					if (!res)
+					{
+						foreach (ValidationError validationError in res.Errors)
+						{
+							yield return new SingleValidationResult(
+								false, validationError.Message, "", mValueExtractor.SourceName + "." + validationError.SourceName);
+						}
+					}
+				}
+			}
 		}
 	}
 }

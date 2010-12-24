@@ -30,6 +30,7 @@ namespace ValidatorTest
 			var newObject = new object();
 			IValueExtractor ive = MockRepository.GenerateStub<IValueExtractor>();
 			ive.Stub(obj => obj.ExtractValue(null)).IgnoreArguments().Return(4);
+			ive.Expect(o => o.SourceName).Return("property");
 			var rv = new ActionValidation<Int32>(ive, num => num > 10);
 			Assert.IsFalse(rv.Validate(newObject), "Range incorrect validation");
 		}

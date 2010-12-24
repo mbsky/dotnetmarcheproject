@@ -42,7 +42,8 @@ namespace DotNetMarche.Validator.Validators.Concrete
 			return new SingleValidationResult(
 				false, 
 				String.Format("String of lenght [{0},{1}]", MinLenght, MaxLength),
-				actualValue);
+				actualValue, 
+				mValueExtractor.SourceName);
 		}
 	}
 }

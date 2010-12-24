@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using DotNetMarche.Validator.Core;
 using DotNetMarche.Validator.Interfaces;
@@ -33,7 +34,7 @@ namespace DotNetMarche.Validator.Validators
 		internal Rule Configure(Core.Validator validator)
 		{
 			ValidationUnitCollection coll = validator.GetRules(Type);
-			coll.Add(new ValidationUnit(ErrorMessage, _CreateValidator(Extractor)));
+			coll.Add( ValidationUnit.CreateValidationUnit(ErrorMessage, _CreateValidator(Extractor)));
 			return this;
 		}
 
@@ -44,12 +45,40 @@ namespace DotNetMarche.Validator.Validators
 		public static Rule For<T>()
 		{
 			return For(typeof(T));
-		}		
-		
-		public static Rule For<T>(Func<T, Object> extractor) 
+		}
+
+		public static Rule For<T>(Func<T, Object> extractor)
 		{
 			Rule rule = For(typeof(T));
 			rule._Extractor = new LambdaExtractor<T>(extractor);
+			return rule;
+		}
+
+		public static Rule ForMember<T>(Expression<Func<T, Object>> propertyExtractor)
+		{
+			//we can have directly a member expression or a convert expression
+			PropertyInfo pinfo;
+			MemberExpression mex;
+			if (propertyExtractor.Body is UnaryExpression)
+			{
+				UnaryExpression exp = (UnaryExpression)propertyExtractor.Body;
+				if (exp.NodeType != ExpressionType.Convert)
+				{
+					throw new ArgumentException("The expression is not a property selector", "propertyExtractor");
+				}
+				mex = exp.Operand as MemberExpression;
+			}
+			else
+			{
+				mex = propertyExtractor.Body as MemberExpression;
+			}
+
+			if (mex == null) throw new ArgumentException("The expression is not a property selector", "propertyExtractor");
+			Rule rule = For(typeof(T));
+			pinfo = mex.Member as PropertyInfo;
+			if (pinfo == null) throw new ArgumentException("The expression is not a property selector", "propertyExtractor");
+			
+			rule._Extractor = new PropertyInfoValueExtractor(pinfo);
 			return rule;
 		}
 
@@ -64,7 +93,7 @@ namespace DotNetMarche.Validator.Validators
 
 		public Rule Message(String message)
 		{
-			ErrorMessage = new ErrorMessage(message); 
+			ErrorMessage = new ErrorMessage(message);
 			return this;
 		}
 

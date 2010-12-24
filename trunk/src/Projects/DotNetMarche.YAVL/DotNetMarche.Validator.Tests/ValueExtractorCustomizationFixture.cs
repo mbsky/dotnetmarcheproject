@@ -47,6 +47,11 @@ namespace DotNetMarche.Validator.Tests
 				return testObj.field1*testObj.field2;
 			}
 
+			public String SourceName
+			{
+				get { return ValidationResult.ValidationSourceObject; }
+			}
+
 			#endregion
 		}
 

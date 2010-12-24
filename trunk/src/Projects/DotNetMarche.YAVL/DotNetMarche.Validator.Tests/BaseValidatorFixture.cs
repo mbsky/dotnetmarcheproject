@@ -1,9 +1,14 @@
+#pragma warning disable 0649
 using System;
+using System.Collections.Generic;
+using DotNetMarche.Validator.Interfaces;
+using DotNetMarche.Validator.Tests.ResourcesFiles;
 using DotNetMarche.Validator.Validators;
 using DotNetMarche.Validator.Validators.Attributes;
 using DotNetMarche.Validator.Validators.Concrete;
 using DotNetMarche.Validator.ValueExtractors;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace DotNetMarche.Validator.Tests
 {
@@ -42,9 +47,18 @@ namespace DotNetMarche.Validator.Tests
 			public String Property { get; set; }
 		}
 
+		internal class Simple2Property
+		{
+			
+			public String SProperty { get; set; }
+
+			public Int32 IProperty { get; set; }
+		}
+
 		internal class Simple1Field1Property
 		{
-			[Required(cSimpleErrorMessage)] public String field;
+			[Required(cSimpleErrorMessage)] 
+			public String field;
 
 			[Required(cAlternativeErrorMessage, cDefaultValueSimple1Property)]
 			public String Property { get; set; }
@@ -52,7 +66,8 @@ namespace DotNetMarche.Validator.Tests
 
 		internal class RFTestClass1
 		{
-			[RangeValue(cSimpleErrorMessageRange, 0, 100)] public Int32 field;
+			[RangeValue(cSimpleErrorMessageRange, 0, 100)] 
+			public Int32 field;
 
 			[RangeValue(cSimpleErrorMessageRange, -100, 200)]
 			public Single Property { get; set; }
@@ -83,6 +98,31 @@ namespace DotNetMarche.Validator.Tests
 		}
 
 		[Test]
+		public void RangeTestWrongObjectErrorContainsPropertyName()
+		{
+			var rng = new RFTestClass1();
+			rng.Property = 10000.0f;
+			var v = new Core.Validator();
+			ValidationResult res = v.ValidateObject(rng);
+			Assert.IsFalse(res, "Range Object does wrong validation.");
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("Property"));
+		}
+
+		[Test]
+		public void CoreTestIValidatorReturnsSourceName()
+		{
+			var rng = new RFTestClass1();
+			IValueExtractor extractor = MockRepository.GenerateStub<IValueExtractor>();
+			extractor.Expect(obj => obj.ExtractValue(rng)).Return(100000.0f);
+			extractor.Expect(obj => obj.SourceName).Return("TESTPNAME");
+			var v = new RangeValueValidator(extractor, 0.0, 1.0);
+			SingleValidationResult res = v.Validate(rng);
+			Assert.IsFalse(res, "Range Object does wrong validation.");
+			Assert.That(res.SourceName, Is.EqualTo("TESTPNAME"));
+		}
+
+
+		[Test]
 		public void TestGoodObject()
 		{
 			var s1f = new Simple1Field();
@@ -99,7 +139,57 @@ namespace DotNetMarche.Validator.Tests
 			var v = new Core.Validator();
 			Assert.Throws<ValidationException>(() => v.CheckObject(s1f));
 		}
-		
+
+		/// <summary>
+		/// Verifies that exception contains the source names of the properties that
+		/// returns errors.
+		/// </summary>
+		[Test]
+		public void TestValidateWithExceptionForSourceMessages()
+		{
+			var obj = new Simple1Property();
+			var v = new Core.Validator();
+			try
+			{
+				v.CheckObject(obj);
+			}
+			catch (ValidationException ex)
+			{
+				Assert.That(ex.Errors, Has.Count.EqualTo(1));
+				Assert.That(ex.Errors[0].SourceName, Is.EqualTo("Property"));
+				return;
+			}
+			Assert.Fail("Exception expected");
+		}
+
+		[Test]
+		public void VerifySingleValidationResultSourceName()
+		{
+			Assert.Throws<ArgumentException>(() => new SingleValidationResult(false, "", "", ""));
+		}
+
+		[Test]
+		public void TestValidatorResultForMessages()
+		{
+			var vr = new ValidationResult(true);
+			vr.AddErrorMessage("TEST", "Property");
+			vr.AddErrorMessage("TESTQ", "Property");
+			Assert.That(vr.ErrorMessages, Is.EquivalentTo(new String[]
+			                                              	{
+			                                              		"TEST",
+			                                              		"TESTQ"
+			                                              	}
+			                              	));
+		}
+
+		[Test]
+		public void TestValidationExceptionForMessages()
+		{
+			var vr = new ValidationException(new[] { new ValidationError("1", ""), new ValidationError("2", "") });
+			
+			Assert.That(vr.ErrorMessages, Is.EquivalentTo(new []{"1", "2"}));
+		}
+
 		[Test]
 		public void TestGoodObjectFluent()
 		{
@@ -125,6 +215,22 @@ namespace DotNetMarche.Validator.Tests
 	          	.OnMember("field")
 	          	.Required.Message("ErrorMessage"));
 
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.IsFalse(res, "Object does not validate well");
+			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
+			Assert.That(res.ErrorMessages[0], Is.EqualTo("ErrorMessage"));
+		}
+
+		[Test]
+		public void TestGoodObjectFluent3()
+		{
+			var s1f = new Simple1FieldWithoutAttribute();
+			s1f.field = "Test";
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.For<Simple1FieldWithoutAttribute>()
+					.OnMember("field")
+					.LengthInRange(10, 40)
+					.Message("ErrorMessage"));
 			ValidationResult res = v.ValidateObject(s1f);
 			Assert.IsFalse(res, "Object does not validate well");
 			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
@@ -201,6 +307,53 @@ namespace DotNetMarche.Validator.Tests
 			s1f.intField = -1;
 			res = v.ValidateObject(s1f);
 			Assert.IsFalse(res, "Object does not validate well");
+		}
+
+		[Test]
+		public void TestFluentForErrorMessageWithLambda()
+		{
+			var s1f = new Simple1FieldWithoutAttribute();
+			s1f.intField = -50;
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.For<Simple1FieldWithoutAttribute>(o => o.intField)
+				.IsInRange(0, 100)
+				.Message(() => TestRes.Test));
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.That(res.Errors[0].Message, Is.EqualTo("This is a test message"));
+		}
+
+		[Test]
+		public void TestFluentForSourceWithLambda()
+		{
+			var s1f = new Simple1Property();
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.ForMember<Simple1Property>(o => o.Property)
+				.Required
+				.Message(() => TestRes.Test));
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("Property"));
+		}
+		
+		[Test]
+		public void TestFluentForSourceWithLambdaInt()
+		{
+			var s1f = new Simple2Property();
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.ForMember<Simple2Property>(o => o.IProperty)
+				.IsInRange(10, 100)
+				.Message(() => TestRes.Test));
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("IProperty"));
+		}
+
+		[Test]
+		public void TestFluentInvalidNoProperty()
+		{
+			Core.Validator v = new Core.Validator();
+			Assert.Throws<ArgumentException>(() =>
+			                                 v.AddRule(Rule.ForMember<Simple1Field>(o => o.field)
+			                                           	.IsInRange(10, 100)
+			                                           	.Message(() => TestRes.Test)));
 		}
 
 		[Test]

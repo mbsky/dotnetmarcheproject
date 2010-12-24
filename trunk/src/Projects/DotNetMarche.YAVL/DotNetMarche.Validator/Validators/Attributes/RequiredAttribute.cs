@@ -23,8 +23,14 @@ namespace DotNetMarche.Validator.Validators.Attributes
 
 		public RequiredAttribute(String errorMessage) : base(errorMessage) {
 			Init(null);
-		} 
+		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RequiredAttribute"/> class.
+		/// </summary>
+		/// <param name="errorMessage">The error message.</param>
+		/// <param name="nullValue">The value that is used to consider that property value
+		/// null.</param>
 		public RequiredAttribute(String errorMessage, object nullValue) : base(errorMessage) {
 			Init(nullValue);
 		} 

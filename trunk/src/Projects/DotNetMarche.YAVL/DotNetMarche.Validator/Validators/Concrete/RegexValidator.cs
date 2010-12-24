@@ -23,7 +23,7 @@ namespace DotNetMarche.Validator.Validators.Concrete
 			String value = base.Extract<String>(objectToValidate);
 			if (Regex.IsMatch(value, RegexExpression))
 			return SingleValidationResult.GenericSuccess;
-			return new SingleValidationResult(false, String.Format("Match regex {0}", RegexExpression), value);
+			return new SingleValidationResult(false, String.Format("Match regex {0}", RegexExpression), value, mValueExtractor.SourceName);
 		}
 	}
 }

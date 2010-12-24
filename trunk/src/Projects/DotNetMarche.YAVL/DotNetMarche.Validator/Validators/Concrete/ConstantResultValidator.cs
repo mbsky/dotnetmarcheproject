@@ -22,7 +22,7 @@ namespace DotNetMarche.Validator.Validators.Concrete
 			if (mResult)
 				return SingleValidationResult.GenericSuccess;
 			else
-				return SingleValidationResult.GenericError;
+				return new SingleValidationResult(false, "", "", mValueExtractor.SourceName);
 		}
 	
 
