@@ -46,7 +46,6 @@ namespace DotNetMarche.Validator.Core
 		/// <param name="valueExtractor"></param>
 		/// <param name="partName"></param>
 		/// <param name="ruleMap"></param>
-		/// <param name="isRecursive"></param>
 		/// <returns></returns>
 		public static ValidationUnit CreateObjectValidationUnit(
 			IValueExtractor valueExtractor,
