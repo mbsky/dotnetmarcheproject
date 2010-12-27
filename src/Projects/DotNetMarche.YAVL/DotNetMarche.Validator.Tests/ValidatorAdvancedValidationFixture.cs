@@ -46,6 +46,11 @@ namespace DotNetMarche.Validator.Tests
 		}
 
 
+		internal class OwnCollectionAnotherClassTest
+		{
+			public List<AnotherClassTest> List { get; set; }
+		}
+
 		#endregion
 
 		[Test]
@@ -89,6 +94,18 @@ namespace DotNetMarche.Validator.Tests
 
 			ValidationResult res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
 			Assert.That(res.Errors, Has.Count.EqualTo(2));
+		}
+
+		[Test]
+		public void VerifyCollectionValidation()
+		{
+			var rng = new OwnCollectionAnotherClassTest() { List = new List<AnotherClassTest>()};
+			rng.List.Add(new AnotherClassTest() {Property1 = "bla", Property2 = "BEA"});
+			rng.List.Add(new AnotherClassTest() { Property1 = "bla"}); //this is invalid
+			var v = new Core.Validator();
+
+			var res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
+			Assert.IsFalse(res);
 		}
 
 	}

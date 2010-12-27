@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
@@ -6,6 +7,7 @@ using DotNetMarche.Validator.BaseClasses;
 using DotNetMarche.Validator.Core;
 using DotNetMarche.Validator.Interfaces;
 using DotNetMarche.Validator.ValueExtractors;
+using DotNetMarche.Validator.Utils;
 
 namespace DotNetMarche.Validator.Core
 {
@@ -81,7 +83,6 @@ namespace DotNetMarche.Validator.Core
 
 			foreach (BaseValidationAttribute va in validationfields)
 			{
-
 				if (va.IsValueExtractorOverriden)
 					valueExtractor = va.CreateValueExtractor();
 				vc.Add( ValidationUnit.CreateValidationUnit(
@@ -148,14 +149,16 @@ namespace DotNetMarche.Validator.Core
 			Type ty,
 			List<Type> fieldTypes)
 		{
-			if (fieldTypes != null && !IsBasicType(ty) && !fieldTypes.Contains(ty))
-				fieldTypes.Add(ty);
+			Type realType = GetTypeFromInnerMember(ty);
+			if (fieldTypes != null && !IsBasicType(realType) && !fieldTypes.Contains(realType))
+				fieldTypes.Add(realType);
 		}
 
 		private Boolean IsBasicType(Type ty)
 		{
 			return ty.Assembly.FullName.StartsWith("mscorlib");
 		}
+
 		#endregion
 
 		#region Recursive Type Scanners
@@ -218,31 +221,50 @@ namespace DotNetMarche.Validator.Core
 			//now we should check for each property and field, we need to find
 			foreach (FieldInfo fi in typeToCheck.GetFields(BindingFlags.Instance | BindingFlags.Public))
 			{
-				if (ruleMap.ContainsKey(fi.FieldType))
+				if (ShouldValidateWithObjectValidator(ruleMap, fi.FieldType))
 				{
 					IValueExtractor extractor = new FieldInfoValueExtractor(fi);
 					ruleMap[typeToCheck].Add(
 						ValidationUnit.CreateObjectValidationUnit(
 							extractor, fi.Name, ruleMap));
 				}
-				if (!listOfScannedTypes.Contains(fi.FieldType))
-					RecursiveSetObjectValidator(fi.FieldType, ruleMap, listOfLoadedTypes, listOfScannedTypes);
+				Type type = GetTypeFromInnerMember(fi.FieldType);
+				if (!listOfScannedTypes.Contains(type))
+					RecursiveSetObjectValidator(type, ruleMap, listOfLoadedTypes, listOfScannedTypes);
 			}
 
 			foreach (PropertyInfo pi in typeToCheck.GetProperties(BindingFlags.Instance | BindingFlags.Public))
 			{
-				if (ruleMap.ContainsKey(pi.PropertyType))
+				if (ShouldValidateWithObjectValidator(ruleMap, pi.PropertyType))
 				{
 					IValueExtractor extractor = new PropertyInfoValueExtractor(pi);
 					ruleMap[typeToCheck].Add(
 						ValidationUnit.CreateObjectValidationUnit(
 							extractor, pi.Name, ruleMap));
 				}
-				if (!listOfScannedTypes.Contains(pi.PropertyType))
-					RecursiveSetObjectValidator(pi.PropertyType, ruleMap, listOfLoadedTypes, listOfScannedTypes);
+				Type type = GetTypeFromInnerMember(pi.PropertyType);
+				if (!listOfScannedTypes.Contains(type))
+					RecursiveSetObjectValidator(type, ruleMap, listOfLoadedTypes, listOfScannedTypes);
 			}
 		}
 
+
+		private static bool ShouldValidateWithObjectValidator(
+			Dictionary<Type, ValidationUnitCollection> ruleMap, Type typeOfMember)
+		{
+			return ruleMap.ContainsKey(typeOfMember) ||
+				(typeOfMember != typeof(String) && typeOfMember.ImplementsInterface(typeof(IEnumerable)));
+		}
+
+		private static Type GetTypeFromInnerMember(Type baseType)
+		{
+			//verify collection validation
+			if (baseType.ImplementsInterface(typeof(IEnumerable<>)))
+			{
+				return baseType.GetGenericTypeOfIEnumerable() ?? baseType;
+			}
+			return baseType;
+		}
 
 		#endregion
 

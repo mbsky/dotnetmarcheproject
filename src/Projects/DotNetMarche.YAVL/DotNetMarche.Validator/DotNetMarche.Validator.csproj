@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="BaseClasses\BaseValidationAttribute.cs" />
     <Compile Include="BaseClasses\BaseValidator.cs" />
+    <Compile Include="BaseClasses\BaseMultipleValidator.cs" />
     <Compile Include="Configuration\Xml\Extractors\BaseExtractor.cs" />
     <Compile Include="Configuration\Xml\Extractors\MemberExtractorNode.cs" />
     <Compile Include="Configuration\Xml\ExtratorNode.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Configuration\Xml\XmlHelper.cs" />
     <Compile Include="Core\ErrorMessage.cs" />
     <Compile Include="Core\ErrorMessageFormatter.cs" />
+    <Compile Include="Core\InnerValidators\CollectionOfObjectsValidator.cs" />
     <Compile Include="Core\InnerValidators\ObjectValidator.cs" />
     <Compile Include="Core\TypeScanner.cs" />
     <Compile Include="Core\ValidationRules.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Interfaces\IValidator.cs" />
     <Compile Include="Interfaces\IValueExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CollectionHelper.cs" />
     <Compile Include="ValidationError.cs" />
     <Compile Include="ValidationException.cs" />
     <Compile Include="ValidationFlags.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="Validators\Attributes\RequiredAttribute.cs" />
     <Compile Include="Validators\Concrete\ActionValidation.cs" />
     <Compile Include="Validators\Concrete\ConstantResultValidator.cs" />
+    <Compile Include="Validators\Concrete\NotEmptyValidator.cs" />
     <Compile Include="Validators\Concrete\RangeLengthValidator.cs" />
     <Compile Include="Validators\Concrete\RangeValueValidator.cs" />
     <Compile Include="Validators\Concrete\RegexValidator.cs" />
