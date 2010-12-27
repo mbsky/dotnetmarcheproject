@@ -37,32 +37,46 @@ namespace DotNetMarche.Validator.Core.InnerValidators
 			object obj = Extract<Object>(objectToValidate);
 			if (obj != null)
 			{
+				List<SingleValidationResult> results = new List<SingleValidationResult>();
 				if (obj is IEnumerable)
 				{
 					//the object is IEnumerable, we need to validate inner objects
 					Int32 index = 0;
-					List<SingleValidationResult> results = new List<SingleValidationResult>();
+
 					foreach (var innerObj in obj as IEnumerable)
 					{
-						var partialRet = ValidateSingleObject(innerObj, validationFlags);
-						foreach (var singleValidationResult in partialRet)
+						var errors = ValidateSingleObject(innerObj, validationFlags);
+						foreach (var validationError in errors)
 						{
-							results.Add(singleValidationResult);
+							results.Add(new SingleValidationResult(
+									false, validationError.Message, "", string.Format("{0}[{1}].{2}",
+									mValueExtractor.SourceName, index, validationError.SourceName)));
+
 						}
 						index++;
 					}
-					return results;
 				}
-		
+				else
+				{
 					//Check if this object support a validation, if we do not have a rule the object should
 					//be considered valid.
-					return ValidateSingleObject(obj, validationFlags);
+					var errors = ValidateSingleObject(obj, validationFlags);
+					foreach (var validationError in errors)
+					{
+						results.Add(new SingleValidationResult(
+													false, validationError.Message, "", mValueExtractor.SourceName + "." + validationError.SourceName));
+
+					}
+				}
+				return results;
+
+
 			}
 
-			return new SingleValidationResult[] {};
+			return new SingleValidationResult[] { };
 		}
 
-		protected IEnumerable<SingleValidationResult> ValidateSingleObject(object obj, ValidationFlags validationFlags)
+		protected IEnumerable<ValidationError> ValidateSingleObject(object obj, ValidationFlags validationFlags)
 		{
 			ValidationUnitCollection vc = mRuleMap[obj.GetType()];
 			if (vc.Count > 0)
@@ -72,17 +86,11 @@ namespace DotNetMarche.Validator.Core.InnerValidators
 				vc.ValidateObject(res, obj, validationFlags);
 				if (!res)
 				{
-					List<SingleValidationResult> retValue = new List<SingleValidationResult>();
-					foreach (ValidationError validationError in res.Errors)
-					{
-						retValue.Add(new SingleValidationResult(
-											false, validationError.Message, "", mValueExtractor.SourceName + "." + validationError.SourceName));
-					}
-					return retValue;
+					return res.Errors;
 				}
 			}
-			return new SingleValidationResult[] { };
-			
+			return new ValidationError[] { };
+
 		}
 	}
 }

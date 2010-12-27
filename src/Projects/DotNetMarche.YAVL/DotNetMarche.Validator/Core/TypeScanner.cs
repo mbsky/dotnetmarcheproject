@@ -212,7 +212,7 @@ namespace DotNetMarche.Validator.Core
 			IList<Type> listOfScannedTypes)
 		{
 
-			//If this type was not loaded there is no need to check, probably its set or rules is already loaded
+			//If this type was not in the listofloadedtype there is no need to check, probably its set or rules is already loaded
 			if (!listOfLoadedTypes.Contains(typeToCheck)) return;
 
 			listOfScannedTypes.Add(typeToCheck);

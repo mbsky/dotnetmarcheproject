@@ -108,5 +108,16 @@ namespace DotNetMarche.Validator.Tests
 			Assert.IsFalse(res);
 		}
 
+		[Test]
+		public void VerifyCollectionValidationIndexingOfPropertyInErrorList()
+		{
+			var rng = new OwnCollectionAnotherClassTest() { List = new List<AnotherClassTest>() };
+			rng.List.Add(new AnotherClassTest() { Property1 = "bla", Property2 = "BEA" });
+			rng.List.Add(new AnotherClassTest() { Property1 = "bla" }); //this is invalid
+			var v = new Core.Validator();
+
+			var res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("List[1].Property2"));
+		}
 	}
 }

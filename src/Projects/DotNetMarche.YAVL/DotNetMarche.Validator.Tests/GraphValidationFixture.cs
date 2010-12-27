@@ -52,7 +52,7 @@ namespace DotNetMarche.Validator.Tests
 			var v = new Core.Validator();
 			ValidationResult res = v.ValidateObject(obj, 
 				ValidationFlags.StopOnFirstError | ValidationFlags.RecursiveValidation);
-			Assert.IsFalse(res, "Object field does not validate.");
+			Assert.IsFalse(res, "Object does not works for recursive validation");
 		}
 
 		/// <summary>
