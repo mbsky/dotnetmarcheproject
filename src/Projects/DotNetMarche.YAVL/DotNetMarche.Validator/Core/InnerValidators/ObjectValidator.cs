@@ -78,17 +78,22 @@ namespace DotNetMarche.Validator.Core.InnerValidators
 
 		protected IEnumerable<ValidationError> ValidateSingleObject(object obj, ValidationFlags validationFlags)
 		{
-			ValidationUnitCollection vc = mRuleMap[obj.GetType()];
-			if (vc.Count > 0)
+			Type type = obj.GetType();
+			if (mRuleMap.ContainsKey(type))
 			{
-				ValidationResult res = new ValidationResult();
-
-				vc.ValidateObject(res, obj, validationFlags);
-				if (!res)
+				ValidationUnitCollection vc = mRuleMap[type];
+				if (vc.Count > 0)
 				{
-					return res.Errors;
+					ValidationResult res = new ValidationResult();
+
+					vc.ValidateObject(res, obj, validationFlags);
+					if (!res)
+					{
+						return res.Errors;
+					}
 				}
 			}
+
 			return new ValidationError[] { };
 
 		}

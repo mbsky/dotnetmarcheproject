@@ -138,8 +138,8 @@
     </Compile>
     <Compile Include="ErrorMessageFormatterFixture.cs" />
     <Compile Include="TypeScannerFixture.cs" />
-    <Compile Include="Utils\CollectionHelperUtilsFixture.cs" />
-    <Compile Include="Utils\MockUtils.cs" />
+    <Compile Include="ResourcesFiles\Utils\CollectionHelperUtilsFixture.cs" />
+    <Compile Include="ResourcesFiles\Utils\MockUtils.cs" />
     <Compile Include="ValidationResultFixture.cs" />
     <Compile Include="MessageLocalizationTest.cs" />
     <Compile Include="CollectionValidationFixture.cs" />
