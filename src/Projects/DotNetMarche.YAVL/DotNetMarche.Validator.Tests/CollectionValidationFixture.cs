@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DotNetMarche.Validator.Validators;
 using DotNetMarche.Validator.Validators.Attributes;
 using NUnit.Framework;
 
 namespace DotNetMarche.Validator.Tests
 {
 	[TestFixture]
-	public class ValidatorAdvancedValidationFixture
+	public class CollectionValidationFixture
 	{
 		private const String cSimpleErrorMessage = "error";
 		private const String cAlternativeErrorMessage = "alternativeError";
@@ -47,6 +48,12 @@ namespace DotNetMarche.Validator.Tests
 
 
 		internal class OwnCollectionAnotherClassTest
+		{
+			[NotEmpty("List property should be not empty")]
+			public List<AnotherClassTest> List { get; set; }
+		}
+
+		internal class OwnCollectionAnotherClassTestWithNoAttribute
 		{
 			public List<AnotherClassTest> List { get; set; }
 		}
@@ -106,6 +113,33 @@ namespace DotNetMarche.Validator.Tests
 
 			var res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
 			Assert.IsFalse(res);
+		}
+
+		[Test]
+		public void VerifyCollectionNotEmptyValidation()
+		{
+			var rng = new OwnCollectionAnotherClassTest() { List = new List<AnotherClassTest>() };
+			var v = new Core.Validator();
+
+			var res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
+			Assert.IsFalse(res);
+		}		
+		
+		[Test]
+		public void VerifyCollectionNotEmptyValidationFluent()
+		{
+			var rng = new OwnCollectionAnotherClassTestWithNoAttribute() { List = new List<AnotherClassTest>() };
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.For<OwnCollectionAnotherClassTestWithNoAttribute>()
+					.OnMember("List")
+					.NotEmpty()
+					.Message("List should have at least one element"));
+			ValidationResult res = v.ValidateObject(rng);
+			Assert.IsFalse(res);
+			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
+			Assert.That(res.ErrorMessages[0], 
+				Is.EqualTo("List should have at least one element"));
+		
 		}
 
 		[Test]

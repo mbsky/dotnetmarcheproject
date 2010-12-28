@@ -142,7 +142,7 @@
     <Compile Include="Utils\MockUtils.cs" />
     <Compile Include="ValidationResultFixture.cs" />
     <Compile Include="MessageLocalizationTest.cs" />
-    <Compile Include="ValidatorAdvancedValidationFixture.cs" />
+    <Compile Include="CollectionValidationFixture.cs" />
     <Compile Include="ValueExtractorCustomizationFixture.cs" />
     <Compile Include="ValueExtractorTestFixture.cs" />
   </ItemGroup>
