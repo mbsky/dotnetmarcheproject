@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using DotNetMarche.Validator.Core;
 using DotNetMarche.Validator.Interfaces;
+using DotNetMarche.Validator.Utils;
 using DotNetMarche.Validator.Validators.Concrete;
 using DotNetMarche.Validator.ValueExtractors;
 
@@ -133,6 +134,12 @@ namespace DotNetMarche.Validator.Validators
 		public Rule OnMember(String propertyName)
 		{
 			Extractor = new NamedValueExtractor(propertyName);
+			return this;
+		}
+
+		public Rule OnMember<T>(Expression<Func<T, Object>> propertySelector)
+		{
+			Extractor = new NamedValueExtractor(propertySelector.GetMemberName());
 			return this;
 		}
 

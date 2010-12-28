@@ -217,6 +217,38 @@ namespace DotNetMarche.Validator.Tests
 		}
 
 		[Test]
+		public void VerifyInnerIEnuerablePropertyPropertyValidation()
+		{
+			var rng = new OwnSecondLevel() { Collection = new List<OwnCollectionOfBasicElementIEnumerable>() };
+			rng.Collection.Add(new OwnCollectionOfBasicElementIEnumerable(1));
+			rng.Collection.Add(new OwnCollectionOfBasicElementIEnumerable());
+			var v = new Core.Validator();
+			v.AddRule(Rule.For<OwnCollectionOfBasicElementIEnumerable>()
+				.OnMember("SearchUnits")
+				 .Custom<IEnumerable<Int32>>(sl =>
+						  sl.Count() > 0)
+						  .Message("Error"));
+			var res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("Collection[1].SearchUnits")); //Second list does not contains elements
+		}
+
+		[Test]
+		public void VerifyInnerIEnuerablePropertyWithExpressionDefinition()
+		{
+			var rng = new OwnSecondLevel() { Collection = new List<OwnCollectionOfBasicElementIEnumerable>() };
+			rng.Collection.Add(new OwnCollectionOfBasicElementIEnumerable(1));
+			rng.Collection.Add(new OwnCollectionOfBasicElementIEnumerable());
+			var v = new Core.Validator();
+			v.AddRule(Rule.For<OwnCollectionOfBasicElementIEnumerable>()
+				.OnMember < OwnCollectionOfBasicElementIEnumerable>(l => l.SearchUnits)
+				 .Custom<IEnumerable<Int32>>(sl =>
+						  sl.Count() > 0)
+						  .Message("Error"));
+			var res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("Collection[1].SearchUnits")); //Second list does not contains elements
+		}
+
+		[Test]
 		public void VerifyInnerValidationGrabCorrectNameWhenPassedAsArgument()
 		{
 			var rng = new OwnSecondLevel() { Collection = new List<OwnCollectionOfBasicElementIEnumerable>() };
