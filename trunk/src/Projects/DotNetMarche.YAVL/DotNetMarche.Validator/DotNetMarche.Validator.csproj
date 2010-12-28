@@ -127,6 +127,7 @@
     <Compile Include="ValidationFlags.cs" />
     <Compile Include="ValidationResult.cs" />
     <Compile Include="Validators\Attributes\ConstantResultAttribute.cs" />
+    <Compile Include="Validators\Attributes\NotEmptyAttribute.cs" />
     <Compile Include="Validators\Attributes\RangeLengthAttribute.cs" />
     <Compile Include="Validators\Attributes\RangeValueAttribute.cs" />
     <Compile Include="Validators\Attributes\RegexAttribute.cs" />

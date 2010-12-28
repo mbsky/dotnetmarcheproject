@@ -34,7 +34,7 @@ namespace DotNetMarche.Validator.Validators
 		internal Rule Configure(Core.Validator validator)
 		{
 			ValidationUnitCollection coll = validator.GetRules(Type);
-			coll.Add( ValidationUnit.CreateValidationUnit(ErrorMessage, _CreateValidator(Extractor)));
+			coll.Add(ValidationUnit.CreateValidationUnit(ErrorMessage, _CreateValidator(Extractor)));
 			return this;
 		}
 
@@ -77,7 +77,7 @@ namespace DotNetMarche.Validator.Validators
 			Rule rule = For(typeof(T));
 			pinfo = mex.Member as PropertyInfo;
 			if (pinfo == null) throw new ArgumentException("The expression is not a property selector", "propertyExtractor");
-			
+
 			rule._Extractor = new PropertyInfoValueExtractor(pinfo);
 			return rule;
 		}
@@ -160,6 +160,13 @@ namespace DotNetMarche.Validator.Validators
 			return this;
 		}
 
+		public Rule NotEmpty()
+		{
+			_CreateValidator = e => new NotEmptyValidator(e);
+			return this;
+		}
 		#endregion
+
+
 	}
 }
