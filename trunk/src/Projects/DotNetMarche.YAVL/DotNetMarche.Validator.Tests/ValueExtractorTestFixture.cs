@@ -213,11 +213,5 @@ namespace DotNetMarche.Validator.Tests
 			Assert.That(sut.SourceName, Is.EqualTo("OtherProperty"));
 		}
 
-		[Test]
-		public void ExtractLambdaValidationDefaultSourceName()
-		{
-			LambdaExtractor<ClassTest1> sut = new LambdaExtractor<ClassTest1>(c => c.OtherProperty);
-			Assert.That(sut.SourceName, Is.EqualTo(ValidationResult.ValidationSourceObject));
-		}
 	}
 }
