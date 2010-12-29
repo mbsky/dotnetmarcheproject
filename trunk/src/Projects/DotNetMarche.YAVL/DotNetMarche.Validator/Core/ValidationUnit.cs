@@ -145,14 +145,9 @@ namespace DotNetMarche.Validator.Core
 			CultureInfo cultureInfo)
 		{
 
-			var res = mValidator.Validate(objToValidate, validationFlag).ToList();
-			foreach (SingleValidationResult singleValidationResult in res)
-			{
-				actualResult.AddErrorMessage(
-					GetErrorMessage(singleValidationResult, cultureInfo), singleValidationResult.SourceName);
-			}
-
-			return res.Count == 0;
+			var res = mValidator.Validate(objToValidate, validationFlag);
+			actualResult.Compose(res);
+			return res.Success;
 		}
 	}
 

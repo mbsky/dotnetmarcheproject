@@ -185,6 +185,8 @@ namespace DotNetMarche.Validator.Tests
 			var res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
 			Assert.IsTrue(res);
 		}
+
+	
 		
 		[Test]
 		public void VerifyInnerIEnuerablePropertyOfInnerObjectIsNotValidated()
@@ -199,6 +201,21 @@ namespace DotNetMarche.Validator.Tests
 						  .Message("Error"));
 			var res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
 			Assert.IsFalse(res); //Second list does not contains elements
+		}
+		
+		[Test]
+		public void VerifyInnerIEnumerableMessageErrorWhenLambdaIsUsed()
+		{
+			var rng = new OwnSecondLevel() { Collection = new List<OwnCollectionOfBasicElementIEnumerable>()};
+			rng.Collection.Add(new OwnCollectionOfBasicElementIEnumerable(1));
+			rng.Collection.Add(new OwnCollectionOfBasicElementIEnumerable());
+			var v = new Core.Validator();
+			v.AddRule(Rule.For<OwnCollectionOfBasicElementIEnumerable>(l => l.SearchUnits)
+				 .Custom<IEnumerable<Int32>>(sl =>
+						  sl.Count() > 0)
+						  .Message("I want to see this message"));
+			var res = v.ValidateObject(rng, ValidationFlags.RecursiveValidation);
+			Assert.That(res.Errors[0].Message, Is.EqualTo("I want to see this message"));
 		}
 
 		[Test]

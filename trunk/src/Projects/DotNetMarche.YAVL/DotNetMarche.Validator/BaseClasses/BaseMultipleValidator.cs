@@ -19,6 +19,6 @@ namespace DotNetMarche.Validator.BaseClasses
 			return (T) mValueExtractor.ExtractValue(obj);
 		}
 
-		public abstract IEnumerable<SingleValidationResult> Validate(object objectToValidate, ValidationFlags validationFlags);
+		public abstract ValidationResult Validate(object objectToValidate, ValidationFlags validationFlags);
 	}
 }

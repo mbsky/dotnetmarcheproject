@@ -36,6 +36,6 @@ namespace DotNetMarche.Validator.Interfaces
 		/// it should know actual validation flags.</param>
 		/// <returns>The list of errors, if the return is an empty <see cref="IEnumerable{SingleValidationResult}"/>
 		/// </returns>
-		IEnumerable<SingleValidationResult> Validate(Object objectToValidate, ValidationFlags validationFlags);
+		ValidationResult Validate(Object objectToValidate, ValidationFlags validationFlags);
 	}
 }

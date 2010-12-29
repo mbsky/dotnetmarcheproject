@@ -79,6 +79,17 @@ namespace DotNetMarche.Validator
 
 		#endregion
 
-
+		/// <summary>
+		/// Compose two distinct <see cref="ValidationResult"/> objects.
+		/// </summary>
+		/// <param name="res">The res.</param>
+		public void Compose(ValidationResult res)
+		{
+			if (!res.Success )
+			{
+				Success = false;
+				Errors.AddRange(res.Errors);
+			}
+		}
 	}
 }
