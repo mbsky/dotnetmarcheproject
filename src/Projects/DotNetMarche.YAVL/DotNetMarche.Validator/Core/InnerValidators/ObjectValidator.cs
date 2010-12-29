@@ -30,14 +30,15 @@ namespace DotNetMarche.Validator.Core.InnerValidators
 		/// <param name="objectToValidate"></param>
 		/// <param name="validationFlags"></param>
 		/// <returns></returns>
-		public override IEnumerable<SingleValidationResult>
+		public override ValidationResult
 			Validate(object objectToValidate, ValidationFlags validationFlags)
 		{
 			//First of all retrieve the object, if it is null validate.
+			ValidationResult results = new ValidationResult();
 			object obj = Extract<Object>(objectToValidate);
 			if (obj != null)
 			{
-				List<SingleValidationResult> results = new List<SingleValidationResult>();
+				
 				if (obj is IEnumerable)
 				{
 					//the object is IEnumerable, we need to validate inner objects
@@ -48,9 +49,10 @@ namespace DotNetMarche.Validator.Core.InnerValidators
 						var errors = ValidateSingleObject(innerObj, validationFlags);
 						foreach (var validationError in errors)
 						{
-							results.Add(new SingleValidationResult(
-									false, validationError.Message, "", string.Format("{0}[{1}].{2}",
-									mValueExtractor.SourceName, index, validationError.SourceName)));
+							results.Success = false;
+							results.AddErrorMessage(
+								validationError.Message, 
+								string.Format("{0}[{1}].{2}",mValueExtractor.SourceName, index, validationError.SourceName));
 
 						}
 						index++;
@@ -63,8 +65,9 @@ namespace DotNetMarche.Validator.Core.InnerValidators
 					var errors = ValidateSingleObject(obj, validationFlags);
 					foreach (var validationError in errors)
 					{
-						results.Add(new SingleValidationResult(
-													false, validationError.Message, "", mValueExtractor.SourceName + "." + validationError.SourceName));
+						results.AddErrorMessage(
+							validationError.Message, 
+							mValueExtractor.SourceName + "." + validationError.SourceName);
 
 					}
 				}
@@ -73,7 +76,7 @@ namespace DotNetMarche.Validator.Core.InnerValidators
 
 			}
 
-			return new SingleValidationResult[] { };
+			return results;
 		}
 
 		protected IEnumerable<ValidationError> ValidateSingleObject(object obj, ValidationFlags validationFlags)
