@@ -144,7 +144,7 @@ namespace DotNetMarche.Validator.Tests.ConfigurationTests
 
 			public Validators.Rule Configure(Type resourceType, Validators.Rule rule)
 			{
-				return rule.SetRequired();
+				return rule.Required(null);
 			}
 
 			#endregion

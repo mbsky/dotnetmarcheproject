@@ -67,7 +67,7 @@ namespace DotNetMarche.Validator.Tests
 			var v = new Core.Validator();
 			ChildEntityNa bes = new ChildEntityNa();
 			v.AddRule(Rule.For<ChildEntityNa>(e => e.RequiredString)
-			          	.Required.Message("Required!!!!"));
+			          	.Required().Message("Required!!!!"));
 			ValidationResult res = v.ValidateObject(bes);
 			Assert.That(res.Success, Is.False);
 			Assert.That(res.ErrorMessages[0], Is.EqualTo("Required!!!!"));
@@ -79,7 +79,7 @@ namespace DotNetMarche.Validator.Tests
 			var v = new Core.Validator();
 			ChildEntityNa bes = new ChildEntityNa();
 			v.AddRule(Rule.For<ChildEntityNa>(e => e.RequiredString)
-						.Required.Message("Required!!!!"));
+						.Required().Message("Required!!!!"));
 			bes.RequiredString = "is here!!";
 			ValidationResult res = v.ValidateObject(bes);
 			Assert.That(res.Success, Is.True);

@@ -146,17 +146,16 @@ namespace DotNetMarche.Validator.Validators
 		/// <summary>
 		/// Calling this property insert a required validator
 		/// </summary>
-		public Rule Required
+		public Rule Required()
 		{
-			get
-			{
-				return SetRequired();
-			}
+			
+				return Required(null);
+			
 		}
 
-		public Rule SetRequired()
+		public Rule Required(Object nullvalue)
 		{
-			_CreateValidator = e => new RequiredValidator(e);
+			_CreateValidator = e => new RequiredValidator(e, nullvalue);
 			return this;
 		}
 
