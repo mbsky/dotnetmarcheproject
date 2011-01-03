@@ -13,7 +13,7 @@ namespace DotNetMarche.Validator.Configuration.Xml.Rules
 
 		protected override Validators.Rule InnerConfigure(Validators.Rule rule)
 		{
-			return rule.SetRequired();
+			return rule.Required();
 		}
 
 		#endregion

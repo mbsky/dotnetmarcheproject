@@ -213,7 +213,7 @@ namespace DotNetMarche.Validator.Tests
 			Core.Validator v = new Core.Validator();
 			v.AddRule(Rule.For<Simple1FieldWithoutAttribute>()
 	          	.OnMember("field")
-	          	.Required.Message("ErrorMessage"));
+					.Required().Message("ErrorMessage"));
 
 			ValidationResult res = v.ValidateObject(s1f);
 			Assert.IsFalse(res, "Object does not validate well");
@@ -244,7 +244,7 @@ namespace DotNetMarche.Validator.Tests
 			s1f.field = null;
 			Core.Validator v = new Core.Validator();
 			v.AddRule(Rule.For<Simple1FieldWithoutAttribute>()
-				.Required.OnMember("field")
+				.Required().OnMember("field")
 				.Message("ErrorMessage"));
 
 			ValidationResult res = v.ValidateObject(s1f);
@@ -270,6 +270,22 @@ namespace DotNetMarche.Validator.Tests
 			Assert.That(res.ErrorMessages[0], Is.EqualTo("ErrorMessage"));
 		}
 
+		[Test]
+		public void VerifyRequiredDoesNotValidateEmptyString()
+		{
+		var s1F = new Simple2Property();
+			s1F.SProperty = String.Empty;
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.For<Simple2Property>()
+				.OnMember<Simple2Property>(s => s.SProperty)
+	          .Required(String.Empty)
+				.Message("ErrorMessage"));
+
+			ValidationResult res = v.ValidateObject(s1F);
+			Assert.IsFalse(res, "Empty string should not pass required validation");
+			Assert.That(res.ErrorMessages, Has.Count.EqualTo(1));
+			Assert.That(res.ErrorMessages[0], Is.EqualTo("ErrorMessage"));
+		}
 		/// <summary>
 		/// Insert in fluent interface the validator before the extractor.
 		/// </summary>
@@ -328,7 +344,7 @@ namespace DotNetMarche.Validator.Tests
 			var s1f = new Simple1Property();
 			Core.Validator v = new Core.Validator();
 			v.AddRule(Rule.ForMember<Simple1Property>(o => o.Property)
-				.Required
+				.Required()
 				.Message(() => TestRes.Test));
 			ValidationResult res = v.ValidateObject(s1f);
 			Assert.That(res.Errors[0].SourceName, Is.EqualTo("Property"));
@@ -382,6 +398,19 @@ namespace DotNetMarche.Validator.Tests
 			Assert.IsFalse(res, "Object does not validate well");
 			Assert.AreEqual(1, res.ErrorMessages.Count, "Wrong number of error detected");
 			Assert.AreEqual(cAlternativeErrorMessage, res.ErrorMessages[0]);
+		}
+
+		[Test]
+		public void VerifyWithCustomValidationCAnSelectPropertyName()
+		{
+			var s1pf = new Simple1Field1Property();
+			var v = new Core.Validator();
+			v.AddRule(Rule.For<Simple1Field1Property>(l => l, "Property")
+				 .Custom<Simple1Field1Property>(l => l.Property == "bla bla bla")
+				 .OnMember("")
+						  .Message("Property is not equal to bla bla bla"));
+			var res = v.ValidateObject(s1pf);
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("Property")); //Second list does not contains elements
 		}
 
 		/// <summary>
