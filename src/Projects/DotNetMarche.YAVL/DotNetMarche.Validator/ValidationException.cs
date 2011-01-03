@@ -9,7 +9,9 @@ namespace DotNetMarche.Validator
 	public class ValidationException : Exception
 	{
 		public ValidationException(IEnumerable<ValidationError> errorMessages, Exception innerException)
-			: base(errorMessages.First().Message, innerException)
+			: base(errorMessages
+			.Select(m => m.Message)
+			.Aggregate((s1, s2) =>s1 + "\n" + s2), innerException)
 		{
 			this.Errors.AddRange(errorMessages);
 		}
