@@ -19,5 +19,13 @@ namespace DotNetMarche.Validator.Tests
 			Assert.IsTrue(vr, "Validation Result does not convert well to Boolean");
 		}
 
+        [Test]
+        public void VerifyValidationExceptionMessage()
+        {
+            var ve = new ValidationException(
+                new ValidationError("ERROR1"),
+                new ValidationError("ERROR2"));
+            Assert.That(ve.Message, Is.EqualTo("ERROR1\nERROR2"));
+        }
 	}
 }

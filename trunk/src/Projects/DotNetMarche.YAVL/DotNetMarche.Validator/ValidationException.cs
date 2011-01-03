@@ -19,6 +19,11 @@ namespace DotNetMarche.Validator
 		{
 		}
 
+        public ValidationException(params ValidationError[] errorMessages)
+            : this(errorMessages, null)
+        {
+        }
+
 		public List<ValidationError> Errors
 		{
 			get
