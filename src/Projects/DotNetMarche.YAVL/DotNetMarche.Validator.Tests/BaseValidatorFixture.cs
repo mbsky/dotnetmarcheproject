@@ -53,6 +53,10 @@ namespace DotNetMarche.Validator.Tests
 			public String SProperty { get; set; }
 
 			public Int32 IProperty { get; set; }
+
+			public Int32? NullableInt { get; set; }
+
+			public DateTime? NullableDateTime { get; set; }
 		}
 
 		internal class Simple1Field1Property
@@ -363,6 +367,44 @@ namespace DotNetMarche.Validator.Tests
 		}
 
 		[Test]
+		public void TestFluentForSourceWithLambdaAndNullableInt()
+		{
+			var s1f = new Simple2Property();
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.ForMember<Simple2Property>(o => o.NullableInt)
+				.IsInRange(10, 100)
+				.Message(() => TestRes.Test));
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("NullableInt"));
+		}
+
+		[Test]
+		public void TestFluentForSourceWithLambdaAndNullableDateTime()
+		{
+			var s1f = new Simple2Property();
+			Core.Validator v = new Core.Validator();
+			v.AddRule(Rule.ForMember<Simple2Property>(o => o.NullableDateTime)
+				.Required()
+				.Message(() => TestRes.Test));
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("NullableDateTime"));
+		}
+		
+		[Test]
+		public void TestFluentForSourceWithLambdaAndConvertExpression()
+		{
+			var s1f = new Simple2Property();
+			Core.Validator v = new Core.Validator();
+			v.AddRule(
+				Rule.For<Simple2Property>(dto => dto.NullableDateTime)
+					.Custom<DateTime?>(date => false)
+					.Message(() => TestRes.Test));
+			
+			ValidationResult res = v.ValidateObject(s1f);
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("NullableDateTime"));
+		}
+
+		[Test]
 		public void TestFluentInvalidNoProperty()
 		{
 			Core.Validator v = new Core.Validator();
@@ -403,14 +445,14 @@ namespace DotNetMarche.Validator.Tests
 		[Test]
 		public void VerifyWithCustomValidationCAnSelectPropertyName()
 		{
-			var s1pf = new Simple1Field1Property();
+			var s1pf = new Simple1Field1Property() {field = "a", Property="b"};
 			var v = new Core.Validator();
 			v.AddRule(Rule.For<Simple1Field1Property>(l => l, "Property")
 				 .Custom<Simple1Field1Property>(l => l.Property == "bla bla bla")
-				 .OnMember("")
-						  .Message("Property is not equal to bla bla bla"));
+				 .Message("Property is not equal to bla bla bla"));
+			
 			var res = v.ValidateObject(s1pf);
-			Assert.That(res.Errors[0].SourceName, Is.EqualTo("Property")); //Second list does not contains elements
+			Assert.That(res.Errors[0].SourceName, Is.EqualTo("Property")); 
 		}
 
 		/// <summary>
