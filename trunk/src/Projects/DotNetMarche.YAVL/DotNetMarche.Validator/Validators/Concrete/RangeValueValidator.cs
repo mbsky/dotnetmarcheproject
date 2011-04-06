@@ -7,42 +7,55 @@ using DotNetMarche.Validator.Interfaces;
 
 namespace DotNetMarche.Validator.Validators.Concrete
 {
-	public class RangeValueValidator : BaseValidator {
+	public class RangeValueValidator : BaseValidator
+	{
 
 		Double mMinValue;
 		Double mMaxValue;
 
 		public RangeValueValidator(
-			IValueExtractor	valueExtractor,
-			Double				minValue,
-			Double				maxValue)
-			: base(valueExtractor) {
+			IValueExtractor valueExtractor,
+			Double minValue,
+			Double maxValue)
+			: base(valueExtractor)
+		{
 
 			mMinValue = minValue;
 			mMaxValue = maxValue;
+		}
+
+		public override SingleValidationResult Validate(object objectToValidate)
+		{
+			object valueToCheck = mValueExtractor.ExtractValue(objectToValidate);
+			Boolean result;
+			if (valueToCheck == null)
+			{
+				result = false;
+			}
+			else
+			{
+				Double parsedValueToCheck = ParseValue(valueToCheck);
+				result = IsValueValid(parsedValueToCheck);
 			}
 
-		public override SingleValidationResult Validate(object objectToValidate) {
-			object valueToCheck = mValueExtractor.ExtractValue(objectToValidate);
-			Double parsedValueToCheck = ParseValue(valueToCheck);
-			Boolean result = IsValueValid(parsedValueToCheck);
 			if (result)
 				return SingleValidationResult.GenericSuccess;
-			else 
+			else
 				return new SingleValidationResult(
-					false, 
-					String.Format("{0}-{1}", mMinValue,mMaxValue),
-					valueToCheck, 
+					false,
+					String.Format("{0}-{1}", mMinValue, mMaxValue),
+					valueToCheck,
 					mValueExtractor.SourceName);
 		}
 
-		private Double ParseValue(object value) {
+		private Double ParseValue(object value)
+		{
 			Double parsed;
-			if (value.GetType() == typeof (Double))
-				parsed = (Double) value;
-			else 
+			if (value.GetType() == typeof(Double))
+				parsed = (Double)value;
+			else
 				parsed = Convert.ToDouble(value);
-			
+
 			return parsed;
 		}
 
@@ -51,8 +64,9 @@ namespace DotNetMarche.Validator.Validators.Concrete
 		/// </summary>
 		/// <param name="valueToCheck"></param>
 		/// <returns></returns>
-		private Boolean IsValueValid(Double parsedValueToCheck) {
-			return parsedValueToCheck >= mMinValue && parsedValueToCheck <= mMaxValue;  
+		private Boolean IsValueValid(Double parsedValueToCheck)
+		{
+			return parsedValueToCheck >= mMinValue && parsedValueToCheck <= mMaxValue;
 		}
 
 	}

@@ -21,7 +21,8 @@ namespace DotNetMarche.Validator.Validators.Concrete
 
 		public override SingleValidationResult Validate(object objectToValidate)
 		{
-			T valueToCheck = (T) mValueExtractor.ExtractValue(objectToValidate);
+			object extractedValue = mValueExtractor.ExtractValue(objectToValidate);
+			T valueToCheck = (T) extractedValue;
 			if (_validationFunction(valueToCheck))
 			{
 				return SingleValidationResult.GenericSuccess;

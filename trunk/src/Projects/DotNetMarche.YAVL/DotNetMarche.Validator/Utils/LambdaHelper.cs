@@ -11,6 +11,15 @@ namespace DotNetMarche.Validator.Utils
 		public static String GetMemberName<T, TProperty>(this Expression<Func<T, TProperty>> source)
 		{
 			var expression = source.Body as MemberExpression;
+
+			if (expression == null)
+			{
+				UnaryExpression unex = source.Body as UnaryExpression;
+				if (unex != null)
+				{
+					expression = unex.Operand as MemberExpression;
+				}
+			}
 			if (expression != null)
 			{
 				var member = expression.Member;
