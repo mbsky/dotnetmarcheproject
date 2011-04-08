@@ -90,15 +90,15 @@
     <Compile Include="UndoRedoList.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
-      <Project>{F3CBC7EC-DB24-4B11-BE87-E8ABC076A29C}</Project>
-      <Name>DotNetMarche.Utils</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\..\..\DotNetMarche.snk">
       <Link>DotNetMarche.snk</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetMarche.Utils\DotNetMarche.Utils.csproj">
+      <Project>{C44BF3FB-FD17-489B-85D0-FBDF463970EA}</Project>
+      <Name>DotNetMarche.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
