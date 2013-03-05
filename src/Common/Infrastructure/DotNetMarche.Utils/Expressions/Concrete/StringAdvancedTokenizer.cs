@@ -88,7 +88,7 @@ namespace DotNetMarche.Utils.Expressions.Concrete
 				else
 				{
 					//We must check for double quote, if we have a quote go to IsInQuote status where separator gets ignored.
-					if (data.CurrentChar == '\'')
+					if (data.CurrentChar == '\'' || data.CurrentChar == '\"')
 					{
 						HandleQuote(ref data);
 					}
