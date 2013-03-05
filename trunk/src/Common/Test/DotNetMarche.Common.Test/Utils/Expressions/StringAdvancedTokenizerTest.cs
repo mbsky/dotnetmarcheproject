@@ -71,6 +71,14 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		}		
 		
 		[Test]
+		public void TestQuotedStringWithDoubleQuotes()
+		{
+			CollectionAssert.AreEquivalent(new[] { "Test", "==", "test space" }, sut.Tokenize("Test == \"test space\""));
+		}
+
+		
+		
+		[Test]
 		public void TestStringOperatorsAndOperatorShouldNotMatchInQuotes()
 		{
 			CollectionAssert.AreEqual(new[] { "Test", "like" , "test space%" }, sut.Tokenize("Test like 'test space%'"));
