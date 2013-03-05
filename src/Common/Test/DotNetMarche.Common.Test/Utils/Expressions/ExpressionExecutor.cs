@@ -33,5 +33,17 @@ namespace DotNetMarche.Common.Test.Utils.Expressions
 		{
 			Assert.That(Execute("3 * 5 + 4 + 6 / 3"), Is.EqualTo(21));
 		}
+
+		[Test]
+		public void TestSimpleMath3()
+		{
+			Assert.That(Execute("3 * ( 5 + 4 + 6 ) / 3"), Is.EqualTo(15));
+		}
+
+		[Test]
+		public void TestSimpleMath4()
+		{
+			Assert.That(Execute("3 * (5 + 4 + 6) / 3"), Is.EqualTo(15));
+		}
 	}
 }
