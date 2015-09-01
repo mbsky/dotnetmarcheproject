@@ -1,0 +1,1 @@
+This is the base repository for DotNetMarche common projects.
